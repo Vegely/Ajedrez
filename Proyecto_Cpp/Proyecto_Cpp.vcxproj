@@ -127,11 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\UPM\3\Segundo cuatrimestre\Informatica induatrial\Programas de clase\Ejercicios de clase\Ejercicios de clase\Asciigraphics.cpp" />
+    <ClCompile Include="Asciigraphics.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\UPM\3\Segundo cuatrimestre\Informatica induatrial\Programas de clase\Ejercicios de clase\Ejercicios de clase\AsciiGraphics.h" />
+    <ClInclude Include="AsciiGraphics.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

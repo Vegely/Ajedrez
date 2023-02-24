@@ -1,37 +1,38 @@
 ﻿  Asciigraphics.cpp
-C:\Users\Rubikrazy\Documents\UPM\3\Segundo cuatrimestre\Informatica induatrial\Programas de clase\Ejercicios de clase\Ejercicios de clase\Asciigraphics.cpp(62,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Rubikrazy\Documents\UPM\3\Segundo cuatrimestre\Informatica induatrial\Programas de clase\Ejercicios de clase\Ejercicios de clase\Asciigraphics.cpp(69,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\Asciigraphics.cpp(62,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\Asciigraphics.cpp(69,21): warning C4018: '<': no coinciden signed/unsigned
   main.cpp
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(36,74): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(37,44): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(38,20): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(42,74): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(43,44): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(44,20): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(48,39): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(49,20): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(53,39): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(54,20): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(56,65): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(57,43): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(58,43): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(63,26): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(64,54): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(65,43): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(66,19): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(70,26): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(71,54): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(72,43): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(73,19): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(77,38): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(78,19): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(82,38): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(83,19): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(85,64): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(86,64): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(87,178): warning C4244: 'argumento': conversión de 'double' a 'char'; posible pérdida de datos
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(88,183): warning C4244: 'argumento': conversión de 'double' a 'char'; posible pérdida de datos
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(114,52): warning C4244: 'argumento': conversión de 'double' a 'unsigned int'; posible pérdida de datos
-C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\main.cpp(114,35): warning C4244: 'argumento': conversión de 'double' a 'unsigned int'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(36,74): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(37,44): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(38,20): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(42,74): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(43,44): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(44,20): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(48,39): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(49,20): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(53,39): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(54,20): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(56,65): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(57,43): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(58,43): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(63,26): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(64,54): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(65,43): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(66,19): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(70,26): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(71,54): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(72,43): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(73,19): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(77,38): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(78,19): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(82,38): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(83,19): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(85,64): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(86,64): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(87,178): warning C4244: 'argumento': conversión de 'double' a 'char'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(88,183): warning C4244: 'argumento': conversión de 'double' a 'char'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(114,52): warning C4244: 'argumento': conversión de 'double' a 'unsigned int'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\main.cpp(114,35): warning C4244: 'argumento': conversión de 'double' a 'unsigned int'; posible pérdida de datos
   Generando código...
-  Proyecto_Cpp.vcxproj -> C:\Users\Rubikrazy\Documents\GitHub\Ajedrez\Proyecto_Cpp\x64\Debug\Proyecto_Cpp.exe
+  LINK : no se encontró C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\x64\Debug\Proyecto_Cpp.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+  Proyecto_Cpp.vcxproj -> C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Proyecto_Cpp\x64\Debug\Proyecto_Cpp.exe
