@@ -39,3 +39,11 @@ Proyecto de programación de un ajedrez en C++ con la librería gráfica [Glut](
 - Puede comer.
 - Puede defender.
 - Amenazada.
+
+## Convenio de nomenclatura:
+- Variables: `var_var`
+- Funciones: `funcionFuncion`
+- Clases: `Clase`
+- Definiciones compilador: `#define DEF_VALOR`
+- Nombres de funciones y variables en español.
+- Comentar inputs y outputs de funciones y qué implementa (el cómo dentro).
