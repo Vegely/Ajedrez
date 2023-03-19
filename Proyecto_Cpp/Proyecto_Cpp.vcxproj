@@ -129,9 +129,13 @@
   <ItemGroup>
     <ClCompile Include="Asciigraphics.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Cliente.cpp" />
+    <ClCompile Include="Servidor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AsciiGraphics.h" />
+    <ClInclude Include="Cliente.h" />
+    <ClInclude Include="Servidor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
