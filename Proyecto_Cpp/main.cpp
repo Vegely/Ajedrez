@@ -11,6 +11,7 @@ using namespace std;
 #define Y_SPACING 2
 #define X_BACKGROUND 10
 #define Y_BACKGROUND 10
+#define X "Una mierda"
 
 
 int main()
