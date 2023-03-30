@@ -133,6 +133,7 @@
     <ClCompile Include="Dama.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Peon.cpp" />
+    <ClCompile Include="Pieza.cpp" />
     <ClCompile Include="Rey.cpp" />
     <ClCompile Include="Torre.cpp" />
   </ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="Caballo.h" />
     <ClInclude Include="Dama.h" />
     <ClInclude Include="Peon.h" />
+    <ClInclude Include="Pieza.h" />
     <ClInclude Include="Rey.h" />
     <ClInclude Include="Torre.h" />
   </ItemGroup>

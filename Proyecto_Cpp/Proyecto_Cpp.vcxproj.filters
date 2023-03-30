@@ -13,31 +13,37 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de origen\.cpp Archivos de encabezado">
+      <UniqueIdentifier>{2953244d-41a6-4a23-b38e-4b819ec16024}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Asciigraphics.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="Alfil.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="Peon.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
     </ClCompile>
     <ClCompile Include="Caballo.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="Torre.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
     </ClCompile>
     <ClCompile Include="Dama.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
+    </ClCompile>
+    <ClCompile Include="Peon.cpp">
+      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
     </ClCompile>
     <ClCompile Include="Rey.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
+    </ClCompile>
+    <ClCompile Include="Torre.cpp">
+      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
+    </ClCompile>
+    <ClCompile Include="Asciigraphics.cpp">
+      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
+    </ClCompile>
+    <ClCompile Include="Pieza.cpp">
+      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +66,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Rey.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Pieza.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

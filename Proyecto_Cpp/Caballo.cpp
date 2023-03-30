@@ -5,7 +5,7 @@ Caballo::Caballo()
 
 }
 
-Caballo::~Caballo()
+void Caballo::mover()
 {
 
 }

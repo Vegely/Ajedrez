@@ -1,19 +1,13 @@
 #ifndef _Caballo__H_
 #define	_Caballo__H_
 
-	class Caballo
-	{
-	public:
-		Caballo();
-		~Caballo();
+#include "Pieza.h"
 
-	private:
-		int valor;
-		bool color;
-		int posicion[2];
-		int puede_comer[8][8];
-		int puede_defender[8][8];
-		int amenazada[8][8];
-	};
+class Caballo : public Pieza
+{
+public:
+	Caballo();
+	void mover();
+};
 
 #endif // !_Caballo__H_ //

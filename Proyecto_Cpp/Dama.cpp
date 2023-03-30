@@ -2,8 +2,5 @@
 
 Dama::Dama()
 {
-}
 
-Dama::~Dama()
-{
 }

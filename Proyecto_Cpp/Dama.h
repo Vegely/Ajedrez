@@ -1,19 +1,12 @@
 #ifndef _Dama__H_
 #define	_Dama__H_
 
-	class Dama
-	{
-	public:
-		Dama();
-		~Dama();
+#include "Pieza.h"
 
-	private:
-		int valor;
-		bool color;
-		int posicion[2];
-		int puede_comer[8][8];
-		int puede_defender[8][8];
-		int amenazada[8][8];
-	};
+class Dama : public Pieza
+{
+public:
+	Dama();
+};
 
 #endif // !_Dama__H_ //

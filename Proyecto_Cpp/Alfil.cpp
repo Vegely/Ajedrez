@@ -4,8 +4,3 @@ Alfil::Alfil()
 {
 
 }
-
-Alfil::~Alfil()
-{
-
-}

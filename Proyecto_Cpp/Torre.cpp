@@ -3,8 +3,10 @@
 
 Torre::Torre()
 {
+
 }
 
 Torre::~Torre()
 {
+
 }

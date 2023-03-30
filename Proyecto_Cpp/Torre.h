@@ -1,19 +1,12 @@
 #ifndef _Torre__H_
 #define	_Torre__H_
 
-	class Torre
-	{
-	public:
-		Torre();
-		~Torre();
+#include "Pieza.h"
 
-	private:
-		int valor;
-		bool color;
-		int posicion[2];
-		int puede_comer[8][8];
-		int puede_defender[8][8];
-		int amenazada[8][8];
-	};
+class Torre : public Pieza
+{
+public:
+	Torre();
+}
 
 #endif // !_Torre__H_ //
