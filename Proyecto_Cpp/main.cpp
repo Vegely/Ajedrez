@@ -4,16 +4,12 @@
 /********************************************/
 
 //IMPORTACIÓN DE CLASES
-
-#include "Peon.h"
-#include "Caballo.h"
-#include "Alfil.h"
-#include "Torre.h"
-#include "Dama.h"
-#include "Rey.h"
+#include "Tablero.h"
 
 /********************************************/
 
+
+Tablero tablero;
 
 using namespace std;
 
