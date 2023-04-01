@@ -1,37 +1,26 @@
 #ifndef TEMPOBJECTS_H
 #define TEMPOBJECTS_H
 
-using byte = unsigned char;
-
-struct Point
-{
-	float x, y, z;
-};
-
-struct Color
-{
-	byte r, g, b;
-};
+#include "freeglut.h"
+#include "structs.h"
 
 struct Cell
 {
 	Point pos_space;
 	Color color;
+	float length;
 };
 
-class Tablero
+class Board
 {
 private:
-	Point pos_space;
-	Point cell_centers[8][8];
-	float square_length;
+	Point pos_global;
+	Cell cells[64];
 public:
 	/* CONSTRUCTOR */
-	Tablero(const Point& pos_space, const float square_length);
-	Tablero(const float x, const float y, const float z, const float square_length);
+	Board(const Point& pos_global, const float square_length);
 
-
-	void calcCellDimensions(void);
+	/* DRAWING FUNCTIONS */
 	void draw(void);
 };
 

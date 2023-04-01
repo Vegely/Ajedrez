@@ -2,6 +2,8 @@
 #include <string>
 #include <iostream>
 
+Board board({0, 0, 0}, 3.0f);
+
 void init(int* argc, char* argv[], const char* windowName, int windowLength, int windowHeight)
 {
 	// Initialize window manager GLUT and create a window.

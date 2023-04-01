@@ -1,7 +1,7 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#include "freeglut.h"
+#include "tempObjects.h"
 
 using keypress = unsigned char;
 using byte	   = unsigned char;

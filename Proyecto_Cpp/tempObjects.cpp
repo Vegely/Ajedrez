@@ -1,26 +1,36 @@
 #include "tempObjects.h"
 
-Tablero::Tablero(const Point& pos_space, const float square_length) 
-	: pos_space(pos_space), square_length(square_length) 
+Board::Board(const Point& pos_global, const float square_length) 
+	: pos_global(pos_global)
 {
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 64; i++)
 	{
-		for (int j = 0; j < 8; j++)
+		cells[i].length = square_length;
+
+		if (i % 2 == 0)
+			cells[i].color = CRGB::Black;
+		else
+			cells[i].color = CRGB::White;
+	}
+
+	for (int j = 0; j < 8; j++)
+	{
+		for (int i = 0; i < 8; i++)
 		{
-			cell_centers[i][j] = { i * square_length, j * square_length, pos_space.z };
+			cells[i].pos_space = { square_length * i, pos_global.y, square_length * j };
 		}
 	}
 }
 
-Tablero::Tablero(const float x, const float y, const float z, const float square_length)
-	: pos_space({x, y, z}), square_length(square_length)
+void Board::draw(void)
 {
-	for (int i = 0; i < 8; i++)
+	// Draw the object according to its parameters.
+	for (int i = 0; i < 64; i++)
 	{
-		for (int j = 0; j < 8; j++)
-		{
-			cell_centers[i][j] = { i * square_length, j * square_length, pos_space.z };
-		}
+		glColor3ub(cells[i].color.r, cells[i].color.g, cells[i].color.b);
+		glTranslatef(cells[i].pos_space.x, cells[i].pos_space.y, cells[i].pos_space.z);
+		glutSolidCube(cells[i].length);
+		glTranslatef(-cells[i].pos_space.x, -cells[i].pos_space.y, -cells[i].pos_space.z);
 	}
 }
 
