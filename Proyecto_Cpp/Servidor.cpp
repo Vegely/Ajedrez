@@ -48,7 +48,7 @@ void servidor::creaSocket() {
 void servidor::vincula() {
 	int res;
 
-	res = bind(listen_socket, this->res->ai_addr, static_cast<int>(this->res->ai_addrlen));
+	res = bind(listen_socket, this->res->ai_addr, (int)(this->res->ai_addrlen));
 
 	if (res == SOCKET_ERROR) {
 		std::cout << "Error en la vinculacion: " << WSAGetLastError();
@@ -68,11 +68,49 @@ void servidor::escucha() {
 }
 
 void servidor::aceptaConexion() {
-	client_socket = accept(listen_socket, NULL, NULL);
+	client_socket = accept(listen_socket, nullptr, nullptr);
 	if (client_socket == INVALID_SOCKET) {
-		printf("accept failed: %d\n", WSAGetLastError());
+		printf("accept failed with error: %d\n", WSAGetLastError());
 		closesocket(listen_socket);
 		WSACleanup();
 	}
 	closesocket(listen_socket);
+}
+
+void servidor::recibe() {
+	do {
+
+		iResult = recv(client_socket, recvbuf, recvbuflen, 0);
+		if (iResult > 0) {
+			printf("Bytes received: %d\n", iResult);
+
+			// Echo the buffer back to the sender
+			iSendResult = send(client_socket, recvbuf, iResult, 0);
+			if (iSendResult == SOCKET_ERROR) {
+				printf("send failed: %d\n", WSAGetLastError());
+				closesocket(client_socket);
+				WSACleanup();
+			}
+			printf("Bytes sent: %d\n", iSendResult);
+		}
+		else if (iResult == 0)
+			printf("Connection closing...\n");
+		else {
+			printf("recv failed: %d\n", WSAGetLastError());
+			closesocket(client_socket);
+			WSACleanup();
+		}
+
+	} while (iResult > 0);
+}
+
+void servidor::desconecta() {
+	iResult = shutdown(client_socket, SD_SEND);
+	if (iResult == SOCKET_ERROR) {
+		printf("shutdown failed: %d\n", WSAGetLastError());
+		closesocket(client_socket);
+		WSACleanup();
+	}
+	closesocket(client_socket);
+	WSACleanup();
 }

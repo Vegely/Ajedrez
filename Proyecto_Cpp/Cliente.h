@@ -28,11 +28,17 @@ private:
     addrinfo hints;
 
     int iResult;
+    int recvbuflen = DEFAULT_BUFLEN;
+    char recvbuf[DEFAULT_BUFLEN];
+    const char* sendbuf = "hola mundo";
+
 
     SOCKET ConnectSocket = INVALID_SOCKET;
 
 public:
     void creaSocket();
     void conecta();
+    void envia();
+    void recibe();
 };
 
