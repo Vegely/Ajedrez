@@ -1,8 +1,5 @@
-//Cliente
+/*Cliente
 
-
-
-/*
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
@@ -127,5 +124,4 @@ int __cdecl main(int argc, char** argv)
     WSACleanup();
 
     return 0;
-}
-*/
+}*/
