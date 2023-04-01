@@ -1,4 +1,6 @@
 #include "graphics.h"
+#include <string>
+#include <iostream>
 
 void init(int* argc, char* argv[], const char* windowName, int windowLength, int windowHeight)
 {
@@ -16,7 +18,7 @@ void init(int* argc, char* argv[], const char* windowName, int windowLength, int
 	glMatrixMode(GL_PROJECTION);
 	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
 
-	// Register callbacks
+	// Callback registering.
 	glutDisplayFunc(OnDraw);
 	glutIdleFunc(OnDraw);
 	glutReshapeFunc(OnReshape);
@@ -38,4 +40,68 @@ void OnReshape(int w, int h)
 	glLoadIdentity();
 	gluPerspective(60, (GLfloat)w / (GLfloat)h, 1.0, 1000.0); //set the perspective (angle of sight, width, height, depth)
 	glMatrixMode(GL_MODELVIEW); //set the matrix back to model
+}
+
+void OnDraw(void)
+{
+
+	// End of drawing code (do not erase or write anything afterwards).
+	glutSwapBuffers();
+}
+
+void OnTimer(int value)
+{
+
+
+	glutTimerFunc(value, OnTimer, 0); // Recalls the timer
+	// End of timing code (do not erase or write anything afterwards).
+	glutPostRedisplay();
+}
+
+void OnKeyboardDown(unsigned char key, int x_t, int y_t)
+{
+
+	// End of keyboard reading code (do not erase or write anything afterwards).
+	glutPostRedisplay();
+}
+
+void OnMouseClick(int button, int state, int x, int y)
+{
+	static std::string btn;
+	switch (button)
+	{
+	case 0:
+		btn = "left";
+		break;
+	case 1:
+		btn = "middle";
+		break;
+	case 2:
+		btn = "right";
+		break;
+	case 3:
+		btn = "scroll up";
+		break;
+	case 4:
+		btn = "scroll down";
+		break;
+	default:
+		break;
+	}
+
+	if (state == GLUT_DOWN)
+	{
+		std::cout << "Button: " << btn << std::endl;
+		std::cout << "X:" << x << std::endl;
+		std::cout << "Y:" << y << std::endl;
+	}
+
+	// End of mouse reading code (do not erase or write anything afterwards).
+	glutPostRedisplay();
+}
+
+void OnMouseMotion(int x, int y)
+{
+	// End of mouse reading code (do not erase or write anything afterwards).
+	glutPostRedisplay();
 }
