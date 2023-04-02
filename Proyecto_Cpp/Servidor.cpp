@@ -17,100 +17,114 @@
 #define DEFAULT_PORT "27015" //Puerto en el que se realiza la conexión por defecto
 
 void servidor::inicializa() {
-	int res; //Éxito: 0 , Fracaso: código de error (https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-wsastartup)
+	error_inicializacion_ws = WSAStartup(MAKEWORD(2, 2), &sck_info); //Argumentos: (versión, puntero a estructura WSADATA)
 
-	res = WSAStartup(MAKEWORD(2, 2), &sck_info); //Argumentos: (versión, puntero a estructura WSADATA)
-
-	if (res != 0)
-		std::cout << "Error de inicializacion: " << res;
+	//Éxito: 0 , Fracaso: código de error (https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-wsastartup)
+	if (error_inicializacion_ws != 0)
+		std::cout << "Error en la inicializacion de la libreria: " << error_inicializacion_ws << std::endl;
 }
 
 void servidor::creaSocket() {
-	int res;//Éxito: 0, Fracaso: código de error (https://learn.microsoft.com/en-us/windows/win32/winsock/creating-a-socket-for-the-server)
+	ZeroMemory(&red_info, sizeof(red_info));
+	red_info.ai_family = AF_INET; //IPv4
+	red_info.ai_socktype = SOCK_STREAM;//Socket de tipo stream
+	red_info.ai_protocol = IPPROTO_TCP;//Protocolo TCP
+	red_info.ai_flags = AI_PASSIVE; //Indica que vamos a vincular nuestro programa con el socket mediante bind()
 
-	ZeroMemory(&hints, sizeof(hints));
-	hints.ai_family = AF_INET; //IPv4
-	hints.ai_socktype = SOCK_STREAM;//Socket de tipo stream
-	hints.ai_protocol = IPPROTO_TCP;//Protocolo TCP
-	hints.ai_flags = AI_PASSIVE; //Indica que vamos a vincular nuestro programa con el socket mediante bind()
+	//Indico el tipo de conexión ("red_info") y recibo el tipo de conexión que acepta el servidor ("host_info")
+	//Éxito: 0, Fracaso: código de error (https://learn.microsoft.com/en-us/windows/win32/winsock/creating-a-socket-for-the-server)
+	error_creacion = getaddrinfo(NULL, DEFAULT_PORT, &red_info, &host_info);
 
-	res = getaddrinfo(NULL, DEFAULT_PORT, &hints, &this->res);
-
-	listen_socket = socket(this->res->ai_family, this->res->ai_socktype, this->res->ai_protocol);
-
-	if (listen_socket == INVALID_SOCKET) {
-		std::cout << "Error en la creacion del socket: " << WSAGetLastError();
-		freeaddrinfo(this->res);
+	//Comprobación de errores
+	if (error_creacion != 0) {
+		printf("getaddrinfo failed with error: %d\n", error_creacion);
+		WSACleanup();
 	}
 
+	//Creo un socket en el servidor con la información de conexión del host
+	//Este socket se encargará de aceptar peticiones de conexión
+	servidor_sck = socket(host_info->ai_family, host_info->ai_socktype, host_info->ai_protocol);
+
+	//Comprobación de errores
+	if (servidor_sck == INVALID_SOCKET) {
+		std::cout << "Error en la creacion del socket: " << WSAGetLastError();
+		freeaddrinfo(host_info);
+	}
 }
 
 void servidor::vincula() {
-	int res;
+	//Asocia nuestro programa con el socket creado
+	error_vinculacion = bind(servidor_sck, host_info->ai_addr, (int)(host_info->ai_addrlen));
 
-	res = bind(listen_socket, this->res->ai_addr, (int)(this->res->ai_addrlen));
-
-	if (res == SOCKET_ERROR) {
+	//Comprobación de errores
+	if (error_vinculacion == SOCKET_ERROR) {
 		std::cout << "Error en la vinculacion: " << WSAGetLastError();
-		freeaddrinfo(this->res);
-		closesocket(listen_socket);
+		freeaddrinfo(host_info);
+		closesocket(servidor_sck);
 		WSACleanup();
 	}
-	freeaddrinfo(this->res);
+
+	//Ya no hace falta la información sobre la conexión (el socket ya está creado y vinculado)
+	freeaddrinfo(host_info);
 }
 
 void servidor::escucha() {
-	if (listen(listen_socket, SOMAXCONN) == SOCKET_ERROR) {
+	//Avisamos al SO de que comience a atender conexiones
+	error_escucha = listen(servidor_sck, SOMAXCONN);
+
+	//Comprobación de errores
+	if (error_escucha == SOCKET_ERROR) {
 		printf("Listen failed with error: %ld\n", WSAGetLastError());
-		closesocket(listen_socket);
+		closesocket(servidor_sck);
 		WSACleanup();
 	}
 }
 
 void servidor::aceptaConexion() {
-	client_socket = accept(listen_socket, nullptr, nullptr);
-	if (client_socket == INVALID_SOCKET) {
+	//Indicamos al SO que acepte conexiones de clientes si las hay
+	//Devuelve un socket a través del cual se va a realizar la conexión
+	//Si se tratara con varios clientes, se mandaría este socket a un hilo diferente
+	cliente_socket = accept(servidor_sck, nullptr, nullptr);
+
+	//Comprobación de errores
+	if (cliente_socket == INVALID_SOCKET) {
 		printf("accept failed with error: %d\n", WSAGetLastError());
-		closesocket(listen_socket);
+		closesocket(servidor_sck);
 		WSACleanup();
 	}
-	closesocket(listen_socket);
+
+	//Solo nos comunicamos con un cliente, no es necesario aceptar más peticiones
+	closesocket(servidor_sck);
 }
 
 void servidor::recibe() {
 	do {
+		//Recibe información del cliente
+		//Longitud del mensaje limitada (gusanos)
+		error = recv(cliente_socket, recvbuf, recvbuflen, 0);
 
-		iResult = recv(client_socket, recvbuf, recvbuflen, 0);
-		if (iResult > 0) {
-			printf("Bytes received: %d\n", iResult);
+		//Si no se producen errores, sigo trabajando
+		if (error > 0) {
+			printf("Bytes received: %d\n", error);
 
-			// Echo the buffer back to the sender
-			iSendResult = send(client_socket, recvbuf, iResult, 0);
-			if (iSendResult == SOCKET_ERROR) {
-				printf("send failed: %d\n", WSAGetLastError());
-				closesocket(client_socket);
-				WSACleanup();
-			}
-			printf("Bytes sent: %d\n", iSendResult);
+			for (int i = 0; i < error; i++)
+				std::cout << recvbuf[i];
 		}
-		else if (iResult == 0)
-			printf("Connection closing...\n");
-		else {
-			printf("recv failed: %d\n", WSAGetLastError());
-			closesocket(client_socket);
-			WSACleanup();
-		}
-
-	} while (iResult > 0);
+	} while (error > 0);
 }
 
 void servidor::desconecta() {
-	iResult = shutdown(client_socket, SD_SEND);
-	if (iResult == SOCKET_ERROR) {
-		printf("shutdown failed: %d\n", WSAGetLastError());
-		closesocket(client_socket);
+	//Termina la conexión en la que se produce el intercambio de información
+	error_desconexion = shutdown(cliente_socket, SD_SEND);
+
+	//Comprobación de errores
+	if (error_desconexion == SOCKET_ERROR) {
+		std::cout << "shutdown failed: " << WSAGetLastError() << std::endl;
+		closesocket(cliente_socket);
 		WSACleanup();
 	}
-	closesocket(client_socket);
+
+	//Cerramos socket
+	closesocket(cliente_socket);
 	WSACleanup();
 }
