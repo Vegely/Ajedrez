@@ -1,8 +1,10 @@
 #include "graphics.h"
+#include "camera.h"
 #include <string>
 #include <iostream>
 
-Board board({0, 0, 0}, 3.0f);
+Board board({0, 0, 0}, 1.0f);
+Camera player;
 
 void init(int* argc, char* argv[], const char* windowName, int windowLength, int windowHeight)
 {
@@ -46,6 +48,9 @@ void OnReshape(int w, int h)
 
 void OnDraw(void)
 {
+	player.update();
+
+	board.draw();
 
 	// End of drawing code (do not erase or write anything afterwards).
 	glutSwapBuffers();
@@ -62,7 +67,7 @@ void OnTimer(int value)
 
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
-
+	player.keyboardMove(key, 1.0f);
 	// End of keyboard reading code (do not erase or write anything afterwards).
 	glutPostRedisplay();
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 using byte = unsigned char;
+using keypress = unsigned char;
 
 struct Point
 {
@@ -10,6 +11,11 @@ struct Point
 struct Color
 {
 	byte r, g, b;
+};
+
+struct Rotation
+{
+	float x, y, angle;
 };
 
 class CRGB

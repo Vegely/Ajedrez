@@ -1,4 +1,5 @@
 #include "tempObjects.h"
+#include <iostream>
 
 Board::Board(const Point& pos_global, const float square_length) 
 	: pos_global(pos_global)
@@ -6,18 +7,29 @@ Board::Board(const Point& pos_global, const float square_length)
 	for (int i = 0; i < 64; i++)
 	{
 		cells[i].length = square_length;
-
-		if (i % 2 == 0)
-			cells[i].color = CRGB::Black;
-		else
-			cells[i].color = CRGB::White;
 	}
 
 	for (int j = 0; j < 8; j++)
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			cells[i].pos_space = { square_length * i, pos_global.y, square_length * j };
+			std::cout << j * 8 + i << std::endl;
+			cells[j * 8 + i].pos_space = { square_length * (i), pos_global.y, square_length * (j) };
+
+			if (j % 2 == 0)
+			{
+				if (i % 2 == 0)
+					cells[j * 8 + i].color = CRGB::White;
+				else
+					cells[j * 8 + i].color = CRGB::Red;
+			}
+			else
+			{
+				if (i % 2 == 0)
+					cells[j * 8 + i].color = CRGB::Red;
+				else
+					cells[j * 8 + i].color = CRGB::White;
+			}
 		}
 	}
 }

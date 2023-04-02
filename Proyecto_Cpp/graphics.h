@@ -3,9 +3,6 @@
 
 #include "tempObjects.h"
 
-using keypress = unsigned char;
-using byte	   = unsigned char;
-
 /* INITIALIZATION CODE */
 void init(int* argc, char* argv[], const char* windowName, int windowLength, int windowHeight);
 

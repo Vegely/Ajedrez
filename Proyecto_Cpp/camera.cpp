@@ -1,11 +1,14 @@
 #include "camera.h"
+#include "freeglut.h"
+#include <cmath>
+#include <iostream>
+
+#define PI 3.141592654f
 
 // Constructor.
 Camera::Camera(void) :
 	position{ -5, 10, -5 },
 	lookAt{ 0, 0, 0 },
-	lastPosition{ 0, 0, 0 },
-	currentPosition{ 0, 0, 0 },
 	rotation{ 0, 0, 1 } {}
 
 Point Camera::getPosition(void)
@@ -72,4 +75,25 @@ void Camera::animationRotate(float radius, float z, Point lookAt)
 	this->lookAt = lookAt;
 
 	position = { radius * cos(ang), z, radius * sin(ang) };
+}
+
+void Camera::keyboardMove(keypress key, float sensitivity)
+{
+	switch (key)
+	{
+	case 'w':
+		position.z += sensitivity;
+		break;
+	case 'a':
+		position.x -= sensitivity;
+		break;
+	case 's':
+		position.z -= sensitivity;
+		break;
+	case 'd':
+		position.x += sensitivity;
+		break;
+	default:
+		break;
+	}
 }

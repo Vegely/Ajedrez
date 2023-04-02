@@ -1,16 +1,13 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "objects.h"
+#include "structs.h"
 
 class Camera
 {
 private:
 	Point position;
 	Point lookAt;
-public:
-	Point lastPosition;
-	Point currentPosition;
 	Rotation rotation;
 
 public:
@@ -22,6 +19,8 @@ public:
 
 	void setPosition(Point* pos);
 	void setRotation(Rotation* rot);
+
+	void keyboardMove(keypress key, float sensitivity);
 
 	void update(void);
 
