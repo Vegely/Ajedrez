@@ -14,18 +14,20 @@
 #pragma comment (lib, "Ws2_32.lib")
 // #pragma comment (lib, "Mswsock.lib")
 
-#define DEFAULT_PORT "27015" //Puerto en el que se realiza la conexión por defecto
 
 
-int servidor::recibirDeCliente(std::string& s) {
+
+int Servidor::recibirDeCliente(std::string& s) {
 	return comunicacion_sck->recibe(s);
 }
 
-int servidor::enviarACliente(std::string s) {
+int Servidor::enviarACliente(std::string s) {
 	return comunicacion_sck->envia(s);
 }
 
-void servidor::conectarServidor() {
+void Servidor::conectarServidor() {
+	//NULL: almacena en host_info todas las direcciones de red almacenadas en el equipo 
+	//AI_PASSIVE: indica que vamos a hacer una llamada a bind()
 	sck = new Socket{ NULL,AI_PASSIVE };
 	comunicacion_sck = new Socket;
 
@@ -33,12 +35,13 @@ void servidor::conectarServidor() {
 	sck->escucha();
 	sck->aceptaConexion(*comunicacion_sck);
 
-	//Solo hago una conexión, por lo que ya no es necesario atender más peticiones
+	//Solo se hace una conexión: no es necesario aceptar más conexiones
 	delete sck;
 }
 
-void servidor::desconectarServidor() {
+void Servidor::desconectarServidor() {
 	comunicacion_sck->desconecta();
 
+	//Conexión cerrada: elimina el socket para la comunicación
 	delete comunicacion_sck;
 }

@@ -14,22 +14,23 @@
 #pragma comment (lib, "Ws2_32.lib")
 // #pragma comment (lib, "Mswsock.lib")
 
-#define DEFAULT_PORT "27015" //Puerto en el que se realiza la conexión por defecto
+//Puerto en el que se realiza la conexión por defecto
+constexpr const char* PUERTO_PREDETERMINADO = "42069";
 
 
 Socket::Socket(const char* direccion, int flags, int familia,
 	int tipo_socket, int protocolo) {
-	//Inicializamos WinSock
-	inicializaWinSock(); //Fuera del constructor, en el main
 
 	red_info = new addrinfo;
-	//Pone el bloque de memoria donde está red_info a 0
+	//Pone el bloque de memoria donde está red_info a 0 (necesario inicializar a 0)
 	ZeroMemory(red_info, sizeof(*red_info));
+	//Almacena en red_info la información sobre el tipo de conexión
 	red_info->ai_family = familia;
 	red_info->ai_socktype = tipo_socket;
 	red_info->ai_protocol = protocolo;
 	red_info->ai_flags = flags;
 
+	//Crea un socket asociado a una dirección
 	creaSocket(direccion);
 }
 
@@ -37,16 +38,16 @@ void Socket::creaSocket(const char* direccion) {
 	int error_creacion;
 
 	//Obtiene información sobre la direcciones registradas en el ordenador 
-	error_creacion = getaddrinfo(direccion, DEFAULT_PORT, red_info, &host_info);
+	error_creacion = getaddrinfo(direccion, PUERTO_PREDETERMINADO, red_info, &host_info);
 
 	//Comprobación de errores
 	if (error_creacion != 0) {
-		printf("getaddrinfo failed with error: %d\n", error_creacion);
+		std::cout << "Error en la obtencion de la direccion: " << error_creacion << std::endl;
 		WSACleanup();
 	}
 
-	//Creo un socket en el servidor con la información de conexión del host
-	//Este socket se encargará de aceptar peticiones de conexión
+	//Crea un socket en el servidor con la información de conexión del host
+	//Acepta peticiones de conexión
 	sck = socket(host_info->ai_family, host_info->ai_socktype, host_info->ai_protocol);
 
 	//Comprobación de errores
@@ -59,7 +60,7 @@ void Socket::creaSocket(const char* direccion) {
 void Socket::vincula() {
 	int error_vinculacion;
 
-	//Asocia nuestro programa con el socket creado
+	//Asocia el programa con el socket creado
 	error_vinculacion = bind(sck, host_info->ai_addr, (int)(host_info->ai_addrlen));
 
 	//Comprobación de errores
@@ -71,37 +72,37 @@ void Socket::vincula() {
 	}
 
 	//Ya no hace falta la información sobre la conexión (el socket ya está creado y vinculado)
-	freeaddrinfo(host_info); //???
+	freeaddrinfo(host_info);
 }
 
 void Socket::escucha() {
 	int error_escucha;
 
-	//Avisamos al SO de que comience a atender conexiones
+	//Avisa al SO de que comience a atender conexiones
 	error_escucha = listen(sck, SOMAXCONN);
 
 	//Comprobación de errores
 	if (error_escucha == SOCKET_ERROR) {
-		printf("Listen failed with error: %ld\n", WSAGetLastError());
+		std::cout << "Error al atender la conexion: " << error_escucha << std::endl;
 		closesocket(sck);
 		WSACleanup();
 	}
 }
 
 void Socket::aceptaConexion(Socket& sck_aux) {
-	//Indicamos al SO que acepte conexiones de clientes si las hay
+	//Indica al SO que acepte conexiones de clientes si las hay
 	//Devuelve un socket a través del cual se va a realizar la conexión
 	//Si se tratara con varios clientes, se mandaría este socket a un hilo diferente
 	sck_aux.sck = accept(sck, nullptr, nullptr);
 
 	//Comprobación de errores
 	if (sck_aux.sck == INVALID_SOCKET) {
-		printf("accept failed with error: %d\n", WSAGetLastError());
+		std::cout << "Error al aceptar la conexion " << std::endl;
 		closesocket(sck);
 		WSACleanup();
 	}
 
-	//Solo nos comunicamos con un cliente, no es necesario aceptar más peticiones
+	//No es necesario aceptar más conexiones: se cierra el socket
 	closesocket(sck);
 }
 
@@ -114,8 +115,8 @@ void Socket::conectarAServidor() {
 
 	//Comprobación de errores
 	if (error_conexion == SOCKET_ERROR) {
+		std::cout << "No se pudo conectar al servidor: " << error_conexion << std::endl;
 		closesocket(sck);
-		printf("Unable to connect to server!\n");
 		WSACleanup();
 	}
 
@@ -129,13 +130,15 @@ int Socket::envia(std::string s) {
 	//Envía una cadena de caracteres (const char*)
 	bytes_enviados = send(sck, s.c_str(), s.length(), 0);
 
+	//Comprobación de errores
 	if (bytes_enviados == SOCKET_ERROR) {
-		printf("send failed with error: %d\n", WSAGetLastError());
+		std::cout << "Error al enviar el mensaje: " << WSAGetLastError() << std::endl;
 		closesocket(sck);
 		WSACleanup();
 		return bytes_enviados;
 	}
-	return bytes_enviados; //Correcto si bytes_enviado >= 0
+	//Correcto si bytes_enviado >= 0
+	return bytes_enviados;
 }
 
 int Socket::recibe(std::string& s) {
@@ -146,7 +149,7 @@ int Socket::recibe(std::string& s) {
 	//Longitud del mensaje limitada (gusanos)
 	bytes_recibidos = recv(sck, buffer, (int)sizeof(buffer), 0);
 
-	//Si no se producen errores, sigo trabajando
+	//Si recibe información, la incluye en la cadena y devuelve los bytes recibidos
 	if (bytes_recibidos > 0) {
 		for (int i = 0; i < bytes_recibidos; i++) {
 			s += buffer[i];
@@ -154,29 +157,34 @@ int Socket::recibe(std::string& s) {
 		s += '\0';
 		return bytes_recibidos;
 	}
+	//Si recibe 0, el cliente ha cerrado la conexión
 	else if (bytes_recibidos == 0) {
 		std::cout << "Conexion cerrada " << std::endl;
 		return bytes_recibidos;
 	}
-	else
+	//Error al recibir la información
+	else {
+		std::cout << "Error al recibir el mensaje: " << WSAGetLastError() << std::endl;
 		return bytes_recibidos;
+	}
+
 }
 
 void Socket::desconecta() {
 	int error_desconexion;
 
-	//Cierra la conexión con el servidor
+	//Termina la conexión
 	error_desconexion = shutdown(sck, SD_SEND);
 
 	//Comprobación de errores
 	if (error_desconexion == SOCKET_ERROR) {
-		printf("shutdown failed with error: %d\n", WSAGetLastError());
+		std::cout << "Error en la desconexion: " << WSAGetLastError() << std::endl;
 		closesocket(sck);
 		WSACleanup();
 
 	}
 
-	//Cierra el socket del cliente
+	//Cierra el socket
 	closesocket(sck);
 	WSACleanup();
 }
@@ -185,9 +193,10 @@ void inicializaWinSock() {
 	WSADATA sck_info; //Contiene información para la implementación de sockets
 	int error_inicializacion_ws;
 
-	error_inicializacion_ws = WSAStartup(MAKEWORD(2, 2), &sck_info); //Argumentos: (versión, puntero a estructura WSADATA)
+	//Argumentos: (versión, puntero a estructura WSADATA)
+	error_inicializacion_ws = WSAStartup(MAKEWORD(2, 2), &sck_info);
 
-	//Éxito: 0 , Fracaso: código de error (https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-wsastartup)
+	//Comprobación de errores
 	if (error_inicializacion_ws != 0)
-		std::cout << "Error en la inicializacion de la libreria: " << error_inicializacion_ws << std::endl;
+		std::cout << "Error en la inicializacion de WinSock: " << error_inicializacion_ws << std::endl;
 }

@@ -19,24 +19,27 @@
 
 
 
-#define DEFAULT_PORT "27015"
 
-int cliente::enviarAServidor(std::string s) {
+
+int Cliente::enviarAServidor(std::string s) {
 	return sck->envia(s);
 }
 
-int cliente::recibirDeServidor(std::string& s) {
+int Cliente::recibirDeServidor(std::string& s) {
 	return sck->recibe(s);
 }
 
-void cliente::conectarCliente() {
+void Cliente::conectarCliente() {
+	//IP del equipo al que se conecta ("127.0.0.1" --> localhost)
+	//NULL: no se especifican opciones en host_info
 	sck = new Socket{ "127.0.0.1",NULL };
 
 	sck->conectarAServidor();
 }
 
-void cliente::desconectarCliente() {
+void Cliente::desconectarCliente() {
 	sck->desconecta();
 
+	//Conexión cerrada: elimina el socket para la comunicación
 	delete sck;
 }

@@ -16,17 +16,39 @@
 #pragma comment (lib, "AdvApi32.lib")
 
 
-#define DEFAULT_PORT "27015"
+#define PUERTO_PREDETERMINADO "27015"
 
-class cliente
+class Cliente
 {
 private:
-    Socket* sck = nullptr; //Se encarga de la comunicación
+    //Se encarga de la comunicación
+    Socket* sck = nullptr;
 
 public:
-    int enviarAServidor(std::string s);
-    int recibirDeServidor(std::string& s);
+    //Constructor:
+    // - Inicialización por defecto
+    // - Inicialización Winsock
+    Cliente() { inicializaWinSock(); };
+
+    //No hace falta destructor (conflictos de copia/asignación eliminados), lo gestiona el SO
+
+    //Eliminamos posibles conflictos de copia/asignación
+    Cliente(const Cliente&) = delete;
+    Cliente& operator= (const Cliente&) = delete;
+
+    //Conecta el cliente
     void conectarCliente();
+    //Desconecta el cliente
     void desconectarCliente();
+
+    //Envía una cadena de caracteres al servidor
+    //@param std::string s: cadena a enviar
+    //@return Número de bytes enviados
+    int enviarAServidor(std::string s);
+    //Recibe una cadena de caracteres del servidor
+    //@param std::string& s: cadena recibida
+    //@return Número de bytes recibidos
+    int recibirDeServidor(std::string& s);
+
 };
 

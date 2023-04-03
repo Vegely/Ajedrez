@@ -15,20 +15,31 @@ constexpr int MAX_LONG_BUFF = 256;
 #pragma comment (lib, "Ws2_32.lib")
 // #pragma comment (lib, "Mswsock.lib")
 
-
-//Podría implemetar herencia para distinguir entre socket cliente y socket servidor
 class Socket
 {
 private:
-	addrinfo* red_info = nullptr; //Información de la red
-	addrinfo* host_info = nullptr; //Almacena información del host
+	//Almacena parámetros de la red
+	addrinfo* red_info = nullptr;
+	//Almacena información de la conexión que acepta el host
+	addrinfo* host_info = nullptr;
+	//Servidor: comunicación y acepar peticiones de conexión
+	//Cliente: comunicación
+	SOCKET sck = INVALID_SOCKET;
 
-	SOCKET sck = INVALID_SOCKET; //Servidor: aceptar conexiones, Cliente: comunicación con servidor
 
+	//Crea un socket asociado a una dirección IP
+	//@param const char* direccion: dirección IP del host (nullptr si lo usamos desde el servidor)
 	void creaSocket(const char* direccion);
 
 public:
-	Socket() {}; //Inicialización por defecto
+	//Inicialización por defecto
+	Socket() {};
+	//Inicialización
+	//@param PCSTR direccion: dirección IP del host (nullptr si lo usamos desde el servidor)
+	//@param int flags: servidor --> AI_PASSIVE, cliente --> NULL
+	//@param int familia: familia del protocolo (AF_INET para familia IPv4)
+	//@param int tipo_socket: tipo de socket a usar (SOCK_STREAM por defecto)
+	//@param int protocolo: protocolo usado (IPPROTO_TCP para TCP)
 	Socket(PCSTR direccion, int flags, int familia = AF_INET,
 		int tipo_socket = SOCK_STREAM, int protocolo = IPPROTO_TCP);
 
@@ -40,30 +51,31 @@ public:
 	Socket(const Socket&) = delete;
 	Socket& operator= (const Socket&) = delete;
 
+	//Vincula el programa con el socket creado
 	void vincula();
+	//Atiende peticiones de conexión del cliente
 	void escucha();
+	//Acepta peticiones de conexión del cliente
+	//Cierra el socket que acepta las conexiones (solo hay 1 conexión) y crea un socket de comunicación
+	//@param Socket& sck_aux: socket para la comunicación con el cliente
 	void aceptaConexion(Socket& sck_aux);
+	//Conecta el cliente con el servidor
 	void conectarAServidor();
+	//Envía una cadena de caracteres al cliente/servidor
+	//@param std::string s: cadena de caracteres a enviar
+	//@return  Número de bytes enviados
 	int envia(std::string s);
+	//Recibe una caddena de caracteres del cliente/servidor
+	//@param std::string& s: cadena de caracteres recibida
+	//@return Número de bytes recibidos
 	int recibe(std::string& s);
 
+	//Desconecta el cliente/servidor: termina la conexión y cierra los sockets
 	void desconecta();
 };
 
-void inicializaWinSock(); //Inicializa la librería WinSock
+//Inicializa la librería WinSock
+void inicializaWinSock();
 
-/*
-* UNIT TEST
-* Servidor/Cliente:
-*
-* Socket* s; //No lo creo si no voy a jugar en línea
-*
-* s=inicializarSocket(...);  //Pertenece al servidor --> Libera espacio para el socket
-*	{
-*		Socket* sck = new Socket;
-*		sck->inicializa, crea, vincula...
-*		return sck;
-*	}
-*/
 
 
