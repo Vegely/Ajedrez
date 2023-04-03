@@ -4,16 +4,15 @@
 
 #define WIN32_LEAN_AND_MEAN
 constexpr int MAX_LONG_BUFF = 256;
+//Puerto en el que se realiza la conexión por defecto
+constexpr const char* PUERTO_PREDETERMINADO = "42069";
 
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <iostream>
-// Need to link with Ws2_32.lib
+
 #pragma comment (lib, "Ws2_32.lib")
-// #pragma comment (lib, "Mswsock.lib")
 
 class Socket
 {
@@ -26,21 +25,15 @@ private:
 	//Cliente: comunicación
 	SOCKET sck = INVALID_SOCKET;
 
-
-	//Crea un socket asociado a una dirección IP
-	//@param const char* direccion: dirección IP del host (nullptr si lo usamos desde el servidor)
-	void creaSocket(const char* direccion);
-
 public:
 	//Inicialización por defecto
 	Socket() {};
 	//Inicialización
-	//@param PCSTR direccion: dirección IP del host (nullptr si lo usamos desde el servidor)
 	//@param int flags: servidor --> AI_PASSIVE, cliente --> NULL
 	//@param int familia: familia del protocolo (AF_INET para familia IPv4)
 	//@param int tipo_socket: tipo de socket a usar (SOCK_STREAM por defecto)
 	//@param int protocolo: protocolo usado (IPPROTO_TCP para TCP)
-	Socket(PCSTR direccion, int flags, int familia = AF_INET,
+	Socket(int flags, int familia = AF_INET,
 		int tipo_socket = SOCK_STREAM, int protocolo = IPPROTO_TCP);
 
 	//No defino destructor porque no existe posibilidad de copia/asignación (no hay conflicto de recursos)
@@ -51,6 +44,13 @@ public:
 	Socket(const Socket&) = delete;
 	Socket& operator= (const Socket&) = delete;
 
+	//Obtiene una lista con las IP disponibles en el ordenador
+	//@param std::string& s: cadena en la que se almacena la ip
+	void listaIp(std::string& s);
+
+	//Crea un socket asociado a una dirección IP
+	//@param const char* direccion: dirección IP del host (nullptr si lo usamos desde el servidor)
+	void creaSocket(const char* direccion);
 	//Vincula el programa con el socket creado
 	void vincula();
 	//Atiende peticiones de conexión del cliente

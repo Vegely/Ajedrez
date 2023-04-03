@@ -1,13 +1,10 @@
 #pragma once
-#define WIN32_LEAN_AND_MEAN
 
-#include <windows.h>
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string>
 #include "Socket.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 
 
 // Need to link with Ws2_32.lib, Mswsock.lib, and Advapi32.lib
@@ -16,13 +13,20 @@
 #pragma comment (lib, "AdvApi32.lib")
 
 
-#define PUERTO_PREDETERMINADO "27015"
 
 class Cliente
 {
 private:
     //Se encarga de la comunicación
     Socket* sck = nullptr;
+
+    //Lista con las direcciones IP del ordenador
+    std::string lista_ip;
+    //IP real del ordenador
+    std::string ip;
+
+    //Obtiene la dirección IP de una lista de direcciones
+    void ipDir();
 
 public:
     //Constructor:

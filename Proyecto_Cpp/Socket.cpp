@@ -1,24 +1,6 @@
 #include "Socket.h"
 
-#undef UNICODE
-
-#define WIN32_LEAN_AND_MEAN
-
-#include <windows.h>
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <iostream>
-// Need to link with Ws2_32.lib
-#pragma comment (lib, "Ws2_32.lib")
-// #pragma comment (lib, "Mswsock.lib")
-
-//Puerto en el que se realiza la conexión por defecto
-constexpr const char* PUERTO_PREDETERMINADO = "42069";
-
-
-Socket::Socket(const char* direccion, int flags, int familia,
+Socket::Socket(int flags, int familia,
 	int tipo_socket, int protocolo) {
 
 	red_info = new addrinfo;
@@ -29,9 +11,6 @@ Socket::Socket(const char* direccion, int flags, int familia,
 	red_info->ai_socktype = tipo_socket;
 	red_info->ai_protocol = protocolo;
 	red_info->ai_flags = flags;
-
-	//Crea un socket asociado a una dirección
-	creaSocket(direccion);
 }
 
 void Socket::creaSocket(const char* direccion) {
@@ -70,9 +49,26 @@ void Socket::vincula() {
 		closesocket(sck);
 		WSACleanup();
 	}
-
 	//Ya no hace falta la información sobre la conexión (el socket ya está creado y vinculado)
 	freeaddrinfo(host_info);
+}
+
+void Socket::listaIp(std::string& s) {
+	addrinfo* ptr = nullptr;
+	getaddrinfo("", PUERTO_PREDETERMINADO, red_info, &ptr);
+	//Recorre uno a uno los nodos de la lista enlazada
+	for (ptr; ptr != nullptr; ptr = ptr->ai_next) {
+		//Transforma host_info->ai_addr a una estructura que permite usar la función inet_ntop para obtener la dirección IP
+		//En cada iteración del for se destruyen las variables (no hace falta limpiarlas constantemente)
+		sockaddr_in* aux = (sockaddr_in*)ptr->ai_addr;
+		char str[INET_ADDRSTRLEN];
+
+		//Transforma la dirección IP a formato cadena de caracteres
+		inet_ntop(AF_INET, &(aux->sin_addr), str, INET_ADDRSTRLEN);
+		//Formato de s: Dirección IP 1 + \n + Dirección IP 2 + \n + ...
+		s += str;
+		s += "\n";
+	}
 }
 
 void Socket::escucha() {
