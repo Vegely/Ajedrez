@@ -32,12 +32,20 @@ public:
 	Socket(PCSTR direccion, int flags, int familia = AF_INET,
 		int tipo_socket = SOCK_STREAM, int protocolo = IPPROTO_TCP);
 
+	//No defino destructor porque no existe posibilidad de copia/asignación (no hay conflicto de recursos)
+	//Además, las estructuras de datos dentro de Socket son complejas y no están orientadas a objetos (no tienen destructor),
+	//por lo que es mejor dejar al SO que se encargue de la gestión de dicha memoria.
+
+	//No se pueden copiar ni asignar los sockets
+	Socket(const Socket&) = delete;
+	Socket& operator= (const Socket&) = delete;
+
 	void vincula();
 	void escucha();
 	void aceptaConexion(Socket& sck_aux);
 	void conectarAServidor();
-	void envia(std::string s);
-	std::string recibe();
+	int envia(std::string s);
+	int recibe(std::string& s);
 
 	void desconecta();
 };
@@ -57,4 +65,5 @@ void inicializaWinSock(); //Inicializa la librería WinSock
 *		return sck;
 *	}
 */
+
 

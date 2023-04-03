@@ -28,8 +28,8 @@ private:
 
 public:
 
-	std::string recibirDeCliente();
-	void enviarACliente(std::string s);
+	int recibirDeCliente(std::string& s);
+	int enviarACliente(std::string s);
 
 	void conectarServidor();
 	void desconectarServidor();

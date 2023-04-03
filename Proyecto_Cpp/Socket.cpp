@@ -33,7 +33,6 @@ Socket::Socket(const char* direccion, int flags, int familia,
 	creaSocket(direccion);
 }
 
-
 void Socket::creaSocket(const char* direccion) {
 	int error_creacion;
 
@@ -124,7 +123,7 @@ void Socket::conectarAServidor() {
 	freeaddrinfo(host_info);
 }
 
-void Socket::envia(std::string s) {
+int Socket::envia(std::string s) {
 	int bytes_enviados;
 
 	//Envía una cadena de caracteres (const char*)
@@ -134,10 +133,12 @@ void Socket::envia(std::string s) {
 		printf("send failed with error: %d\n", WSAGetLastError());
 		closesocket(sck);
 		WSACleanup();
+		return bytes_enviados;
 	}
+	return bytes_enviados; //Correcto si bytes_enviado >= 0
 }
 
-std::string Socket::recibe() {
+int Socket::recibe(std::string& s) {
 	int bytes_recibidos;
 	char buffer[MAX_LONG_BUFF];
 
@@ -147,13 +148,18 @@ std::string Socket::recibe() {
 
 	//Si no se producen errores, sigo trabajando
 	if (bytes_recibidos > 0) {
-		for (int i = 0; i < bytes_recibidos; i++)
-			std::cout << buffer[i];
-		std::string s(buffer);
-		return s;
+		for (int i = 0; i < bytes_recibidos; i++) {
+			s += buffer[i];
+		}
+		s += '\0';
+		return bytes_recibidos;
+	}
+	else if (bytes_recibidos == 0) {
+		std::cout << "Conexion cerrada " << std::endl;
+		return bytes_recibidos;
 	}
 	else
-		return "";
+		return bytes_recibidos;
 }
 
 void Socket::desconecta() {

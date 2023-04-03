@@ -17,12 +17,12 @@
 #define DEFAULT_PORT "27015" //Puerto en el que se realiza la conexión por defecto
 
 
-std::string servidor::recibirDeCliente() {
-	return comunicacion_sck->recibe() + "\0";
+int servidor::recibirDeCliente(std::string& s) {
+	return comunicacion_sck->recibe(s);
 }
 
-void servidor::enviarACliente(std::string s) {
-	comunicacion_sck->envia(s);
+int servidor::enviarACliente(std::string s) {
+	return comunicacion_sck->envia(s);
 }
 
 void servidor::conectarServidor() {
