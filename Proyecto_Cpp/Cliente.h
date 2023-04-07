@@ -20,13 +20,8 @@ private:
     //Se encarga de la comunicación
     Socket* sck = nullptr;
 
-    //Lista con las direcciones IP del ordenador
-    std::string lista_ip;
-    //IP real del ordenador
-    std::string ip;
-
-    //Obtiene la dirección IP de una lista de direcciones
-    void ipDir();
+    //Guarda la dirección ip del host
+    std::string ipv4 = "";
 
 public:
     //Constructor:

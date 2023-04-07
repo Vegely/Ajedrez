@@ -44,10 +44,6 @@ public:
 	Socket(const Socket&) = delete;
 	Socket& operator= (const Socket&) = delete;
 
-	//Obtiene una lista con las IP disponibles en el ordenador
-	//@param std::string& s: cadena en la que se almacena la ip
-	void listaIp(std::string& s);
-
 	//Crea un socket asociado a una dirección IP
 	//@param const char* direccion: dirección IP del host (nullptr si lo usamos desde el servidor)
 	void creaSocket(const char* direccion);

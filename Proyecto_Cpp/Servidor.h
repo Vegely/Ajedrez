@@ -11,14 +11,18 @@ private:
 	Socket* sck = nullptr;
 	//Se encarga de la comunicación
 	Socket* comunicacion_sck = nullptr;
-	//Almacena las posibles direcciones IP del equipo
-	std::string direccion_ip;
+	//Almacena ip en la que está conectada el servidor
+	std::string ipv4 = "";
+
+	//Obtiene la dirección ipv4 a la que está conectada el ordenador
+	void ipDir();
 
 public:
 	//Constructor: 
 	// - Inicialización por defecto
 	// - Inicialización WinSock
-	Servidor() { inicializaWinSock(); };
+	// - Obtención de la ip del host
+	Servidor() { inicializaWinSock(); ipDir(); };
 
 	//No hace falta destructor (conflictos de copia/asignación eliminados), lo gestiona el SO
 
@@ -31,6 +35,12 @@ public:
 	//Desconecta el servidor
 	void desconectarServidor();
 
+	//Genera un código de partida a partir de la ip del equipo
+	//@return String con código de la partida
+	//////////////////////////////////////
+	std::string generarCodigoPartida(); //
+	//////////////////////////////////////
+
 	//Recibe una cadena de caracteres del cliente
 	//@param std::string s: cadena recibida
 	//@return Número de bytes recibidos
@@ -40,6 +50,7 @@ public:
 	//@return Número de bytes enviados
 	int enviarACliente(std::string s);
 
+	std::string getip() { return ipv4; };
 
 };
 

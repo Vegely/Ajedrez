@@ -53,24 +53,6 @@ void Socket::vincula() {
 	freeaddrinfo(host_info);
 }
 
-void Socket::listaIp(std::string& s) {
-	addrinfo* ptr = nullptr;
-	getaddrinfo("", PUERTO_PREDETERMINADO, red_info, &ptr);
-	//Recorre uno a uno los nodos de la lista enlazada
-	for (ptr; ptr != nullptr; ptr = ptr->ai_next) {
-		//Transforma host_info->ai_addr a una estructura que permite usar la función inet_ntop para obtener la dirección IP
-		//En cada iteración del for se destruyen las variables (no hace falta limpiarlas constantemente)
-		sockaddr_in* aux = (sockaddr_in*)ptr->ai_addr;
-		char str[INET_ADDRSTRLEN];
-
-		//Transforma la dirección IP a formato cadena de caracteres
-		inet_ntop(AF_INET, &(aux->sin_addr), str, INET_ADDRSTRLEN);
-		//Formato de s: Dirección IP 1 + \n + Dirección IP 2 + \n + ...
-		s += str;
-		s += "\n";
-	}
-}
-
 void Socket::escucha() {
 	int error_escucha;
 
