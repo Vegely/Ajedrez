@@ -54,3 +54,42 @@ public:
 
 };
 
+// Main
+/*
+
+void cambiarTurno(bool& tnegras, bool& tblancas) {
+	tnegras = !tnegras;
+	tblancas = !tblancas;
+}
+
+//Servidor: negras
+//Cliente: blancas
+std::string cenviar = "", crecibir = "";
+bool tblancas = 0, tnegras = 1;
+bool salir = 0, cambiar = 0;
+Servidor s;
+std::string str;
+
+std::cout << s.getip();
+
+s.conectarServidor();
+
+while (!salir) {
+	if (tnegras) {
+		cenviar = "";
+		std::getline(std::cin, cenviar);
+		s.enviarACliente(cenviar);
+		cambiarTurno(tnegras, tblancas);
+	}
+	else if (tblancas) {
+		if (s.recibirDeCliente(crecibir) > 0) {
+			std::cout << crecibir << std::endl;
+			crecibir = "";
+		}
+		cambiarTurno(tnegras, tblancas);
+	}
+
+}
+
+s.desconectarServidor();
+*/

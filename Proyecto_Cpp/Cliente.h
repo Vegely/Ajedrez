@@ -21,7 +21,7 @@ private:
     Socket* sck = nullptr;
 
     //Guarda la dirección ip del host
-    std::string ipv4 = "";
+    std::string ipv4 = "192.168.0.21";
 
 public:
     //Constructor:
@@ -51,3 +51,43 @@ public:
 
 };
 
+// Main (poner la dirección ip que aparece en la pantalla del servidor en el campo ipv4 del cliente)
+
+/*
+
+void cambiarTurno(bool& tnegras, bool& tblancas) {
+    tnegras = !tnegras;
+    tblancas = !tblancas;
+}
+
+    //Servidor: negras
+    //Cliente: blancas
+    std::string cenviar = "", crecibir = "";
+    bool tblancas = 0, tnegras = 1;
+    bool salir = 0, cambiar = 0;
+
+
+    Cliente c;
+
+    c.conectarCliente();
+
+    while (!salir) {
+        if (tnegras) {
+            if (c.recibirDeServidor(crecibir) > 0) {
+                std::cout << crecibir << std::endl;
+                crecibir = "";
+            }
+            cambiarTurno(tnegras, tblancas);
+        }
+        else if (tblancas) {
+            cenviar = "";
+            std::getline(std::cin, cenviar);
+            c.enviarAServidor(cenviar);
+            cambiarTurno(tnegras, tblancas);
+        }
+
+    }
+
+    c.desconectarCliente();
+
+*/
