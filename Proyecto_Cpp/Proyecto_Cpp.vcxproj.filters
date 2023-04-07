@@ -24,13 +24,16 @@
     <ClCompile Include="graphics.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="tempObjects.cpp">
+    <ClCompile Include="board.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="structs.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="plane.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,13 +44,16 @@
     <ClInclude Include="graphics.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="tempObjects.h">
+    <ClInclude Include="board.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="structs.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="plane.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

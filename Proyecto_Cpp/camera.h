@@ -7,18 +7,24 @@ class Camera
 {
 private:
 	Point position;
-	Point lookAt;
+	Point looking_at;
 	Rotation rotation;
 
 public:
 	Camera(void);
 
-	Point getPosition(void);
-	Point getLookAt(void);
-	Rotation getRotation(void);
+	Camera(const Point& pos, const Point& lookAt);
+	Camera(const Point& pos, const Point& lookAt, const Rotation& rot);
 
-	void setPosition(Point* pos);
-	void setRotation(Rotation* rot);
+	Point getPosition(void) const;
+	Point getLookAt(void) const;
+	Rotation getRotation(void) const;
+
+	void lookAtTest(void);
+
+	void setPosition(const Point& pos);
+	void setRotation(const Rotation& rot);
+	void lookAt(const Point& pt);
 
 	void keyboardMove(keypress key, float sensitivity);
 

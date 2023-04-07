@@ -131,15 +131,17 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="plane.cpp" />
     <ClCompile Include="structs.cpp" />
-    <ClCompile Include="tempObjects.cpp" />
+    <ClCompile Include="board.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AsciiGraphics.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="plane.h" />
     <ClInclude Include="structs.h" />
-    <ClInclude Include="tempObjects.h" />
+    <ClInclude Include="board.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

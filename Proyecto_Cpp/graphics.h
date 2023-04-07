@@ -1,7 +1,7 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#include "tempObjects.h"
+#include "structs.h"
 
 /* INITIALIZATION CODE */
 void init(int* argc, char* argv[], const char* windowName, int windowLength, int windowHeight);

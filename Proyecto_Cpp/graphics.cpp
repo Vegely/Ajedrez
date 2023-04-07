@@ -1,10 +1,15 @@
 #include "graphics.h"
+#include "board.h"
 #include "camera.h"
 #include <string>
 #include <iostream>
 
 Board board({0, 0, 0}, 1.0f);
-Camera player;
+Camera player
+(
+	{ -5.0f, 10.0f, -5.0f },
+	{ board.getCellLength() * 3.5f, board.getPosition().y, board.getCellLength() * 3.5f }
+);
 
 void init(int* argc, char* argv[], const char* windowName, int windowLength, int windowHeight)
 {
@@ -51,6 +56,7 @@ void OnDraw(void)
 	player.update();
 
 	board.draw();
+	player.lookAtTest();
 
 	// End of drawing code (do not erase or write anything afterwards).
 	glutSwapBuffers();
@@ -58,16 +64,19 @@ void OnDraw(void)
 
 void OnTimer(int value)
 {
-
+	glTranslatef(player.getLookAt().x, player.getLookAt().y, player.getLookAt().z);
+	player.animationRotate(10.0f, 10.0f, player.getLookAt());
+	glTranslatef(-player.getLookAt().x, -player.getLookAt().y, -player.getLookAt().z);
 
 	glutTimerFunc(value, OnTimer, 0); // Recalls the timer
 	// End of timing code (do not erase or write anything afterwards).
 	glutPostRedisplay();
 }
 
-void OnKeyboardDown(unsigned char key, int x_t, int y_t)
+void OnKeyboardDown(keypress key, int x_t, int y_t)
 {
 	player.keyboardMove(key, 1.0f);
+
 	// End of keyboard reading code (do not erase or write anything afterwards).
 	glutPostRedisplay();
 }

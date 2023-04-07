@@ -1,50 +1,59 @@
 #include "camera.h"
 #include "freeglut.h"
-#include <cmath>
-#include <iostream>
 
 #define PI 3.141592654f
 
 // Constructor.
-Camera::Camera(void) :
-	position{ -5, 10, -5 },
-	lookAt{ 0, 0, 0 },
-	rotation{ 0, 0, 1 } {}
+Camera::Camera(void) 
+	: position{ -5, 10, -5 }, looking_at{ 0, 0, 0 }, rotation{ 0, 0, 1 } { }
 
-Point Camera::getPosition(void)
+Camera::Camera(const Point& pos, const Point& lookAt) 
+	: position(pos), looking_at(lookAt), rotation{ 0, 0, 1 } { }
+
+Camera::Camera(const Point& pos, const Point& lookAt, const Rotation& rot)
+	: position(pos), looking_at(lookAt), rotation(rot) { }
+
+Point Camera::getPosition(void) const
 {
 	return this->position;
 }
 
-Point Camera::getLookAt(void)
+Point Camera::getLookAt(void) const
 {
-	return this->lookAt;
+	return this->looking_at;
 }
 
-Rotation Camera::getRotation(void)
+Rotation Camera::getRotation(void) const
 {
 	return this->rotation;
 }
 
-void Camera::setPosition(Point* pos)
+void Camera::setPosition(const Point& pos)
 {
-	this->position.x = pos->x;
-	this->position.y = pos->y;
-	this->position.z = pos->z;
+	this->position = pos;
 }
 
-void Camera::setRotation(Rotation* rot)
+void Camera::setRotation(const Rotation& rot)
 {
-	this->rotation.x = rot->x;
-	this->rotation.y = rot->y;
-	this->rotation.angle = rot->angle;
+	this->rotation = rot;
+}
+
+void Camera::lookAt(const Point& pt)
+{
+	this->looking_at = pt;
+}
+
+void Camera::lookAtTest(void)
+{
+	glColor3ub(CRGB::Green.r, CRGB::Green.g, CRGB::Green.b);
+	glTranslatef(looking_at.x, looking_at.y, looking_at.z);
+	//glTranslatef(0,0,0);
+	glutSolidSphere(1.0, 50, 50);
+	glTranslatef(-looking_at.x, -looking_at.y, -looking_at.z);
 }
 
 void Camera::update(void)
 {
-	Point position = getPosition();
-	Point lookAt = getLookAt();
-
 	// Clears screen.	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -53,14 +62,14 @@ void Camera::update(void)
 	glLoadIdentity();
 	gluLookAt
 	(
-		position.x, position.y, position.z,	// Camera position.
-		lookAt.x, lookAt.y, lookAt.z,		// Point to look at.
-		0.0, 1.0, 0.0						// Define Y axis direction to up.
+		position.x, position.y, position.z,	   // Camera position.
+		looking_at.x, looking_at.y, looking_at.z, // Point to look at.
+		0.0, 1.0, 0.0						   // Define Y axis direction to up.
 	);
 
 	glRotatef(rotation.x, 1.0, 0.0, 0.0);				 // rotate our camera on the x-axis (left and right)
 	glRotatef(rotation.y, 0.0, 1.0, 0.0);				 // rotate our camera on the y-axis (up and down)
-	glTranslated(-position.x, -position.y, -position.z); // translate the screen to the position of our camera
+	//glTranslated(-position.x, -position.y, -position.z); // translate the screen to the position of our camera
 }
 
 void Camera::animationRotate(float radius, float z, Point lookAt)
@@ -72,7 +81,7 @@ void Camera::animationRotate(float radius, float z, Point lookAt)
 	if (ang > 2 * PI - 0.01)
 		ang = 0;
 
-	this->lookAt = lookAt;
+	this->looking_at = lookAt;
 
 	position = { radius * cos(ang), z, radius * sin(ang) };
 }

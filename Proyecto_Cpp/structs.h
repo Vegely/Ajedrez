@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cmath>
+#include <iostream>
+
 using byte = unsigned char;
 using keypress = unsigned char;
 
