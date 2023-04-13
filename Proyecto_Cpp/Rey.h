@@ -1,5 +1,5 @@
-#ifndef _Rey__H_
-#define	_Rey__H_
+#ifndef _REY__H_
+#define	_REY__H_
 
 #include "Pieza.h"
 

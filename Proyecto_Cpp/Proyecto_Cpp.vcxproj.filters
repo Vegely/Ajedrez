@@ -16,60 +16,69 @@
     <Filter Include="Archivos de origen\.cpp Archivos de encabezado">
       <UniqueIdentifier>{2953244d-41a6-4a23-b38e-4b819ec16024}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\.cpp Archivos de encabezado\Piezas">
+      <UniqueIdentifier>{5f04c0a7-4a05-476d-bf35-98bc3ada0e6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Piezas">
+      <UniqueIdentifier>{b15d42f8-3d8a-476a-861d-446bc0b30e2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Alfil.cpp">
-      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
-    </ClCompile>
-    <ClCompile Include="Caballo.cpp">
-      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
-    </ClCompile>
-    <ClCompile Include="Dama.cpp">
-      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
-    </ClCompile>
-    <ClCompile Include="Peon.cpp">
-      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
-    </ClCompile>
-    <ClCompile Include="Rey.cpp">
-      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
-    </ClCompile>
-    <ClCompile Include="Torre.cpp">
-      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
-    </ClCompile>
-    <ClCompile Include="Asciigraphics.cpp">
-      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
-    </ClCompile>
     <ClCompile Include="Pieza.cpp">
       <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
     </ClCompile>
+    <ClCompile Include="Tablero.cpp">
+      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
+    </ClCompile>
+    <ClCompile Include="Alfil.cpp">
+      <Filter>Archivos de origen\.cpp Archivos de encabezado\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="Caballo.cpp">
+      <Filter>Archivos de origen\.cpp Archivos de encabezado\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="Reina.cpp">
+      <Filter>Archivos de origen\.cpp Archivos de encabezado\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="Peon.cpp">
+      <Filter>Archivos de origen\.cpp Archivos de encabezado\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="Rey.cpp">
+      <Filter>Archivos de origen\.cpp Archivos de encabezado\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="Torre.cpp">
+      <Filter>Archivos de origen\.cpp Archivos de encabezado\Piezas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AsciiGraphics.h">
+    <ClInclude Include="Pieza.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Peon.h">
+    <ClInclude Include="Posicion.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Tablero.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Alfil.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\Piezas</Filter>
     </ClInclude>
     <ClInclude Include="Caballo.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\Piezas</Filter>
     </ClInclude>
-    <ClInclude Include="Torre.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="Reina.h">
+      <Filter>Archivos de encabezado\Piezas</Filter>
     </ClInclude>
-    <ClInclude Include="Dama.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="Peon.h">
+      <Filter>Archivos de encabezado\Piezas</Filter>
     </ClInclude>
     <ClInclude Include="Rey.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\Piezas</Filter>
     </ClInclude>
-    <ClInclude Include="Pieza.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="Torre.h">
+      <Filter>Archivos de encabezado\Piezas</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

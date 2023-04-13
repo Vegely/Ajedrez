@@ -1,13 +1,13 @@
-#ifndef _Caballo__H_
-#define	_Caballo__H_
+#ifndef _CABALLO__H_
+#define	_CABALLO__H_
 
-#include "Pieza.h"
-
-class Caballo : public Pieza
-{
-public:
-	Caballo();
-	void mover();
-};
+//#include "Pieza.h"
+//
+//class Caballo : public Pieza
+//{
+//public:
+//	Caballo();
+//	void mover();
+//};
 
 #endif // !_Caballo__H_ //

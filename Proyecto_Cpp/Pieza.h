@@ -1,32 +1,51 @@
-#ifndef _Pieza__H_
-#define	_Pieza__H_
+#ifndef _PIEZA__H_
+#define	_PIEZA__H_
 
 #include <vector>
-#include <ostream>
+
+#include "Posicion.h"
+
+class Tablero;
 
 class Pieza
 {
-private:
-	const unsigned char valor;
+protected:
+	const Tablero& tablero;
 	const bool color;
-	int posicion[2];						//Es redundante con el tablero?
-	std::vector<Pieza> puede_comer;			//Piezas que puede comer
-	std::vector<Pieza> esta_protegiendo;	//Piezas de su propio equipo con las que colisiona en el movimiento
-	std::vector<Pieza> amenazas;			//Piezas que amenazan a la nuestra
+	const unsigned char value;
 
-	void actualizarPuedaComer();
-	void actualizarEstaProtegiendo();
-	void actualizarAmenazas();
+	Posicion posicion;
+	std::vector<Posicion> puede_mover;		//Lugares disponibles para mover
+	std::vector<Pieza*> puede_comer;		//Piezas que puede comer
+	std::vector<Pieza*> esta_protegiendo;	//Piezas de su propio equipo con las que colisiona en el movimiento
+	std::vector<Pieza*> amenazas;			//Piezas enemigas que amenazan la posicion actual
+
+	void clearVariables();
+	inline void addAmenazas(Pieza* p_pieza) { amenazas.push_back(p_pieza); }
+	virtual void actualizarVariables() {}
 
 public:
-	friend std::ostream& operator<<(std::ostream& o, const Pieza& p);
+	friend class Tablero;
 
-	Pieza();
-	~Pieza();
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Se necesita para que las piezas se asignen a si mismas a las amenazas de las piezas que tienen en puede_comer
+	friend class Peon;
+	friend class Caballo;
+	friend class Alfil;
+	friend class Torre;
+	friend class Reina;
+	friend class Rey;
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void mover() {}							//Mueve la pieza
+	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value) : tablero(p_tablero), color(color), value(value) {}
+
+	////////////////////////////////////////////////////////////////////////
+	//Temporal para pruebas
+	inline const std::vector<Posicion> getPuedeMover() { return puede_mover; }
+	//inline const Tablero& getTablero() { return tablero; }
+	////////////////////////////////////////////////////////////////////////
+
+	void mover();
 };
-
-std::ostream& operator<<(std::ostream& o, const Pieza& p);
 
 #endif // !_Pieza__H_ //

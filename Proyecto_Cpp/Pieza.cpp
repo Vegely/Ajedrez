@@ -1,6 +1,14 @@
 #include "Pieza.h"
 
-std::ostream& operator<<(std::ostream& o, const Pieza& p)
+void Pieza::clearVariables()
 {
+	puede_mover.clear();
+	puede_comer.clear();
+	esta_protegiendo.clear();
+	amenazas.clear();
+}
 
+void Pieza::mover()
+{
+	actualizarVariables();
 }

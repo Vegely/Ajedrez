@@ -1,11 +1,11 @@
 #include "Caballo.h"
 
-Caballo::Caballo()
-{
-
-}
-
-void Caballo::mover()
-{
-
-}
+//Caballo::Caballo()
+//{
+//
+//}
+//
+//void Caballo::mover()
+//{
+//
+//}

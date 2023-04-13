@@ -1,5 +1,5 @@
-#ifndef _Peon__H_
-#define	_Peon__H_
+#ifndef _PEON__H_
+#define	_PEON__H_
 
 #include "Pieza.h"
 

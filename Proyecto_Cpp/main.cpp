@@ -1,26 +1,18 @@
+#include "Tablero.h"
+
 #include <iostream>
-#include "AsciiGraphics.h"
-
-/********************************************/
-
-//IMPORTACIÓN DE CLASES
-
-#include "Peon.h"
-#include "Caballo.h"
-#include "Alfil.h"
-#include "Torre.h"
-#include "Dama.h"
-#include "Rey.h"
-
-/********************************************/
-
 
 using namespace std;
 
-
 int main()
 {
-	
+	Tablero tablero;
+	tablero.leer(Posicion(3, 2))->mover();
+
+	for (const Posicion puedeMover : tablero.leer(Posicion(3, 2))->getPuedeMover())
+	{
+		cout << (int)puedeMover.x << " " << (int)puedeMover.y << endl;
+	}
 
 	return 0;
 }
