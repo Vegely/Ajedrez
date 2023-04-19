@@ -3,8 +3,6 @@
 
 #include "Pieza.h"
 
-#define VALOR_ALFIL 3
-
 class Alfil : public Pieza
 {
 	void actualizarVariables();

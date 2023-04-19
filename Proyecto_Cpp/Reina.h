@@ -3,8 +3,6 @@
 
 #include "Pieza.h"
 
-#define VALOR_REINA 9
-
 class Reina : public Pieza
 {
 	void actualizarVariables();

@@ -3,8 +3,6 @@
 
 #include "Pieza.h"
 
-#define VALOR_TORRE 5
-
 class Torre : public Pieza
 {
 	void actualizarVariables();

@@ -5,6 +5,13 @@
 
 #include "Posicion.h"
 
+#define VALOR_PEON 1
+#define VALOR_CABALLO 3
+#define VALOR_ALFIL 3
+#define VALOR_TORRE 5
+#define VALOR_REINA 9
+#define VALOR_REY 10	// A lo mejor hay que ponerle un valor -> inf para que la IA no suicide el rey
+
 class Tablero;
 
 class Pieza
