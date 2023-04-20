@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "Registro.h"
 #include "AsciiGraphics.h"
 
 using namespace std;
@@ -12,10 +13,8 @@ using namespace std;
 #define X_BACKGROUND 10
 #define Y_BACKGROUND 10
 
-
 int main()
 {
-
 	/*
 	//Inicializacion de la pantalla
 
