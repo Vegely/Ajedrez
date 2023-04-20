@@ -15,6 +15,8 @@ using namespace std;
 
 int main()
 {
+
+	/*
 	//Inicializacion de la pantalla
 
 	Screen scr(30);
@@ -118,6 +120,8 @@ int main()
 	scr.printSettings(2, 1);
 
 	scr.print();
+
+	*/
 
 	return 0;
 }
