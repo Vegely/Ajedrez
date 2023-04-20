@@ -1,5 +1,22 @@
 #include "Partida.h"
 
+Partida::Partida(std::string nombre_partida, int id, std::string modo, std::string blancas, std::string negras,
+	float tiempo_inicial) {
+	this->nombre_partida = nombre_partida;
+	this->id = id;
+	this->finalizada = 0;
+	this->ganada = INICIALIZACION_POR_DEFECTO_STRING;
+	this->tablas = INICIALIZACION_POR_DEFECTO_STRING;
+	this->modo = modo;
+	this->blancas = blancas;
+	this->negras = negras;
+	this->tiempo_inicial = tiempo_inicial;
+	this->tiempo_restante = tiempo_inicial; //El tiempo restante es el mismo que el inicial al inicio de la partida
+	this->ventaja_material = 0; 
+	this->movimientos_blancas = { INICIALIZACION_POR_DEFECTO_STRING };
+	this->movimientos_negras = { INICIALIZACION_POR_DEFECTO_STRING };
+}
+
 bool Partida::crearPartida() {
 	std::fstream fs(nombre_partida.c_str(), std::ios_base::in);
 
