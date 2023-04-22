@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Asciigraphics.cpp" />
+    <ClCompile Include="Campo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Partida.cpp" />
     <ClCompile Include="Ranking.cpp" />
@@ -135,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AsciiGraphics.h" />
+    <ClInclude Include="Campo.h" />
     <ClInclude Include="Partida.h" />
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="Registro.h" />

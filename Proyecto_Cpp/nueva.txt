@@ -1,0 +1,15 @@
+Nombre de la partida: nueva.txt
+Id partida: 1
+Modo: online
+Blancas: 1
+Negras: 2
+Finalizada: 0
+Ganada: defecto
+Tablas: defecto
+Tiempo inicial: 10
+Tiempo restante: 10
+Material (blancas - negras): 0
+$ - - - - - - - - - - - - - - - - - - $
+Desarrollo
+Blancas 	 Negras
+	

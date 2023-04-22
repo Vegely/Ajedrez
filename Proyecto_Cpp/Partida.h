@@ -4,9 +4,11 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "Campo.h"
 
 constexpr const char* PARTIDA_TEMPORAL = "partida_temp.txt";
 constexpr const char* INICIALIZACION_POR_DEFECTO_STRING = "defecto";
+constexpr int MAX_BUFF_PARTIDA = 256;
 
 class Partida
 {
@@ -18,25 +20,27 @@ private:
 	std::string ganada;
 	std::string tablas;
 	std::string modo;
-	std::string blancas; //Id jugador blancas
-	std::string negras; //Id jugador negras
+	int blancas; //Id jugador blancas
+	int negras; //Id jugador negras
 	float tiempo_inicial;
 	float tiempo_restante;
 	int ventaja_material; //material_blancas - material_negras
 	std::vector<std::string> movimientos_blancas;
 	std::vector<std::string> movimientos_negras;
 
-	friend void operator<<(std::ostream& o, const Partida& p);
-	friend void operator>>(std::ostream& o, Partida& p);
-
 public:
+	Partida() {};
 	//Constructor de partidas nuevas
-	Partida(std::string nombre_partida, int id, std::string modo, std::string blancas, std::string negras,
+	Partida(std::string nombre_partida, int id, std::string modo, int blancas, int negras,
 		float tiempo_inicial);
 
 	bool crearPartida();
 	bool guardarPartida();
+	bool cargarPartida();
+
+	friend void operator<<(std::ostream& o, const Partida& p);
+	friend void operator>>(std::istream& is, Partida& p);
 };
 
 void operator<<(std::ostream& o, const Partida& p);
-void operator>>(std::ostream& o, Partida& p);
+void operator>>(std::istream& is, Partida& p);

@@ -13,8 +13,17 @@ using namespace std;
 #define X_BACKGROUND 10
 #define Y_BACKGROUND 10
 
+
+#include "Partida.h"
 int main()
 {
+	Partida p("nueva.txt", 1, "online", 1, 2, 10.0f);
+	p.crearPartida();
+	std::ifstream fs("nueva.txt");
+	Partida ps;
+	fs >> ps;
+	std::cout << ps;
+	fs.close();
 	/*
 	//Inicializacion de la pantalla
 
