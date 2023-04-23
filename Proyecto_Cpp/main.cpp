@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Registro.h"
+
 #include "AsciiGraphics.h"
 
 using namespace std;
@@ -15,15 +15,11 @@ using namespace std;
 
 
 #include "Partida.h"
+#include "Ranking.h"
 int main()
 {
-	Partida p("nueva.txt", 1, "online", 1, 2, 10.0f);
-	p.crearPartida();
-	std::ifstream fs("nueva.txt");
-	Partida ps;
-	fs >> ps;
-	std::cout << ps;
-	fs.close();
+	Ranking r;
+	r.aniadirJugador("juan", 2);
 	/*
 	//Inicializacion de la pantalla
 

@@ -21,7 +21,7 @@
     <ClCompile Include="Asciigraphics.cpp">
       <Filter>Archivos de encabezado</Filter>
     </ClCompile>
-    <ClCompile Include="Registro.cpp">
+    <ClCompile Include="NoFinalizadas.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="Ranking.cpp">
@@ -38,7 +38,7 @@
     <ClInclude Include="AsciiGraphics.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Registro.h">
+    <ClInclude Include="NoFinalizadas.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Ranking.h">

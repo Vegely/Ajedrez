@@ -1,0 +1,5 @@
+RANKING
+Pos  Punt 	 Jug 		 Id
+1 	 0 	 juan 	 2
+2 	 0 	 juan 	 2
+3 	 0 	 juan 	 2

@@ -132,14 +132,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Partida.cpp" />
     <ClCompile Include="Ranking.cpp" />
-    <ClCompile Include="Registro.cpp" />
+    <ClCompile Include="NoFinalizadas.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AsciiGraphics.h" />
     <ClInclude Include="Campo.h" />
     <ClInclude Include="Partida.h" />
     <ClInclude Include="Ranking.h" />
-    <ClInclude Include="Registro.h" />
+    <ClInclude Include="NoFinalizadas.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

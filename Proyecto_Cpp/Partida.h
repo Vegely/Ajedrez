@@ -8,7 +8,6 @@
 
 constexpr const char* PARTIDA_TEMPORAL = "partida_temp.txt";
 constexpr const char* INICIALIZACION_POR_DEFECTO_STRING = "defecto";
-constexpr int MAX_BUFF_PARTIDA = 256;
 
 class Partida
 {
@@ -37,6 +36,9 @@ public:
 	bool crearPartida();
 	bool guardarPartida();
 	bool cargarPartida();
+	void movBlancas(std::string mov_blancas) { movimientos_blancas.push_back(mov_blancas); };
+	void movNegras(std::string mov_negras) { movimientos_negras.push_back(mov_negras); };
+	bool partidaFinalizada() { return finalizada; };
 
 	friend void operator<<(std::ostream& o, const Partida& p);
 	friend void operator>>(std::istream& is, Partida& p);

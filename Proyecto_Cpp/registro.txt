@@ -1,5 +1,0 @@
-REGISTRO DE PARTIDAS
-Numero de partidas: -2
-ID ultima partida: -1
-Partidas no finalizadas: -1 -2 -4 -7 -8 -9
-- - - - - - - - - - - - - - - - - - - - - - - - - - - -
