@@ -129,7 +129,6 @@
   <ItemGroup>
     <ClCompile Include="Caballo.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Peon.cpp" />
     <ClCompile Include="Pieza.cpp" />
     <ClCompile Include="Rey.cpp" />
     <ClCompile Include="Tablero.cpp" />

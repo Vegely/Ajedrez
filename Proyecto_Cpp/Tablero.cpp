@@ -3,6 +3,9 @@
 #include "Caballo.h"
 #include "Rey.h"
 #include "Peon.h"
+#include "Alfil.h"
+#include "Torre.h"
+#include "Reina.h"
 
 Tablero::Tablero()
 {
