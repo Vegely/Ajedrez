@@ -1,18 +1,6 @@
-﻿  Alfil.cpp
-  Asciigraphics.cpp
-C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Proyecto_Cpp\Asciigraphics.cpp(62,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Proyecto_Cpp\Asciigraphics.cpp(69,21): warning C4018: '<': no coinciden signed/unsigned
-  Caballo.cpp
-C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Proyecto_Cpp\Caballo.cpp(4,1): error C2059: error de sintaxis: '{'
-  Dama.cpp
-  main.cpp
-  Peon.cpp
-  Pieza.cpp
-  Rey.cpp
+﻿  Rey.cpp
   Tablero.cpp
-C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Proyecto_Cpp\Tablero.cpp(8,11): error C2600: 'Tablero::~Tablero': no se puede definir una función miembro especial generada por el compilador (se debe declarar primero en la clase)
-  Torre.cpp
-C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Proyecto_Cpp\Torre.cpp(4,8): error C2533: 'Torre::{ctor}': los constructores no permiten un tipo de valor devuelto
-C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Proyecto_Cpp\Torre.cpp(9,9): error C2600: 'Torre::~Torre': no se puede definir una función miembro especial generada por el compilador (se debe declarar primero en la clase)
-  Generando código...
-C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Proyecto_Cpp\Pieza.cpp(10): error C4716: 'operator<<': debe devolver un valor
+  Generating Code...
+Tablero.obj : error LNK2001: unresolved external symbol "private: virtual void __cdecl Caballo::actualizarVariables(void)" (?actualizarVariables@Caballo@@EEAAXXZ)
+Tablero.obj : error LNK2001: unresolved external symbol "private: virtual void __cdecl Peon::actualizarVariables(void)" (?actualizarVariables@Peon@@EEAAXXZ)
+C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Proyecto_Cpp\x64\Debug\Proyecto_Cpp.exe : fatal error LNK1120: 2 unresolved externals

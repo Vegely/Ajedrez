@@ -138,6 +138,7 @@
     <ClInclude Include="Caballo.h" />
     <ClInclude Include="Peon.h" />
     <ClInclude Include="Pieza.h" />
+    <ClInclude Include="Posicion.h" />
     <ClInclude Include="Rey.h" />
     <ClInclude Include="Tablero.h" />
   </ItemGroup>

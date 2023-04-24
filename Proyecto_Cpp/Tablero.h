@@ -1,21 +1,24 @@
-#ifndef _Tablero__H_
-#define	_Tablero__H_
+#ifndef _TABLERO__H_
+#define	_TABLERO__H_
+
 
 #include "Pieza.h"
 
+#define ANCHO_TABLERO 8
+
 class Tablero
 {
-private:
-	Pieza tablero[8][8]; 
+	Pieza* tablero[ANCHO_TABLERO * ANCHO_TABLERO];
+
+	void clearVariablesDePiezas() { for (Pieza* p_pieza : tablero) p_pieza->clearVariables(); }
+
+	void escribir(const Posicion& posicion, Pieza* pieza);
 
 public:
-	Tablero();
+	explicit Tablero();
 
-
-
-	
+	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO]; }
 };
 
 
-
-#endif // !_Tablero__H_ //
+#endif

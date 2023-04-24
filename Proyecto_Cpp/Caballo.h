@@ -5,9 +5,9 @@
 
 class Caballo : public Pieza
 {
+	void actualizarVariables();
 public:
-	Caballo(int val) :valor(val) {}
-	void mover();
+	explicit Caballo(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_CABALLO) {}
 };
 
 #endif // !_Caballo__H_ //
