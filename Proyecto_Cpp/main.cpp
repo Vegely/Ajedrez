@@ -16,10 +16,23 @@ using namespace std;
 
 #include "Partida.h"
 #include "Ranking.h"
+#include "DatosRanking.h"
 int main()
 {
-	Ranking r;
-	r.aniadirJugador("juan", 2);
+	DatosRanking* dt = nullptr;
+
+	dt = asignaEspacio(4);
+
+	rellenaRanking(dt,"ranking.txt");
+	//modificarPosicion(dt, 34.5f);
+	actualizaRanking(dt, "jorge", 5550.5f);
+	//std::cout << posicionJugador(dt, "jorge");
+
+	//for (int i = 0; i < dt->tamanio; i++)
+	//	std::cout << dt[i].posicion << std::endl;
+
+	liberaEspacio(dt);
+	//r.actualizar("jorge", 4.0);
 	/*
 	//Inicializacion de la pantalla
 

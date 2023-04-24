@@ -1,4 +1,3 @@
-﻿  Ranking.cpp
-  main.cpp
-  Generando código...
+﻿  main.cpp
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Proyecto_Cpp\main.cpp(28,32): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
   Proyecto_Cpp.vcxproj -> C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Proyecto_Cpp\x64\Debug\Proyecto_Cpp.exe
