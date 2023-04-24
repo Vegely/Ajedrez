@@ -18,7 +18,7 @@ class Pieza
 {
 protected:
 	const Tablero& tablero;
-	const bool color;
+	const bool color;						//True == Blancas <-> False == Negras
 	const unsigned char value;
 
 	Posicion posicion;
