@@ -18,7 +18,7 @@ class Pieza
 {
 protected:
 	const Tablero& tablero;
-	const bool color;
+	const bool color;						//True == Blancas <-> False == Negras
 	const unsigned char value;
 
 	Posicion posicion;
@@ -42,7 +42,6 @@ public:
 	friend class Torre;
 	friend class Reina;
 	friend class Rey;
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value) : tablero(p_tablero), color(color), value(value) {}
 
