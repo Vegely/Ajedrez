@@ -11,8 +11,8 @@ struct Punto {
 
 class Pieza
 {
-private:
-	const unsigned char valor;
+protected:
+	unsigned char valor;
 	const bool color;
 	int posicion[2];						
 	std::vector<Pieza> puede_comer;			//Piezas que puede comer

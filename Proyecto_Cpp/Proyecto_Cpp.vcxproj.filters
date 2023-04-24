@@ -21,25 +21,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Alfil.cpp">
-      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
-    </ClCompile>
     <ClCompile Include="Caballo.cpp">
-      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
-    </ClCompile>
-    <ClCompile Include="Dama.cpp">
       <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
     </ClCompile>
     <ClCompile Include="Peon.cpp">
       <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
     </ClCompile>
     <ClCompile Include="Rey.cpp">
-      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
-    </ClCompile>
-    <ClCompile Include="Torre.cpp">
-      <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
-    </ClCompile>
-    <ClCompile Include="Asciigraphics.cpp">
       <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
     </ClCompile>
     <ClCompile Include="Pieza.cpp">
@@ -50,22 +38,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AsciiGraphics.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Peon.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Alfil.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Caballo.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Torre.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Dama.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Rey.h">

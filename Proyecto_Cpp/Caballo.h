@@ -6,7 +6,7 @@
 class Caballo : public Pieza
 {
 public:
-	Caballo();
+	Caballo(int val) :valor(val) {}
 	void mover();
 };
 

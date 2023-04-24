@@ -127,27 +127,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Alfil.cpp" />
-    <ClCompile Include="Asciigraphics.cpp" />
     <ClCompile Include="Caballo.cpp" />
-    <ClCompile Include="Dama.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Peon.cpp" />
     <ClCompile Include="Pieza.cpp" />
     <ClCompile Include="Rey.cpp" />
     <ClCompile Include="Tablero.cpp" />
-    <ClCompile Include="Torre.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Alfil.h" />
-    <ClInclude Include="AsciiGraphics.h" />
     <ClInclude Include="Caballo.h" />
-    <ClInclude Include="Dama.h" />
     <ClInclude Include="Peon.h" />
     <ClInclude Include="Pieza.h" />
     <ClInclude Include="Rey.h" />
     <ClInclude Include="Tablero.h" />
-    <ClInclude Include="Torre.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
