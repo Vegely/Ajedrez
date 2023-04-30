@@ -15,20 +15,20 @@ void Reina::actualizarVariables()
 		Posicion posicion_prueba = posicion + direccion;
 		while (posicion_prueba >= Posicion(0, 0) && posicion_prueba < Posicion(8, 8))		//Comprueba si la posicion se encuentra dentro del tablero
 		{
-			if (tablero.leer(posicion_prueba) == nullptr)		//La casilla revisada está vacía
+			if (tablero.leer(posicion_prueba) == nullptr)		//La casilla revisada estï¿½ vacï¿½a
 			{
-				puede_mover.push_back(posicion_prueba);			//Añade los vacios de la linea a puede_mover
-				posicion_prueba += direccion;					//Actualiza la siguiente posición
+				puede_mover.push_back(posicion_prueba);			//Aï¿½ade los vacios de la linea a puede_mover
+				posicion_prueba += direccion;					//Actualiza la siguiente posiciï¿½n
 			}
 			else if (tablero.leer(posicion_prueba)->color != color)		//La casilla revisada tiene una pieza enemiga
 			{
-				puede_comer.push_back(tablero.leer(posicion_prueba));		//Añade la pieza enemiga a puede_comer
-				tablero.leer(posicion_prueba)->addAmenazas(this);		//Se añade a las amenazas de la otra pieza
+				puede_comer.push_back(tablero.leer(posicion_prueba));		//Aï¿½ade la pieza enemiga a puede_comer
+				tablero.leer(posicion_prueba)->addAmenazas(this);		//Se aï¿½ade a las amenazas de la otra pieza
 				break;
 			}
 			else		//La casilla revisada tiene una pieza amiga
 			{
-				esta_protegiendo.push_back(tablero.leer(posicion_prueba));		//Añade la pieza amiga a esta_protegiendo
+				esta_protegiendo.push_back(tablero.leer(posicion_prueba));		//Aï¿½ade la pieza amiga a esta_protegiendo
 				break;
 			}
 		}

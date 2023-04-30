@@ -8,7 +8,7 @@ class Alfil : public Pieza
 	void actualizarVariables();
 
 public:
-	explicit Alfil(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_ALFIL) {}
+	explicit Alfil(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_ALFIL,"ALFIL") {}
 };
 
 #endif // !_Alfil__H_ //

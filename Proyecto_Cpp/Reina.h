@@ -8,7 +8,7 @@ class Reina : public Pieza
 	void actualizarVariables();
 
 public:
-	explicit Reina(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_REINA) {}
+	explicit Reina(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_REINA, "DAMA") {}
 };
 
 #endif // !_Dama__H_ //

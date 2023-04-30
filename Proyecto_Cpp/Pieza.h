@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Posicion.h"
+#include <string>
 
 #define VALOR_PEON 1
 #define VALOR_CABALLO 3
@@ -17,6 +18,7 @@ class Tablero;
 class Pieza
 {
 protected:
+	const std::string nombre;
 	const Tablero& tablero;
 	const bool color;						//True == Blancas <-> False == Negras
 	const unsigned char value;
@@ -43,15 +45,18 @@ public:
 	friend class Reina;
 	friend class Rey;
 
-	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value) : tablero(p_tablero), color(color), value(value) {}
 
-	////////////////////////////////////////////////////////////////////////
-	//Temporal para pruebas
-	inline const std::vector<Posicion> getPuedeMover() { return puede_mover; }
-	//inline const Tablero& getTablero() { return tablero; }
-	////////////////////////////////////////////////////////////////////////
-
+	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const  std::string nombre) : tablero(p_tablero), color(color), value(value), nombre(nombre){}
 	void mover();
+
+	//Funciones para obtener las variables
+	inline Posicion getPosicion() const { return posicion; }
+	inline const std::vector<Posicion> getPuedeMover() { return puede_mover; }
+	inline const std::vector<Pieza*> getPuedeComer() { return puede_comer; }
+	inline const std::vector<Pieza*> getestaProtegiendo() { return esta_protegiendo; }
+	inline const std::vector<Pieza*> getAmenazas() { return amenazas; }
+	inline std::string getNombre() const { return nombre; }
+	inline bool getColor() const { return color; }
 };
 
 #endif // !_Pieza__H_ //

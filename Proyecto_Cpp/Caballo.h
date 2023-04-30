@@ -7,7 +7,7 @@ class Caballo : public Pieza
 {
 	void actualizarVariables();
 public:
-	explicit Caballo(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_CABALLO) {}
+	explicit Caballo(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_CABALLO,"CABALLO") {}
 };
 
 #endif // !_Caballo__H_ //

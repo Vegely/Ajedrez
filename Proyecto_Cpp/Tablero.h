@@ -16,8 +16,8 @@ class Tablero
 
 public:
 	explicit Tablero();
-
 	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO]; }
+	void imprimeTablero();
 };
 
 

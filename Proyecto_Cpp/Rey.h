@@ -7,7 +7,7 @@ class Rey : public Pieza
 {
 	void actualizarVariables();
 public:
-	Rey(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_TORRE) {};
+	Rey(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_REY, "REY") {};
 };
 
 #endif // !_Rey__H_ //
