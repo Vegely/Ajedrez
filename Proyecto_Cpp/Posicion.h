@@ -1,7 +1,7 @@
 #ifndef _POSICION__H_
 #define _POSICION__H_
 
-
+//Clase para hacer las comparaciones y modificaciones de casillas más sencillas
 struct Posicion
 {
 	char x, y;

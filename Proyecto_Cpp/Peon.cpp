@@ -1,11 +1,14 @@
 #include "Peon.h"
 #include "Tablero.h"
 
+constexpr auto YBLANCAS = 1;
+constexpr auto YNEGRAS = 1;
+
 
 void Peon::actualizarVariables() {
 	clearVariables();
 
-	if (color) {
+	if (color) { //Comprueba si el peon es blanco por asignar una direccionalidad de movimiento u otra.
 		Posicion direcciones[] = { Posicion(0, 1),						//Direccion	  mover
 								Posicion(-1, 1), Posicion(1,1) };		//Direcciones Comer
 
@@ -18,7 +21,7 @@ void Peon::actualizarVariables() {
 
 					puede_mover.push_back(posicion_prueba);			//Añade los vacios de la linea a puede_mover
 					posicion_prueba += Posicion{ 0,1 };
-					if (posicion.y == 1 && tablero.leer(posicion_prueba ) == nullptr) //Si esta en la casilla inicial puede mover 2
+					if (posicion.y == YBLANCAS && tablero.leer(posicion_prueba ) == nullptr) //Si esta en la casilla inicial puede mover 2
 					{
 						puede_mover.push_back(posicion_prueba );
 					}
@@ -55,7 +58,7 @@ void Peon::actualizarVariables() {
 				{
 					puede_mover.push_back(posicion_prueba);			//Añade los vacios de la linea a puede_mover
 					posicion_prueba += Posicion{ 0,-1 };
-					if (posicion.y == 7 && tablero.leer(posicion_prueba ) == nullptr) //Si esta en la casilla inicial puede mover 2
+					if (posicion.y == YNEGRAS && tablero.leer(posicion_prueba ) == nullptr) //Si esta en la casilla inicial puede mover 2
 					{
 						puede_mover.push_back(posicion_prueba);
 					}

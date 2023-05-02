@@ -5,9 +5,11 @@
 #include "Peon.h"
 #include "Alfil.h"
 #include "Torre.h"
-#include "Reina.h"
+#include "Dama.h"
 #include <iostream>
 #include <string>
+
+constexpr auto NUM_LINEAS = 40;
 
 Tablero::Tablero()
 {
@@ -33,7 +35,7 @@ Tablero::Tablero()
 	escribir(Posicion(5, 0), new Alfil(*this, true));
 
 	//Se escribe la dama y el rey
-	escribir(Posicion(3, 0), new Reina(*this, true));
+	escribir(Posicion(3, 0), new Dama(*this, true));
 	escribir(Posicion(4, 0), new Rey(*this, true));
 
 	//Negras
@@ -55,9 +57,10 @@ Tablero::Tablero()
 	escribir(Posicion(5, 7), new Alfil(*this, false));
 
 	//Se escribe la dama y el rey
-	escribir(Posicion(3, 7), new Reina(*this, false));
+	escribir(Posicion(3, 7), new Dama(*this, false));
 	escribir(Posicion(4, 7), new Rey(*this, false));
 
+	actualizarTablero(); //Se inicializan los movimientos posibles
 }
 
 void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
@@ -70,15 +73,16 @@ void Tablero::borrar(const Posicion& posicion)
 {
 	if (leer(posicion) != nullptr)
 	{
-		delete tablero[posicion.x + posicion.y * ANCHO_TABLERO];
-		tablero[posicion.x + posicion.y * ANCHO_TABLERO] = nullptr;
+		delete tablero[posicion.x + posicion.y * ANCHO_TABLERO];		//Se libera el puntero
+		tablero[posicion.x + posicion.y * ANCHO_TABLERO] = nullptr;		//Se asigna a NULL
 	}
 }
 
 
 
 void Tablero::imprimeTablero() {
-	for (int i = 0; i < 40; i++) {
+	//Insertar lineas vacias para limpiar consola
+	for (int i = 0; i < NUM_LINEAS; i++) {
 		std::cout << std::endl << std::endl;
 	}
 	
@@ -86,7 +90,7 @@ void Tablero::imprimeTablero() {
 	{	
 		for (int j = 0; j < ANCHO_TABLERO; j++)
 		{	
-			if (leer(Posicion{ (char)j,(char)i })!=nullptr)
+			if (leer(Posicion{ (char)j,(char)i })!=nullptr) //Si == nullptr no hay pieza
 			{
 				std::cout << leer(Posicion{ (char)j,(char)i })->nombre <<" " << leer(Posicion{(char)j,(char)i})->color << "	";
 			}
@@ -105,7 +109,7 @@ void Tablero::actualizarTablero() {
 	{
 		for (int j = 0; j < ANCHO_TABLERO; j++)
 		{
-			if (leer(Posicion{ (char)i,(char)j }) != nullptr)
+			if (leer(Posicion{ (char)i,(char)j }) != nullptr) //Si == nullptr no hay pieza
 			{
 				 leer(Posicion{ (char)i,(char)j })->actualizarVariables();
 			}
@@ -114,33 +118,42 @@ void Tablero::actualizarTablero() {
 }
 
 bool Tablero::mover(const Posicion& p1, const Posicion& p2) {
-	if (leer(p1) == nullptr)
+	if (leer(p1) == nullptr)		//Si no hay pieza en p1 no se puede mover
 	{
 		return false;
 	}
 	else
 	{
-		if (leer(p2) == nullptr)
+		if (leer(p2) == nullptr)	//Si no hay pieza en p2 si se puede mover se mueve
 		{
 			for (const Posicion puedeMover : leer(p1)->getPuedeMover())
 			{
-				
 				if (puedeMover == p2)
 				{
-					auto& aux = *leer(p1);
-					tablero[p2.x + p2.y * ANCHO_TABLERO] = new Pieza(aux);
-					borrar(p1);
+					tablero[p2.x + p2.y * ANCHO_TABLERO] = leer(p1);
+					leer(p2)->posicion = p2;
+					tablero[p1.x + p1.y * ANCHO_TABLERO] = nullptr;
+					actualizarTablero();
 					return true;
 				}
-				//else
-				//{
-				//	return false;
-				//}
 			}
+			return false;			//Si no se ha podido porque no es posible
 		}
 		else
 		{
-			return false;
+			for (const Pieza* puedeComer:leer(p1)->getPuedeComer())
+			{
+				if (puedeComer == leer(p2))
+				{
+					borrar(p2); //Liberar espacio de memoria de la pieza comida
+					tablero[p2.x + p2.y * ANCHO_TABLERO] = leer(p1);
+					leer(p2)->posicion = p2;
+					tablero[p1.x + p1.y * ANCHO_TABLERO] = nullptr;
+					actualizarTablero();
+					return true;
+				}
+			}
+			return false; //Si no se ha podido porque no es posible
 		}
 	}
 }

@@ -42,7 +42,7 @@
     <ClCompile Include="Rey.cpp">
       <Filter>Archivos de origen\.cpp Archivos de encabezado\Piezas</Filter>
     </ClCompile>
-    <ClCompile Include="Reina.cpp">
+    <ClCompile Include="Dama.cpp">
       <Filter>Archivos de origen\.cpp Archivos de encabezado\Piezas</Filter>
     </ClCompile>
     <ClCompile Include="Torre.cpp">
@@ -71,7 +71,7 @@
     <ClInclude Include="Rey.h">
       <Filter>Archivos de encabezado\Piezas</Filter>
     </ClInclude>
-    <ClInclude Include="Reina.h">
+    <ClInclude Include="Dama.h">
       <Filter>Archivos de encabezado\Piezas</Filter>
     </ClInclude>
     <ClInclude Include="Torre.h">
