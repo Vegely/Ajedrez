@@ -9,6 +9,7 @@ class Reina : public Pieza
 
 public:
 	explicit Reina(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_REINA, "DAMA") {}
+	explicit Reina(const Reina& R) : Pieza(R) {}
 };
 
 #endif // !_Dama__H_ //

@@ -1,6 +1,8 @@
 #include "Pieza.h"
 #include "Tablero.h"
 
+
+
 void Pieza::clearVariables()
 {
 	puede_mover.clear();
@@ -42,4 +44,5 @@ void Pieza::mover()
 {
 	actualizarVariables();
 }
+
 

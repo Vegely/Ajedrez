@@ -9,6 +9,7 @@ class Alfil : public Pieza
 
 public:
 	explicit Alfil(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_ALFIL,"ALFIL") {}
+	explicit Alfil(const Alfil& A) : Pieza(A) {}
 };
 
 #endif // !_Alfil__H_ //

@@ -11,13 +11,17 @@ class Tablero
 	Pieza* tablero[ANCHO_TABLERO * ANCHO_TABLERO];
 
 	void clearVariablesDePiezas() { for (Pieza* p_pieza : tablero) p_pieza->clearVariables(); }
-
 	void escribir(const Posicion& posicion, Pieza* pieza);
+	void borrar(const Posicion& posicion);
+	
 
 public:
 	explicit Tablero();
 	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO]; }
+	void actualizarTablero();
 	void imprimeTablero();
+	bool mover(const Posicion &, const Posicion&);
+
 };
 
 

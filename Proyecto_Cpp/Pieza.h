@@ -45,8 +45,13 @@ public:
 	friend class Reina;
 	friend class Rey;
 
-
 	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const  std::string nombre) : tablero(p_tablero), color(color), value(value), nombre(nombre){}
+	explicit Pieza(const Pieza& p) :nombre(p.nombre), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegiendo = p.esta_protegiendo; amenazas = p.amenazas; }
+	virtual ~Pieza() {}
+
+	
+
+
 	void mover();
 
 	//Funciones para obtener las variables

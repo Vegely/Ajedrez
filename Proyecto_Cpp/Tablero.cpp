@@ -66,7 +66,22 @@ void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
 	pieza->posicion = posicion;
 }
 
+void Tablero::borrar(const Posicion& posicion)
+{
+	if (leer(posicion) != nullptr)
+	{
+		delete tablero[posicion.x + posicion.y * ANCHO_TABLERO];
+		tablero[posicion.x + posicion.y * ANCHO_TABLERO] = nullptr;
+	}
+}
+
+
+
 void Tablero::imprimeTablero() {
+	for (int i = 0; i < 40; i++) {
+		std::cout << std::endl << std::endl;
+	}
+	
 	for (int i = 0; i < ANCHO_TABLERO ; i++)
 	{	
 		for (int j = 0; j < ANCHO_TABLERO; j++)
@@ -82,5 +97,50 @@ void Tablero::imprimeTablero() {
 			
 		}
 		std::cout << std::endl << std::endl;
+	}
+}
+
+void Tablero::actualizarTablero() {
+	for (int i = 0; i < ANCHO_TABLERO; i++)
+	{
+		for (int j = 0; j < ANCHO_TABLERO; j++)
+		{
+			if (leer(Posicion{ (char)i,(char)j }) != nullptr)
+			{
+				 leer(Posicion{ (char)i,(char)j })->actualizarVariables();
+			}
+		}
+	}
+}
+
+bool Tablero::mover(const Posicion& p1, const Posicion& p2) {
+	if (leer(p1) == nullptr)
+	{
+		return false;
+	}
+	else
+	{
+		if (leer(p2) == nullptr)
+		{
+			for (const Posicion puedeMover : leer(p1)->getPuedeMover())
+			{
+				
+				if (puedeMover == p2)
+				{
+					auto& aux = *leer(p1);
+					tablero[p2.x + p2.y * ANCHO_TABLERO] = new Pieza(aux);
+					borrar(p1);
+					return true;
+				}
+				//else
+				//{
+				//	return false;
+				//}
+			}
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
