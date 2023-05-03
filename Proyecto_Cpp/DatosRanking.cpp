@@ -1,5 +1,7 @@
 #pragma once
 #include "DatosRanking.h"
+#include <iostream>
+#include <fstream>
 
 DatosRanking* asignaEspacio(int nfilas) {
 	DatosRanking* ptdranking = new DatosRanking[nfilas];
@@ -11,12 +13,6 @@ void liberaEspacio(DatosRanking* ptdranking) {
 	delete[] ptdranking;
 }
 
-void modificarPosicion(DatosRanking* ptdranking, int puntuacion) {
-	for (int i = 0; i < ptdranking->tamanio; i++)
-		if (ptdranking[i].puntuacion < puntuacion)
-			ptdranking[i].posicion += 1;
-}
-
 int posicionJugador(DatosRanking* ptdranking, const std::string& nombre) {
 	for (int i = 0; i < ptdranking->tamanio; i++) 
 		if (ptdranking[i].nombre == nombre)
@@ -25,27 +21,28 @@ int posicionJugador(DatosRanking* ptdranking, const std::string& nombre) {
 	return 0;
 }
 
-void actualizaRanking(DatosRanking* ptdranking, const std::string& nombre, int puntos) {
+void actualizaRanking(DatosRanking* ptdranking, const std::string& nombre, int puntos, const std::string& nombre_fichero) {
 	int pos = posicionJugador(ptdranking, nombre);
+	std::fstream fs(nombre_fichero, std::ios_base::app);
 	ptdranking[pos - 1].puntuacion += puntos;
 	
 	int puesto = 1;
 
 	for (int i = 0; i < ptdranking->tamanio; i++) {
 		if (ptdranking[i].puntuacion > ptdranking[pos - 1].puntuacion) {
-			std::cout << puesto << " " << ptdranking[i].puntuacion << " " << ptdranking[i].nombre
+			fs << puesto << " " << ptdranking[i].puntuacion << " " << ptdranking[i].nombre
 				<< " " << ptdranking[i].id << std::endl;
 			puesto++;
 		}
 	}
 	
-	std::cout << puesto  << " " << ptdranking[pos - 1].puntuacion << " " << ptdranking[pos - 1].nombre
+	fs << puesto  << " " << ptdranking[pos - 1].puntuacion << " " << ptdranking[pos - 1].nombre
 		<< " " << ptdranking[pos - 1].id << std::endl;
 	puesto++;
 	
 	for (int i = 0; i < ptdranking->tamanio; i++) {
 		if (ptdranking[i].puntuacion < ptdranking[pos - 1].puntuacion) {
-			std::cout << puesto << " " << ptdranking[i].puntuacion << " " << ptdranking[i].nombre
+			fs << puesto << " " << ptdranking[i].puntuacion << " " << ptdranking[i].nombre
 				<< " " << ptdranking[i].id << std::endl;
 			puesto++;
 		}

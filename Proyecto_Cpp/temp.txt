@@ -1,6 +1,0 @@
-RANKING
-Pos  Punt 	 Jug 		 Id
-1 	 680.2f 	 juan 	 0
-2 	 58.3f 	 jorge 	 1
-3 	 5.4f 	 otro 	 2
-

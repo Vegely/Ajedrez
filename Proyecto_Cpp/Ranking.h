@@ -19,8 +19,12 @@ private:
 	//std::string fila; 
 
 	bool inicializa();
-	void aEstructura();
+	void aEstructura() { ptdranking = asignaEspacio(ultima_posicion); };
+	void liberaEstructura() { liberaEspacio(ptdranking); };
+	void encabezado() const;
+
 public:
+
 	//Constructor
 	Ranking();
 
@@ -29,11 +33,7 @@ public:
 	Ranking& operator=(const Ranking&) = delete;
 
 	bool aniadirJugador(const std::string& nombre, int id);
-	bool actualizar(const std::string& nombre, float puntos);
-	void datosJugador(const std::string& nombre);
-	int posicion() const;
-	int id() const;
-	float puntuacion() const;
+	void actualizar(const std::string& nombre, float puntos);
 	std::string nombre() const;
 	std::ostream& print(int nposiciones, std::ostream& o = std::cout) const;
 };

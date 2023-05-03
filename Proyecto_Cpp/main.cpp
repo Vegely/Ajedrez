@@ -19,7 +19,12 @@ using namespace std;
 #include "DatosRanking.h"
 int main()
 {
-	DatosRanking* dt = nullptr;
+	Ranking r;
+
+	//const std::string n = "nuevo";
+	r.aniadirJugador("bogurad", 4);
+	r.actualizar("bogurad", 657.0);
+	/*DatosRanking* dt = nullptr;
 
 	dt = asignaEspacio(4);
 
@@ -28,10 +33,9 @@ int main()
 	actualizaRanking(dt, "jorge", 5550.5f);
 	//std::cout << posicionJugador(dt, "jorge");
 
-	//for (int i = 0; i < dt->tamanio; i++)
-	//	std::cout << dt[i].posicion << std::endl;
 
-	liberaEspacio(dt);
+
+	liberaEspacio(dt);*/
 	//r.actualizar("jorge", 4.0);
 	/*
 	//Inicializacion de la pantalla
