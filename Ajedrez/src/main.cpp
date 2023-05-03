@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 	tablero.imprimeTablero();
 	////////////////////////////////////////////////////////////
 	
-	std::cout << "sopdjasopk";
+	std::cout << "1";
 
 	return 0;
 }
