@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="Alfil.cpp" />
     <ClCompile Include="Caballo.cpp" />
     <ClCompile Include="main.cpp" />
@@ -147,6 +148,23 @@
     <ClInclude Include="Rey.h" />
     <ClInclude Include="Tablero.h" />
     <ClInclude Include="Torre.h" />
+=======
+    <ClCompile Include="Asciigraphics.cpp" />
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="plane.cpp" />
+    <ClCompile Include="structs.cpp" />
+    <ClCompile Include="board.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AsciiGraphics.h" />
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="graphics.h" />
+    <ClInclude Include="plane.h" />
+    <ClInclude Include="structs.h" />
+    <ClInclude Include="board.h" />
+>>>>>>> Graphics
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

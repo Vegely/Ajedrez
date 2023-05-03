@@ -27,6 +27,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Pieza.cpp">
       <Filter>Archivos de origen\.cpp Archivos de encabezado</Filter>
     </ClCompile>
@@ -50,12 +51,32 @@
     </ClCompile>
     <ClCompile Include="Alfil.cpp">
       <Filter>Archivos de origen\.cpp Archivos de encabezado\Piezas</Filter>
+=======
+    <ClCompile Include="Asciigraphics.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="board.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="structs.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="plane.cpp">
+      <Filter>Archivos de origen</Filter>
+>>>>>>> Graphics
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pieza.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Tablero.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -79,6 +100,22 @@
     </ClInclude>
     <ClInclude Include="Alfil.h">
       <Filter>Archivos de encabezado\Piezas</Filter>
+=======
+    <ClInclude Include="graphics.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="board.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="structs.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="plane.h">
+      <Filter>Archivos de encabezado</Filter>
+>>>>>>> Graphics
     </ClInclude>
   </ItemGroup>
 </Project>
