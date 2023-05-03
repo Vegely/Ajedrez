@@ -1,4 +1,2 @@
-﻿  plane.cpp
-C:\Users\adria\Documents\GitHub\Ajedrez\Proyecto_Cpp\plane.cpp(53): warning C4715: 'Plane::getCornerPosition': not all control paths return a value
-C:\Users\adria\Documents\GitHub\Ajedrez\Proyecto_Cpp\plane.cpp(73): warning C4715: 'Plane::getCornerColor': not all control paths return a value
+﻿  graphics.cpp
   Proyecto_Cpp.vcxproj -> C:\Users\adria\Documents\GitHub\Ajedrez\Proyecto_Cpp\x64\Debug\Proyecto_Cpp.exe

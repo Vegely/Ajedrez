@@ -53,10 +53,12 @@ void OnReshape(int w, int h)
 
 void OnDraw(void)
 {
+	//glTranslatef(0, 0, 0);
 	player.update();
+	glutSolidTeapot(20);
 
 	board.draw();
-	player.lookAtTest();
+	//player.lookAtTest();
 
 	// End of drawing code (do not erase or write anything afterwards).
 	glutSwapBuffers();
