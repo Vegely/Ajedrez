@@ -31,13 +31,13 @@ protected:
 	Posicion posicion;						//Casilla del tablero donde esta la pieza (0-7)x(0-7)
 	std::vector<Posicion> puede_mover;		//Lugares disponibles para mover
 	std::vector<Pieza*> puede_comer;		//Piezas que puede comer
-	std::vector<Pieza*> esta_protegiendo;	//Piezas de su propio equipo con las que colisiona en el movimiento
+	std::vector<Pieza*> esta_protegida;	//Piezas de su propio equipo con las que colisiona en el movimiento
 	std::vector<Pieza*> amenazas;			//Piezas enemigas que amenazan la posicion actual
 
 	void clearVariables();					//Funcion para limpiar los elementos de la clase vector
 	virtual void actualizarVariables() = 0;	//Funcion para actualizar todos los elementos de vector
 	inline void addAmenazas(Pieza* p_pieza) { amenazas.push_back(p_pieza); }	 //Función general de gestión de las amenazas desde el gestor
-
+	inline void addProtecciones(Pieza* p_pieza) { esta_protegida.push_back(p_pieza); }	 //Función general de gestión de las amenazas desde el gestor
 public:
 	//Para que el tablero pueda modificar las piezas
 	friend class Tablero;
@@ -52,8 +52,13 @@ public:
 	friend class Rey;
 
 	//Operadores básicos
+<<<<<<< Updated upstream
 	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const tipo_t nombre) : tablero(p_tablero), color(color), value(value), tipo(nombre){}
 	explicit Pieza(const Pieza& p) :tipo(p.tipo), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegiendo = p.esta_protegiendo; amenazas = p.amenazas; }
+=======
+	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const  std::string nombre) : tablero(p_tablero), color(color), value(value), nombre(nombre){}
+	explicit Pieza(const Pieza& p) :nombre(p.nombre), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegida = p.esta_protegida; amenazas = p.amenazas; }
+>>>>>>> Stashed changes
 	virtual ~Pieza() {}
 
 	//Poder mover desde el main
@@ -65,7 +70,7 @@ public:
 	virtual std::string getNombre() const = 0;
 	inline const std::vector<Posicion> getPuedeMover() const { return puede_mover; }
 	inline const std::vector<Pieza*> getPuedeComer() const { return puede_comer; }
-	inline const std::vector<Pieza*> getestaProtegiendo() const { return esta_protegiendo; }
+	inline const std::vector<Pieza*> EstaProtegida() const { return esta_protegida; }
 	inline const std::vector<Pieza*> getAmenazas() const { return amenazas; }
 	
 	

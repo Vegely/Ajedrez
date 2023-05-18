@@ -10,7 +10,7 @@ void Peon::actualizarVariables() {
 	if (color) { //Comprueba si el peon es blanco por asignar una direccionalidad de movimiento u otra.
 		Posicion direcciones[] = { Posicion(0, 1),						//Direccion	  mover
 								Posicion(-1, 1), Posicion(1,1) };		//Direcciones Comer
-
+		
 		for (Posicion direccion : direcciones) {
 			Posicion posicion_prueba = posicion + direccion;
 			if (posicion_prueba >= Posicion(0, 0) && posicion_prueba < Posicion(8, 8))		//Comprueba si la posicion se encuentra dentro del tablero
@@ -35,7 +35,7 @@ void Peon::actualizarVariables() {
 						}
 						else		//La casilla revisada tiene una pieza amiga
 						{
-							esta_protegiendo.push_back(tablero.leer(posicion_prueba));		//Añade la pieza amiga a esta_protegiendo
+							tablero.leer(posicion_prueba)->addProtecciones(this);		//Añade la pieza amiga a esta_protegiendo
 						}
 
 					}
@@ -72,7 +72,7 @@ void Peon::actualizarVariables() {
 						}
 						else		//La casilla revisada tiene una pieza amiga
 						{
-							esta_protegiendo.push_back(tablero.leer(posicion_prueba));		//Añade la pieza amiga a esta_protegiendo
+							tablero.leer(posicion_prueba)->addProtecciones(this);		//Añade la pieza amiga a esta_protegiendo
 						}
 					}
 				}

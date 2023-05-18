@@ -6,7 +6,7 @@ void Pieza::clearVariables()
 {
 	puede_mover.clear();
 	puede_comer.clear();
-	esta_protegiendo.clear();
+	esta_protegida.clear();
 	amenazas.clear();
 }
 

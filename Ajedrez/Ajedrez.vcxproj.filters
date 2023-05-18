@@ -25,8 +25,15 @@
     <Filter Include="Resource Files\Graficos">
       <UniqueIdentifier>{d65600b2-e3c8-46b9-a1a5-2e90a727619c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Graphics">
+      <UniqueIdentifier>{b1a7804a-7611-48d5-8dc7-b5a53eba1608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Piezas">
+      <UniqueIdentifier>{8e07c095-ed6f-4aad-9326-8d4b6b5821bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
     <ClCompile Include="src\Alfil.cpp">
       <Filter>Resource Files\Ajedrez</Filter>
     </ClCompile>
@@ -67,6 +74,48 @@
       <Filter>Resource Files\Graficos</Filter>
     </ClCompile>
     <ClCompile Include="src\IA.cpp">
+=======
+    <ClCompile Include="src\Pieza.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tablero.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\board.cpp">
+      <Filter>Resource Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera.cpp">
+      <Filter>Resource Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics.cpp">
+      <Filter>Resource Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\plane.cpp">
+      <Filter>Resource Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\structs.cpp">
+      <Filter>Resource Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alfil.cpp">
+      <Filter>Resource Files\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Caballo.cpp">
+      <Filter>Resource Files\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dama.cpp">
+      <Filter>Resource Files\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Peon.cpp">
+      <Filter>Resource Files\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rey.cpp">
+      <Filter>Resource Files\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Torre.cpp">
+      <Filter>Resource Files\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+>>>>>>> Stashed changes
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">

@@ -25,7 +25,7 @@ void Caballo::actualizarVariables() {
 			}
 			else		//La casilla revisada tiene una pieza amiga
 			{
-				esta_protegiendo.push_back(tablero.leer(posicion_prueba));		//Añade la pieza amiga a esta_protegiendo
+				tablero.leer(posicion_prueba)->addProtecciones(this);		//Añade la pieza amiga a esta_protegiendo
 			}
 		}
 
