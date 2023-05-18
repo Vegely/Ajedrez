@@ -8,8 +8,14 @@
 #include "Dama.h"
 #include <iostream>
 #include <string>
+#include <cmath>
+
 
 constexpr auto NUM_LINEAS = 40;
+constexpr auto COEFF_DIFERENCIA_MATERIAL = 0.0;
+constexpr auto COEFF_AMENAZAS_PELIGROSAS = 0.0;
+constexpr auto COEFF_AMENAZAS_POCO_PELIGROSAS = 0.0;
+constexpr auto VALOR_AMENAZAS_PELIGROSAS = 1.79769e+308;
 
 void Tablero::actualizarTablero()
 {
@@ -111,16 +117,6 @@ void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
 	if (pieza != nullptr) pieza->posicion = posicion;
 }
 
-////////////////////////////////////////////////////////////////////
-void Tablero::borrar(const Posicion& posicion)
-{
-	if (leer(posicion) != nullptr)
-	{
-		delete tablero[posicion.x + posicion.y * ANCHO_TABLERO];		//Se libera el puntero
-		tablero[posicion.x + posicion.y * ANCHO_TABLERO] = nullptr;		//Se asigna a NULL
-	}
-}
-////////////////////////////////////////////////////////////////////
 
 bool Tablero::mover(const Movimiento& movimiento) {
 	if (leer(movimiento.inicio) != nullptr && leer(movimiento.inicio)->color == ColorDelTurno)		//Si no hay pieza en p1 no se puede mover
@@ -199,4 +195,54 @@ void Tablero::imprimeTablero() {
 
 		if (i++ % 8 == 7) std::cout << "\n\n";
 	}
+}
+
+double Tablero::evaluacion() const  //Valor negativo ventaja negras valor positivo ventaja blancas
+{
+	double valorTablero = 0;
+	double amenaza_peligrosa = 1.79769e+308; //Valor para luego comparar si hay amenazas de piezas de menor a piezas de mayor valor (se pone a un valor de error)
+	double amenaza_poco_peligrosa = 0;		//Valor para registrar valor de amenazas de mayor valor a una pieza de menor valor
+	double proteccion = 0;					//Valor de piezas que defienden de una amenaza poco peligrosa
+	double amenaza_poco_peligrosa = 0;
+	double amenaza_peligrosa_return = 0;
+	double amenaza_poco_peligrosa_return = 0;
+
+	for (auto pieza_analizada : tablero) 
+	{
+		valorTablero += pow(-1, 1+pieza_analizada->color) * pieza_analizada->value; //Resta si es negra y suma si es blanca
+
+		//Se reinicializan los valores en cada ciclo
+		amenaza_peligrosa = VALOR_AMENAZAS_PELIGROSAS;
+		amenaza_poco_peligrosa = 0;		
+		proteccion = 0;					
+		amenaza_poco_peligrosa = 0;
+
+		for (auto piezas_amenazanA : pieza_analizada->getAmenazas())
+		{
+			if (pieza_analizada->value - piezas_amenazanA->value > 1) //Si la amenaza es peligrosa pieza de menor valor amenaza una de mayor valor
+			{
+				if (amenaza_peligrosa > abs(pieza_analizada->value - piezas_amenazanA->value))
+					amenaza_peligrosa = pow(-1, 1 + pieza_analizada->color) * abs(pieza_analizada->value - piezas_amenazanA->value); //Valor con signo para suma final
+			}
+			else
+			{
+				amenaza_poco_peligrosa += piezas_amenazanA->value; //Valor sin signo temporal
+			}
+		}
+		for (auto piezas_defiendenA : pieza_analizada->EstaProtegida())
+		{
+			proteccion += piezas_defiendenA->value; //Valor sin signo temporal
+		}
+
+		if (amenaza_peligrosa != VALOR_AMENAZAS_PELIGROSAS)
+		{
+			amenaza_peligrosa_return += amenaza_peligrosa;
+		}
+			
+
+
+		amenaza_poco_peligrosa_return += pow(-1, 1 + pieza_analizada->color) * abs(pieza_analizada->value - amenaza_poco_peligrosa / pieza_analizada->getAmenazas().size() - proteccion / pieza_analizada->EstaProtegida().size());
+	}
+
+	return COEFF_DIFERENCIA_MATERIAL*valorTablero+COEFF_AMENAZAS_PELIGROSAS* amenaza_peligrosa_return +COEFF_AMENAZAS_POCO_PELIGROSAS* amenaza_peligrosa_return;
 }

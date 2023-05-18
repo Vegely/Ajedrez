@@ -12,7 +12,7 @@ constexpr auto VALOR_CABALLO = 3;
 constexpr auto VALOR_ALFIL = 3;
 constexpr auto VALOR_TORRE = 5;
 constexpr auto VALOR_DAMA = 9; 
-constexpr auto VALOR_REY = 10;
+constexpr auto VALOR_REY = 1000;
 
 //Clase tablero vacía para tener una referencia al tablero dentro de las piezas
 class Tablero;
@@ -31,7 +31,7 @@ protected:
 	Posicion posicion;						//Casilla del tablero donde esta la pieza (0-7)x(0-7)
 	std::vector<Posicion> puede_mover;		//Lugares disponibles para mover
 	std::vector<Pieza*> puede_comer;		//Piezas que puede comer
-	std::vector<Pieza*> esta_protegida;	//Piezas de su propio equipo con las que colisiona en el movimiento
+	std::vector<Pieza*> esta_protegida;		//Piezas que la protegen
 	std::vector<Pieza*> amenazas;			//Piezas enemigas que amenazan la posicion actual
 
 	void clearVariables();					//Funcion para limpiar los elementos de la clase vector
@@ -52,13 +52,9 @@ public:
 	friend class Rey;
 
 	//Operadores básicos
-<<<<<<< Updated upstream
-	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const tipo_t nombre) : tablero(p_tablero), color(color), value(value), tipo(nombre){}
-	explicit Pieza(const Pieza& p) :tipo(p.tipo), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegiendo = p.esta_protegiendo; amenazas = p.amenazas; }
-=======
-	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const  std::string nombre) : tablero(p_tablero), color(color), value(value), nombre(nombre){}
-	explicit Pieza(const Pieza& p) :nombre(p.nombre), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegida = p.esta_protegida; amenazas = p.amenazas; }
->>>>>>> Stashed changes
+
+	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const tipo_t tipo) : tablero(p_tablero), color(color), value(value), tipo(tipo){}
+	explicit Pieza(const Pieza& p) :tipo(p.tipo), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegida = p.esta_protegida; amenazas = p.amenazas; }
 	virtual ~Pieza() {}
 
 	//Poder mover desde el main
