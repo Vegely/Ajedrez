@@ -1,4 +1,5 @@
 #include "graphics.h"
+#include "freeglut.h"
 #include "board.h"
 #include "camera.h"
 #include <string>

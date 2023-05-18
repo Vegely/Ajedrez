@@ -63,6 +63,43 @@ Tablero::Tablero()
 	actualizarTablero(); //Se inicializan los movimientos posibles
 }
 
+Tablero::Tablero(const Tablero& tablero)
+{
+	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++)
+	{
+		if (tablero.tablero != nullptr)
+		{
+			switch (tablero.tablero[i]->tipo)
+			{
+			case Pieza::tipo_t::PEON:
+				escribir(tablero.posicion(i), new Peon(*this, tablero.tablero[i]->color));
+				break;
+			case Pieza::tipo_t::CABALLO:
+				escribir(tablero.posicion(i), new Caballo(*this, tablero.tablero[i]->color));
+				break;
+			case Pieza::tipo_t::ALFIL:
+				escribir(tablero.posicion(i), new Alfil(*this, tablero.tablero[i]->color));
+				break;
+			case Pieza::tipo_t::TORRE:
+				escribir(tablero.posicion(i), new Torre(*this, tablero.tablero[i]->color));
+				break;
+			case Pieza::tipo_t::DAMA:
+				escribir(tablero.posicion(i), new Dama(*this, tablero.tablero[i]->color));
+				break;
+			case Pieza::tipo_t::REY:
+				escribir(tablero.posicion(i), new Rey(*this, tablero.tablero[i]->color));
+				break;
+			}
+		}
+		else this->tablero[i] = nullptr;
+	}
+}
+
+Tablero::~Tablero()
+{
+	for (Pieza* p_pieza : tablero) delete p_pieza;
+}
+
 void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
 {
 	tablero[posicion.x + posicion.y * ANCHO_TABLERO] = pieza;
@@ -86,53 +123,38 @@ void Tablero::imprimeTablero() {
 		std::cout << std::endl << std::endl;
 	}
 	
-	for (int i = 0; i < ANCHO_TABLERO ; i++)
-	{	
-		for (int j = 0; j < ANCHO_TABLERO; j++)
-		{	
-			if (leer(Posicion{ (char)j,(char)i })!=nullptr) //Si == nullptr no hay pieza
-			{
-				std::cout << leer(Posicion{ (char)j,(char)i })->nombre <<" " << leer(Posicion{(char)j,(char)i})->color << "	";
-			}
-			else
-			{
-				std::cout << "  ▄		";
-			}
-			
-		}
-		std::cout << std::endl << std::endl;
-	}
-}
-
-void Tablero::actualizarTablero() {
-	for (int i = 0; i < ANCHO_TABLERO; i++)
+	// Pintar el tablero
+	int i = 0;
+	for (Pieza* p_pieza : tablero)
 	{
-		for (int j = 0; j < ANCHO_TABLERO; j++)
-		{
-			if (leer(Posicion{ (char)i,(char)j }) != nullptr) //Si == nullptr no hay pieza
-			{
-				 leer(Posicion{ (char)i,(char)j })->actualizarVariables();
-			}
-		}
+		if (p_pieza == nullptr) std::cout << "---\t";
+		else std::cout << p_pieza->getNombre() << " " << p_pieza->color << "\t";
+
+		if (i++ % 8 == 7) std::cout << "\n\n";
 	}
 }
 
-bool Tablero::mover(const Posicion& p1, const Posicion& p2) {
-	if (leer(p1) == nullptr)		//Si no hay pieza en p1 no se puede mover
+void Tablero::actualizarTablero() 
+{
+	for (Pieza* p_pieza : tablero) if(p_pieza != nullptr) p_pieza->actualizarVariables();
+}
+
+bool Tablero::mover(const Movimiento& movimiento) {
+	if (leer(movimiento.inicio) == nullptr)		//Si no hay pieza en p1 no se puede mover
 	{
 		return false;
 	}
 	else
 	{
-		if (leer(p2) == nullptr)	//Si no hay pieza en p2 si se puede mover se mueve
+		if (leer(movimiento.fin) == nullptr)	//Si no hay pieza en p2 si se puede mover se mueve
 		{
-			for (const Posicion puedeMover : leer(p1)->getPuedeMover())
+			for (const Posicion puedeMover : leer(movimiento.inicio)->getPuedeMover())
 			{
-				if (puedeMover == p2)
+				if (puedeMover == movimiento.fin)
 				{
-					tablero[p2.x + p2.y * ANCHO_TABLERO] = leer(p1);
-					leer(p2)->posicion = p2;
-					tablero[p1.x + p1.y * ANCHO_TABLERO] = nullptr;
+					tablero[movimiento.fin.x + movimiento.fin.y * ANCHO_TABLERO] = leer(movimiento.inicio);
+					leer(movimiento.fin)->posicion = movimiento.fin;
+					tablero[movimiento.inicio.x + movimiento.inicio.y * ANCHO_TABLERO] = nullptr;
 					actualizarTablero();
 					return true;
 				}
@@ -141,14 +163,14 @@ bool Tablero::mover(const Posicion& p1, const Posicion& p2) {
 		}
 		else
 		{
-			for (const Pieza* puedeComer:leer(p1)->getPuedeComer())
+			for (const Pieza* puedeComer:leer(movimiento.inicio)->getPuedeComer())
 			{
-				if (puedeComer == leer(p2))
+				if (puedeComer == leer(movimiento.fin))
 				{
-					borrar(p2); //Liberar espacio de memoria de la pieza comida
-					tablero[p2.x + p2.y * ANCHO_TABLERO] = leer(p1);
-					leer(p2)->posicion = p2;
-					tablero[p1.x + p1.y * ANCHO_TABLERO] = nullptr;
+					borrar(movimiento.fin); //Liberar espacio de memoria de la pieza comida
+					tablero[movimiento.fin.x + movimiento.fin.y * ANCHO_TABLERO] = leer(movimiento.inicio);
+					leer(movimiento.fin)->posicion = movimiento.fin;
+					tablero[movimiento.inicio.x + movimiento.inicio.y * ANCHO_TABLERO] = nullptr;
 					actualizarTablero();
 					return true;
 				}

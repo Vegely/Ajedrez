@@ -4,7 +4,7 @@
 #define BACKGROUNDS_H
 
 #include "structs.h"
-#include "freeglut.h"
+//#include "freeglut.h"
 
 class Plane
 {

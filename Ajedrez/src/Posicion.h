@@ -4,9 +4,9 @@
 //Clase para hacer las comparaciones y modificaciones de casillas más sencillas
 struct Posicion
 {
-	char x, y;
+	int x, y;
 
-	explicit Posicion(char x = 0, char y = 0) : x(x), y(y) {}
+	explicit Posicion(int x = 0, int y = 0) : x(x), y(y) {}
 
 	inline Posicion& operator- ()  {x = -x; y = -y; return *this; }
 	inline Posicion& operator+= (const Posicion& rhs) { x += rhs.x; y += rhs.y; return *this; }

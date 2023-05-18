@@ -19,8 +19,11 @@ class Tablero;
 
 class Pieza
 {
+public:
+	enum class tipo_t {PEON, CABALLO, ALFIL, TORRE, DAMA, REY};
+
 protected:
-	const std::string nombre;				//Nombre para identificar a la pieza
+	const tipo_t tipo;				//Nombre para identificar a la pieza
 	const Tablero& tablero;					//Referencia al tablero para que las piezas sepan en que tablero estan
 	const bool color;						//True == Blancas <-> False == Negras
 	const unsigned char value;				//Valor de la pieza
@@ -32,7 +35,7 @@ protected:
 	std::vector<Pieza*> amenazas;			//Piezas enemigas que amenazan la posicion actual
 
 	void clearVariables();					//Funcion para limpiar los elementos de la clase vector
-	virtual void actualizarVariables() {}	//Funcion para actualizar todos los elementos de vector
+	virtual void actualizarVariables() = 0;	//Funcion para actualizar todos los elementos de vector
 	inline void addAmenazas(Pieza* p_pieza) { amenazas.push_back(p_pieza); }	 //Función general de gestión de las amenazas desde el gestor
 
 public:
@@ -49,8 +52,8 @@ public:
 	friend class Rey;
 
 	//Operadores básicos
-	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const  std::string nombre) : tablero(p_tablero), color(color), value(value), nombre(nombre){}
-	explicit Pieza(const Pieza& p) :nombre(p.nombre), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegiendo = p.esta_protegiendo; amenazas = p.amenazas; }
+	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const tipo_t nombre) : tablero(p_tablero), color(color), value(value), tipo(nombre){}
+	explicit Pieza(const Pieza& p) :tipo(p.tipo), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegiendo = p.esta_protegiendo; amenazas = p.amenazas; }
 	virtual ~Pieza() {}
 
 	//Poder mover desde el main
@@ -59,7 +62,7 @@ public:
 	//Funciones para obtener las variables (deben poder usarse en un espacio de constness)
 	inline Posicion getPosicion() const { return posicion; }
 	inline bool getColor() const { return color; }
-	inline std::string getNombre() const { return nombre; }
+	virtual std::string getNombre() const = 0;
 	inline const std::vector<Posicion> getPuedeMover() const { return puede_mover; }
 	inline const std::vector<Pieza*> getPuedeComer() const { return puede_comer; }
 	inline const std::vector<Pieza*> getestaProtegiendo() const { return esta_protegiendo; }

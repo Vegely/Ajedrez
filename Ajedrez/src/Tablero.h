@@ -3,6 +3,7 @@
 
 
 #include "Pieza.h"
+#include "Movimiento.h"
 
 constexpr auto ANCHO_TABLERO = 8;
 
@@ -17,10 +18,17 @@ class Tablero
 	void actualizarTablero();																		//Actualiza las variables de todas las piezas del tablero
 
 public:
+	friend class IA;
+
 	explicit Tablero();																									//Constructor
+	explicit Tablero(const Tablero& tablero);
+	virtual ~Tablero();
+
+	inline Posicion posicion(int i) const { return Posicion(i % ANCHO_TABLERO, i / ANCHO_TABLERO); }
 	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO];}		//Devuelve el puntero a pieza de una posición leóda
-	bool mover(const Posicion &, const Posicion&);																		//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
+	bool mover(const Movimiento& movimiento);																		//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
 																														//No implementada distinción por turnos
+	bool jaqueMate() const { return 0; }//TODO
 
 	//Funcion temporal para imprimir tablero por consola
 	void imprimeTablero();

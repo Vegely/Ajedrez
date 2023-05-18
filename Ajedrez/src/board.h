@@ -1,7 +1,7 @@
 #ifndef TEMPOBJECTS_H
 #define TEMPOBJECTS_H
 
-#include "freeglut.h"
+//#include "freeglut.h"
 #include "structs.h"
 
 struct Cell

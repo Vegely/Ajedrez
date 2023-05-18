@@ -1,4 +1,5 @@
 #include "plane.h"
+#include "freeglut.h"
 
 Plane::Plane(float xDim, float yDim) :
 	xDim(xDim), yDim(yDim),

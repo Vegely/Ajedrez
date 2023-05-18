@@ -1,5 +1,6 @@
 #include "board.h"
 #include <iostream>
+#include "freeglut.h"
 #include "camera.h"
 
 Board::Board(const Point& pos_global, const float square_length) 
