@@ -2,8 +2,7 @@
 #include "Tablero.h"
 
 constexpr auto YBLANCAS = 1;
-constexpr auto YNEGRAS = 1;
-
+constexpr auto YNEGRAS = 6;
 
 void Peon::actualizarVariables() {
 	clearVariables();
@@ -16,11 +15,10 @@ void Peon::actualizarVariables() {
 			Posicion posicion_prueba = posicion + direccion;
 			if (posicion_prueba >= Posicion(0, 0) && posicion_prueba < Posicion(8, 8))		//Comprueba si la posicion se encuentra dentro del tablero
 			{
-				if (direccion == Posicion{ 0, 1 }&& tablero.leer(posicion_prueba) == nullptr)
+				if (direccion == Posicion{ 0, 1 } && tablero.leer(posicion_prueba) == nullptr)
 				{
-
 					puede_mover.push_back(posicion_prueba);			//Añade los vacios de la linea a puede_mover
-					posicion_prueba += Posicion{ 0,1 };
+					posicion_prueba += Posicion{ 0, 1 };
 					if (posicion.y == YBLANCAS && tablero.leer(posicion_prueba ) == nullptr) //Si esta en la casilla inicial puede mover 2
 					{
 						puede_mover.push_back(posicion_prueba );
@@ -62,7 +60,6 @@ void Peon::actualizarVariables() {
 					{
 						puede_mover.push_back(posicion_prueba);
 					}
-
 				}
 				else
 				{

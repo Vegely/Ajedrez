@@ -11,6 +11,11 @@
 
 constexpr auto NUM_LINEAS = 40;
 
+void Tablero::actualizarTablero()
+{
+	for (Pieza* p_pieza : tablero) if (p_pieza != nullptr) p_pieza->actualizarVariables();
+}
+
 Tablero::Tablero()
 {
 	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++) { tablero[i] = nullptr; } //Se crea un tablero vacio
@@ -67,7 +72,7 @@ Tablero::Tablero(const Tablero& tablero)
 {
 	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++)
 	{
-		if (tablero.tablero != nullptr)
+		if (tablero.tablero[i] != nullptr)
 		{
 			switch (tablero.tablero[i]->tipo)
 			{
@@ -103,9 +108,10 @@ Tablero::~Tablero()
 void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
 {
 	tablero[posicion.x + posicion.y * ANCHO_TABLERO] = pieza;
-	pieza->posicion = posicion;
+	if (pieza != nullptr) pieza->posicion = posicion;
 }
 
+////////////////////////////////////////////////////////////////////
 void Tablero::borrar(const Posicion& posicion)
 {
 	if (leer(posicion) != nullptr)
@@ -114,8 +120,69 @@ void Tablero::borrar(const Posicion& posicion)
 		tablero[posicion.x + posicion.y * ANCHO_TABLERO] = nullptr;		//Se asigna a NULL
 	}
 }
+////////////////////////////////////////////////////////////////////
 
+bool Tablero::mover(const Movimiento& movimiento) {
+	if (leer(movimiento.inicio) != nullptr && leer(movimiento.inicio)->color == ColorDelTurno)		//Si no hay pieza en p1 no se puede mover
+	{
+		if (leer(movimiento.fin) == nullptr)	//Si no hay pieza en p2 si se puede mover se mueve
+		{
+			for (const Posicion puedeMover : leer(movimiento.inicio)->getPuedeMover())
+			{
+				if (puedeMover == movimiento.fin)
+				{
+					escribir(movimiento.fin, leer(movimiento.inicio));
+					escribir(movimiento.inicio, nullptr);
+					actualizarTablero();
 
+					if (!jaqueMate())
+					{
+						cambiarTurno();
+						return true;
+					}
+					
+					escribir(movimiento.inicio, leer(movimiento.fin));
+					escribir(movimiento.fin, nullptr);
+					actualizarTablero();
+				}
+			}
+		}
+		else
+		{
+			for (const Pieza* puedeComer:leer(movimiento.inicio)->getPuedeComer())
+			{
+				if (puedeComer == leer(movimiento.fin))
+				{
+					Pieza* p_piezaComida = leer(movimiento.fin);
+
+					escribir(movimiento.fin, leer(movimiento.inicio));
+					escribir(movimiento.inicio, nullptr);
+					actualizarTablero();
+
+					if (!jaqueMate())
+					{
+						delete p_piezaComida; //Liberar espacio de memoria de la pieza comida
+						
+						cambiarTurno();
+						return true;
+					}
+
+					escribir(movimiento.inicio, leer(movimiento.fin));
+					escribir(movimiento.fin, p_piezaComida);
+					actualizarTablero();
+				}
+			}
+		}
+	}
+	
+	return false;
+}
+
+bool Tablero::jaqueMate() const 
+{ 
+	for (Pieza* p_pieza : tablero) if (p_pieza != nullptr && p_pieza->tipo == Pieza::tipo_t::REY && p_pieza->getAmenazas().size() == 0) return false;
+	return true;
+}
 
 void Tablero::imprimeTablero() {
 	//Insertar lineas vacias para limpiar consola
@@ -131,51 +198,5 @@ void Tablero::imprimeTablero() {
 		else std::cout << p_pieza->getNombre() << " " << p_pieza->color << "\t";
 
 		if (i++ % 8 == 7) std::cout << "\n\n";
-	}
-}
-
-void Tablero::actualizarTablero() 
-{
-	for (Pieza* p_pieza : tablero) if(p_pieza != nullptr) p_pieza->actualizarVariables();
-}
-
-bool Tablero::mover(const Movimiento& movimiento) {
-	if (leer(movimiento.inicio) == nullptr)		//Si no hay pieza en p1 no se puede mover
-	{
-		return false;
-	}
-	else
-	{
-		if (leer(movimiento.fin) == nullptr)	//Si no hay pieza en p2 si se puede mover se mueve
-		{
-			for (const Posicion puedeMover : leer(movimiento.inicio)->getPuedeMover())
-			{
-				if (puedeMover == movimiento.fin)
-				{
-					tablero[movimiento.fin.x + movimiento.fin.y * ANCHO_TABLERO] = leer(movimiento.inicio);
-					leer(movimiento.fin)->posicion = movimiento.fin;
-					tablero[movimiento.inicio.x + movimiento.inicio.y * ANCHO_TABLERO] = nullptr;
-					actualizarTablero();
-					return true;
-				}
-			}
-			return false;			//Si no se ha podido porque no es posible
-		}
-		else
-		{
-			for (const Pieza* puedeComer:leer(movimiento.inicio)->getPuedeComer())
-			{
-				if (puedeComer == leer(movimiento.fin))
-				{
-					borrar(movimiento.fin); //Liberar espacio de memoria de la pieza comida
-					tablero[movimiento.fin.x + movimiento.fin.y * ANCHO_TABLERO] = leer(movimiento.inicio);
-					leer(movimiento.fin)->posicion = movimiento.fin;
-					tablero[movimiento.inicio.x + movimiento.inicio.y * ANCHO_TABLERO] = nullptr;
-					actualizarTablero();
-					return true;
-				}
-			}
-			return false; //Si no se ha podido porque no es posible
-		}
 	}
 }

@@ -11,6 +11,7 @@ class Tablero
 {
 	//Un tablero contiene todas las piezas
 	Pieza* tablero[ANCHO_TABLERO * ANCHO_TABLERO];
+	bool ColorDelTurno = true;
 
 	void escribir(const Posicion& posicion, Pieza* pieza);											//Escribe una pieza en una posición	
 	void borrar(const Posicion& posicion);															//Borra la pieza en una posición
@@ -28,7 +29,9 @@ public:
 	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO];}		//Devuelve el puntero a pieza de una posición leóda
 	bool mover(const Movimiento& movimiento);																		//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
 																														//No implementada distinción por turnos
-	bool jaqueMate() const { return 0; }//TODO
+	
+	void cambiarTurno() { ColorDelTurno = !ColorDelTurno; }
+	bool jaqueMate() const;
 
 	//Funcion temporal para imprimir tablero por consola
 	void imprimeTablero();
