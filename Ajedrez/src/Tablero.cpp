@@ -116,7 +116,6 @@ void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
 	if (pieza != nullptr) pieza->posicion = posicion;
 }
 
-
 bool Tablero::mover(const Movimiento& movimiento) {
 	if (leer(movimiento.inicio) != nullptr && leer(movimiento.inicio)->color == ColorDelTurno)		//Si no hay pieza en p1 no se puede mover
 	{
@@ -176,8 +175,47 @@ bool Tablero::mover(const Movimiento& movimiento) {
 
 //////////////////////////////////////////////////////////////////////////////
 bool Tablero::jaqueMate() const 
-{ 
-	for (Pieza* p_pieza : tablero) if (p_pieza != nullptr && p_pieza->tipo == Pieza::tipo_t::REY && p_pieza->getAmenazas().size() == 0) return false;
+{
+	for (Pieza* p_pieza : tablero)
+	{
+		if (p_pieza != nullptr && p_pieza->color == ColorDelTurno && p_pieza->tipo == Pieza::tipo_t::REY)
+		{
+			if (p_pieza->getAmenazas().size() == 0)
+			{
+				return false;
+			}
+			else
+			{
+				if (p_pieza->getAmenazas().size()> 1)
+				{
+					//Comprobar si el rey puede mover
+
+
+					//Si no jaque mate
+				}
+				else
+				{
+					if (p_pieza->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO|| distancia(p_pieza->getAmenazas()[0]->posicion,p_pieza->posicion)<2.0)
+					{
+						//Comprobar si el rey puede mover 
+						//Comprobar si se puede comer el caballo
+
+						//Si ninguna jaque mate
+
+					}
+					else
+					{
+
+						//Comprobar si el rey puede mover (si no puede entonces jaque mate)
+						//Comprobar si se puede comer la pieza
+						//Comprobar si se puede poner algo en medio
+
+						//Si ninguna jaque mate
+					}
+				}
+			}
+		}
+	}
 	return true;
 }
 //////////////////////////////////////////////////////////////////////////////
