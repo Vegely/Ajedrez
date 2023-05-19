@@ -74,7 +74,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)\bin</OutDir>
     <IntDir>$(SolutionDir)\temp</IntDir>
-    <LibraryPath>C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\bin\</OutDir>

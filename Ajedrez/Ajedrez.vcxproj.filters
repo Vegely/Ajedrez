@@ -1,181 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\Graficos">
-      <UniqueIdentifier>{83a9fce7-cd69-4c59-9371-ff715ab53091}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Ajedrez">
-      <UniqueIdentifier>{a7b94c1a-903f-45b1-9786-3571f0da3f26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Ajedrez">
-      <UniqueIdentifier>{7fa2acfa-53c7-4dca-b232-b00d4456c369}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Graficos">
-      <UniqueIdentifier>{d65600b2-e3c8-46b9-a1a5-2e90a727619c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Graphics">
-      <UniqueIdentifier>{b1a7804a-7611-48d5-8dc7-b5a53eba1608}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Piezas">
-      <UniqueIdentifier>{8e07c095-ed6f-4aad-9326-8d4b6b5821bb}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="src\Alfil.cpp" />
+    <ClCompile Include="src\board.cpp" />
+    <ClCompile Include="src\Caballo.cpp" />
+    <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\Dama.cpp" />
+    <ClCompile Include="src\graphics.cpp" />
+    <ClCompile Include="src\IA.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Movimiento.cpp" />
+    <ClCompile Include="src\Peon.cpp" />
+    <ClCompile Include="src\Pieza.cpp" />
+    <ClCompile Include="src\plane.cpp" />
+    <ClCompile Include="src\Rey.cpp" />
+    <ClCompile Include="src\structs.cpp" />
+    <ClCompile Include="src\Tablero.cpp" />
+    <ClCompile Include="src\Torre.cpp" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
-    <ClCompile Include="src\Alfil.cpp">
-      <Filter>Resource Files\Ajedrez</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Caballo.cpp">
-      <Filter>Resource Files\Ajedrez</Filter>
-    </ClCompile>
-    <ClCompile Include="src\camera.cpp">
-      <Filter>Resource Files\Ajedrez</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Dama.cpp">
-      <Filter>Resource Files\Ajedrez</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Peon.cpp">
-      <Filter>Resource Files\Ajedrez</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Pieza.cpp">
-      <Filter>Resource Files\Ajedrez</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rey.cpp">
-      <Filter>Resource Files\Ajedrez</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tablero.cpp">
-      <Filter>Resource Files\Ajedrez</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Torre.cpp">
-      <Filter>Resource Files\Ajedrez</Filter>
-    </ClCompile>
-    <ClCompile Include="src\board.cpp">
-      <Filter>Resource Files\Graficos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics.cpp">
-      <Filter>Resource Files\Graficos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\plane.cpp">
-      <Filter>Resource Files\Graficos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\structs.cpp">
-      <Filter>Resource Files\Graficos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IA.cpp">
-=======
-    <ClCompile Include="src\Pieza.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tablero.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\board.cpp">
-      <Filter>Resource Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\camera.cpp">
-      <Filter>Resource Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics.cpp">
-      <Filter>Resource Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\plane.cpp">
-      <Filter>Resource Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\structs.cpp">
-      <Filter>Resource Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alfil.cpp">
-      <Filter>Resource Files\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Caballo.cpp">
-      <Filter>Resource Files\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Dama.cpp">
-      <Filter>Resource Files\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Peon.cpp">
-      <Filter>Resource Files\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rey.cpp">
-      <Filter>Resource Files\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Torre.cpp">
-      <Filter>Resource Files\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
->>>>>>> Stashed changes
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Movimiento.cpp">
-      <Filter>Resource Files\Ajedrez</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Alfil.h">
-      <Filter>Header Files\Ajedrez</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Caballo.h">
-      <Filter>Header Files\Ajedrez</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Dama.h">
-      <Filter>Header Files\Ajedrez</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Peon.h">
-      <Filter>Header Files\Ajedrez</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Pieza.h">
-      <Filter>Header Files\Ajedrez</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rey.h">
-      <Filter>Header Files\Ajedrez</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tablero.h">
-      <Filter>Header Files\Ajedrez</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Posicion.h">
-      <Filter>Header Files\Ajedrez</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Torre.h">
-      <Filter>Header Files\Ajedrez</Filter>
-    </ClInclude>
-    <ClInclude Include="src\freeglut.h">
-      <Filter>Header Files\Graficos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\camera.h">
-      <Filter>Header Files\Graficos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics.h">
-      <Filter>Header Files\Graficos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\structs.h">
-      <Filter>Header Files\Graficos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\plane.h">
-      <Filter>Header Files\Graficos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\board.h">
-      <Filter>Header Files\Graficos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Movimiento.h">
-      <Filter>Header Files\Ajedrez</Filter>
-    </ClInclude>
+    <ClInclude Include="src\Alfil.h" />
+    <ClInclude Include="src\board.h" />
+    <ClInclude Include="src\Caballo.h" />
+    <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\Dama.h" />
+    <ClInclude Include="src\freeglut.h" />
+    <ClInclude Include="src\graphics.h" />
+    <ClInclude Include="src\IA.h" />
+    <ClInclude Include="src\Movimiento.h" />
+    <ClInclude Include="src\Peon.h" />
+    <ClInclude Include="src\Pieza.h" />
+    <ClInclude Include="src\plane.h" />
+    <ClInclude Include="src\Posicion.h" />
+    <ClInclude Include="src\Rey.h" />
+    <ClInclude Include="src\structs.h" />
+    <ClInclude Include="src\Tablero.h" />
+    <ClInclude Include="src\Torre.h" />
   </ItemGroup>
 </Project>
