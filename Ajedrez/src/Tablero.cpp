@@ -75,6 +75,7 @@ Tablero::Tablero()
 	actualizarTablero(); //Se inicializan los movimientos posibles
 	numeroPiezas = 32;
 	ColorDelTurno=true;
+
 }
 
 Tablero::Tablero(const Tablero& tablero)
@@ -139,7 +140,7 @@ bool Tablero::mover(const Movimiento& movimiento) {
 					escribir(movimiento.inicio, nullptr);
 					actualizarTablero();
 
-					if (leer(ReyPos[leer(movimiento.inicio)->color])->amenazas.size() > 0) //Si al mover pones el rey en jaque deshaces el movimiento
+					if (leer(ReyPos[ColorDelTurno])->amenazas.size() > 0) //Si al mover pones el rey en jaque deshaces el movimiento
 					{
 						escribir(movimiento.inicio, leer(movimiento.fin));
 						escribir(movimiento.fin, nullptr);
@@ -169,7 +170,7 @@ bool Tablero::mover(const Movimiento& movimiento) {
 					escribir(movimiento.inicio, nullptr);
 					actualizarTablero();
 
-					if (leer(ReyPos[leer(movimiento.inicio)->color])->amenazas.size() > 0) //Si al mover pones el rey en jaque deshaces el movimiento
+					if (leer(ReyPos[ColorDelTurno])->amenazas.size() > 0) //Si al mover pones el rey en jaque deshaces el movimiento
 					{
 						escribir(movimiento.inicio, leer(movimiento.fin));
 						escribir(movimiento.fin, p_piezaComida);
@@ -245,6 +246,7 @@ bool Tablero::reyAhogado() const {
 		}
 
 	}
+	return false;
 
 }
 
@@ -275,7 +277,7 @@ bool Tablero::tablasMaterialInsuficiente() const {
 						if (!PrimerAlfil) {
 							colorPrueba=piezasPrueba->color;
 							PrimerAlfil = true;
-							ColorAlfil = piezasPrueba->posicion.x % 2;
+							ColorAlfil = piezasPrueba->posicion.x % 2+ piezasPrueba->posicion.y % 2; //Todas las casillas o son par/impar o par/par impar/impar
 						}
 						else
 						{
@@ -285,7 +287,8 @@ bool Tablero::tablasMaterialInsuficiente() const {
 							}
 							else
 							{
-								if (piezasPrueba->posicion.x%2 != ColorAlfil)
+
+								if ((piezasPrueba->posicion.x%2 + piezasPrueba->posicion.y % 2) == ColorAlfil)
 								{
 									return true;
 								}

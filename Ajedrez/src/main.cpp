@@ -11,6 +11,7 @@ int main(int argc, char* argv[])
 	//init(&argc, argv, "Ajedrez", 1280, 720);
 	//TEST UNITARIO PARA VER SI MUEVEN Y COMEN LAS PIEZAS
 	////////////////////////////////////////////////////////////
+
 	tablero.imprimeTablero();
 	std::cin;
 	tablero.mover(Movimiento(Posicion{ 1,0 }, Posicion{ 2,2 }));
@@ -29,7 +30,7 @@ int main(int argc, char* argv[])
 	tablero.imprimeTablero();
 	////////////////////////////////////////////////////////////
 	
-	std::cout << "1";
+
 
 	return 0;
 }
