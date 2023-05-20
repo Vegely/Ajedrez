@@ -9,7 +9,6 @@
 #include <string>
 #include <cmath>
 
-
 constexpr auto NUM_LINEAS = 40;
 constexpr auto COEFF_DIFERENCIA_MATERIAL = 50.0;
 constexpr auto COEFF_AMENAZAS_PELIGROSAS = 40.0;

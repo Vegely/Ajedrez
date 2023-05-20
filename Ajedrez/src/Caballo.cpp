@@ -28,6 +28,5 @@ void Caballo::actualizarVariables() {
 				tablero.leer(posicion_prueba)->addProtecciones(this);		//Añade la pieza amiga a esta_protegiendo
 			}
 		}
-
 	}
 }
