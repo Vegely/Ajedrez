@@ -12,6 +12,15 @@
     <ClCompile Include="src\Rey.cpp" />
     <ClCompile Include="src\Tablero.cpp" />
     <ClCompile Include="src\Torre.cpp" />
+    <ClCompile Include="src\Callbacks.cpp">
+      <Filter>Graficos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>Graficos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Globals.cpp">
+      <Filter>Graficos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Alfil.h" />
@@ -25,6 +34,15 @@
     <ClInclude Include="src\Rey.h" />
     <ClInclude Include="src\Tablero.h" />
     <ClInclude Include="src\Torre.h" />
+    <ClInclude Include="src\Callbacks.h">
+      <Filter>Graficos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera.h">
+      <Filter>Graficos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Globals.h">
+      <Filter>Graficos</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graficos">
