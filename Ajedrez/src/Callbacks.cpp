@@ -1,13 +1,57 @@
 // Callbacks.cpp | Source file for callback functions called by GLUT
 
 #include "Callbacks.h"
+#include <vector>
 
 // Global variables for the model data
-const aiScene* scene;
-GLuint model_list;
+std::vector<Model> models;
 
 // Camera
 Camera camera({ 0.0f, 10.0f, 10.0f }, { 0 });
+
+void import_model(const char* file_path)
+{
+	// Create an instance of the Assimp importer and load the model file
+	Assimp::Importer importer;
+	GLuint model_list = 0;
+	const aiScene* scene = importer.ReadFile(file_path,
+		aiProcess_CalcTangentSpace		|
+		aiProcess_Triangulate			|
+		aiProcess_JoinIdenticalVertices |
+		aiProcess_SortByPType);
+
+	if (!scene)
+	{
+		std::cerr << "Failed to load model: " << importer.GetErrorString() << std::endl;
+		return;
+	}
+	else
+		std::cout << "Model loaded succesfully." << std::endl;
+
+	// Creates a display list for the model
+	model_list = glGenLists(1);
+	glNewList(model_list, GL_COMPILE);
+
+	// Traverses the scene graph and render each mesh
+	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
+	{
+		const aiMesh* mesh = scene->mMeshes[i];
+		glBegin(GL_TRIANGLES);
+		for (int j = 0; j < mesh->mNumFaces; j++)
+		{
+			const aiFace& face = mesh->mFaces[j];
+			for (int k = 0; k < face.mNumIndices; k++)
+			{
+				const aiVector3D& vertex = mesh->mVertices[face.mIndices[k]];
+				glVertex3f(vertex.x, vertex.y, vertex.z);
+			}
+		}
+		glEnd();
+	}
+	glEndList();
+
+	models.push_back({ scene, model_list });
+}
 
 void graphicsInit(int* argc, char** argv)
 {
@@ -15,11 +59,11 @@ void graphicsInit(int* argc, char** argv)
 	glutInit(argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Assimp Model Viewer");
+	glutCreateWindow("FlatChess");
 
 	// Load the model file
-	import_model("bin/modelos/rey_blender.obj");
-	//import_model("bin/modelos/teapot.obj");
+	import_model("modelos/rey_blender.obj");
+	import_model("modelos/teapot.obj");
 
 	// Set up the OpenGL state
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -55,9 +99,12 @@ void graphicsInit(int* argc, char** argv)
 // Continuously draws what it is specified to it.
 void OnDraw(void)
 {
-	glTranslatef(5, 0, 0);
-		glCallList(model_list);
-	glTranslatef(-5, 0, 0);
+	for (int i = 0; i < models.size(); i++)
+	{
+		glTranslatef(i * 10, 0, 0);
+			glCallList(models[i].model_list);
+		glTranslatef(-i * 10, 0, 0);
+	}
 
 	glutSwapBuffers();
 	glutPostRedisplay();
@@ -199,43 +246,3 @@ void debugAxis(void)
 	}
 }
 
-void import_model(const char* filename)
-{
-	// Create an instance of the Assimp importer and load the model file
-	Assimp::Importer importer;
-	scene = importer.ReadFile(filename,
-		aiProcess_CalcTangentSpace |
-		aiProcess_Triangulate |
-		aiProcess_JoinIdenticalVertices |
-		aiProcess_SortByPType);
-
-	if (!scene)
-	{
-		std::cerr << "Failed to load model: " << importer.GetErrorString() << std::endl;
-		return;
-	}
-	else
-		std::cout << "Model loaded succesfully." << std::endl;
-
-	// Create a display list for the model
-	model_list = glGenLists(1);
-	glNewList(model_list, GL_COMPILE);
-
-	// Traverse the scene graph and render each mesh
-	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
-	{
-		const aiMesh* mesh = scene->mMeshes[i];
-		glBegin(GL_TRIANGLES);
-		for (int j = 0; j < mesh->mNumFaces; j++)
-		{
-			const aiFace& face = mesh->mFaces[j];
-			for (int k = 0; k < face.mNumIndices; k++)
-			{
-				const aiVector3D& vertex = mesh->mVertices[face.mIndices[k]];
-				glVertex3f(vertex.x, vertex.y, vertex.z);
-			}
-		}
-		glEnd();
-	}
-	glEndList();
-}

@@ -15,8 +15,16 @@
 #include <string>
 #include <iostream>
 
+struct Model
+{
+	const aiScene* scene;
+	GLuint model_list;
+};
+
+/* INITIALIZATION */
 void graphicsInit(int* argc, char** argv);
 
+/* GLUT CALLBACKS */
 void OnDraw(void);
 void OnTimer(int value);
 void OnReshape(int w, int h);
@@ -26,8 +34,10 @@ void OnKeyboardDown(const unsigned char key, int x, int y);
 void OnKeyboardUp(const unsigned char key, int x, int y);
 void OnKeyboardSpecial(int key, int x, int y);
 
+/* DEBUG AXIS */
 void debugAxis(void);
 
+/* ASSIMP FUNCTIONS */
 void import_model(const char* filename);
 
 #endif
