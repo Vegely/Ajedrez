@@ -35,7 +35,7 @@ Tablero::Tablero()
 	//Se añaden las torres
 	escribir(Posicion(0, 0), new Torre(*this, true));
 	escribir(Posicion(7, 0), new Torre(*this, true));
-
+	
 	//Se escriben los caballos
 	escribir(Posicion(1, 0), new Caballo(*this, true));
 	escribir(Posicion(6, 0), new Caballo(*this, true));
@@ -47,6 +47,7 @@ Tablero::Tablero()
 	//Se escribe la dama y el rey
 	escribir(Posicion(3, 0), new Dama(*this, true));
 	escribir(Posicion(4, 0), new Rey(*this, true));
+	ReyPos[1] = Posicion{4,0};
 
 	//Negras
 	//Se añaden los peones
@@ -69,8 +70,11 @@ Tablero::Tablero()
 	//Se escribe la dama y el rey
 	escribir(Posicion(3, 7), new Dama(*this, false));
 	escribir(Posicion(4, 7), new Rey(*this, false));
+	ReyPos[0] = Posicion{ 4,7 };
 
 	actualizarTablero(); //Se inicializan los movimientos posibles
+	numeroPiezas = 32;
+	ColorDelTurno=true;
 }
 
 Tablero::Tablero(const Tablero& tablero)
@@ -103,6 +107,12 @@ Tablero::Tablero(const Tablero& tablero)
 		}
 		else this->tablero[i] = nullptr;
 	}
+	//Copiar resto de variables
+	this->numeroPiezas = tablero.numeroPiezas;
+	this->ColorDelTurno = tablero.ColorDelTurno;
+	this->ReyPos[0] = tablero.ReyPos[0];
+	this->ReyPos[1] = tablero.ReyPos[1];
+
 }
 
 Tablero::~Tablero()
@@ -129,15 +139,21 @@ bool Tablero::mover(const Movimiento& movimiento) {
 					escribir(movimiento.inicio, nullptr);
 					actualizarTablero();
 
-					if (!jaqueMate())
+					if (leer(ReyPos[leer(movimiento.inicio)->color])->amenazas.size() > 0) //Si al mover pones el rey en jaque deshaces el movimiento
 					{
-						cambiarTurno();
-						return true;
+						escribir(movimiento.inicio, leer(movimiento.fin));
+						escribir(movimiento.fin, nullptr);
+						actualizarTablero();
+						return false;
 					}
-					
-					escribir(movimiento.inicio, leer(movimiento.fin));
-					escribir(movimiento.fin, nullptr);
-					actualizarTablero();
+						
+					if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY)
+					{
+						ReyPos[leer(movimiento.inicio)->color] = movimiento.fin;
+						
+					}
+
+					return true;					
 				}
 			}
 		}
@@ -153,17 +169,21 @@ bool Tablero::mover(const Movimiento& movimiento) {
 					escribir(movimiento.inicio, nullptr);
 					actualizarTablero();
 
-					if (!jaqueMate())
+					if (leer(ReyPos[leer(movimiento.inicio)->color])->amenazas.size() > 0) //Si al mover pones el rey en jaque deshaces el movimiento
 					{
-						delete p_piezaComida; //Liberar espacio de memoria de la pieza comida
-						
-						cambiarTurno();
-						return true;
+						escribir(movimiento.inicio, leer(movimiento.fin));
+						escribir(movimiento.fin, p_piezaComida);
+						actualizarTablero();
+						return false;
 					}
 
-					escribir(movimiento.inicio, leer(movimiento.fin));
-					escribir(movimiento.fin, p_piezaComida);
-					actualizarTablero();
+					if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY)
+					{
+						ReyPos[leer(movimiento.inicio)->color] = movimiento.fin;
+					}
+
+					numeroPiezas--;
+					return true;
 				}
 			}
 		}
@@ -173,52 +193,117 @@ bool Tablero::mover(const Movimiento& movimiento) {
 }
 
 
-//////////////////////////////////////////////////////////////////////////////
+
+
 bool Tablero::jaqueMate() const 
 {
-	for (Pieza* p_pieza : tablero)
+	if (leer(ReyPos[ColorDelTurno]) != nullptr )
 	{
-		if (p_pieza != nullptr && p_pieza->color == ColorDelTurno && p_pieza->tipo == Pieza::tipo_t::REY)
+		if (leer(ReyPos[ColorDelTurno])->getAmenazas().size() == 0)
 		{
-			if (p_pieza->getAmenazas().size() == 0)
+			return false;
+		}
+		else
+		{
+			if (leer(ReyPos[ColorDelTurno])->getAmenazas().size()> 1)
 			{
-				return false;
+				//Comprobar si el rey puede mover
+
+
+				//Si no jaque mate
 			}
 			else
 			{
-				if (p_pieza->getAmenazas().size()> 1)
+				if (leer(ReyPos[ColorDelTurno])->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO|| distancia(leer(ReyPos[ColorDelTurno])->getAmenazas()[0]->posicion, leer(ReyPos[ColorDelTurno])->posicion)<2.0)
 				{
-					//Comprobar si el rey puede mover
+					//Comprobar si el rey puede mover 
+					//Comprobar si se puede comer el caballo
 
+					//Si ninguna jaque mate
 
-					//Si no jaque mate
 				}
 				else
 				{
-					if (p_pieza->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO|| distancia(p_pieza->getAmenazas()[0]->posicion,p_pieza->posicion)<2.0)
-					{
-						//Comprobar si el rey puede mover 
-						//Comprobar si se puede comer el caballo
 
-						//Si ninguna jaque mate
+					//Comprobar si el rey puede mover (si no puede entonces jaque mate)
+					//Comprobar si se puede comer la pieza
+					//Comprobar si se puede poner algo en medio
 
-					}
-					else
-					{
-
-						//Comprobar si el rey puede mover (si no puede entonces jaque mate)
-						//Comprobar si se puede comer la pieza
-						//Comprobar si se puede poner algo en medio
-
-						//Si ninguna jaque mate
-					}
+					//Si ninguna jaque mate
 				}
 			}
 		}
 	}
-	return true;
+	return false;
 }
-//////////////////////////////////////////////////////////////////////////////
+
+bool Tablero::reyAhogado() const {
+	for (auto piezasColor : tablero)
+	{
+		if (piezasColor != nullptr && piezasColor->color == ColorDelTurno) {
+
+		}
+
+	}
+
+}
+
+bool Tablero::tablasMaterialInsuficiente() const {
+	bool colorPrueba;
+	bool PrimerAlfil=false;
+	int ColorAlfil;
+
+	if (numeroPiezas == 2) //Comprobar si solo quedan los reyes
+	{
+		return true;
+	}
+
+	if (numeroPiezas <= 4) {
+		for (auto piezasPrueba : tablero)
+		{
+			if (piezasPrueba != nullptr)
+			{
+				if (numeroPiezas == 3) //Comprobar si es Caballo + Rey o Alfil + Rey vs Rey
+				{
+					if (piezasPrueba->tipo == Pieza::tipo_t::CABALLO || piezasPrueba->tipo == Pieza::tipo_t::ALFIL)
+						return true;
+				}
+				else //Comprobar si uno tiene 1 alfil de un color y el rival el de color contrario
+				{
+					if (piezasPrueba->tipo == Pieza::tipo_t::ALFIL)
+					{
+						if (!PrimerAlfil) {
+							colorPrueba=piezasPrueba->color;
+							PrimerAlfil = true;
+							ColorAlfil = piezasPrueba->posicion.x % 2;
+						}
+						else
+						{
+							if (piezasPrueba->color == colorPrueba)
+							{
+								return false;
+							}
+							else
+							{
+								if (piezasPrueba->posicion.x%2 != ColorAlfil)
+								{
+									return true;
+								}
+								else
+								{
+									return false;
+								}
+							}
+						}
+						
+					}	
+				}
+			}
+		}
+	}
+
+	return false;
+}
 
 //////////////////////////////////////////////////////////////////////////////
 void Tablero::imprimeTablero() {
