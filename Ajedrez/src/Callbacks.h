@@ -14,11 +14,13 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 
 struct Model
 {
 	const aiScene* scene;
 	GLuint model_list;
+	std::vector<GLuint> textures;
 };
 
 /* INITIALIZATION */
@@ -38,6 +40,7 @@ void OnKeyboardSpecial(int key, int x, int y);
 void debugAxis(void);
 
 /* ASSIMP FUNCTIONS */
-void import_model(const char* filename);
+void importModel(const char* file_path);
+GLuint loadTexture(const std::string& file_path);
 
 #endif
