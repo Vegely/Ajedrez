@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< HEAD:Ajedrez/Ajedrez.vcxproj
     <ClCompile Include="src\Alfil.cpp" />
     <ClCompile Include="src\Caballo.cpp" />
     <ClCompile Include="src\Callbacks.cpp" />
@@ -179,6 +180,23 @@
     <ClInclude Include="src\Rey.h" />
     <ClInclude Include="src\Tablero.h" />
     <ClInclude Include="src\Torre.h" />
+=======
+    <ClCompile Include="Asciigraphics.cpp" />
+    <ClCompile Include="Campo.cpp" />
+    <ClCompile Include="DatosRanking.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Partida.cpp" />
+    <ClCompile Include="Ranking.cpp" />
+    <ClCompile Include="NoFinalizadas.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AsciiGraphics.h" />
+    <ClInclude Include="Campo.h" />
+    <ClInclude Include="DatosRanking.h" />
+    <ClInclude Include="Partida.h" />
+    <ClInclude Include="Ranking.h" />
+    <ClInclude Include="NoFinalizadas.h" />
+>>>>>>> gestionRankings:Proyecto_Cpp/Proyecto_Cpp.vcxproj
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
