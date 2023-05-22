@@ -185,6 +185,7 @@
     <ClCompile Include="Campo.cpp" />
     <ClCompile Include="DatosRanking.cpp" />
     <ClCompile Include="main.cpp" />
+<<<<<<< HEAD:Ajedrez/Ajedrez.vcxproj
     <ClCompile Include="Partida.cpp" />
     <ClCompile Include="Ranking.cpp" />
     <ClCompile Include="NoFinalizadas.cpp" />
@@ -197,6 +198,17 @@
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="NoFinalizadas.h" />
 >>>>>>> gestionRankings:Proyecto_Cpp/Proyecto_Cpp.vcxproj
+=======
+    <ClCompile Include="Cliente.cpp" />
+    <ClCompile Include="Servidor.cpp" />
+    <ClCompile Include="Socket.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AsciiGraphics.h" />
+    <ClInclude Include="Cliente.h" />
+    <ClInclude Include="Servidor.h" />
+    <ClInclude Include="Socket.h" />
+>>>>>>> Red:Proyecto_Cpp/Proyecto_Cpp.vcxproj
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
