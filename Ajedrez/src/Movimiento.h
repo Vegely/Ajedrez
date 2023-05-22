@@ -12,6 +12,11 @@ struct Movimiento
 
 	Movimiento() {}
 	Movimiento(Posicion inicio, Posicion fin) : inicio(inicio), fin(fin) {}
+
+	Movimiento operator- () { return Movimiento(this->fin, this->inicio); }
+
+	bool operator== (const Movimiento& rhs) const { return (this->inicio == rhs.inicio && this->fin == rhs.fin); }
+	bool operator!= (const Movimiento& rhs) const { return !(*this == rhs); }
 };
 
 struct MovimientoEvaluado

@@ -1,6 +1,7 @@
 #include "Rey.h"
 #include "Tablero.h"
 
+
 //El rey no puede clavarse
 DatosClavada Rey::actualizarVariables(bool clavada, Posicion direccionClavada, bool tableroIlegalesRey[2][8][8]) {
 	clearVariables();
@@ -30,29 +31,33 @@ DatosClavada Rey::actualizarVariables(bool clavada, Posicion direccionClavada, b
 			}
 		}
 
-	
-	Posicion posicionesTorres[2][2] = { { Posicion{7,7}, Posicion{7,0} }, { Posicion{0,7}, Posicion{0,0} } };
-	if (noHaMovido)
-	{
-		if (tablero.leer(posicionesTorres[color][0])->tipo==Pieza::tipo_t::TORRE && tablero.leer(posicionesTorres[color][0])->noHaMovido )
-		{
-			if (tablero.leer(posicionesTorres[color][0] + Posicion{ 0,-1 }) == nullptr
-				&& tablero.leer(posicionesTorres[color][0] + Posicion{ 0,-2 }) == nullptr
-				&& tableroIlegalesRey[color][(posicionesTorres[color][0] + Posicion{ 0,-1 }).x][(posicionesTorres[color][0] + Posicion{ 0,-1 }).y] == false
-				&& tableroIlegalesRey[color][(posicionesTorres[color][0] + Posicion{ 0,-2 }).x][(posicionesTorres[color][0] + Posicion{ 0,-2 }).y] == false)
-			{
-				puedeEnrocar[0] = true;
-			}
-		}
 
-		if (tablero.leer(posicionesTorres[color][1])->tipo == Pieza::tipo_t::TORRE && tablero.leer(posicionesTorres[color][1])->noHaMovido)
+		Posicion posicionesTorres[2][2] = { { Posicion{7,7}, Posicion{0,7} }, { Posicion{7,0}, Posicion{0,0} } };
+		if (noHaMovido)
 		{
-			if (tablero.leer(posicionesTorres[color][1] + Posicion{ 0,1 }) == nullptr
-				&& tablero.leer(posicionesTorres[color][1] + Posicion{ 0,2 }) == nullptr
-				&& tableroIlegalesRey[color][(posicionesTorres[color][1] + Posicion{ 0,1 }).x][(posicionesTorres[color][1] + Posicion{ 0,1 }).y] == false
-				&& tableroIlegalesRey[color][(posicionesTorres[color][1] + Posicion{ 0,2 }).x][(posicionesTorres[color][1] + Posicion{ 0,2 }).y] == false)
+			if (tablero.leer(posicionesTorres[color][0])->tipo == Pieza::tipo_t::TORRE && tablero.leer(posicionesTorres[color][0])->noHaMovido)
 			{
-				puedeEnrocar[1] = true;
+				
+				if (tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ -1,0 })) == nullptr && tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ -2,0 })) == nullptr
+					&& tableroIlegalesRey[color][(posicionesTorres[color][0] + Posicion{ -1,0 }).x][(posicionesTorres[color][0] + Posicion{ -1,0 }).y] == false
+					&& tableroIlegalesRey[color][(posicionesTorres[color][0] + Posicion{ -2 ,0 }).x][(posicionesTorres[color][0] + Posicion{ -2 ,0 }).y] == false)
+
+					
+				
+				{
+					puedeEnrocar[0] = true;
+				}
+			}
+
+			if (tablero.leer(posicionesTorres[color][1])->tipo == Pieza::tipo_t::TORRE && tablero.leer(posicionesTorres[color][1])->noHaMovido)
+			{
+				if (tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ 1,0 })) == nullptr
+					&& tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ 2,0 })) == nullptr
+					&& tableroIlegalesRey[color][(posicionesTorres[color][1] + Posicion{1,0 }).x][(posicionesTorres[color][1] + Posicion{ 1,0 }).y] == false
+					&& tableroIlegalesRey[color][(posicionesTorres[color][1] + Posicion{ 2,0 }).x][(posicionesTorres[color][1] + Posicion{2,0 }).y] == false)
+				{
+					puedeEnrocar[1] = true;
+				}
 			}
 		}
 	}

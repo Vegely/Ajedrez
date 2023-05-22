@@ -10,7 +10,7 @@
 #include <cmath>
 
 
-constexpr auto NUM_LINEAS = 40;
+//constexpr auto NUM_LINEAS = 40;
 constexpr auto COEFF_DIFERENCIA_MATERIAL = 50.0;
 constexpr auto COEFF_AMENAZAS_PELIGROSAS = 40.0;
 constexpr auto COEFF_AMENAZAS_POCO_PELIGROSAS = 10.0;
@@ -47,48 +47,48 @@ Tablero::Tablero()
 		escribir(Posicion(i, 1), new Peon(*this, true));
 	}
 	//Se añaden las torres
-	escribir(Posicion(0, 0), new Torre(*this, true));
-	escribir(Posicion(7, 0), new Torre(*this, true));
-	
-	//Se escriben los caballos
-	escribir(Posicion(1, 0), new Caballo(*this, true));
-	escribir(Posicion(6, 0), new Caballo(*this, true));
+escribir(Posicion(0, 0), new Torre(*this, true));
+escribir(Posicion(7, 0), new Torre(*this, true));
 
-	//Se escriben los alfiles
-	escribir(Posicion(2, 0), new Alfil(*this, true));
-	escribir(Posicion(5, 0), new Alfil(*this, true));
+//Se escriben los caballos
+escribir(Posicion(1, 0), new Caballo(*this, true));
+escribir(Posicion(6, 0), new Caballo(*this, true));
 
-	//Se escribe la dama y el rey
-	escribir(Posicion(3, 0), new Dama(*this, true));
-	escribir(Posicion(4, 0), new Rey(*this, true));
-	ReyPos[1] = Posicion{4,0};
+//Se escriben los alfiles
+escribir(Posicion(2, 0), new Alfil(*this, true));
+escribir(Posicion(5, 0), new Alfil(*this, true));
 
-	//Negras
-	//Se añaden los peones
-	for (int i = 0; i < ANCHO_TABLERO; i++)
-	{
-		escribir(Posicion(i, 6), new Peon(*this, false));
-	}
-	//Se añaden las torres
-	escribir(Posicion(0, 7), new Torre(*this, false));
-	escribir(Posicion(7, 7), new Torre(*this, false));
+//Se escribe la dama y el rey
+escribir(Posicion(3, 0), new Dama(*this, true));
+escribir(Posicion(4, 0), new Rey(*this, true));
+reyPos[1] = Posicion{ 4,0 };
 
-	//Se escriben los caballos
-	escribir(Posicion(1, 7), new Caballo(*this, false));
-	escribir(Posicion(6, 7), new Caballo(*this, false));
+//Negras
+//Se añaden los peones
+for (int i = 0; i < ANCHO_TABLERO; i++)
+{
+	escribir(Posicion(i, 6), new Peon(*this, false));
+}
+//Se añaden las torres
+escribir(Posicion(0, 7), new Torre(*this, false));
+escribir(Posicion(7, 7), new Torre(*this, false));
 
-	//Se escriben los alfiles
-	escribir(Posicion(2, 7), new Alfil(*this, false));
-	escribir(Posicion(5, 7), new Alfil(*this, false));
+//Se escriben los caballos
+escribir(Posicion(1, 7), new Caballo(*this, false));
+escribir(Posicion(6, 7), new Caballo(*this, false));
 
-	//Se escribe la dama y el rey
-	escribir(Posicion(3, 7), new Dama(*this, false));
-	escribir(Posicion(4, 7), new Rey(*this, false));
-	ReyPos[0] = Posicion{ 4,7 };
+//Se escriben los alfiles
+escribir(Posicion(2, 7), new Alfil(*this, false));
+escribir(Posicion(5, 7), new Alfil(*this, false));
 
-	actualizarTablero(); //Se inicializan los movimientos posibles
-	numeroPiezas = 32;
-	ColorDelTurno=true;
+//Se escribe la dama y el rey
+escribir(Posicion(3, 7), new Dama(*this, false));
+escribir(Posicion(4, 7), new Rey(*this, false));
+reyPos[0] = Posicion{ 4,7 };
+
+actualizarTablero(); //Se inicializan los movimientos posibles
+numeroPiezas = 32;
+colorDelTurno = true;
 
 }
 
@@ -124,9 +124,9 @@ Tablero::Tablero(const Tablero& tablero)
 	}
 	//Copiar resto de variables
 	this->numeroPiezas = tablero.numeroPiezas;
-	this->ColorDelTurno = tablero.ColorDelTurno;
-	this->ReyPos[0] = tablero.ReyPos[0];
-	this->ReyPos[1] = tablero.ReyPos[1];
+	this->colorDelTurno = tablero.colorDelTurno;
+	this->reyPos[0] = tablero.reyPos[0];
+	this->reyPos[1] = tablero.reyPos[1];
 
 }
 
@@ -141,70 +141,77 @@ void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
 	if (pieza != nullptr) pieza->posicion = posicion;
 }
 
-bool Tablero::mover(const Movimiento& movimiento) {
-	if (leer(movimiento.inicio) != nullptr && leer(movimiento.inicio)->color == ColorDelTurno)		//Si no hay pieza en p1 no se puede mover
-	{
-		if (leer(movimiento.fin) == nullptr)	//Si no hay pieza en p2 si se puede mover se mueve
-		{
-			for (const Posicion puedeMover : leer(movimiento.inicio)->getPuedeMover())
-			{
-				if (puedeMover == movimiento.fin)
-				{
-					escribir(movimiento.fin, leer(movimiento.inicio));
-					escribir(movimiento.inicio, nullptr);
-					actualizarTablero();
+void Tablero::mover(const Movimiento& movimiento) {
+	escribir(movimiento.fin, leer(movimiento.inicio));
+	escribir(movimiento.inicio, nullptr);
 
-					if (leer(ReyPos[ColorDelTurno])->amenazas.size() > 0) //Si al mover pones el rey en jaque deshaces el movimiento
-					{
-						escribir(movimiento.inicio, leer(movimiento.fin));
-						escribir(movimiento.fin, nullptr);
-						actualizarTablero();
-						return false;
-					}
-						
-					if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY)
-					{
-						ReyPos[leer(movimiento.inicio)->color] = movimiento.fin;
-						
-					}
+	if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY) reyPos[leer(movimiento.fin)->color] = movimiento.fin; // Si se mueve un rey acctualizar la variable reyPos
 
-					return true;					
-				}
-			}
-		}
-		else
-		{
-			for (const Pieza* puedeComer:leer(movimiento.inicio)->getPuedeComer())
-			{
-				if (puedeComer == leer(movimiento.fin))
-				{
-					Pieza* p_piezaComida = leer(movimiento.fin);
+	actualizarTablero();
 
-					escribir(movimiento.fin, leer(movimiento.inicio));
-					escribir(movimiento.inicio, nullptr);
-					actualizarTablero();
+	//if (leer(movimiento.inicio) != nullptr && leer(movimiento.inicio)->color == ColorDelTurno)		//Si no hay pieza en p1 no se puede mover
+	//{
+	//	if (leer(movimiento.fin) == nullptr)	//Si no hay pieza en p2 si se puede mover se mueve
+	//	{
+	//		for (const Posicion puedeMover : leer(movimiento.inicio)->getPuedeMover())
+	//		{
+	//			if (puedeMover == movimiento.fin)
+	//			{
+	//				escribir(movimiento.fin, leer(movimiento.inicio));
+	//				escribir(movimiento.inicio, nullptr);
+	//				actualizarTablero();
 
-					if (leer(ReyPos[ColorDelTurno])->amenazas.size() > 0) //Si al mover pones el rey en jaque deshaces el movimiento
-					{
-						escribir(movimiento.inicio, leer(movimiento.fin));
-						escribir(movimiento.fin, p_piezaComida);
-						actualizarTablero();
-						return false;
-					}
+	//				if (leer(ReyPos[ColorDelTurno])->amenazas.size() > 0) //Si al mover pones el rey en jaque deshaces el movimiento
+	//				{
+	//					escribir(movimiento.inicio, leer(movimiento.fin));
+	//					escribir(movimiento.fin, nullptr);
+	//					actualizarTablero();
+	//					return false;
+	//				}
+	//					
+	//				if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY)
+	//				{
+	//					ReyPos[leer(movimiento.inicio)->color] = movimiento.fin;
+	//					
+	//				}
 
-					if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY)
-					{
-						ReyPos[leer(movimiento.inicio)->color] = movimiento.fin;
-					}
+	//				return true;					
+	//			}
+	//		}
+	//	}
+	//	else
+	//	{
+	//		for (const Pieza* puedeComer:leer(movimiento.inicio)->getPuedeComer())
+	//		{
+	//			if (puedeComer == leer(movimiento.fin))
+	//			{
+	//				Pieza* p_piezaComida = leer(movimiento.fin);
 
-					numeroPiezas--;
-					return true;
-				}
-			}
-		}
-	}
-	
-	return false;
+	//				escribir(movimiento.fin, leer(movimiento.inicio));
+	//				escribir(movimiento.inicio, nullptr);
+	//				actualizarTablero();
+
+	//				if (leer(ReyPos[ColorDelTurno])->amenazas.size() > 0) //Si al mover pones el rey en jaque deshaces el movimiento
+	//				{
+	//					escribir(movimiento.inicio, leer(movimiento.fin));
+	//					escribir(movimiento.fin, p_piezaComida);
+	//					actualizarTablero();
+	//					return false;
+	//				}
+
+	//				if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY)
+	//				{
+	//					ReyPos[leer(movimiento.inicio)->color] = movimiento.fin;
+	//				}
+
+	//				numeroPiezas--;
+	//				return true;
+	//			}
+	//		}
+	//	}
+	//}
+	//
+	//return false;
 }
 
 
@@ -212,15 +219,15 @@ bool Tablero::mover(const Movimiento& movimiento) {
 
 bool Tablero::jaqueMate() const 
 {
-	if (leer(ReyPos[ColorDelTurno]) != nullptr )
+	if (leer(reyPos[colorDelTurno]) != nullptr )
 	{
-		if (leer(ReyPos[ColorDelTurno])->getAmenazas().size() == 0)
+		if (leer(reyPos[colorDelTurno])->getAmenazas().size() == 0)
 		{
 			return false;
 		}
 		else
 		{
-			if (leer(ReyPos[ColorDelTurno])->getAmenazas().size()> 1)
+			if (leer(reyPos[colorDelTurno])->getAmenazas().size()> 1)
 			{
 				//Comprobar si el rey puede mover
 
@@ -229,7 +236,7 @@ bool Tablero::jaqueMate() const
 			}
 			else
 			{
-				if (leer(ReyPos[ColorDelTurno])->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO|| distancia(leer(ReyPos[ColorDelTurno])->getAmenazas()[0]->posicion, leer(ReyPos[ColorDelTurno])->posicion)<2.0)
+				if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO|| distancia(leer(reyPos[colorDelTurno])->getAmenazas()[0]->posicion, leer(reyPos[colorDelTurno])->posicion)<2.0)
 				{
 					//Comprobar si el rey puede mover 
 					//Comprobar si se puede comer el caballo
@@ -255,7 +262,7 @@ bool Tablero::jaqueMate() const
 bool Tablero::reyAhogado() const {
 	for (auto piezasColor : tablero)
 	{
-		if (piezasColor != nullptr && piezasColor->color == ColorDelTurno) {
+		if (piezasColor != nullptr && piezasColor->color == colorDelTurno) {
 
 		}
 
@@ -323,22 +330,22 @@ bool Tablero::tablasMaterialInsuficiente() const {
 }
 
 //////////////////////////////////////////////////////////////////////////////
-void Tablero::imprimeTablero() {
-	//Insertar lineas vacias para limpiar consola
-	for (int i = 0; i < NUM_LINEAS; i++) {
-		std::cout << std::endl << std::endl;
-	}
-	
-	// Pintar el tablero
-	int i = 0;
-	for (Pieza* p_pieza : tablero)
-	{
-		if (p_pieza == nullptr) std::cout << "---\t";
-		else std::cout << p_pieza->getNombre() << " " << p_pieza->color << "\t";
-
-		if (i++ % 8 == 7) std::cout << "\n\n";
-	}
-}
+//void Tablero::imprimeTablero() {
+//	//Insertar lineas vacias para limpiar consola
+//	for (int i = 0; i < NUM_LINEAS; i++) {
+//		std::cout << std::endl << std::endl;
+//	}
+//	
+//	// Pintar el tablero
+//	int i = 0;
+//	for (Pieza* p_pieza : tablero)
+//	{
+//		if (p_pieza == nullptr) std::cout << "---\t";
+//		else std::cout << p_pieza->getNombre() << " " << p_pieza->color << "\t";
+//
+//		if (i++ % 8 == 7) std::cout << "\n\n";
+//	}
+//}
 //////////////////////////////////////////////////////////////////////////////
 
 

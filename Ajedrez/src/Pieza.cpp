@@ -12,4 +12,3 @@ void Pieza::clearVariables()
 
 
 
-

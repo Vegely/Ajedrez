@@ -10,8 +10,8 @@ class Tablero
 {
 	//Un tablero contiene todas las piezas
 	Pieza* tablero[ANCHO_TABLERO * ANCHO_TABLERO];
-	bool ColorDelTurno;
-	Posicion ReyPos[2];
+	bool colorDelTurno;
+	Posicion reyPos[2];
 	int numeroPiezas;
 	bool tableroIlegalesRey[2][8][8] = { false };
 	std::vector<DatosClavada> datosClavada;
@@ -24,6 +24,7 @@ class Tablero
 
 public:
 	friend class IA;
+	friend class MotorDeJuego;
 
 	explicit Tablero();																									//Constructor
 	explicit Tablero(const Tablero& tablero);
@@ -31,16 +32,16 @@ public:
 
 	inline Posicion posicion(int i) const { return Posicion(i % ANCHO_TABLERO, i / ANCHO_TABLERO); }
 	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO];}		//Devuelve el puntero a pieza de una posición leóda
-	bool mover(const Movimiento& movimiento);																		//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
+	void mover(const Movimiento& movimiento);																		//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
 
-	void cambiarTurno() { ColorDelTurno = !ColorDelTurno; }
+	void cambiarTurno() { colorDelTurno = !colorDelTurno; }
 	bool jaqueMate() const;
 	bool reyAhogado() const;
 	bool tablasMaterialInsuficiente() const;
 	double evaluacion() const;
 
 	//Funcion temporal para imprimir tablero por consola
-	void imprimeTablero();
+	//void imprimeTablero();
 };
 
 
