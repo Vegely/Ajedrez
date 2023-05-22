@@ -11,9 +11,3 @@ void Pieza::clearVariables()
 }
 
 
-void Pieza::mover()
-{
-	actualizarVariables();
-}
-
-

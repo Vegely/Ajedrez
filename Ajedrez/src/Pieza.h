@@ -57,9 +57,6 @@ public:
 	explicit Pieza(const Pieza& p) :tipo(p.tipo), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegida = p.esta_protegida; amenazas = p.amenazas; }
 	virtual ~Pieza() {}
 
-	//Poder mover desde el main
-	void mover();
-
 	//Funciones para obtener las variables (deben poder usarse en un espacio de constness)
 	inline Posicion getPosicion() const { return posicion; }
 	inline bool getColor() const { return color; }
