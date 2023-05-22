@@ -2,6 +2,8 @@
 #include "Callbacks.h"
 #include <iostream>
 
+
+
 int main(int argc, char* argv[])
 {
 	Tablero tablero; //Creación del tablero con las piezas
@@ -10,6 +12,7 @@ int main(int argc, char* argv[])
 	//init(&argc, argv, "Ajedrez", 1280, 720);
 	//TEST UNITARIO PARA VER SI MUEVEN Y COMEN LAS PIEZAS
 	////////////////////////////////////////////////////////////
+	/* Desilenciar	
 	tablero.imprimeTablero();
 	std::cin.get();
 	tablero.mover(Movimiento(Posicion{ 1,0 }, Posicion{ 2,2 }));
@@ -29,6 +32,7 @@ int main(int argc, char* argv[])
 	////////////////////////////////////////////////////////////
 	
 	std::cout << "1";
+	*/
 
 	return 0;
 }

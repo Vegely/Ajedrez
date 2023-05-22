@@ -21,6 +21,9 @@
     <ClCompile Include="src\Globals.cpp">
       <Filter>Graficos</Filter>
     </ClCompile>
+    <ClCompile Include="src\CoordinadorAjedrez.cpp" />
+    <ClCompile Include="src\GestionMenus.cpp" />
+    <ClCompile Include="src\Mundo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Alfil.h" />
@@ -43,6 +46,9 @@
     <ClInclude Include="src\Globals.h">
       <Filter>Graficos</Filter>
     </ClInclude>
+    <ClInclude Include="src\CoordinadorAjedrez.h" />
+    <ClInclude Include="src\GestionMenus.h" />
+    <ClInclude Include="src\Mundo.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graficos">

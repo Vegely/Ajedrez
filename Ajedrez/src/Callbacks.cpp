@@ -1,15 +1,17 @@
 // Callbacks.cpp | Source file for callback functions called by GLUT
 
 #include "Callbacks.h"
-
+#include "CoordinadorAjedrez.h"
 #include <fstream>
 #include <sstream>
 
+CoordinadorAjedrez ajedrez;
+
 // Camera
-Camera camera({ 0.0f, 10.0f, 10.0f }, { 0 });
+//Camera camera({ 0.0f, 10.0f, 10.0f }, { 0 });
 
 // Global variables for the model data
-std::vector<Model> models;
+//std::vector<Model> models;
 // Rutas de las texturas.
 std::vector<std::string> texture_paths = { "texturas/rocks.tga", "texturas/rocks.tga" };
 
@@ -168,7 +170,7 @@ void importModel(const char* file_path)
 	}
 	glEndList();
 
-	models.push_back({ scene, model_list, textures });
+	ajedrez.mundo.models.push_back({ scene, model_list, textures });
 }
 
 void graphicsInit(int* argc, char** argv)
@@ -200,8 +202,8 @@ void graphicsInit(int* argc, char** argv)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(
-		camera.getPosition().x, camera.getPosition().y, camera.getPosition().z,
-		camera.getLookAt().x, camera.getLookAt().y, camera.getLookAt().z,
+		ajedrez.mundo.camara.getPosition().x, ajedrez.mundo.camara.getPosition().y, ajedrez.mundo.camara.getPosition().z,
+		ajedrez.mundo.camara.getLookAt().x, ajedrez.mundo.camara.getLookAt().y, ajedrez.mundo.camara.getLookAt().z,
 		0.0f, 1.0f, 0.0f);
 	glViewport(0, 0, 1920, 1080);
 
@@ -216,27 +218,22 @@ void graphicsInit(int* argc, char** argv)
 	glutMouseFunc(OnMouseClick);
 	glutPassiveMotionFunc(OnMouseMotion);
 
+
 	glutMainLoop();
 }
 
 // Continuously draws what it is specified to it.
 void OnDraw(void)
-{
-	for (int i = 0; i < models.size(); i++)
-	{
-		glTranslatef(i * 10, 0, 0);
-			glCallList(models[i].model_list);
-		glTranslatef(-i * 10, 0, 0);
-	}
+{	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	//Para definir el punto de vista
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	ajedrez.dibuja();
 	glutSwapBuffers();
-	glutPostRedisplay();
-
-	// Camera update
-	camera.update();
-
-	// Debug axis
-	debugAxis();
+	//ajedrez.dibuja();
 }
 
 // Reshapes the window if needed without resizing the objects and mantaining their proportions.
@@ -252,35 +249,35 @@ void OnReshape(int w, int h)
 // Each set time, performs the set functions.
 void OnTimer(int value)
 {
-	camera.movement(0.025);
-
+	ajedrez.mundo.camara.movement(0.025);
 	glutTimerFunc(25, OnTimer, 0);
 }
 
 void OnKeyboardDown(const unsigned char key, int x_t, int y_t)
 {
-	switch (key)
+	ajedrez.tecla(key);
+	/*switch (key)
 	{
 	case 'a':
-		camera.setSpeed({ -10.0f, 0, 0 });
+		ajedrez.mundo.camara.setSpeed({ -10.0f, 0, 0 });
 		break;
 	case 'd':
-		camera.setSpeed({ 10.0f, 0, 0 });
+		ajedrez.mundo.camara.setSpeed({ 10.0f, 0, 0 });
 		break;
 	case 's':
-		camera.setSpeed({ 0, 0, 10.0f });
+		ajedrez.mundo.camara.setSpeed({ 0, 0, 10.0f });
 		break;
 	case 'w':
-		camera.setSpeed({ 0, 0, -10.0f });
+		ajedrez.mundo.camara.setSpeed({ 0, 0, -10.0f });
 		break;
 	default:
 		break;
-	}
+	}*/
 }
 
 void OnKeyboardUp(const unsigned char key, int x, int y)
 {
-	camera.setSpeed({ 0 });
+	ajedrez.mundo.camara.setSpeed({ 0 });
 
 	// End of keyboard reading code (do not erase or write anything afterwardas).
 	//glutPostRedisplay();

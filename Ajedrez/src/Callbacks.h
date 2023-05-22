@@ -16,12 +16,6 @@
 #include <iostream>
 #include <vector>
 
-struct Model
-{
-	const aiScene* scene;
-	GLuint model_list;
-	std::vector<GLuint> textures;
-};
 
 /* INITIALIZATION */
 void graphicsInit(int* argc, char** argv);
