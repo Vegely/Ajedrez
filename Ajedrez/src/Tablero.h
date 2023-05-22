@@ -1,7 +1,6 @@
 #ifndef _TABLERO__H_
 #define	_TABLERO__H_
 
-
 #include "Pieza.h"
 #include "Movimiento.h"
 

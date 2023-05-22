@@ -17,6 +17,7 @@
     <ClCompile Include="src\structs.cpp" />
     <ClCompile Include="src\Tablero.cpp" />
     <ClCompile Include="src\Torre.cpp" />
+    <ClCompile Include="src\InfoTablas.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Alfil.h" />
@@ -36,5 +37,6 @@
     <ClInclude Include="src\structs.h" />
     <ClInclude Include="src\Tablero.h" />
     <ClInclude Include="src\Torre.h" />
+    <ClInclude Include="src\InfoTablas.h" />
   </ItemGroup>
 </Project>
