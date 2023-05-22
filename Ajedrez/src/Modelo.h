@@ -15,24 +15,26 @@
 #include <vector>
 // Librerías propias 
 #include "Globals.h" // Clases útiles genéricas
+#include "Entity.h"
 
-enum TipoPieza { NONE, REY, DAMA, ALFIL, CABALLO, TORRE, PEÓN };
+enum TipoPieza { NONE, REY, DAMA, ALFIL, CABALLO, TORRE, PEON };
 
-class Modelo
+class Modelo : public Entity
 {
 private:
 	GLuint	       texture_ID;
 	std::string    model_path;
 	std::string    texture_path;
 	TipoPieza      tipo_pieza;
+
 public:
 	const aiScene* scene;
 	Assimp::Importer importer;
 
 public:
 	/* FORMA CANÓNICA */
-	Modelo(const std::string& model_path, const std::string& texture_path, TipoPieza tipo_pieza);
-   ~Modelo(void) { delete scene; }
+	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path);
+   ~Modelo(void) { /*delete scene;*/ }
 	Modelo(const Modelo& m);
 	Modelo& operator = (const Modelo& rhs);
 
@@ -49,7 +51,8 @@ public:
 	void setTextureID  (GLuint ID)		  { this->texture_ID   = ID; }
 
 	/* FUNCIONES */
-	void render(const aiNode* nodo);
+	void render(void);
+	void renderNodo(const aiNode* nodo);
 	bool cargarTextura(void);
 };
 

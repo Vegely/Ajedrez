@@ -62,4 +62,6 @@ public:
 	static bool delay(const float milliseconds);
 };
 
+Point getPointFromCoords(char letter, unsigned int number);
+
 #endif

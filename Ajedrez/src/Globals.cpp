@@ -65,6 +65,44 @@ Point operator / (const Point& lhs, const float rhs)
 	return result;
 }
 
+Point getPointFromCoords(char letter, unsigned int number)
+{
+	int first, second;
+	switch (letter)
+	{
+	case 'a':
+		first = 0;
+		break;
+	case 'b':
+		first = 1;
+		break;
+	case 'c':
+		first = 2;
+		break;
+	case 'd':
+		first = 3;
+		break;
+	case 'e':
+		first = 4;
+		break;
+	case 'f':
+		first = 5;
+		break;
+	case 'g':
+		first = 6;
+		break;
+	case 'h':
+		first = 7;
+		break;
+	default:
+		std::cerr << "Not a valid coordinate." << std::endl;
+		break;
+	}
+	second = number - 1;
+
+	return Point{ -210.0f + first * 60.0f, 0, -210.0f + second * 60.0f };
+}
+
 bool operator == (const Point& lhs, const Point& rhs)
 {
 	if (lhs.x == rhs.x &&

@@ -1,10 +1,11 @@
 #include "Modelo.h"
 
-Modelo::Modelo(const std::string& model_path, const std::string& texture_path, TipoPieza tipo_pieza) :
+Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path) :
 	texture_ID(0),
 	model_path(model_path),
 	texture_path(texture_path),
-	tipo_pieza(tipo_pieza)
+	tipo_pieza(tipo_pieza),
+	Entity(initial_pos, Colors::White, "Modelo " + tipo_pieza)
 {
 	this->scene = nullptr;
 	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -18,6 +19,9 @@ Modelo::Modelo(const std::string& model_path, const std::string& texture_path, T
 
 Modelo::Modelo(const Modelo& m)
 {
+	this->position = m.position;
+	this->velocity = m.velocity;
+	this->acceleration = m.acceleration;
 	this->texture_ID   = m.texture_ID;
 	this->model_path   = m.model_path;
 	this->texture_path = m.texture_path;
@@ -29,16 +33,22 @@ Modelo::Modelo(const Modelo& m)
 
 Modelo& Modelo::operator = (const Modelo& rhs)
 { 
-	this->scene		   = new aiScene;
+	this->position = rhs.position;
+	this->velocity = rhs.velocity;
+	this->acceleration = rhs.acceleration;
 	this->texture_ID   = rhs.texture_ID;
 	this->model_path   = rhs.model_path;
 	this->texture_path = rhs.texture_path;
 	this->tipo_pieza   = rhs.tipo_pieza;
+	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	if (!scene || scene->mRootNode == nullptr) // Comprobación de lectura correcta del archivo.
+		std::cerr << "Failed to load 3D model file: " << importer.GetErrorString();
+
 	return *this;
 }
 
 // Renderizado del modelo
-void Modelo::render(const aiNode* nodo)
+void Modelo::renderNodo(const aiNode* nodo)
 {
 	if (nodo == nullptr)
 	{
@@ -85,7 +95,14 @@ void Modelo::render(const aiNode* nodo)
 	}
 	// Renderiza los nodos hijos utilizando esta misma función hasta que no queden nodos hijos
 	for (unsigned int i = 0; i < nodo->mNumChildren; i++)
-		render(nodo->mChildren[i]);
+		renderNodo(nodo->mChildren[i]);
+}
+
+void Modelo::render(void)
+{
+	glTranslatef  (this->position.x,  this->position.y,  this->position.z);
+		renderNodo(this->scene->mRootNode);
+	glTranslatef (-this->position.x, -this->position.y, -this->position.z);
 }
 
 bool Modelo::cargarTextura(void)
@@ -100,6 +117,11 @@ bool Modelo::cargarTextura(void)
 	}
 
 	glGenTextures(1, &this->texture_ID);
+	if (this == nullptr)
+	{
+		std::cerr << "Error binding texture to object." << std::endl;
+		return false;
+	}
 	glBindTexture(GL_TEXTURE_2D, this->texture_ID);
 	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, ancho, alto, GL_RGB, GL_UNSIGNED_BYTE, datos_imagen);
 

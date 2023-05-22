@@ -27,6 +27,9 @@
     <ClCompile Include="src\Modelo.cpp">
       <Filter>Graficos</Filter>
     </ClCompile>
+    <ClCompile Include="src\Entity.cpp">
+      <Filter>Graficos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Alfil.h" />
@@ -53,6 +56,9 @@
       <Filter>Graficos</Filter>
     </ClInclude>
     <ClInclude Include="src\Modelo.h">
+      <Filter>Graficos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity.h">
       <Filter>Graficos</Filter>
     </ClInclude>
   </ItemGroup>

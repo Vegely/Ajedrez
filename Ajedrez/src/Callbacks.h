@@ -22,4 +22,11 @@ void OnKeyboardSpecial(int key, int x, int y);
 /* DEBUG AXIS */
 void debugAxis(void);
 
+void inicializarEstadoOpenGL(void);
+void inicializarIluminacion(void);
+void registrarCallbacks(void);
+void asignarModelos(void);
+void cargarTexturas(void);
+void renderizarModelos(void);
+
 #endif

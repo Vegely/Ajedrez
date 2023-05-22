@@ -3,18 +3,30 @@
 /* CONSTRUCTOR */
 Camara::Camara(const Point& position) :
 	position(position),
+	speed({0}),
 	look_at{ 0, 0, 0 },
 	rotation{0, 0, 1}
 {
+	light.position = { this->position.x, this->position.y, this->position.z, 1.0f };
+	light.ambient = { 0.2f, 0.2f, 0.2f, 0.1f };
+	light.diffuse = { 1.0f ,1.0f ,1.0f ,1.0f };
+	light.specular = { 1.0f ,1.0f ,1.0f ,1.0f };
+
 	std::cout << "Initial camera position set to " << this->position << std::endl;
 	std::cout << "Initial camera look-at point set to " << this->look_at << std::endl;
 }
 
 Camara::Camara(const Point& position, const Point& look_at) :
 	position(position),
+	speed({0}),
 	look_at(look_at),
 	rotation{ 0, 0, 1 }
 {
+	light.position = { 0.0f, 10.0f, 0.0f, 1.0f };
+	light.ambient = { 1.5f, 1.5f, 1.5f, 0.1f };
+	light.diffuse = { 1.0f ,1.0f ,1.0f ,1.0f };
+	light.specular = { 1.0f ,1.0f ,1.0f ,1.0f };
+
 	std::cout << "Initial camera position set to " << this->position << std::endl;
 	std::cout << "Initial camera look-at point set to " << this->look_at << std::endl;
 }
@@ -25,22 +37,45 @@ Camara::~Camara(void)
 
 }
 
-/* GETTERS */
-Point Camara::getPosition(void) const
+float* Camara::getLightPos(void) const
 {
-	//std::cout << "Got position " << this->position << "." << std::endl;
-	return this->position;
-}
+	float result[4];
+	result[0] = this->light.position.x;
+	result[1] = this->light.position.y;
+	result[2] = this->light.position.z;
+	result[3] = this->light.position.positional;
 
-Point Camara::getSpeed(void) const
-{
-	return this->speed;
+	return result;
 }
-
-Point Camara::getLookAt(void) const
+float* Camara::getLightAmb(void) const
 {
-	//std::cout << "Got Look At point " << this->look_at << "." << std::endl;
-	return this->look_at;
+	float result[4];
+	result[0] = this->light.ambient.r;
+	result[1] = this->light.ambient.g;
+	result[2] = this->light.ambient.b;
+	result[3] = this->light.ambient.alpha;
+
+	return result;
+}
+float* Camara::getLightDif(void) const
+{
+	float result[4];
+	result[0] = this->light.diffuse.r;
+	result[1] = this->light.diffuse.g;
+	result[2] = this->light.diffuse.b;
+	result[3] = this->light.diffuse.alpha;
+
+	return result;
+}
+float* Camara::getLightSpe(void) const
+{
+	float result[4];
+	result[0] = this->light.specular.r;
+	result[1] = this->light.specular.g;
+	result[2] = this->light.specular.b;
+	result[3] = this->light.specular.alpha;
+
+	return result;
 }
 
 /* SETTERS */
@@ -96,6 +131,8 @@ void Camara::update(void)
 		look_at.x, look_at.y, look_at.z,		// Point to look at.
 		0.0, 1.0, 0.0						// Define Y axis direction to up.
 	);
+
+	this->light.position = { this->position.x, this->position.y, this->position.z, 1.0f };
 
 	glRotatef(rotation.x, 1.0, 0.0, 0.0);				 // rotate our camera on the x-axis (left and right)
 	glRotatef(rotation.y, 0.0, 1.0, 0.0);				 // rotate our camera on the y-axis (up and down)
