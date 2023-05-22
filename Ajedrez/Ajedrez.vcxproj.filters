@@ -9,7 +9,6 @@
     <ClCompile Include="src\graphics.cpp" />
     <ClCompile Include="src\IA.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Movimiento.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
     <ClCompile Include="src\plane.cpp" />
@@ -38,5 +37,6 @@
     <ClInclude Include="src\Tablero.h" />
     <ClInclude Include="src\Torre.h" />
     <ClInclude Include="src\InfoTablas.h" />
+    <ClInclude Include="src\DatosClavada.h" />
   </ItemGroup>
 </Project>

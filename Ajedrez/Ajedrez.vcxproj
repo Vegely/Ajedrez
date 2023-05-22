@@ -74,7 +74,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)\bin</OutDir>
     <IntDir>$(SolutionDir)\temp</IntDir>
-    <LibraryPath>C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\bin\</OutDir>
@@ -145,7 +145,6 @@
     <ClCompile Include="src\graphics.cpp" />
     <ClCompile Include="src\IA.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Movimiento.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
     <ClCompile Include="src\plane.cpp" />
@@ -161,6 +160,7 @@
     <ClInclude Include="src\Caballo.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\Dama.h" />
+    <ClInclude Include="src\DatosClavada.h" />
     <ClInclude Include="src\freeglut.h" />
     <ClInclude Include="src\graphics.h" />
     <ClInclude Include="src\IA.h" />

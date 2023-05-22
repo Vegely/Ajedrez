@@ -4,8 +4,9 @@
 constexpr auto YBLANCAS = 1;
 constexpr auto YNEGRAS = 6;
 
-void Peon::actualizarVariables() {
+DatosClavada Peon::actualizarVariables(bool clavada, Posicion direccionClavada, bool tableroIlegalesRey[2][8][8]) {
 	clearVariables();
+	DatosClavada piezaClavada;
 
 	if (color) { //Comprueba si el peon es blanco por asignar una direccionalidad de movimiento u otra.
 		Posicion direcciones[] = { Posicion(0, 1),						//Direccion	  mover
@@ -18,10 +19,12 @@ void Peon::actualizarVariables() {
 				if (direccion == Posicion{ 0, 1 } && tablero.leer(posicion_prueba) == nullptr)
 				{
 					puede_mover.push_back(posicion_prueba);			//Añade los vacios de la linea a puede_mover
+					tableroIlegalesRey[(color + 1) % 2][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 					posicion_prueba += Posicion{ 0, 1 };
 					if (posicion.y == YBLANCAS && tablero.leer(posicion_prueba ) == nullptr) //Si esta en la casilla inicial puede mover 2
 					{
 						puede_mover.push_back(posicion_prueba );
+						tableroIlegalesRey[(color + 1) % 2][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 					}
 				}
 				else
@@ -36,6 +39,7 @@ void Peon::actualizarVariables() {
 						else		//La casilla revisada tiene una pieza amiga
 						{
 							tablero.leer(posicion_prueba)->addProtecciones(this);		//Añade la pieza amiga a esta_protegiendo
+							tableroIlegalesRey[(color + 1) % 2][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 						}
 
 					}
@@ -55,10 +59,12 @@ void Peon::actualizarVariables() {
 				if (direccion == Posicion{ 0, -1 } && tablero.leer(posicion_prueba) == nullptr)
 				{
 					puede_mover.push_back(posicion_prueba);			//Añade los vacios de la linea a puede_mover
+					tableroIlegalesRey[(color + 1) % 2][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 					posicion_prueba += Posicion{ 0,-1 };
 					if (posicion.y == YNEGRAS && tablero.leer(posicion_prueba ) == nullptr) //Si esta en la casilla inicial puede mover 2
 					{
 						puede_mover.push_back(posicion_prueba);
+						tableroIlegalesRey[(color + 1) % 2][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 					}
 				}
 				else
@@ -73,10 +79,12 @@ void Peon::actualizarVariables() {
 						else		//La casilla revisada tiene una pieza amiga
 						{
 							tablero.leer(posicion_prueba)->addProtecciones(this);		//Añade la pieza amiga a esta_protegiendo
+							tableroIlegalesRey[(color + 1) % 2][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 						}
 					}
 				}
 			}
 		}
 	}
+	return piezaClavada;
 }

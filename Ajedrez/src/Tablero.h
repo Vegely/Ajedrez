@@ -13,6 +13,9 @@ class Tablero
 	bool ColorDelTurno;
 	Posicion ReyPos[2];
 	int numeroPiezas;
+	bool tableroIlegalesRey[2][8][8] = { false };
+	std::vector<DatosClavada> datosClavada;
+	Posicion ultimaJugada; //Se guardan los datos de la posicion tras la ultima jugada para implementar comer al paso
 
 	void escribir(const Posicion& posicion, Pieza* pieza);											//Escribe una pieza en una posición	
 	void clearVariablesDePiezas() { for (Pieza* p_pieza : tablero) p_pieza->clearVariables(); }		//Limpia todas las variables de las piezas del tablero
@@ -40,7 +43,5 @@ public:
 	void imprimeTablero();
 };
 
-inline double distancia(const Posicion p1, const Posicion p2) {
-	return sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
-}
+
 #endif

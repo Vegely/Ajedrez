@@ -1,55 +1,16 @@
-<<<<<<< HEAD
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  Tablero.cpp
-C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(11,14): warning C4305: 'argument': truncation from 'const int' to 'const unsigned char'
-C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(11,85): warning C4309: 'argument': truncation of constant value
-  Ajedrez.vcxproj -> C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\bin\Ajedrez.exe
-=======
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
   Alfil.cpp
   Caballo.cpp
-  camera.cpp
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\camera.cpp(80,13): warning C4305: '+=': truncamiento de 'double' a 'float'
   Dama.cpp
-  IA.cpp
-  main.cpp
-  Movimiento.cpp
   Peon.cpp
   Pieza.cpp
   Rey.cpp
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(11): warning C4305: 'argumento': truncamiento de 'const int' a 'const unsigned char'
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(11,85): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(11,14): warning C4305: 'argument': truncation from 'const int' to 'const unsigned char'
+C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(11,85): warning C4309: 'argument': truncation of constant value
   Tablero.cpp
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(11): warning C4305: 'argumento': truncamiento de 'const int' a 'const unsigned char'
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(11,85): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(11,14): warning C4305: 'argument': truncation from 'const int' to 'const unsigned char'
+C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(11,85): warning C4309: 'argument': truncation of constant value
   Torre.cpp
-  TPR.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xutility(5518,13): error C2678: '==' binario: no se encontró un operador que adopte un operando en la parte izquierda de tipo 'Tablero' (o bien no existe una conversión aceptable)
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Posicion.h(22,13): message : puede ser 'bool operator ==(const Posicion &,const Posicion &)' [se encontró con la búsqueda dependiente de argumentos]
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xutility(3969,5): message : o       'bool std::operator ==(const std::move_iterator<_Iter> &,const std::move_iterator<_Iter2> &) noexcept(<expr>)'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xutility(5518,13): message : "bool std::operator ==(const std::move_iterator<_Iter> &,const std::move_iterator<_Iter2> &) noexcept(<expr>)": no se pudo deducir el argumento plantilla para "const std::move_iterator<_Iter> &" de "Tablero"
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xutility(1441,5): message : o       'bool std::operator ==(const std::reverse_iterator<_BidIt> &,const std::reverse_iterator<_BidIt2> &) noexcept(<expr>)'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xutility(5518,13): message : "bool std::operator ==(const std::reverse_iterator<_BidIt> &,const std::reverse_iterator<_BidIt2> &) noexcept(<expr>)": no se pudo deducir el argumento plantilla para "const std::reverse_iterator<_BidIt> &" de "Tablero"
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\utility(367,27): message : o       'bool std::operator ==(const std::pair<_Ty1,_Ty2> &,const std::pair<_Ty1,_Ty2> &)'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xutility(5518,13): message : "bool std::operator ==(const std::pair<_Ty1,_Ty2> &,const std::pair<_Ty1,_Ty2> &)": no se pudo deducir el argumento plantilla para "const std::pair<_Ty1,_Ty2> &" de "Tablero"
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xutility(5518,13): message : al hacer coincidir la lista de argumentos '(Tablero, const _Ty)'
-          with
-          [
-              _Ty=Tablero
-          ]
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\xutility(5527): message : Vea la referencia a la creación de una instancia de la función plantilla "_InIt std::_Find_unchecked<Tablero*,_Ty>(_InIt,const _InIt,const _Ty &)" que se está compilando
-          with
-          [
-              _InIt=Tablero *,
-              _Ty=Tablero
-          ]
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\TPR.cpp(5,73): message : Vea la referencia a la creación de una instancia de la función plantilla "_InIt std::find<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,Tablero>(_InIt,const _InIt,const _Ty &)" que se está compilando
-          with
-          [
-              _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<Tablero>>>,
-              _Ty=Tablero
-          ]
-  Generando código...
->>>>>>> da1d53a9043363fdc73b04881af2b210b594cc57
+  Generating Code...
+  Ajedrez.vcxproj -> C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\bin\Ajedrez.exe

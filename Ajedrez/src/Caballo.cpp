@@ -2,8 +2,14 @@
 #include "Tablero.h"
 
 
-void Caballo::actualizarVariables() {
+DatosClavada Caballo::actualizarVariables(bool clavada, Posicion direccionClavada, bool tableroIlegalesRey[2][8][8]) {
 	clearVariables();
+	
+
+	DatosClavada piezaClavada;
+
+	if (clavada) //Si el caballo esta clavado no puede mover
+		return piezaClavada;
 
 	Posicion direcciones[] = {  Posicion(-2, 1), Posicion(-2, -1),		//Direcciones izquierda
 								Posicion(-1, -2), Posicion(1,-2),		//Direcciones abajo
@@ -17,6 +23,7 @@ void Caballo::actualizarVariables() {
 			if (tablero.leer(posicion_prueba) == nullptr)		//La casilla revisada está vacía
 			{
 				puede_mover.push_back(posicion_prueba);			//Añade los vacios de la linea a puede_mover
+				tableroIlegalesRey[(color + 1) % 2][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 			}
 			else if (tablero.leer(posicion_prueba)->color != color)		//La casilla revisada tiene una pieza enemiga
 			{
@@ -26,8 +33,10 @@ void Caballo::actualizarVariables() {
 			else		//La casilla revisada tiene una pieza amiga
 			{
 				tablero.leer(posicion_prueba)->addProtecciones(this);		//Añade la pieza amiga a esta_protegiendo
+				tableroIlegalesRey[(color + 1) % 2][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 			}
 		}
 
 	}
+	return piezaClavada;
 }

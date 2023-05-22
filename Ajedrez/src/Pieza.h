@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Posicion.h"
+#include "DatosClavada.h"
 
 //Valores de las piezas para su uso en la IA
 constexpr auto VALOR_PEON = 1;
@@ -17,6 +18,7 @@ constexpr auto VALOR_REY = 1000;
 //Clase tablero vacía para tener una referencia al tablero dentro de las piezas
 class Tablero;
 
+
 class Pieza
 {
 public:
@@ -27,6 +29,9 @@ protected:
 	const Tablero& tablero;					//Referencia al tablero para que las piezas sepan en que tablero estan
 	const bool color;						//True == Blancas <-> False == Negras
 	const unsigned char value;				//Valor de la pieza
+	bool noHaMovido = true;					//Si se mueve pierde la posibilidad de enrocar aunque solo lo usen el rey y la torre es útil para manejar mediante polimorfismo
+	bool puedeEnrocar[2] = { false };		//Para que se pueda gestionar el enroque (solo lo usa el rey) útil para manejar mediante polimorfismo
+											//El valor en 0 simboliza enroque corto y 1 enroque en largo 
 
 	Posicion posicion;						//Casilla del tablero donde esta la pieza (0-7)x(0-7)
 	std::vector<Posicion> puede_mover;		//Lugares disponibles para mover
@@ -35,7 +40,7 @@ protected:
 	std::vector<Pieza*> amenazas;			//Piezas enemigas que amenazan la posicion actual
 
 	void clearVariables();					//Funcion para limpiar los elementos de la clase vector
-	virtual void actualizarVariables() = 0;	//Funcion para actualizar todos los elementos de vector
+	virtual DatosClavada actualizarVariables(bool clavada, Posicion direccionClavada, bool tableroIlegalesRey[2][8][8]) = 0;	//Funcion para actualizar todos los elementos de vector
 	inline void addAmenazas(Pieza* p_pieza) { amenazas.push_back(p_pieza); }	 //Función general de gestión de las amenazas desde el gestor
 	inline void addProtecciones(Pieza* p_pieza) { esta_protegida.push_back(p_pieza); }	 //Función general de gestión de las amenazas desde el gestor
 public:
@@ -56,9 +61,6 @@ public:
 	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const tipo_t tipo) : tablero(p_tablero), color(color), value(value), tipo(tipo){}
 	explicit Pieza(const Pieza& p) :tipo(p.tipo), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegida = p.esta_protegida; amenazas = p.amenazas; }
 	virtual ~Pieza() {}
-
-	//Poder mover desde el main
-	void mover();
 
 	//Funciones para obtener las variables (deben poder usarse en un espacio de constness)
 	inline Posicion getPosicion() const { return posicion; }

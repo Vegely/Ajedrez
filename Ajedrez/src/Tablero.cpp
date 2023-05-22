@@ -18,7 +18,21 @@ constexpr auto VALOR_AMENAZAS_PELIGROSAS = 1.79769e+308;
 
 void Tablero::actualizarTablero()
 {
-	for (Pieza* p_pieza : tablero) if (p_pieza != nullptr) p_pieza->actualizarVariables();
+	datosClavada.clear();
+	DatosClavada aux;
+	for (Pieza* p_pieza : tablero) {
+		if (p_pieza != nullptr) {
+			aux=p_pieza->actualizarVariables(false,Posicion{0,0}, tableroIlegalesRey);
+			if (aux.ExisteClavada == true)
+			{
+				datosClavada.push_back(aux);
+			}
+		}
+	}
+	for (int i = 0; i < datosClavada.size(); i++) //Clavar las piezas clavadas
+	{
+		datosClavada[i].PiezaClavada->actualizarVariables(true, datosClavada[i].DireccionClavada,tableroIlegalesRey);
+	}
 }
 
 Tablero::Tablero()
