@@ -1,11 +1,10 @@
 #include "Tablero.h"
 #include "Callbacks.h"
-#include <iostream>
 
 int main(int argc, char* argv[])
 {
 	Tablero tablero; //Creación del tablero con las piezas
-	graphicsInit(&argc, argv); // Inicialización del motor gráfico
+	motorGrafico(&argc, argv); // Inicialización del motor gráfico
 
 	//init(&argc, argv, "Ajedrez", 1280, 720);
 	//TEST UNITARIO PARA VER SI MUEVEN Y COMEN LAS PIEZAS
@@ -29,6 +28,5 @@ int main(int argc, char* argv[])
 	////////////////////////////////////////////////////////////
 	
 	std::cout << "1";
-
 	return 0;
 }

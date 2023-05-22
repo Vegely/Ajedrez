@@ -404,3 +404,5 @@ Ajedrez/temp/Ajedrez.ilk
 *.ilk
 *.db
 Ajedrez/.vs/Ajedrez/v17/.suo
+*.sqlite
+*.db

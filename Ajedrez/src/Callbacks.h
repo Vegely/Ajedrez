@@ -1,30 +1,13 @@
-// Callbacks.h | Header file for callback functions called by GLUT
+// Callbacks.h | Header file for callback functions
 
-#ifndef GLUTCALLBACKS_H
-#define GLUTCALLBAKCS_H
+#ifndef CALLBACKS_H
+#define CALLBAKCS_H
 
-#include <freeglut.h>
-#include "Globals.h"
-
-#include "Camera.h"
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-#include <string>
-#include <iostream>
-#include <vector>
-
-struct Model
-{
-	const aiScene* scene;
-	GLuint model_list;
-	std::vector<GLuint> textures;
-};
+#include "Camara.h"  // Cámara
+#include "Modelo.h"	 // Clase Modelo
 
 /* INITIALIZATION */
-void graphicsInit(int* argc, char** argv);
+void motorGrafico(int* argc, char** argv);
 
 /* GLUT CALLBACKS */
 void OnDraw(void);
@@ -38,9 +21,5 @@ void OnKeyboardSpecial(int key, int x, int y);
 
 /* DEBUG AXIS */
 void debugAxis(void);
-
-/* ASSIMP FUNCTIONS */
-void importModel(const char* file_path);
-GLuint loadTexture(const std::string& file_path);
 
 #endif
