@@ -7,7 +7,7 @@
 #include <sstream>
 
 // Cámara
-Camara camara({ 100.0f, 100.0f, 100.0f }, { 0 });
+Camara camara({ 0.0f, 172.0f, 135.0f }, { 0 });
 
 // Modelos a renderizar
 Modelo  rey_blanco(REY,  getPointFromCoords('e', 1),  "modelos/rey.obj", "texturas/marmol_blanco.jpg");
@@ -97,10 +97,10 @@ void asignarModelos(void)
 	{
 		 alfiles_blancos.push_back(Modelo(ALFIL,   getPointFromCoords('c' + i * 3, 1), "modelos/alfil.obj", "texturas/marmol_blanco.jpg"));
 		  alfiles_negros.push_back(Modelo(ALFIL,   getPointFromCoords('c' + i * 3, 8), "modelos/alfil.obj",  "texturas/marmol_negro.jpg"));
-		caballos_blancos.push_back(Modelo(CABALLO, getPointFromCoords('b' + i * 5, 1), "modelos/alfil.obj", "texturas/marmol_blanco.jpg"));
-		 caballos_negros.push_back(Modelo(CABALLO, getPointFromCoords('b' + i * 5, 8), "modelos/alfil.obj",  "texturas/marmol_negro.jpg"));
-		  torres_blancas.push_back(Modelo(TORRE,   getPointFromCoords('a' + i * 7, 1), "modelos/alfil.obj", "texturas/marmol_blanco.jpg"));
-		   torres_negras.push_back(Modelo(TORRE,   getPointFromCoords('a' + i * 7, 8), "modelos/alfil.obj",  "texturas/marmol_negro.jpg"));
+		caballos_blancos.push_back(Modelo(CABALLO, getPointFromCoords('b' + i * 5, 1), "modelos/caballo.obj", "texturas/marmol_blanco.jpg"));
+		 caballos_negros.push_back(Modelo(CABALLO, getPointFromCoords('b' + i * 5, 8), "modelos/caballo.obj",  "texturas/marmol_negro.jpg"));
+		  torres_blancas.push_back(Modelo(TORRE,   getPointFromCoords('a' + i * 7, 1), "modelos/torre.obj", "texturas/marmol_blanco.jpg"));
+		   torres_negras.push_back(Modelo(TORRE,   getPointFromCoords('a' + i * 7, 8), "modelos/torre.obj",  "texturas/marmol_negro.jpg"));
 	}
 }
 
@@ -227,6 +227,7 @@ void OnKeyboardDown(const unsigned char key, int x_t, int y_t)
 void OnKeyboardUp(const unsigned char key, int x, int y)
 {
 	camara.setSpeed({ 0 });
+	camara.printPosition(std::cout);
 
 	// End of keyboard reading code (do not erase or write anything afterwardas).
 	//glutPostRedisplay();

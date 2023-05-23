@@ -67,7 +67,7 @@ Point operator / (const Point& lhs, const float rhs)
 
 Point getPointFromCoords(char letter, unsigned int number)
 {
-	int first, second;
+	int first = 0, second = 0;
 	switch (letter)
 	{
 	case 'a':
@@ -100,7 +100,7 @@ Point getPointFromCoords(char letter, unsigned int number)
 	}
 	second = number - 1;
 
-	return Point{ -210.0f + first * 60.0f, 0, -210.0f + second * 60.0f };
+	return Point{ -175.0f + first * 50.0f, 0, -175.0f + second * 50.0f };
 }
 
 bool operator == (const Point& lhs, const Point& rhs)
