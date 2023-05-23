@@ -152,10 +152,10 @@
     <ClCompile Include="src\Camara.cpp" />
     <ClCompile Include="src\Dama.cpp" />
     <ClCompile Include="src\Globals.cpp" />
-    <ClCompile Include="src\Graphics.cpp" />
     <ClCompile Include="src\IA.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Movimiento.cpp" />
+    <ClCompile Include="src\Mundo.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
     <ClCompile Include="src\Plane.cpp" />
@@ -173,9 +173,9 @@
     <ClInclude Include="src\Camara.h" />
     <ClInclude Include="src\Dama.h" />
     <ClInclude Include="src\Globals.h" />
-    <ClInclude Include="src\Graphics.h" />
     <ClInclude Include="src\IA.h" />
     <ClInclude Include="src\Movimiento.h" />
+    <ClInclude Include="src\Mundo.h" />
     <ClInclude Include="src\Peon.h" />
     <ClInclude Include="src\Pieza.h" />
     <ClInclude Include="src\Plane.h" />

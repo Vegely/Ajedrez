@@ -21,9 +21,6 @@
     <ClCompile Include="src\Globals.cpp">
       <Filter>Graficos</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics.cpp">
-      <Filter>Graficos</Filter>
-    </ClCompile>
     <ClCompile Include="src\Modelo.cpp">
       <Filter>Graficos</Filter>
     </ClCompile>
@@ -34,6 +31,9 @@
       <Filter>Graficos</Filter>
     </ClCompile>
     <ClCompile Include="src\Plane.cpp">
+      <Filter>Graficos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mundo.cpp">
       <Filter>Graficos</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,9 +58,6 @@
     <ClInclude Include="src\Globals.h">
       <Filter>Graficos</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics.h">
-      <Filter>Graficos</Filter>
-    </ClInclude>
     <ClInclude Include="src\Modelo.h">
       <Filter>Graficos</Filter>
     </ClInclude>
@@ -71,6 +68,9 @@
       <Filter>Graficos</Filter>
     </ClInclude>
     <ClInclude Include="src\Plane.h">
+      <Filter>Graficos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mundo.h">
       <Filter>Graficos</Filter>
     </ClInclude>
   </ItemGroup>
