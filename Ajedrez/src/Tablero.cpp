@@ -105,14 +105,13 @@ reyPos[0] = Posicion{ 4,7 };
 actualizarTablero(); //Se inicializan los movimientos posibles
 numeroPiezas = 32;
 */
-escribir(Posicion(3, 2), new Dama(*this, true));
-escribir(Posicion(3, 1), new Rey(*this, true));
-escribir(Posicion(2, 4), new Dama(*this, false));
-escribir(Posicion(2,7), new Dama(*this, false));
-escribir(Posicion(2, 3), new Dama(*this, false));
-escribir(Posicion(3, 6), new Rey(*this, false));
-reyPos[0] = Posicion{ 3,6 };
-reyPos[1] = Posicion{ 3,1 };
+reyPos[0] = Posicion{ 0,7 };
+reyPos[1] = Posicion{ 2,2 };
+escribir(reyPos[1], new Rey(*this, true));
+escribir(reyPos[0], new Rey(*this, false));
+
+
+escribir(Posicion(1, 5), new Dama(*this, true));
 actualizarTablero();
 colorDelTurno = false;
 
@@ -494,7 +493,7 @@ double Tablero::evaluacion() const  //Valor negativo ventaja negras valor positi
 	return COEFF_DIFERENCIA_MATERIAL*valorTablero+COEFF_AMENAZAS_PELIGROSAS* amenazaPeligrosaReturn +COEFF_AMENAZAS_POCO_PELIGROSAS* amenazaPeligrosaReturn;
 }
 
-std::vector<Pieza*> Tablero::bloqueoJaque() {
+std::vector<Pieza*> Tablero::bloqueoJaque() const {
 	Posicion direccion,posicionPrueba;
 	int distan = static_cast<int> (distancia(leer(reyPos[colorDelTurno])->posicion, leer(reyPos[colorDelTurno])->amenazas[0]->posicion));
 	direccion.x = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).x / distan;
