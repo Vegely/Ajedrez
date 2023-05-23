@@ -4,6 +4,7 @@
 
 class Pieza;
 
+//
 struct DatosClavada
 {
 	bool ExisteClavada=false;

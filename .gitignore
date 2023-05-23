@@ -397,8 +397,24 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+*.idb
+*.pdb
+*.ilk
+*.db
 
 .temp/
-
+Ajedrez/temp/Ajedrez.ilk
+*.idb
+*.pdb
+*.ilk
+*.db
 
 Ajedrez/.vs/Ajedrez/v17/.suo
+Ajedrez/.vs/Ajedrez/v17/.suo
+*.db
+*.pdb
+*.ilk
+*.log
+*.tlog
+*.idb
+*.pdb
