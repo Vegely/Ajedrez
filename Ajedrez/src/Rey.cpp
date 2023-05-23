@@ -33,7 +33,7 @@ DatosClavada Rey::actualizarVariables(bool clavada, Posicion direccionClavada, b
 
 
 		Posicion posicionesTorres[2][2] = { { Posicion{7,7}, Posicion{0,7} }, { Posicion{7,0}, Posicion{0,0} } };
-		if (noHaMovido)
+		if (tablero.leer(posicionesTorres[color][1]) != nullptr&&noHaMovido)
 		{
 			if (tablero.leer(posicionesTorres[color][0])->tipo == Pieza::tipo_t::TORRE && tablero.leer(posicionesTorres[color][0])->noHaMovido)
 			{
