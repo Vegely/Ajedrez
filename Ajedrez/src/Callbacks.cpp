@@ -1,17 +1,13 @@
 // Callbacks.cpp | Source file for callback functions called by GLUT
 
 #include "Callbacks.h"
-#include "CoordinadorAjedrez.h"
 #include <fstream>
 #include <sstream>
+#include "CoordinadorAjedrez.h"
 
 CoordinadorAjedrez ajedrez;
 
-// Camera
-//Camera camera({ 0.0f, 10.0f, 10.0f }, { 0 });
-
-// Global variables for the model data
-//std::vector<Model> models;
+/*
 // Rutas de las texturas.
 std::vector<std::string> texture_paths = { "texturas/rocks.tga", "texturas/rocks.tga" };
 
@@ -171,10 +167,34 @@ void importModel(const char* file_path)
 	glEndList();
 
 	ajedrez.mundo.models.push_back({ scene, model_list, textures });
-}
+}*/
 
 void graphicsInit(int* argc, char** argv)
 {
+	
+	glutInit(argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitWindowSize(1920, 1080);
+	glutCreateWindow("FlatChess");
+	//habilitar luces y definir perspectiva
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_COLOR_MATERIAL);
+	glMatrixMode(GL_PROJECTION);
+	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
+
+	glutDisplayFunc(OnDraw);
+	glutIdleFunc(OnDraw);
+	glutReshapeFunc(OnReshape);
+	glutTimerFunc(25, OnTimer, 0); // Each 25 ms, the function will call OnTimer(); 
+	glutKeyboardFunc(OnKeyboardDown);
+	glutKeyboardUpFunc(OnKeyboardUp);
+	glutSpecialFunc(OnKeyboardSpecial);
+	glutMouseFunc(OnMouseClick);
+	glutPassiveMotionFunc(OnMouseMotion);
+	//glutSpecialFunc(onSpecialKeyboardDown);
+	/*
 	// Initialize GLUT and create a window
 	glutInit(argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -216,7 +236,7 @@ void graphicsInit(int* argc, char** argv)
 	glutKeyboardUpFunc(OnKeyboardUp);
 	glutSpecialFunc(OnKeyboardSpecial);
 	glutMouseFunc(OnMouseClick);
-	glutPassiveMotionFunc(OnMouseMotion);
+	glutPassiveMotionFunc(OnMouseMotion);*/
 
 
 	glutMainLoop();
@@ -231,7 +251,12 @@ void OnDraw(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	glColor3ub(255,0, 0);
+	glutSolidCube(0.1f);
+
 	ajedrez.dibuja();
+
+
 	glutSwapBuffers();
 	//ajedrez.dibuja();
 }
@@ -275,6 +300,7 @@ void OnKeyboardDown(const unsigned char key, int x_t, int y_t)
 	}*/
 }
 
+
 void OnKeyboardUp(const unsigned char key, int x, int y)
 {
 	ajedrez.mundo.camara.setSpeed({ 0 });
@@ -292,7 +318,8 @@ void OnKeyboardSpecial(int key, int x, int y)
 // 0 == left, 1 == middle, 2 == right, 3 == scroll up, 4 == scroll down.
 void OnMouseClick(int button, int state, int x, int y)
 {
-	static std::string btn;
+	ajedrez.click(button, state, x, y);
+	/*static std::string btn;
 	switch (button)
 	{
 	case 0:
@@ -313,7 +340,7 @@ void OnMouseClick(int button, int state, int x, int y)
 	default:
 		break;
 	}
-
+	*/
 	//if (state == GLUT_DOWN)
 	//{
 	//	std::cout << "Button: " << btn << std::endl;

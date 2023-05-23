@@ -3,56 +3,66 @@
   <ItemGroup>
     <ClCompile Include="src\Alfil.cpp" />
     <ClCompile Include="src\Caballo.cpp" />
+    <ClCompile Include="src\Callbacks.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Campo.cpp" />
+    <ClCompile Include="src\Cliente.cpp" />
+    <ClCompile Include="src\CoordinadorAjedrez.cpp" />
     <ClCompile Include="src\Dama.cpp" />
+    <ClCompile Include="src\DatosRanking.cpp" />
+    <ClCompile Include="src\GestionMenus.cpp" />
+    <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\IA.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Movimiento.cpp" />
+    <ClCompile Include="src\Mundo.cpp" />
+    <ClCompile Include="src\NoFinalizadas.cpp" />
+    <ClCompile Include="src\Partida.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
+    <ClCompile Include="src\Ranking.cpp" />
     <ClCompile Include="src\Rey.cpp" />
+    <ClCompile Include="src\Servidor.cpp" />
+    <ClCompile Include="src\Socket.cpp" />
     <ClCompile Include="src\Tablero.cpp" />
     <ClCompile Include="src\Torre.cpp" />
-    <ClCompile Include="src\Callbacks.cpp">
-      <Filter>Graficos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Camera.cpp">
-      <Filter>Graficos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Globals.cpp">
-      <Filter>Graficos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CoordinadorAjedrez.cpp" />
-    <ClCompile Include="src\GestionMenus.cpp" />
-    <ClCompile Include="src\Mundo.cpp" />
+    <ClCompile Include="src\Vector2D.cpp" />
+    <ClCompile Include="src\Caja.cpp" />
+    <ClCompile Include="src\CajaTexto.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Alfil.h" />
     <ClInclude Include="src\Caballo.h" />
+    <ClInclude Include="src\Callbacks.h" />
+    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Campo.h" />
+    <ClInclude Include="src\Cliente.h" />
+    <ClInclude Include="src\CoordinadorAjedrez.h" />
     <ClInclude Include="src\Dama.h" />
+    <ClInclude Include="src\DatosRanking.h" />
+    <ClInclude Include="src\GestionMenus.h" />
+    <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\IA.h" />
     <ClInclude Include="src\Movimiento.h" />
+    <ClInclude Include="src\Mundo.h" />
+    <ClInclude Include="src\NoFinalizadas.h" />
+    <ClInclude Include="src\Partida.h" />
     <ClInclude Include="src\Peon.h" />
     <ClInclude Include="src\Pieza.h" />
     <ClInclude Include="src\Posicion.h" />
+    <ClInclude Include="src\Ranking.h" />
     <ClInclude Include="src\Rey.h" />
+    <ClInclude Include="src\Servidor.h" />
+    <ClInclude Include="src\Socket.h" />
     <ClInclude Include="src\Tablero.h" />
     <ClInclude Include="src\Torre.h" />
-    <ClInclude Include="src\Callbacks.h">
-      <Filter>Graficos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Camera.h">
-      <Filter>Graficos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Globals.h">
-      <Filter>Graficos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CoordinadorAjedrez.h" />
-    <ClInclude Include="src\GestionMenus.h" />
-    <ClInclude Include="src\Mundo.h" />
+    <ClInclude Include="src\Vector2D.h" />
+    <ClInclude Include="src\Caja.h" />
+    <ClInclude Include="src\CajaTexto.h" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Graficos">
-      <UniqueIdentifier>{3927c24f-2882-480a-827a-f25d314310ab}</UniqueIdentifier>
-    </Filter>
+    <Text Include="src\nueva.txt" />
+    <Text Include="src\ranking - copia.txt" />
+    <Text Include="src\ranking.txt" />
   </ItemGroup>
 </Project>

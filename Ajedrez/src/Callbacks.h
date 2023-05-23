@@ -16,7 +16,6 @@
 #include <iostream>
 #include <vector>
 
-
 /* INITIALIZATION */
 void graphicsInit(int* argc, char** argv);
 
