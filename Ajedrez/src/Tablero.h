@@ -38,11 +38,7 @@ public:
 	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO];}		//Devuelve el puntero a pieza de una posición leóda
 	void mover(const Movimiento& movimiento);																		//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
 
-<<<<<<< Updated upstream
-	Posicion getUltimaJugada() const{ return ultimaJugada; }
-=======
 	Movimiento getUltimaJugada() { return ultimaJugada; }
->>>>>>> Stashed changes
 
 	void cambiarTurno() { colorDelTurno = !colorDelTurno; }
 	bool jaqueMate() const;

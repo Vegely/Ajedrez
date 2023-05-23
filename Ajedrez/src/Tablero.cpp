@@ -47,13 +47,9 @@ void Tablero::actualizarTablero()
 	for (int i = 0; i < datosClavada.size(); i++) //Clavar las piezas clavadas
 	{
 		datosClavada[i].PiezaClavada->actualizarVariables(true, datosClavada[i].DireccionClavada,tableroIlegalesRey);
-<<<<<<< Updated upstream
 	}	
-=======
-	}
 
 	actualizarEnroque();
->>>>>>> Stashed changes
 }
 
 Tablero::Tablero()
@@ -108,24 +104,8 @@ Tablero::Tablero()
 	escribir(Posicion(4, 7), new Rey(*this, false));
 	reyPos[0] = Posicion{ 4,7 };
 
-<<<<<<< Updated upstream
-actualizarTablero(); //Se inicializan los movimientos posibles
-numeroPiezas = 32;
-*/
-reyPos[0] = Posicion{ 0,7 };
-reyPos[1] = Posicion{ 2,2 };
-escribir(reyPos[1], new Rey(*this, true));
-escribir(reyPos[0], new Rey(*this, false));
-
-
-escribir(Posicion(1, 5), new Dama(*this, true));
-actualizarTablero();
-colorDelTurno = false;
-=======
 	actualizarTablero(); //Se inicializan los movimientos posibles
 	numeroPiezas = 32;
->>>>>>> Stashed changes
-
 	
 	actualizarTablero();
 	colorDelTurno = true;
@@ -320,12 +300,8 @@ bool Tablero::reyAhogado() const // como se llama al jaque mate antes no es nece
 	for (auto piezasColor : tablero)
 	{
 		if (piezasColor != nullptr && piezasColor->color == colorDelTurno) {
-<<<<<<< Updated upstream
 			if (leer(piezasColor->posicion)->puede_comer.size() > 0 || leer(piezasColor->posicion)->puede_mover.size() > 0)
 				return false;
-=======
-			// TODO
->>>>>>> Stashed changes
 		}
 	}
 	return true;
@@ -424,7 +400,7 @@ void Tablero::actualizarHaMovido(Movimiento movimiento)
 void Tablero::actualizarEnroque()
 {
 	bool aux = !this->colorDelTurno;
-	if (!haMovido[aux * 3] && /*!rey en jaque*/)
+	if (!haMovido[aux * 3]/* && !rey en jaque*/)
 	{
 		// Enroque largo
 		if (!haMovido[1 + aux * 3] && leer(reyPos[aux] - Posicion(1, 0)) == nullptr && leer(reyPos[aux] - Posicion(2, 0)) == nullptr &&
