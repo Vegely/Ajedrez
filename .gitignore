@@ -398,10 +398,7 @@ FodyWeavers.xsd
 *.sln.iml
 
 
-temp/
-Ajedrez/temp/Ajedrez.ilk
-*.idb
-*.pdb
-*.ilk
-*.db
+.temp/
+
+
 Ajedrez/.vs/Ajedrez/v17/.suo
