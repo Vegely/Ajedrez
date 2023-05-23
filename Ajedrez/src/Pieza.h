@@ -65,6 +65,7 @@ public:
 	//Funciones para obtener las variables (deben poder usarse en un espacio de constness)
 	inline Posicion getPosicion() const { return posicion; }
 	inline bool getColor() const { return color; }
+	inline tipo_t getTipo() const { return tipo; }
 	virtual std::string getNombre() const = 0;
 	inline const std::vector<Posicion> getPuedeMover() const { return puede_mover; }
 	inline const std::vector<Pieza*> getPuedeComer() const { return puede_comer; }

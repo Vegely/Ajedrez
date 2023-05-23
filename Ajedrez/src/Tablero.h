@@ -19,7 +19,7 @@ class Tablero
 
 	std::vector<DatosClavada> datosClavada;
 
-	Posicion ultimaJugada; //Se guardan los datos de la posicion tras la ultima jugada para implementar comer al paso
+	Movimiento ultimaJugada; //Se guardan los datos de la posicion tras la ultima jugada para implementar comer al paso
 
 	void escribir(const Posicion& posicion, Pieza* pieza);											//Escribe una pieza en una posición	
 	void clearVariablesDePiezas() { for (Pieza* p_pieza : tablero) p_pieza->clearVariables(); }		//Limpia todas las variables de las piezas del tablero
@@ -38,13 +38,16 @@ public:
 	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO];}		//Devuelve el puntero a pieza de una posición leóda
 	void mover(const Movimiento& movimiento);																		//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
 
-	Posicion getUltimaJugada() const{ return ultimaJugada; }
+	Movimiento getUltimaJugada() { return ultimaJugada; }
 
 	void cambiarTurno() { colorDelTurno = !colorDelTurno; }
 	bool jaqueMate() const;
 	bool reyAhogado() const;
 	bool tablasMaterialInsuficiente() const;
+
+	void actualizarHaMovido(Movimiento movimiento);
 	void actualizarEnroque();
+
 	double evaluacion() const;
 	std::vector<Pieza*> bloqueoJaque() const;
 

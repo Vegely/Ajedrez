@@ -9,7 +9,6 @@
 #include <string>
 #include <cmath>
 
-
 //constexpr auto NUM_LINEAS = 40;
 constexpr auto COEFF_DIFERENCIA_MATERIAL = 50.0;
 constexpr auto COEFF_AMENAZAS_PELIGROSAS = 40.0;
@@ -34,6 +33,7 @@ void Tablero::actualizarTablero()
 		}
 	}
 	datosClavada.clear();
+
 	DatosClavada aux;
 	for (Pieza* p_pieza : tablero) {
 		if (p_pieza != nullptr) {
@@ -48,73 +48,67 @@ void Tablero::actualizarTablero()
 	{
 		datosClavada[i].PiezaClavada->actualizarVariables(true, datosClavada[i].DireccionClavada,tableroIlegalesRey);
 	}	
+
+	actualizarEnroque();
 }
 
 Tablero::Tablero()
 {
 	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++) { tablero[i] = nullptr; } //Se crea un tablero vacio
-	/*
+	
 	//True == Blancas <-> False == Negras En color
 	//Blancas 
 	//Se añaden los peones
-	for (int i = 0; i < ANCHO_TABLERO; i++)
+	/*for (int i = 0; i < ANCHO_TABLERO; i++)
 	{
 		escribir(Posicion(i, 1), new Peon(*this, true));
-	}
+	}*/
 
-	//Se añaden las torres
-escribir(Posicion(0, 0), new Torre(*this, true));
-escribir(Posicion(7, 0), new Torre(*this, true));
+	////Se añaden las torres
+	escribir(Posicion(0, 0), new Torre(*this, true));
+	escribir(Posicion(7, 0), new Torre(*this, true));
 
-//Se escriben los caballos
-escribir(Posicion(1, 0), new Caballo(*this, true));
-escribir(Posicion(6, 0), new Caballo(*this, true));
+	////Se escriben los caballos
+	//escribir(Posicion(1, 0), new Caballo(*this, true));
+	//escribir(Posicion(6, 0), new Caballo(*this, true));
 
-//Se escriben los alfiles
-escribir(Posicion(2, 0), new Alfil(*this, true));
-escribir(Posicion(5, 0), new Alfil(*this, true));
+	////Se escriben los alfiles
+	escribir(Posicion(2, 0), new Alfil(*this, true));
+	escribir(Posicion(5, 0), new Alfil(*this, true));
 
-//Se escribe la dama y el rey
-escribir(Posicion(3, 0), new Dama(*this, true));
-escribir(Posicion(4, 0), new Rey(*this, true));
-reyPos[1] = Posicion{ 4,0 };
+	////Se escribe la dama y el rey
+	//escribir(Posicion(3, 0), new Dama(*this, true));
+	escribir(Posicion(4, 0), new Rey(*this, true));
+	reyPos[1] = Posicion{ 4,0 };
 
-//Negras
-//Se añaden los peones
-for (int i = 0; i < ANCHO_TABLERO; i++)
-{
-	escribir(Posicion(i, 6), new Peon(*this, false));
-}
-//Se añaden las torres
-escribir(Posicion(0, 7), new Torre(*this, false));
-escribir(Posicion(7, 7), new Torre(*this, false));
+	////Negras
+	////Se añaden los peones
+	//for (int i = 0; i < ANCHO_TABLERO; i++)
+	//{
+	//	escribir(Posicion(i, 6), new Peon(*this, false));
+	//}
+	////Se añaden las torres
+	escribir(Posicion(0, 7), new Torre(*this, false));
+	escribir(Posicion(7, 7), new Torre(*this, false));
 
-//Se escriben los caballos
-escribir(Posicion(1, 7), new Caballo(*this, false));
-escribir(Posicion(6, 7), new Caballo(*this, false));
+	////Se escriben los caballos
+	//escribir(Posicion(1, 7), new Caballo(*this, false));
+	//escribir(Posicion(6, 7), new Caballo(*this, false));
 
-//Se escriben los alfiles
-escribir(Posicion(2, 7), new Alfil(*this, false));
-escribir(Posicion(5, 7), new Alfil(*this, false));
+	////Se escriben los alfiles
+	//escribir(Posicion(2, 7), new Alfil(*this, false));
+	//escribir(Posicion(5, 7), new Alfil(*this, false));
 
-//Se escribe la dama y el rey
-escribir(Posicion(3, 7), new Dama(*this, false));
-escribir(Posicion(4, 7), new Rey(*this, false));
-reyPos[0] = Posicion{ 4,7 };
+	////Se escribe la dama y el rey
+	//escribir(Posicion(3, 7), new Dama(*this, false));
+	escribir(Posicion(4, 7), new Rey(*this, false));
+	reyPos[0] = Posicion{ 4,7 };
 
-actualizarTablero(); //Se inicializan los movimientos posibles
-numeroPiezas = 32;
-*/
-reyPos[0] = Posicion{ 0,7 };
-reyPos[1] = Posicion{ 2,2 };
-escribir(reyPos[1], new Rey(*this, true));
-escribir(reyPos[0], new Rey(*this, false));
-
-
-escribir(Posicion(1, 5), new Dama(*this, true));
-actualizarTablero();
-colorDelTurno = false;
-
+	actualizarTablero(); //Se inicializan los movimientos posibles
+	numeroPiezas = 32;
+	
+	actualizarTablero();
+	colorDelTurno = true;
 }
 
 Tablero::Tablero(const Tablero& tablero)
@@ -391,25 +385,33 @@ bool Tablero::tablasMaterialInsuficiente() const {
 //}
 //////////////////////////////////////////////////////////////////////////////
 
+void Tablero::actualizarHaMovido(Movimiento movimiento)
+{
+	if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::TORRE && !haMovido[leer(movimiento.inicio)->color * 3 + movimiento.inicio.x / 7 + 1] &&
+		movimiento.inicio.y == !leer(movimiento.inicio)->color * 7) haMovido[leer(movimiento.inicio)->color * 3 + movimiento.inicio.x / 7 + 1] = true;
+
+	else if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::REY && !haMovido[leer(movimiento.inicio)->color * 3])
+		haMovido[leer(movimiento.inicio)->color * 3] = true;
+
+	if (leer(movimiento.fin) != nullptr && leer(movimiento.fin)->getTipo() == Pieza::tipo_t::TORRE && movimiento.fin.y == !leer(movimiento.fin)->color * 7) 
+		haMovido[leer(movimiento.fin)->color * 3 + movimiento.inicio.x / 4 + 1] = true;
+}
+
 void Tablero::actualizarEnroque()
 {
-	for (int i = 0; i < 2; i++)
+	bool aux = !this->colorDelTurno;
+	if (!haMovido[aux * 3]/* && !rey en jaque*/)
 	{
-		if (!haMovido[0 + i * 3])
-		{
-			if (!haMovido[1 + i * 3]) // Enroque corto
-			{
-
-			}
-
-			if (!haMovido[2 + i * 3]) // Enroque largo
-			{
-
-			}
-		}
+		// Enroque largo
+		if (!haMovido[1 + aux * 3] && leer(reyPos[aux] - Posicion(1, 0)) == nullptr && leer(reyPos[aux] - Posicion(2, 0)) == nullptr &&
+			!tableroIlegalesRey[aux][reyPos[aux].x - 1][reyPos[aux].y] && !tableroIlegalesRey[aux][reyPos[aux].x - 2][reyPos[aux].y])
+			tablero[reyPos[aux].indice()]->puede_mover.push_back(reyPos[aux] - Posicion(2, 0));
+		
+		// Enroque corto
+		if (!haMovido[2 + aux * 3] && leer(reyPos[aux] + Posicion(1, 0)) == nullptr && leer(reyPos[aux] + Posicion(2, 0)) == nullptr &&
+			!tableroIlegalesRey[aux][reyPos[aux].x + 1][reyPos[aux].y] && !tableroIlegalesRey[aux][reyPos[aux].x + 2][reyPos[aux].y])
+			tablero[reyPos[aux].indice()]->puede_mover.push_back(reyPos[aux] + Posicion(2, 0));	
 	}
-	
-	// Pushback a los movimientos del rey
 
 
 

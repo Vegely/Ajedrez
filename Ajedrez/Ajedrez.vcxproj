@@ -30,6 +30,7 @@
     <ClCompile Include="src\InfoTablas.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MotorDeJuego.cpp" />
+    <ClCompile Include="src\Movimiento.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
     <ClCompile Include="src\plane.cpp" />
