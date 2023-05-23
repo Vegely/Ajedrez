@@ -42,12 +42,13 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			estado = JUEGO;
 	}
 }
+#include "CajaTexto.h"
 
 void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 	if (estado == INICIO) {
+		static CajaTexto c2({ 10,5 }, { -10,5 }, { -10,0 }, { 10,0 }, "puta vida");
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-			//if (x >= (11.7/43.4)*glutGet(GLUT_WINDOW_WIDTH) && x<=(31.7/43.4)*glutGet(GLUT_WINDOW_WIDTH)
-			//	&& y>=(20.0/35.0)*glutGet(GLUT_WINDOW_HEIGHT) && y <= (25.0 / 35.0) * glutGet(GLUT_WINDOW_HEIGHT))
+			if(c2.click(x,y))
 				estado = JUEGO;
 
 		std::cout << x <<  std::endl;

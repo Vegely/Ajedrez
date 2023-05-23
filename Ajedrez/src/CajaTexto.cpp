@@ -3,8 +3,6 @@
 #include "ETSIDI.h"
 
 void CajaTexto::dibuja() {
-	float fscala = 100;
-
 	Caja::dibuja();
 	glTranslatef((ur.x + 1.5*ul.x) / 2, (ur.y + dr.y) / 2, 1);
 	
@@ -17,5 +15,8 @@ void CajaTexto::dibuja() {
 
 bool CajaTexto::click(float x, float y) {
 	
+	if(x>= (abs(MAX_IZQD_GL - ul.x)*glutGet(GLUT_WINDOW_WIDTH)/ANCHO_GL)&& x<=abs(MAX_IZQD_GL-ur.x)*glutGet(GLUT_WINDOW_WIDTH)/ANCHO_GL)
 	return 1;
+
+	return 0;
 }

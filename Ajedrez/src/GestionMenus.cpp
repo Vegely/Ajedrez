@@ -10,11 +10,10 @@ void GestionMenus::imprimeMenuInicial() {
 
 	//static CajaTexto c({ 10,5 }, { -10,5 }, { -10,0 }, { 10,0 },"PUTA MADRE");
 	//static CajaTexto c({ 10,15 }, { -10,15 }, { -10,10 }, { 10,10 },"texto");
-	static CajaTexto c2({ 31.6,5 }, { -31.5,5}, { -31.5,0 }, { 31.6,0 }, "puta vida");
+	static CajaTexto c2({ 10,5 }, { -10,5}, { -10,0 }, { 10,0 }, "puta vida");
 	
 	//c.dibuja();
 	c2.dibuja();
-
 
 
 	//c2.dibuja();
