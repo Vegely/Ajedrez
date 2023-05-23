@@ -11,10 +11,17 @@ class Tablero
 	//Un tablero contiene todas las piezas
 	Pieza* tablero[ANCHO_TABLERO * ANCHO_TABLERO];
 	bool colorDelTurno;
+
+	bool haMovido[6] = {};
+
 	Posicion reyPos[2];
+
 	int numeroPiezas;
+
 	bool tableroIlegalesRey[2][8][8] = { false };
+
 	std::vector<DatosClavada> datosClavada;
+
 	Posicion ultimaJugada; //Se guardan los datos de la posicion tras la ultima jugada para implementar comer al paso
 
 	void escribir(const Posicion& posicion, Pieza* pieza);											//Escribe una pieza en una posición	
@@ -38,6 +45,7 @@ public:
 	bool jaqueMate() const;
 	bool reyAhogado() const;
 	bool tablasMaterialInsuficiente() const;
+	void actualizarEnroque();
 	double evaluacion() const;
 
 	//Funcion temporal para imprimir tablero por consola

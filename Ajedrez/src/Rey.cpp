@@ -30,36 +30,6 @@ DatosClavada Rey::actualizarVariables(bool clavada, Posicion direccionClavada, b
 				tableroIlegalesRey[(color + 1) % 2][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 			}
 		}
-
-
-		Posicion posicionesTorres[2][2] = { { Posicion{7,7}, Posicion{0,7} }, { Posicion{7,0}, Posicion{0,0} } };
-		if (tablero.leer(posicionesTorres[color][1]) != nullptr&&noHaMovido)
-		{
-			if (tablero.leer(posicionesTorres[color][0])->tipo == Pieza::tipo_t::TORRE && tablero.leer(posicionesTorres[color][0])->noHaMovido)
-			{
-				
-				if (tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ -1,0 })) == nullptr && tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ -2,0 })) == nullptr
-					&& tableroIlegalesRey[color][(posicionesTorres[color][0] + Posicion{ -1,0 }).x][(posicionesTorres[color][0] + Posicion{ -1,0 }).y] == false
-					&& tableroIlegalesRey[color][(posicionesTorres[color][0] + Posicion{ -2 ,0 }).x][(posicionesTorres[color][0] + Posicion{ -2 ,0 }).y] == false)
-
-					
-				
-				{
-					puedeEnrocar[0] = true;
-				}
-			}
-
-			if (tablero.leer(posicionesTorres[color][1])->tipo == Pieza::tipo_t::TORRE && tablero.leer(posicionesTorres[color][1])->noHaMovido)
-			{
-				if (tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ 1,0 })) == nullptr
-					&& tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ 2,0 })) == nullptr
-					&& tableroIlegalesRey[color][(posicionesTorres[color][1] + Posicion{1,0 }).x][(posicionesTorres[color][1] + Posicion{ 1,0 }).y] == false
-					&& tableroIlegalesRey[color][(posicionesTorres[color][1] + Posicion{ 2,0 }).x][(posicionesTorres[color][1] + Posicion{2,0 }).y] == false)
-				{
-					puedeEnrocar[1] = true;
-				}
-			}
-		}
 	}
 	
 	return piezaClavada;

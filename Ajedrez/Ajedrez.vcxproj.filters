@@ -17,6 +17,8 @@
     <ClCompile Include="src\Tablero.cpp" />
     <ClCompile Include="src\Torre.cpp" />
     <ClCompile Include="src\InfoTablas.cpp" />
+    <ClCompile Include="src\MotorDeJuego.cpp" />
+    <ClCompile Include="InfoErroque.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Alfil.h" />
@@ -38,5 +40,7 @@
     <ClInclude Include="src\Torre.h" />
     <ClInclude Include="src\InfoTablas.h" />
     <ClInclude Include="src\DatosClavada.h" />
+    <ClInclude Include="src\MotorDeJuego.h" />
+    <ClInclude Include="InfoErroque.h" />
   </ItemGroup>
 </Project>

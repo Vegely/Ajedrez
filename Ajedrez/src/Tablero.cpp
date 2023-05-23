@@ -358,6 +358,57 @@ bool Tablero::tablasMaterialInsuficiente() const {
 //}
 //////////////////////////////////////////////////////////////////////////////
 
+void Tablero::actualizarEnroque()
+{
+	for (int i = 0; i < 2; i++)
+	{
+		if (!haMovido[0 + i * 3])
+		{
+			if (!haMovido[1 + i * 3]) // Enroque corto
+			{
+
+			}
+
+			if (!haMovido[2 + i * 3]) // Enroque largo
+			{
+
+			}
+		}
+	}
+	
+	// Pushback a los movimientos del rey
+
+
+
+	/*Posicion posicionesTorres[2][2] = { { Posicion{7,7}, Posicion{0,7} }, { Posicion{7,0}, Posicion{0,0} } };
+	if (tablero.leer(posicionesTorres[color][1]) != nullptr && noHaMovido)
+	{
+		if (tablero.leer(posicionesTorres[color][0])->tipo == Pieza::tipo_t::TORRE && tablero.leer(posicionesTorres[color][0])->noHaMovido)
+		{
+
+			if (tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ -1,0 })) == nullptr && tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ -2,0 })) == nullptr
+				&& tableroIlegalesRey[color][(posicionesTorres[color][0] + Posicion{ -1,0 }).x][(posicionesTorres[color][0] + Posicion{ -1,0 }).y] == false
+				&& tableroIlegalesRey[color][(posicionesTorres[color][0] + Posicion{ -2 ,0 }).x][(posicionesTorres[color][0] + Posicion{ -2 ,0 }).y] == false)
+
+
+
+			{
+				puedeEnrocar[0] = true;
+			}
+		}
+
+		if (tablero.leer(posicionesTorres[color][1])->tipo == Pieza::tipo_t::TORRE && tablero.leer(posicionesTorres[color][1])->noHaMovido)
+		{
+			if (tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ 1,0 })) == nullptr
+				&& tablero.leer(Posicion(posicionesTorres[color][0] + Posicion{ 2,0 })) == nullptr
+				&& tableroIlegalesRey[color][(posicionesTorres[color][1] + Posicion{ 1,0 }).x][(posicionesTorres[color][1] + Posicion{ 1,0 }).y] == false
+				&& tableroIlegalesRey[color][(posicionesTorres[color][1] + Posicion{ 2,0 }).x][(posicionesTorres[color][1] + Posicion{ 2,0 }).y] == false)
+			{
+				puedeEnrocar[1] = true;
+			}
+		}
+	}*/
+}
 
 double Tablero::evaluacion() const  //Valor negativo ventaja negras valor positivo ventaja blancas
 {

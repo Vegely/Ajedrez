@@ -1,11 +1,11 @@
 #include "MotorDeJuego.h"
 
-////////////////////////
-#include <iostream>
-#include <windows.h>
+constexpr auto NUM_LINEAS = 40;
+
 ////////////////////////
 
-constexpr auto NUM_LINEAS = 40;
+#include <iostream>
+#include <windows.h>
 
 void MotorDeJuego::pintar(Posicion posSelec)
 {
@@ -45,6 +45,8 @@ void MotorDeJuego::pintar(Posicion posSelec)
 	for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
 	std::cout << std::endl;
 }
+
+////////////////////////
 
 bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 {
