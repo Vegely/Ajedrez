@@ -52,6 +52,18 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 	{
 		if (puedeMover == movimiento.fin)
 		{
+			tablero.mover(movimiento);
+			tablero.cambiarTurno();
+			pintar();
+
+			return true;
+		}
+	}
+
+	for (const Pieza* puedeComer : tablero.leer(movimiento.inicio)->getPuedeComer())
+	{
+		if (puedeComer->getPosicion() == movimiento.fin)
+		{
 			if (tablero.leer(movimiento.fin) != nullptr)
 			{
 				delete tablero.leer(movimiento.fin);
