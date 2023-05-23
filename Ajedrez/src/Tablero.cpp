@@ -484,12 +484,24 @@ double Tablero::evaluacion() const  //Valor negativo ventaja negras valor positi
 }
 
 std::vector<Pieza*> Tablero::bloqueoJaque() {
-	Posicion direccion;
-	direccion.x= (leer(reyPos[colorDelTurno])->posicion- leer(reyPos[colorDelTurno])->amenazas[0]->posicion).x/static_cast<int> (distancia(leer(reyPos[colorDelTurno])->posicion, leer(reyPos[colorDelTurno])->amenazas[0]->posicion));
-	direccion.y = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).y / static_cast<int> (distancia(leer(reyPos[colorDelTurno])->posicion, leer(reyPos[colorDelTurno])->amenazas[0]->posicion));
+	Posicion direccion,posicionPrueba;
+	int distan = static_cast<int> (distancia(leer(reyPos[colorDelTurno])->posicion, leer(reyPos[colorDelTurno])->amenazas[0]->posicion));
+	direccion.x = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).x / distan;
+	direccion.y = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).y / distan;
 
 
-	leer(reyPos[colorDelTurno])->amenazas[0]->posicion;
-	leer(reyPos[colorDelTurno])->posicion;
 
+	std::vector<Pieza*> piezasBloquean;
+	for (int i = 1; i < distan; i++)
+	{
+		posicionPrueba = leer(reyPos[colorDelTurno])->amenazas[0]->posicion+ i * direccion;
+		for (auto piezasMueven : tablero)
+		{
+
+		}
+	}
+
+	
+
+	return piezasBloquean;
 }

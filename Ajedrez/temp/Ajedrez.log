@@ -1,7 +1,8 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  Alfil.cpp
-  Dama.cpp
+  Tablero.cpp
+C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(10,14): warning C4305: 'argument': truncation from 'const int' to 'const unsigned char'
+C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(10,85): warning C4309: 'argument': truncation of constant value
   Torre.cpp
   Generating Code...
   Ajedrez.vcxproj -> C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\bin\Ajedrez.exe
