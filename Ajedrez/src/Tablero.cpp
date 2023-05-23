@@ -18,6 +18,16 @@ constexpr auto VALOR_AMENAZAS_PELIGROSAS = 1.79769e+308;
 
 void Tablero::actualizarTablero()
 {
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			for (int k = 0; k < 8; k++)
+			{
+				tableroIlegalesRey[i][j][k] = false;
+			}
+		}
+	}
 	datosClavada.clear();
 	DatosClavada aux;
 	for (Pieza* p_pieza : tablero) {
@@ -229,55 +239,68 @@ void Tablero::mover(const Movimiento& movimiento) {
 
 bool Tablero::jaqueMate() const 
 {
-	if (leer(reyPos[colorDelTurno]) != nullptr )
+	if (leer(reyPos[colorDelTurno])->getAmenazas().size() == 0)
 	{
-		if (leer(reyPos[colorDelTurno])->getAmenazas().size() == 0)
+		return false;
+	}
+	else
+	{
+		if (leer(reyPos[colorDelTurno])->getAmenazas().size()> 1)
 		{
-			return false;
+			//Comprobar si el rey puede mover
+			if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
+				return false;
+			//Si no jaque mate
+			return true;
 		}
 		else
 		{
-			if (leer(reyPos[colorDelTurno])->getAmenazas().size()> 1)
+			if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO|| distancia(leer(reyPos[colorDelTurno])->getAmenazas()[0]->posicion, leer(reyPos[colorDelTurno])->posicion)<2.0)
 			{
-				//Comprobar si el rey puede mover
+				//Comprobar si el rey puede mover 
+				if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
+					return false;
 
+				//Comprobar si se puede comer el caballo
+				if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->getAmenazas().size() > 0)
+					return false;
 
-				//Si no jaque mate
+				//Si ninguna jaque mate
+				return true;
+
 			}
 			else
 			{
-				if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO|| distancia(leer(reyPos[colorDelTurno])->getAmenazas()[0]->posicion, leer(reyPos[colorDelTurno])->posicion)<2.0)
-				{
-					//Comprobar si el rey puede mover 
-					//Comprobar si se puede comer el caballo
 
-					//Si ninguna jaque mate
+				//Comprobar si el rey puede mover (si no puede entonces jaque mate)
+				if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
+					return false;
 
-				}
-				else
-				{
+				//Comprobar si se puede comer la pieza
+				if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->getAmenazas().size() > 0)
+					return false;
 
-					//Comprobar si el rey puede mover (si no puede entonces jaque mate)
-					//Comprobar si se puede comer la pieza
-					//Comprobar si se puede poner algo en medio
+				//Comprobar si se puede poner algo en medio
+				
 
-					//Si ninguna jaque mate
-				}
+				//Si ninguna jaque mate
+				return true;
 			}
 		}
 	}
-	return false;
+	
 }
 
-bool Tablero::reyAhogado() const {
+bool Tablero::reyAhogado() const // como se llama al jaque mate antes no es necesario revisar si el rey tiene amenazas.
+{
 	for (auto piezasColor : tablero)
 	{
 		if (piezasColor != nullptr && piezasColor->color == colorDelTurno) {
-
+			if (leer(piezasColor->posicion)->puede_comer.size() > 0 || leer(piezasColor->posicion)->puede_mover.size() > 0)
+				return false;
 		}
-
 	}
-	return false;
+	return true;
 
 }
 
@@ -458,4 +481,15 @@ double Tablero::evaluacion() const  //Valor negativo ventaja negras valor positi
 	}
 
 	return COEFF_DIFERENCIA_MATERIAL*valorTablero+COEFF_AMENAZAS_PELIGROSAS* amenazaPeligrosaReturn +COEFF_AMENAZAS_POCO_PELIGROSAS* amenazaPeligrosaReturn;
+}
+
+std::vector<Pieza*> Tablero::bloqueoJaque() {
+	Posicion direccion;
+	direccion.x= (leer(reyPos[colorDelTurno])->posicion- leer(reyPos[colorDelTurno])->amenazas[0]->posicion).x/static_cast<int> (distancia(leer(reyPos[colorDelTurno])->posicion, leer(reyPos[colorDelTurno])->amenazas[0]->posicion));
+	direccion.y = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).y / static_cast<int> (distancia(leer(reyPos[colorDelTurno])->posicion, leer(reyPos[colorDelTurno])->amenazas[0]->posicion));
+
+
+	leer(reyPos[colorDelTurno])->amenazas[0]->posicion;
+	leer(reyPos[colorDelTurno])->posicion;
+
 }

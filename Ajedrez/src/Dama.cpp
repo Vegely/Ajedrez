@@ -33,22 +33,30 @@ DatosClavada Dama::actualizarVariables(bool clavada, Posicion direccionClavada, 
 				if (tablero.leer(posicion_prueba) == nullptr)		//La casilla revisada est� vac�a
 				{
 					puede_mover.push_back(posicion_prueba);			//A�ade los vacios de la linea a puede_mover
-					tableroIlegalesRey[(color + 1) % 2][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
+					tableroIlegalesRey[!color][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 					posicion_prueba += direccion;					//Actualiza la siguiente posici�n
 
 				}
 				else if (tablero.leer(posicion_prueba)->color != color)		//La casilla revisada tiene una pieza enemiga
 				{
-					puede_comer.push_back(tablero.leer(posicion_prueba));		//A�ade la pieza enemiga a puede_comer
-					tablero.leer(posicion_prueba)->addAmenazas(this);		//Se a�ade a las amenazas de la otra pieza
-					piezaEncontrada = true;
-					posicionAux = posicion_prueba;
-					posicion_prueba += direccion;
+					if (tablero.leer(posicion_prueba)->tipo != Pieza::tipo_t::REY)
+					{
+						puede_comer.push_back(tablero.leer(posicion_prueba));		//A�ade la pieza enemiga a puede_comer
+						tablero.leer(posicion_prueba)->addAmenazas(this);		//Se a�ade a las amenazas de la otra pieza
+						piezaEncontrada = true;
+						posicionAux = posicion_prueba;
+						posicion_prueba += direccion;
+					}
+					else //Si se enuentra un rey le prohibe moverse en la dirección de movimiento
+					{
+						tableroIlegalesRey[!color][posicion_prueba.x + direccion.x][posicion_prueba.y + direccion.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
+						break;
+					}
 				}
 				else		//La casilla revisada tiene una pieza amiga
 				{
 					tablero.leer(posicion_prueba)->addProtecciones(this);		//Añade la pieza amiga a esta_protegiendo
-					tableroIlegalesRey[(color + 1) % 2][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
+					tableroIlegalesRey[!color][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 					break;
 				}
 			}

@@ -13,11 +13,8 @@ class Tablero
 	bool colorDelTurno;
 
 	bool haMovido[6] = {};
-
 	Posicion reyPos[2];
-
 	int numeroPiezas;
-
 	bool tableroIlegalesRey[2][8][8] = { false };
 
 	std::vector<DatosClavada> datosClavada;
@@ -41,7 +38,7 @@ public:
 	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO];}		//Devuelve el puntero a pieza de una posición leóda
 	void mover(const Movimiento& movimiento);																		//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
 
-	Posicion getUltimaJugada() { return ultimaJugada; }
+	Posicion getUltimaJugada() const{ return ultimaJugada; }
 
 	void cambiarTurno() { colorDelTurno = !colorDelTurno; }
 	bool jaqueMate() const;
@@ -49,9 +46,11 @@ public:
 	bool tablasMaterialInsuficiente() const;
 	void actualizarEnroque();
 	double evaluacion() const;
+	std::vector<Pieza*> bloqueoJaque();
 
 	//Funcion temporal para imprimir tablero por consola
 	//void imprimeTablero();
+
 };
 
 
