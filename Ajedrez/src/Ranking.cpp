@@ -1,4 +1,6 @@
 #include "Ranking.h"
+#include "ETSIDI.h"
+#include "CajaTexto.h"
 
 //Estado de flujos de forma mas compacta?
 
@@ -27,6 +29,7 @@ bool Ranking::inicializa() {
 			ultima_posicion++;
 		}
 		ultima_posicion -= 3;
+		npaginas = ultima_posicion / JUGADORES_POR_HOJA;
 		fs.close();
 		return 1;
 	}
@@ -53,40 +56,56 @@ bool Ranking::aniadirJugador(const std::string& nombre, int id) {
 		return 0;
 	}
 	else {
-		std::stringstream ss;
-		std::string str = "";
-		ss << (ultima_posicion + 1) << " \t 0.0 \t " << nombre << " \t " << id;
-		str = ss.str();
-		ofs << str << std::endl;
-		ofs.close();
-		ultima_posicion++;
-		return 1;
+		if (!jugadorExiste(nombre)) {
+			std::stringstream ss;
+			std::string str = "";
+			ss << (ultima_posicion + 1) << " \t 0.0 \t " << nombre << " \t " << id;
+			str = ss.str();
+			ofs << str << std::endl;
+			ofs.close();
+			ultima_posicion++;
+			return 1;
+		}
 	}
 }
 
-std::ostream& Ranking::print(int nposiciones, std::ostream& o) const {
+void Ranking::print() const {
 	std::ifstream ifs(nombre_fichero);
 	std::string str = "";
-	
+
 	std::getline(ifs, str);
 	std::getline(ifs, str);
 
 	if (!ifs.is_open()) {
 		std::cerr << "Error al cargar ranking. Saliendo..." << std::endl;
-		return o;
+		return;
 	}
 	else if (ifs.eof() || ifs.fail() || ifs.bad()) {
 		std::cerr << "Error en la lectura. Saliendo..." << std::endl;
-		return o;
+		return;
 	}
 
-	for (int i = 0; i < nposiciones && !ifs.eof(); i++) {
+	if (npaginas == 0) {
+		for (int i = 0; i < ultima_posicion; i++) {
+			std::getline(ifs, str);
+			ETSIDI::printxy(str.c_str(), -5, (ALTO_GL-ALTO_GL/2) - 2 * i);
+		}
+	}
+	else {
+		for (int i = 0; i < pagina_actual * JUGADORES_POR_HOJA; i++) {
+			std::getline(ifs, str);
+		}
+		for (int i = 0; i <  JUGADORES_POR_HOJA; i++) {
+			std::getline(ifs, str);
+			ETSIDI::printxy(str.c_str(), -5, (ALTO_GL - ALTO_GL / 2) - 2 * i);
+		}
+	}
+
+	/*/for (int i = 0; i < nposiciones && !ifs.eof(); i++) {
 		std::getline(ifs, str);
-		o << str << std::endl;
-	}
-
+		//ETSIDI::printxy(ranking.print(5).c_str(), -5, 8);
+	}*/
 	ifs.close();
-	return o;
 }
 
 void Ranking::actualizar(const std::string& nombre, float puntos) {
@@ -95,4 +114,27 @@ void Ranking::actualizar(const std::string& nombre, float puntos) {
 	encabezado();
 	actualizaRanking(ptdranking, nombre, puntos, nombre_fichero);
 	liberaEstructura();
+}
+
+bool Ranking::jugadorExiste(std::string nombre_jugador) const{
+	std::ifstream ifs(nombre_fichero);
+	std::string str = "";
+	float token = 0;
+	std::string nombre = "";
+
+	std::getline(ifs, str);
+	std::getline(ifs, str);
+
+	while (std::getline(ifs, str)) {
+		std::stringstream ss;
+		ss << str;
+		ss >> token >> token >> nombre;
+
+		if (nombre == nombre_jugador)
+			return 1;
+	}
+
+	ifs.close();
+
+	return 0;
 }

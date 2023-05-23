@@ -60,9 +60,4 @@
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\CajaTexto.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="src\nueva.txt" />
-    <Text Include="src\ranking - copia.txt" />
-    <Text Include="src\ranking.txt" />
-  </ItemGroup>
 </Project>

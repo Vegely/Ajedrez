@@ -7,35 +7,8 @@
 
 
 void GestionMenus::imprimeMenuInicial() {
-
-	//static CajaTexto c({ 10,5 }, { -10,5 }, { -10,0 }, { 10,0 },"PUTA MADRE");
-	//static CajaTexto c({ 10,15 }, { -10,15 }, { -10,10 }, { 10,10 },"texto");
-	static CajaTexto c2({ 10,5 }, { -10,5}, { -10,0 }, { 10,0 }, "puta vida");
-	
-	//c.dibuja();
+	static CajaTexto c2({ 10,5 }, { -10,5 }, { -10,0 }, { 10,0 }, "puta vida");
 	c2.dibuja();
-
-
-	//c2.dibuja();
-/*	glDisable(GL_LIGHTING);
-	glColor3ub(255, 0, 0);
-	glBegin(GL_POLYGON);
-	glVertex3d(10, 15, 0);
-	glVertex3d(-10, 15, 0);
-	glVertex3d(-10, 10, 0);
-	glVertex3d(10, 10, 0);
-	glEnd();
-	glEnable(GL_LIGHTING);
-
-	glDisable(GL_LIGHTING);
-	glColor3ub(255, 0, 0);
-	glBegin(GL_POLYGON);
-	glVertex3d(10, 15, 0);
-	glVertex3d(-10, 15, 0);
-	glVertex3d(-10, 10, 0);
-	glVertex3d(10, 10, 0);
-	glEnd();
-	glEnable(GL_LIGHTING);*/
 }
 
 void GestionMenus::imprimeMenuPausa() {
@@ -49,6 +22,25 @@ void GestionMenus::imprimeMenuPausa() {
 	glScaled(1 / fscala, 1 / fscala, 1 / fscala);
 	for (char c : "PAUSA")
 		glutStrokeCharacter(GLUT_STROKE_ROMAN, c);
+
+}
+void GestionMenus::imprimeNuevaPartida() {
+	static CajaTexto c2({ 5,5 }, { -5,5 }, { -5,0 }, { 5,0 }, "puta vida");
+	c2.dibuja();
+}
+void GestionMenus::imprimeRanking() {
+
+}
+void GestionMenus::imprimeCargarPartida() {
+
+}
+void GestionMenus::imprimeJ1() {
+
+}
+void GestionMenus::imprimeJ2() {
+
+}
+void GestionMenus::imprimeModo() {
 
 }
 

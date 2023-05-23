@@ -281,23 +281,6 @@ void OnTimer(int value)
 void OnKeyboardDown(const unsigned char key, int x_t, int y_t)
 {
 	ajedrez.tecla(key);
-	/*switch (key)
-	{
-	case 'a':
-		ajedrez.mundo.camara.setSpeed({ -10.0f, 0, 0 });
-		break;
-	case 'd':
-		ajedrez.mundo.camara.setSpeed({ 10.0f, 0, 0 });
-		break;
-	case 's':
-		ajedrez.mundo.camara.setSpeed({ 0, 0, 10.0f });
-		break;
-	case 'w':
-		ajedrez.mundo.camara.setSpeed({ 0, 0, -10.0f });
-		break;
-	default:
-		break;
-	}*/
 }
 
 
@@ -311,6 +294,7 @@ void OnKeyboardUp(const unsigned char key, int x, int y)
 
 void OnKeyboardSpecial(int key, int x, int y)
 {
+	ajedrez.teclaEspecial(key);
 	// End of keyboard reading code (do not erase or write anything afterwardas).
 	//glutPostRedisplay();
 }
@@ -318,7 +302,7 @@ void OnKeyboardSpecial(int key, int x, int y)
 // 0 == left, 1 == middle, 2 == right, 3 == scroll up, 4 == scroll down.
 void OnMouseClick(int button, int state, int x, int y)
 {
-	ajedrez.click(button, state, x, y);
+	//ajedrez.click(button, state, x, y);
 	/*static std::string btn;
 	switch (button)
 	{

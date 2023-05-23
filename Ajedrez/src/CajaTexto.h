@@ -2,10 +2,10 @@
 #include "Caja.h"
 #include <string>
 
-#define ANCHO_GL 35.0 //25 hasta -10
-#define ALTO_GL 63.2 //-31.6 hasta 31.6
+#define ANCHO_GL 63.2 //25 hasta -10
+#define ALTO_GL 35.0 //-31.6 hasta 31.6
 #define MAX_IZQD_GL -31.6
-#define MAX_ARRIBA_GL 25
+#define MAX_ARRIBA_GL 25.0
 
 class CajaTexto : public Caja
 {

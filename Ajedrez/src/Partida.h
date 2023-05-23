@@ -19,8 +19,8 @@ private:
 	std::string ganada;
 	std::string tablas;
 	std::string modo;
-	int blancas; //Id jugador blancas
-	int negras; //Id jugador negras
+	std::string j1;
+	std::string j2;
 	float tiempo_inicial;
 	float tiempo_restante;
 	int ventaja_material; //material_blancas - material_negras
@@ -28,17 +28,20 @@ private:
 	std::vector<std::string> movimientos_negras;
 
 public:
-	Partida() {};
-	//Constructor de partidas nuevas
-	Partida(std::string nombre_partida, int id, std::string modo, int blancas, int negras,
-		float tiempo_inicial);
+	Partida();
 
+	bool existe();
 	bool crearPartida();
 	bool guardarPartida();
 	bool cargarPartida();
 	void movBlancas(std::string mov_blancas) { movimientos_blancas.push_back(mov_blancas); };
 	void movNegras(std::string mov_negras) { movimientos_negras.push_back(mov_negras); };
 	bool partidaFinalizada() { return finalizada; };
+
+	std::string& getNombre() { return nombre_partida; };
+	std::string& getModo() { return modo; };
+	std::string& getJ1() { return j1; };
+	std::string& getJ2() { return j2; };
 
 	friend void operator<<(std::ostream& o, const Partida& p);
 	friend void operator>>(std::istream& is, Partida& p);

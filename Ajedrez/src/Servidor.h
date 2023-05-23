@@ -4,6 +4,10 @@
 #include <fstream>
 #include <sstream>
 
+/*
+* Compartir 5 números de 0 a 7 y el último de 0 a 1
+*/
+
 class Servidor
 {
 private:

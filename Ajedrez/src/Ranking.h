@@ -6,22 +6,25 @@
 #include <vector>
 #include "DatosRanking.h"
 
-
+#define JUGADORES_POR_HOJA 10
 
 class Ranking
 {
 private:
+	int pagina_actual = 0;
+	int npaginas = 0;
 	const char* nombre_fichero = "ranking.txt";
 	const std::string titulo = "RANKING";
 	const std::string campos = "Pos  Punt \t Jug \t\t Id";
 	int ultima_posicion;
 	DatosRanking* ptdranking = nullptr;
-	//std::string fila; 
+
 
 	bool inicializa();
 	void aEstructura() { ptdranking = asignaEspacio(ultima_posicion); };
 	void liberaEstructura() { liberaEspacio(ptdranking); };
 	void encabezado() const;
+	bool jugadorExiste(std::string nombre_jugador) const;
 
 public:
 
@@ -35,7 +38,9 @@ public:
 	bool aniadirJugador(const std::string& nombre, int id);
 	void actualizar(const std::string& nombre, float puntos);
 	std::string nombre() const;
-	std::ostream& print(int nposiciones, std::ostream& o = std::cout) const;
+	void print() const;
+	void paginaSiguiente() { if (pagina_actual >= npaginas)return; pagina_actual++; }
+	void paginaAnterior() { if (pagina_actual <= 0)return; pagina_actual--; }
 };
 
 

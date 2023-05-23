@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "Callbacks.h"
 #include <vector>
+#include "Partida.h"
 
 struct Model
 {

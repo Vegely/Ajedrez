@@ -1,6 +1,0 @@
-RANKING
-Pos  Punt 	 Jug 		 Id
-1 	 680.2 	 juan 	 0
-2	 74.2		 yo 		 3
-3 	 58.3 	 jorge 	 1
-4 	 0.0 	 nuevo 	 5

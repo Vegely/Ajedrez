@@ -1,37 +1,43 @@
 #include "Partida.h"
 
-Partida::Partida(std::string nombre_partida, int id, std::string modo, int blancas, int negras,
-	float tiempo_inicial) {
-	this->nombre_partida = nombre_partida;
-	this->id = id;
+Partida::Partida() { 
+	this->nombre_partida = "";
+	this->id = 0;
 	this->finalizada = 0;
 	this->ganada = INICIALIZACION_POR_DEFECTO_STRING;
 	this->tablas = INICIALIZACION_POR_DEFECTO_STRING;
-	this->modo = modo;
-	this->blancas = blancas;
-	this->negras = negras;
-	this->tiempo_inicial = tiempo_inicial;
-	this->tiempo_restante = tiempo_inicial; //El tiempo restante es el mismo que el inicial al inicio de la partida
-	this->ventaja_material = 0; 
+	this->modo = "";
+	j1 = "";
+	j2 = "";
+	this->tiempo_inicial = 0;
+	this->tiempo_restante = 0; //El tiempo restante es el mismo que el inicial al inicio de la partida
+	this->ventaja_material = 0;
 	this->movimientos_blancas = {  };
 	this->movimientos_negras = {  };
 }
 
 bool Partida::crearPartida() {
-	std::fstream fs(nombre_partida.c_str(), std::ios_base::in);
+	std::ifstream fs(nombre_partida.c_str());
+
+	if (!fs.is_open()) { //Si no está abierta no existía
+		fs.close();
+		std::ofstream ofs(nombre_partida.c_str());
+		ofs << *this;
+		ofs.close();
+		return true;
+	}
+	return false;
+}
+
+bool Partida::existe() {
+	std::ifstream fs(nombre_partida.c_str());
 
 	if (!fs.is_open()) {
 		fs.close();
-		fs.open(nombre_partida.c_str(), std::ios_base::out);
-		fs << *this;
-		fs.close();
-		return 1;
+		return false;
 	}
-	else {
-		fs.close();
-		std::cout << "La partida ya existe. Saliendo..." << std::endl;
-		return 0;
-	}
+	fs.close();
+	return true;
 }
 
 bool Partida::guardarPartida() {
@@ -69,8 +75,8 @@ void operator<<(std::ostream& o, const Partida& p) {
 	o << (Campo::partida_nombre_partida + ": ") << p.nombre_partida << std::endl;
 	o << (Campo::partida_id + ": ") << p.id << std::endl;
 	o << (Campo::partida_modo + ": ") << p.modo << std::endl;
-	o << (Campo::partida_blancas + ": ") << p.blancas << std::endl;
-	o << (Campo::partida_negras + ": ") << p.negras << std::endl;
+	o << (Campo::partida_blancas + ": ") << p.j1 << std::endl;
+	o << (Campo::partida_negras + ": ") << p.j2 << std::endl;
 	o << (Campo::partida_finalizada + ": ") << p.finalizada << std::endl;
 	o << (Campo::partida_ganada + ": ") << p.ganada << std::endl;
 	o << (Campo::partida_tablas + ": ") << p.tablas << std::endl;
@@ -106,9 +112,9 @@ void operator>>(std::istream& is, Partida& p) {
 		if (nombre_campo == Campo::partida_modo) 
 			ss >> p.modo;
 		if (nombre_campo == Campo::partida_blancas) 
-			ss >> p.blancas;
+			ss >> p.j1;
 		if(nombre_campo== Campo::partida_negras)
-			ss >> p.negras;
+			ss >> p.j2;
 		if(nombre_campo== Campo::partida_finalizada)
 			ss >> p.finalizada;
 		if(nombre_campo== Campo::partida_ganada)
