@@ -25,7 +25,12 @@ void MotorDeJuego::pintar(Posicion posSelec)
 		if (posSelec != Posicion(-1, -1)) // Seleccionar el color de fondo
 		{
 			if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == posSelec) SetConsoleTextAttribute(hStdout, 160);
-			else for (Posicion puedeMover : tablero.leer(posSelec)->getPuedeMover()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeMover) SetConsoleTextAttribute(hStdout, 64);
+			else
+			{
+				for (Posicion puedeMover : tablero.leer(posSelec)->getPuedeMover()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeMover) SetConsoleTextAttribute(hStdout, 176);
+				for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion()) SetConsoleTextAttribute(hStdout, 64);
+			}
+				
 		}
 		
 		if (tablero.tablero[x] == nullptr) std::cout << "---\t";

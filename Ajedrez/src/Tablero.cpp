@@ -25,6 +25,26 @@ void Tablero::actualizarTablero()
 			aux=p_pieza->actualizarVariables(false,Posicion{0,0}, tableroIlegalesRey);
 			if (aux.ExisteClavada == true)
 			{
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
+				std::cout << "existe clavada" << std::endl;
 				datosClavada.push_back(aux);
 			}
 		}
@@ -145,7 +165,10 @@ void Tablero::mover(const Movimiento& movimiento) {
 	escribir(movimiento.fin, leer(movimiento.inicio));
 	escribir(movimiento.inicio, nullptr);
 
-	if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY) reyPos[leer(movimiento.fin)->color] = movimiento.fin; // Si se mueve un rey acctualizar la variable reyPos
+	if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY)
+	{
+		reyPos[leer(movimiento.fin)->color] = movimiento.fin; // Si se mueve un rey acctualizar la variable reyPos
+	}
 
 	actualizarTablero();
 
