@@ -49,6 +49,8 @@ DatosClavada Dama::actualizarVariables(bool clavada, Posicion direccionClavada, 
 					}
 					else //Si se enuentra un rey le prohibe moverse en la dirección de movimiento
 					{
+						puede_comer.push_back(tablero.leer(posicion_prueba));		//A�ade la pieza enemiga a puede_comer
+						tablero.leer(posicion_prueba)->addAmenazas(this);		//Se a�ade a las amenazas de la otra pieza
 						tableroIlegalesRey[!color][posicion_prueba.x + direccion.x][posicion_prueba.y + direccion.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 						break;
 					}

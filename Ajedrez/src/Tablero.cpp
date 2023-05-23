@@ -18,6 +18,11 @@ constexpr auto VALOR_AMENAZAS_PELIGROSAS = 1.79769e+308;
 
 void Tablero::actualizarTablero()
 {
+	for (auto limpiezaAmenazas : tablero) {
+		if (limpiezaAmenazas!=nullptr)
+			limpiezaAmenazas->amenazas.clear();
+	}
+
 	for (int i = 0; i < 2; i++)
 	{
 		for (int j = 0; j < 8; j++)
@@ -42,7 +47,7 @@ void Tablero::actualizarTablero()
 	for (int i = 0; i < datosClavada.size(); i++) //Clavar las piezas clavadas
 	{
 		datosClavada[i].PiezaClavada->actualizarVariables(true, datosClavada[i].DireccionClavada,tableroIlegalesRey);
-	}
+	}	
 }
 
 Tablero::Tablero()
@@ -102,10 +107,14 @@ numeroPiezas = 32;
 */
 escribir(Posicion(3, 2), new Dama(*this, true));
 escribir(Posicion(3, 1), new Rey(*this, true));
-escribir(Posicion(3, 5), new Dama(*this, false));
+escribir(Posicion(2, 4), new Dama(*this, false));
+escribir(Posicion(2,7), new Dama(*this, false));
+escribir(Posicion(2, 3), new Dama(*this, false));
 escribir(Posicion(3, 6), new Rey(*this, false));
+reyPos[0] = Posicion{ 3,6 };
+reyPos[1] = Posicion{ 3,1 };
 actualizarTablero();
-colorDelTurno = true;
+colorDelTurno = false;
 
 }
 
@@ -281,7 +290,9 @@ bool Tablero::jaqueMate() const
 					return false;
 
 				//Comprobar si se puede poner algo en medio
-				
+				std::vector<Pieza*> Bloquea = bloqueoJaque();
+				if(Bloquea.size()>0);
+					return false;
 
 				//Si ninguna jaque mate
 				return true;
@@ -490,18 +501,25 @@ std::vector<Pieza*> Tablero::bloqueoJaque() {
 	direccion.y = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).y / distan;
 
 
-
 	std::vector<Pieza*> piezasBloquean;
 	for (int i = 1; i < distan; i++)
 	{
-		posicionPrueba = leer(reyPos[colorDelTurno])->amenazas[0]->posicion+ i * direccion;
+		posicionPrueba = leer(reyPos[colorDelTurno])->amenazas[0]->posicion + Posicion{ i * direccion.x,i * direccion.y };
 		for (auto piezasMueven : tablero)
 		{
-
+			if (piezasMueven != nullptr&&piezasMueven->color==colorDelTurno)
+			{
+				for (auto testPosiciones : piezasMueven->getPuedeMover())
+				{
+					if (testPosiciones == posicionPrueba)
+					{
+						piezasBloquean.push_back(piezasMueven);
+					}
+						
+				}
+			}
+			
 		}
-	}
-
-	
-
+	}	
 	return piezasBloquean;
 }

@@ -46,7 +46,7 @@ public:
 	bool tablasMaterialInsuficiente() const;
 	void actualizarEnroque();
 	double evaluacion() const;
-	std::vector<Pieza*> bloqueoJaque();
+	std::vector<Pieza*> bloqueoJaque() const;
 
 	//Funcion temporal para imprimir tablero por consola
 	//void imprimeTablero();

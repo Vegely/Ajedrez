@@ -15,5 +15,6 @@ public:
 	bool hacerJugada(Movimiento movimiento);
 
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec);
+	
 };
 
