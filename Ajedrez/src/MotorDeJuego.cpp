@@ -50,33 +50,26 @@ void MotorDeJuego::pintar(Posicion posSelec)
 
 bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 {
-	for (const Posicion puedeMover : tablero.leer(movimiento.inicio)->getPuedeMover())
-	{
-		if (puedeMover == movimiento.fin)
-		{
-			tablero.mover(movimiento);
-			tablero.cambiarTurno();
-			pintar();
+	bool JugadaHecha = false;
 
-			return true;
-		}
-	}
+	for (const Posicion puedeMover : tablero.leer(movimiento.inicio)->getPuedeMover())
+		if (puedeMover == movimiento.fin) JugadaHecha = true;
 
 	for (const Pieza* puedeComer : tablero.leer(movimiento.inicio)->getPuedeComer())
-	{
-		if (puedeComer->getPosicion() == movimiento.fin)
+		if (puedeComer->getPosicion() == movimiento.fin && tablero.leer(movimiento.fin) != nullptr)
 		{
-			if (tablero.leer(movimiento.fin) != nullptr)
-			{
-				delete tablero.leer(movimiento.fin);
-			}
-
-			tablero.mover(movimiento);
-			tablero.cambiarTurno();
-			pintar();
-
-			return true;
+			delete tablero.leer(movimiento.fin);
+			JugadaHecha = true;
 		}
+
+	if (JugadaHecha)
+	{
+		tablero.mover(movimiento);
+		tablero.ultimaJugada = movimiento.fin;
+		tablero.cambiarTurno();
+		pintar();
+
+		return true;
 	}
 
 	return false;
