@@ -9,6 +9,7 @@ DatosClavada Dama::actualizarVariables(bool clavada, Posicion direccionClavada, 
 	DatosClavada piezaClavada;
 	Posicion posicionAux;
 	bool piezaEncontrada = false; //Variable para comprobar si se ha topado con una pieza
+<<<<<<< Updated upstream
 	
 	std::vector<Posicion> direcciones;
 
@@ -17,6 +18,19 @@ DatosClavada Dama::actualizarVariables(bool clavada, Posicion direccionClavada, 
 				Posicion(-1, -1), Posicion(1, -1), Posicion(-1, 1), Posicion(1, 1) };		//Direcciones diagonales
 	else
 		direcciones = { direccionClavada, -direccionClavada };
+=======
+	std::vector<Posicion> direcciones;
+
+	if (!clavada) //Clavar el movimiento de la pieza
+	{
+		direcciones= { Posicion(-1, 0), Posicion(1, 0), Posicion(0, -1), Posicion(0, 1),		//Direcciones paralelas
+				Posicion(-1, -1), Posicion(1, -1), Posicion(-1, 1), Posicion(1, 1) };		//Direcciones diagonales
+	}
+	else
+	{
+		direcciones = { direccionClavada,-direccionClavada };
+	}
+>>>>>>> Stashed changes
 
 	for (Posicion direccion : direcciones)
 	{

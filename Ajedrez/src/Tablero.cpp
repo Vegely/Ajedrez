@@ -25,26 +25,6 @@ void Tablero::actualizarTablero()
 			aux=p_pieza->actualizarVariables(false,Posicion{0,0}, tableroIlegalesRey);
 			if (aux.ExisteClavada == true)
 			{
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
-				std::cout << "existe clavada" << std::endl;
 				datosClavada.push_back(aux);
 			}
 		}
