@@ -1,5 +1,4 @@
 #include "board.h"
-#include <iostream>
 #include "freeglut.h"
 #include "camera.h"
 
@@ -15,7 +14,6 @@ Board::Board(const Point& pos_global, const float square_length)
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			std::cout << j * 8 + i << std::endl;
 			cells[j * 8 + i].pos_space = { square_length * i, pos_global.y, square_length * j };
 
 			if (j % 2 == 0)

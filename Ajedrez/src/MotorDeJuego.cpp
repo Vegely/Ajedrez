@@ -11,7 +11,7 @@ void MotorDeJuego::pintar(Posicion posSelec)
 {
 	//Insertar lineas vacias para limpiar consola
 	for (int i = 0; i < NUM_LINEAS; i++) {
-		std::cout << std::endl;
+		std::cout<< std::endl;
 	}
 
 	// Pintar el tablero

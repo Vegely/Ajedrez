@@ -58,7 +58,7 @@ void Tablero::actualizarTablero()
 Tablero::Tablero()
 {
 	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++) { tablero[i] = nullptr; } //Se crea un tablero vacio
-
+	/*
 	//True == Blancas <-> False == Negras En color
 	//Blancas 
 	//Se añaden los peones
@@ -66,6 +66,7 @@ Tablero::Tablero()
 	{
 		escribir(Posicion(i, 1), new Peon(*this, true));
 	}
+
 	//Se añaden las torres
 escribir(Posicion(0, 0), new Torre(*this, true));
 escribir(Posicion(7, 0), new Torre(*this, true));
@@ -108,6 +109,12 @@ reyPos[0] = Posicion{ 4,7 };
 
 actualizarTablero(); //Se inicializan los movimientos posibles
 numeroPiezas = 32;
+*/
+escribir(Posicion(3, 2), new Dama(*this, true));
+escribir(Posicion(3, 1), new Rey(*this, true));
+escribir(Posicion(3, 5), new Dama(*this, false));
+escribir(Posicion(3, 6), new Rey(*this, false));
+actualizarTablero();
 colorDelTurno = true;
 
 }
