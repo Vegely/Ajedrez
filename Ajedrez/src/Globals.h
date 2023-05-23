@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include <freeglut.h>
 
 constexpr double PI = 3.141592654f;
 
@@ -63,5 +62,7 @@ public:
 };
 
 Point getPointFromCoords(char letter, unsigned int number);
+
+void drawLine(const Point& p1, const Point& p2);
 
 #endif

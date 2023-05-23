@@ -1,4 +1,5 @@
 #include "Camara.h"
+#include <freeglut.h>
 
 /* CONSTRUCTOR */
 Camara::Camara(const Point& position) :

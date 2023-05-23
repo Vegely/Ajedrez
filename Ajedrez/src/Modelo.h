@@ -15,26 +15,27 @@
 #include <vector>
 // Librerías propias 
 #include "Globals.h" // Clases útiles genéricas
-#include "Entity.h"
+#include "Hitbox.h"
 
 enum TipoPieza { NONE, REY, DAMA, ALFIL, CABALLO, TORRE, PEON };
 
 class Modelo : public Entity
 {
 private:
-	GLuint	       texture_ID;
-	std::string    model_path;
-	std::string    texture_path;
-	TipoPieza      tipo_pieza;
+	GLuint	    texture_ID;
+	std::string model_path;
+	std::string texture_path;
+	TipoPieza   tipo_pieza;
+	Hitbox		hitbox;
 
 public:
-	const aiScene* scene;
+	const aiScene*   scene;
 	Assimp::Importer importer;
 
 public:
 	/* FORMA CANÓNICA */
 	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path);
-   ~Modelo(void) { /*delete scene;*/ }
+    virtual ~Modelo(void) { /*delete scene;*/ }
 	Modelo(const Modelo& m);
 	Modelo& operator = (const Modelo& rhs);
 
@@ -53,6 +54,7 @@ public:
 	/* FUNCIONES */
 	void render(void);
 	void renderNodo(const aiNode* nodo);
+	void renderHitbox(void) { hitbox.render(); }
 	bool cargarTextura(void);
 };
 

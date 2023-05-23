@@ -120,7 +120,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freeglut.lib;assimp-vc143-mtd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ETSIDI.lib;freeglut.lib;assimp-vc143-mtd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -139,10 +139,11 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freeglut.lib;assimp-vc143-mtd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ETSIDI.lib;freeglut.lib;assimp-vc143-mtd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Hitbox.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Modelo.cpp" />
     <ClCompile Include="src\Alfil.cpp" />
@@ -157,11 +158,13 @@
     <ClCompile Include="src\Movimiento.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
+    <ClCompile Include="src\Plane.cpp" />
     <ClCompile Include="src\Rey.cpp" />
     <ClCompile Include="src\Tablero.cpp" />
     <ClCompile Include="src\Torre.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Hitbox.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Modelo.h" />
     <ClInclude Include="src\Alfil.h" />
@@ -175,6 +178,7 @@
     <ClInclude Include="src\Movimiento.h" />
     <ClInclude Include="src\Peon.h" />
     <ClInclude Include="src\Pieza.h" />
+    <ClInclude Include="src\Plane.h" />
     <ClInclude Include="src\Posicion.h" />
     <ClInclude Include="src\Rey.h" />
     <ClInclude Include="src\Tablero.h" />

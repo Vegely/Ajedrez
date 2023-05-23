@@ -1,5 +1,6 @@
 #include "Globals.h"
 #include <ctime>
+#include <freeglut.h>
 
 CRGB Colors::White = { 255, 255, 255 };
 CRGB Colors::Black = { 0, 0, 0 };
@@ -149,4 +150,12 @@ bool Delay::delay(const float milliseconds)
 		return false;
 	}
 	return true;
+}
+
+void drawLine(const Point& p1, const Point& p2)
+{
+	glBegin(GL_LINES);
+	glVertex3f(p1.x, p1.y, p1.z);
+	glVertex3f(p2.x, p2.y, p2.z);
+	glEnd();
 }

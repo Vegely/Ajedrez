@@ -4,7 +4,6 @@
 #include "Globals.h"
 #include <string>
 #include <iostream>
-#include "freeglut.h"
 
 class Entity // interface
 {
