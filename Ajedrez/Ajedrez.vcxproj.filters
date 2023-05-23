@@ -1,47 +1,145 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\Alfil.cpp" />
-    <ClCompile Include="src\board.cpp" />
-    <ClCompile Include="src\Caballo.cpp" />
-    <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\Dama.cpp" />
-    <ClCompile Include="src\graphics.cpp" />
-    <ClCompile Include="src\IA.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Peon.cpp" />
-    <ClCompile Include="src\Pieza.cpp" />
-    <ClCompile Include="src\plane.cpp" />
-    <ClCompile Include="src\Rey.cpp" />
-    <ClCompile Include="src\structs.cpp" />
-    <ClCompile Include="src\Tablero.cpp" />
-    <ClCompile Include="src\Torre.cpp" />
-    <ClCompile Include="src\InfoTablas.cpp" />
-    <ClCompile Include="src\MotorDeJuego.cpp" />
-    <ClCompile Include="InfoErroque.cpp" />
-    <ClCompile Include="src\Movimiento.cpp" />
+    <ClCompile Include="src\Tablero.cpp">
+      <Filter>Lógica\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MotorDeJuego.cpp">
+      <Filter>Lógica\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IA.cpp">
+      <Filter>Lógica\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InfoTablas.cpp">
+      <Filter>Lógica\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics.cpp">
+      <Filter>Gráficos\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\plane.cpp">
+      <Filter>Gráficos\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\structs.cpp">
+      <Filter>Gráficos\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\board.cpp">
+      <Filter>Gráficos\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera.cpp">
+      <Filter>Gráficos\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alfil.cpp">
+      <Filter>Lógica\Source\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Caballo.cpp">
+      <Filter>Lógica\Source\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dama.cpp">
+      <Filter>Lógica\Source\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Peon.cpp">
+      <Filter>Lógica\Source\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pieza.cpp">
+      <Filter>Lógica\Source\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rey.cpp">
+      <Filter>Lógica\Source\Piezas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Torre.cpp">
+      <Filter>Lógica\Source\Piezas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Alfil.h" />
-    <ClInclude Include="src\board.h" />
-    <ClInclude Include="src\Caballo.h" />
-    <ClInclude Include="src\camera.h" />
-    <ClInclude Include="src\Dama.h" />
-    <ClInclude Include="src\freeglut.h" />
-    <ClInclude Include="src\graphics.h" />
-    <ClInclude Include="src\IA.h" />
-    <ClInclude Include="src\Movimiento.h" />
-    <ClInclude Include="src\Peon.h" />
-    <ClInclude Include="src\Pieza.h" />
-    <ClInclude Include="src\plane.h" />
-    <ClInclude Include="src\Posicion.h" />
-    <ClInclude Include="src\Rey.h" />
-    <ClInclude Include="src\structs.h" />
-    <ClInclude Include="src\Tablero.h" />
-    <ClInclude Include="src\Torre.h" />
-    <ClInclude Include="src\InfoTablas.h" />
-    <ClInclude Include="src\DatosClavada.h" />
-    <ClInclude Include="src\MotorDeJuego.h" />
-    <ClInclude Include="InfoErroque.h" />
+    <ClInclude Include="src\DatosClavada.h">
+      <Filter>Lógica\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoErroque.h">
+      <Filter>Lógica\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IA.h">
+      <Filter>Lógica\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MotorDeJuego.h">
+      <Filter>Lógica\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Movimiento.h">
+      <Filter>Lógica\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tablero.h">
+      <Filter>Lógica\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InfoTablas.h">
+      <Filter>Lógica\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\board.h">
+      <Filter>Gráficos\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camera.h">
+      <Filter>Gráficos\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\freeglut.h">
+      <Filter>Gráficos\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics.h">
+      <Filter>Gráficos\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\plane.h">
+      <Filter>Gráficos\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Posicion.h">
+      <Filter>Lógica\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\structs.h">
+      <Filter>Gráficos\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alfil.h">
+      <Filter>Lógica\Headers\Piezas</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Caballo.h">
+      <Filter>Lógica\Headers\Piezas</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dama.h">
+      <Filter>Lógica\Headers\Piezas</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Peon.h">
+      <Filter>Lógica\Headers\Piezas</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pieza.h">
+      <Filter>Lógica\Headers\Piezas</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rey.h">
+      <Filter>Lógica\Headers\Piezas</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Torre.h">
+      <Filter>Lógica\Headers\Piezas</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Lógica">
+      <UniqueIdentifier>{65a2120e-ef59-4673-9238-172df42e1e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lógica\Headers">
+      <UniqueIdentifier>{a621be31-753f-4701-b113-7b9f25bb0109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lógica\Source">
+      <UniqueIdentifier>{f3ff2f4a-3334-412b-a308-209dc187c6a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gráficos">
+      <UniqueIdentifier>{6e7e1763-0500-49de-92be-2ff86e7f1ee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gráficos\Headers">
+      <UniqueIdentifier>{7cc1e42b-14b8-4031-ade4-94c288713498}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gráficos\Source">
+      <UniqueIdentifier>{1da390d0-b90a-47cb-b60a-14ff29640f0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lógica\Headers\Piezas">
+      <UniqueIdentifier>{dfe4c8f3-4633-43c1-9ee7-4f2326c370a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lógica\Source\Piezas">
+      <UniqueIdentifier>{ce3353b7-6b65-4621-a2a4-31c3bd4c76d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

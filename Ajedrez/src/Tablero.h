@@ -47,6 +47,7 @@ public:
 
 	void actualizarHaMovido(Movimiento movimiento);
 	void actualizarEnroque();
+	bool actualizarJaque();
 
 	double evaluacion() const;
 	std::vector<Pieza*> bloqueoJaque() const;
