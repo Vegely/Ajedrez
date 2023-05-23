@@ -19,6 +19,7 @@
     <ClCompile Include="src\InfoTablas.cpp" />
     <ClCompile Include="src\MotorDeJuego.cpp" />
     <ClCompile Include="InfoErroque.cpp" />
+    <ClCompile Include="src\Movimiento.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Alfil.h" />

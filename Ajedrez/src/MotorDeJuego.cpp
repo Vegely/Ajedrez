@@ -53,19 +53,39 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 	bool JugadaHecha = false;
 
 	for (const Posicion puedeMover : tablero.leer(movimiento.inicio)->getPuedeMover())
-		if (puedeMover == movimiento.fin) JugadaHecha = true;
+	{
+		if (puedeMover == movimiento.fin)
+		{ 
+			if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::REY)
+			{
+				Posicion aux = movimiento.fin - movimiento.inicio;
+				if (abs(aux.x) == 2)
+					if (aux.x < 0) tablero.mover(Movimiento(Posicion(0, movimiento.inicio.y), Posicion(3, movimiento.inicio.y)));
+					else tablero.mover(Movimiento(Posicion(7, movimiento.inicio.y), Posicion(5, movimiento.inicio.y)));
+			}
 
-	for (const Pieza* puedeComer : tablero.leer(movimiento.inicio)->getPuedeComer())
+			tablero.actualizarHaMovido(movimiento);
+
+			JugadaHecha = true; 
+			break; 
+		}
+	}
+		
+	if (!JugadaHecha) for (const Pieza* puedeComer : tablero.leer(movimiento.inicio)->getPuedeComer())
 		if (puedeComer->getPosicion() == movimiento.fin && tablero.leer(movimiento.fin) != nullptr)
 		{
+			tablero.actualizarHaMovido(movimiento);
+
 			delete tablero.leer(movimiento.fin);
+
 			JugadaHecha = true;
+			break;
 		}
 
 	if (JugadaHecha)
 	{
 		tablero.mover(movimiento);
-		tablero.ultimaJugada = movimiento.fin;
+		tablero.ultimaJugada = movimiento;
 		tablero.cambiarTurno();
 		pintar();
 
