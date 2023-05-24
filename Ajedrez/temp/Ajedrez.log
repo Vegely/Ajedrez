@@ -3,6 +3,6 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v17
   Tablero.cpp
 C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(10,14): warning C4305: 'argument': truncation from 'const int' to 'const unsigned char'
 C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(10,85): warning C4309: 'argument': truncation of constant value
-C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Tablero.cpp(400,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Tablero.cpp(401,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Tablero.cpp(403,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Tablero.cpp(404,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   Ajedrez.vcxproj -> C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\bin\Ajedrez.exe

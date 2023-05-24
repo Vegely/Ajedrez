@@ -53,6 +53,8 @@ void Tablero::actualizarTablero()
 	leer(reyPos[0])->actualizarVariables(false, Posicion{ 0,0 }, tableroIlegalesRey);
 	leer(reyPos[1])->actualizarVariables(false, Posicion{ 0,0 }, tableroIlegalesRey);
 
+	actualizarAlPaso();
+
 	for (int i = 0; i < datosClavada.size(); i++) //Clavar las piezas clavadas
 	{
 		datosClavada[i].PiezaClavada->actualizarVariables(true, datosClavada[i].DireccionClavada,tableroIlegalesRey);
@@ -60,20 +62,21 @@ void Tablero::actualizarTablero()
 
 	actualizarEnroque();
 	actualizarJaque();
-
+	
 }
 
 Tablero::Tablero()
 {
 	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++) { tablero[i] = nullptr; } //Se crea un tablero vacio
-	
+
 	//True == Blancas <-> False == Negras En color
 	//Blancas 
 	//Se añaden los peones
-	/*for (int i = 0; i < ANCHO_TABLERO; i++)
+	for (int i = 0; i < ANCHO_TABLERO; i++)
 	{
 		escribir(Posicion(i, 1), new Peon(*this, true));
-	}*/
+	}
+	escribir(Posicion(3, 4), new Peon(*this, true));
 
 	////Se añaden las torres
 	escribir(Posicion(0, 0), new Torre(*this, true));
@@ -88,17 +91,18 @@ Tablero::Tablero()
 	escribir(Posicion(5, 0), new Alfil(*this, true));
 
 	////Se escribe la dama y el rey
-	//escribir(Posicion(3, 0), new Dama(*this, true));
-	escribir(Posicion(4, 0), new Rey(*this, true));
 	reyPos[1] = Posicion{ 4,0 };
+	//escribir(Posicion(3, 0), new Dama(*this, true));
+	escribir(reyPos[1], new Rey(*this, true));
 
-	////Negras
-	////Se añaden los peones
-	//for (int i = 0; i < ANCHO_TABLERO; i++)
-	//{
-	//	escribir(Posicion(i, 6), new Peon(*this, false));
-	//}
-	////Se añaden las torres
+
+	//Negras
+	//Se añaden los peones
+	for (int i = 0; i < ANCHO_TABLERO; i++)
+	{
+		escribir(Posicion(i, 6), new Peon(*this, false));
+	}
+	//Se añaden las torres
 	escribir(Posicion(0, 7), new Torre(*this, false));
 	escribir(Posicion(7, 7), new Torre(*this, false));
 
@@ -111,15 +115,14 @@ Tablero::Tablero()
 	//escribir(Posicion(5, 7), new Alfil(*this, false));
 
 	////Se escribe la dama y el rey
-	escribir(Posicion(3, 7), new Dama(*this, false));
-	escribir(Posicion(4, 7), new Rey(*this, false));
 	reyPos[0] = Posicion{ 4,7 };
+	escribir(Posicion(3, 7), new Dama(*this, false));
+	escribir(reyPos[0], new Rey(*this, false));
 
-	actualizarTablero(); //Se inicializan los movimientos posibles
-	numeroPiezas = 32;
-	
-	actualizarTablero();
 	colorDelTurno = true;
+	numeroPiezas = 32;  
+	actualizarTablero(); //Se inicializan los movimientos posibles
+	 
 }
 
 Tablero::Tablero(const Tablero& tablero)
@@ -464,6 +467,31 @@ void Tablero::actualizarJaque() {
 				Bloqueos.datosPieza->puede_mover.push_back(Bloqueos.posicionPieza);
 			}
 			
+		}
+	}
+}
+
+void Tablero::actualizarAlPaso() 
+{
+	int alturaInicial[2] = { 6,1 };
+	int alturaFinal[2] = { 4,3 };
+
+	if (leer(ultimaJugada.fin)!=nullptr&&
+		leer(ultimaJugada.fin)->tipo == Pieza::tipo_t::PEON
+		&& ultimaJugada.inicio.y == alturaInicial[leer(ultimaJugada.fin)->color] 
+		&& ultimaJugada.fin.y == alturaFinal[leer(ultimaJugada.fin)->color])
+	{
+		Posicion posicionPosible[2] = { Posicion{ultimaJugada.fin - Posicion{1,0}},Posicion{ultimaJugada.fin + Posicion{1,0}} };
+		for (int i=0;i<2;i++)
+		{
+			if (posicionPosible[i]>= Posicion(0, 0) && posicionPosible[i]< Posicion(8, 8) &&leer(posicionPosible[i]) != nullptr && leer(posicionPosible[i])->tipo == Pieza::tipo_t::PEON)
+			{
+				leer(posicionPosible[i])->puede_comer.push_back(leer(ultimaJugada.fin));
+				Posicion jugadaIntermedia = ultimaJugada.fin + ultimaJugada.inicio;
+				jugadaIntermedia.x /= 2;
+				jugadaIntermedia.y /= 2;
+				leer(posicionPosible[i])->puede_mover.push_back(jugadaIntermedia);
+			}
 		}
 	}
 }

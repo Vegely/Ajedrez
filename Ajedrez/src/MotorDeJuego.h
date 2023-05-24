@@ -5,7 +5,6 @@
 class MotorDeJuego
 {
 	Tablero tablero;
-
 	void pintar(Posicion piezaSelec = Posicion(-1, -1));
 
 public:
