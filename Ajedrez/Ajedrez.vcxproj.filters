@@ -65,4 +65,7 @@
     <Text Include="src\ranking - copia.txt" />
     <Text Include="src\ranking.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="bin\GOS.otf" />
+  </ItemGroup>
 </Project>

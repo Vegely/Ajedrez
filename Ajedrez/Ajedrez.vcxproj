@@ -83,6 +83,9 @@
     <Text Include="src\ranking - copia.txt" />
     <Text Include="src\ranking.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="bin\GOS.otf" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

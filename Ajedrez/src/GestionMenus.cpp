@@ -8,16 +8,19 @@
 
 void GestionMenus::imprimeMenuInicial() {
 
+	
+
 	//static CajaTexto c({ 10,5 }, { -10,5 }, { -10,0 }, { 10,0 },"PUTA MADRE");
 	//static CajaTexto c({ 10,15 }, { -10,15 }, { -10,10 }, { 10,10 },"texto");
-	static CajaTexto c_salir({ 8,-2 }, { -8,-2}, { -8,-4 }, { 8,-4 }, "puta vida");
-	c_salir.dibuja();
-	static CajaTexto c_ranking({ 8, 1 }, { -8, 1 }, { -8,  -1 }, { 8,-1 }, "tus muertos");
-	c_ranking.dibuja();
-	static CajaTexto c_cargar_partida({ 8, 4 }, { -8, 4 }, { -8,  2 }, { 8,2 }, "tus muertos");
-	c_cargar_partida.dibuja();
-	static CajaTexto c_nueva_partida({8, 7}, {-8, 7}, {-8,  5}, {8,5}, "tus muertos");
-	c_nueva_partida.dibuja();
+	static CajaTexto c_salir({ -1,-2.25 }, { -4,-2.25}, { -4,-3.25 }, { -1,-3.25}, "puta vida");
+	//c_salir.dibuja();
+	static CajaTexto c_ranking({ 0, 0.75 }, { -4, 0.75 }, { -4,  -0.25 }, { 0,-0.25 }, "tus muertos");
+	//c_ranking.dibuja();
+	static CajaTexto c_cargar_partida({ 4, 3.75 }, { -4, 3.75 }, { -4,  2.75 }, { 4,2.75 }, "tus muertos");
+	//c_cargar_partida.dibuja();
+	static CajaTexto c_nueva_partida({3.5, 6.75}, {-4, 6.75}, {-4,  5.75}, {3.5,5.75}, "tus muertos");
+	//c_nueva_partida.dibuja();
+	
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("prueba.png").id);
 	glDisable(GL_LIGHTING);
@@ -30,6 +33,21 @@ void GestionMenus::imprimeMenuInicial() {
 	glEnd();
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
+	ETSIDI::setTextColor(0, 0, 0);
+	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::printxy("AJEDREZ", -6, 12);
+	ETSIDI::setTextColor(0, 0, 0);
+	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::printxy("Nueva Partida", -4, 6);
+	ETSIDI::setTextColor(0, 0, 0);
+	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::printxy("Cargar Partida", -4, 3);
+	ETSIDI::setTextColor(0, 0, 0);
+	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::printxy("Ranking", -4, 0);
+	ETSIDI::setTextColor(0, 0, 0);
+	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::printxy("Salir", -4, -3);
 	//c.dibuja();
 	
 
@@ -61,15 +79,18 @@ void GestionMenus::imprimeMenuPausa() {
 	gluLookAt(0, 7.5, 30, // posicion del ojo
 		0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 		0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
-	static CajaTexto c_reanudar({ 8, 1 }, { -8, 1 }, { -8,  -1 }, { 8,-1 }, "tus muertos");
+	static CajaTexto c_reanudar({ 1, 3.75 }, { -4, 3.75 }, { -4,  2.75 }, { 1, 2.75}, "tus muertos");
 	c_reanudar.dibuja();
-	static CajaTexto c_salir({ 8, 4 }, { -8, 4 }, { -8,  2 }, { 8,2 }, "tus muertos");
+	static CajaTexto c_salir({-1, 0.75}, {-4, 0.75}, {-4,  -0.25}, {-1, -0.25}, "tus muertos");
 	c_salir.dibuja();
-	glColor3ub(255, 0, 0);
-	glTranslatef(-4, 15, 0);
-	glScaled(1 / fscala, 1 / fscala, 1 / fscala);
-	for (char c : "PAUSA")
-		glutStrokeCharacter(GLUT_STROKE_ROMAN, c);
-	glTranslatef(0, 0, 0);
+	ETSIDI::setTextColor(1, 0, 0);
+	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::printxy("PAUSA", -6, 12);
+	ETSIDI::setTextColor(0, 1, 0);
+	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::printxy("Reanudar", -4, 3);
+	ETSIDI::setTextColor(0, 1, 0);
+	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::printxy("Salir", -4, 0);
 }
 

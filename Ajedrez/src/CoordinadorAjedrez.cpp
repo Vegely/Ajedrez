@@ -21,6 +21,7 @@ void CoordinadorAjedrez::dibuja() {
 		float y;
 	}
 	else if (estado == PAUSA) {
+		mundo.dibuja();
 		GestionMenus::imprimeMenuPausa();
 	}
 }
@@ -45,10 +46,10 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 
 void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 	if (estado == INICIO) {
-		static CajaTexto c_salir({ 8,-2 }, { -8,-2 }, { -8,-4 }, { 8,-4 }, "puta vida");
-		static CajaTexto c_ranking({ 8, 1 }, { -8, 1 }, { -8,  -1 }, { 8,-1 }, "tus muertos");
-		static CajaTexto c_cargar_partida({ 8, 4 }, { -8, 4 }, { -8,  2 }, { 8,2 }, "tus muertos");
-		static CajaTexto c_nueva_partida({ 8, 7 }, { -8, 7 }, { -8,  5 }, { 8,5 }, "tus muertos");
+		static CajaTexto c_salir({ -1,-2.25 }, { -4,-2.25 }, { -4,-3.25 }, { -1,-3.25 }, "puta vida");
+		static CajaTexto c_ranking({ 0, 0.75 }, { -4, 0.75 }, { -4,  -0.25 }, { 0,-0.25 }, "tus muertos");
+		static CajaTexto c_cargar_partida({ 4, 3.75 }, { -4, 3.75 }, { -4,  2.75 }, { 4,2.75 }, "tus muertos");
+		static CajaTexto c_nueva_partida({ 3.5, 6.75 }, { -4, 6.75 }, { -4,  5.75 }, { 3.5,5.75 }, "tus muertos");
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		{
 			if (c_salir.click(x, y))
@@ -58,13 +59,13 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 			if (c_cargar_partida.click(x, y))
 			estado = CARGAR;
 			if (c_nueva_partida.click(x, y))
-				estado = NUEVA;
+				estado = JUEGO;
 		}
 
 	}
 	if (estado == PAUSA) {
-		static CajaTexto c_reanudar({ 8, 1 }, { -8, 1 }, { -8,  -1 }, { 8,-1 }, "tus muertos");
-		static CajaTexto c_salir({ 8, 4 }, { -8, 4 }, { -8,  2 }, { 8,2 }, "tus muertos");
+		static CajaTexto c_reanudar({ 1, 3.75 }, { -4, 3.75 }, { -4,  2.75 }, { 1, 2.75 }, "tus muertos");
+		static CajaTexto c_salir({ -1, 0.75 }, { -4, 0.75 }, { -4,  -0.25 }, { -1, -0.25 }, "tus muertos");
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		{
 			std::cout << x << std::endl;
