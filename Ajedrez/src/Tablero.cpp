@@ -119,12 +119,13 @@ Tablero::Tablero()
 	escribir(Posicion(3, 7), new Dama(*this, false));
 	escribir(reyPos[0], new Rey(*this, false));
 
-	colorDelTurno = true;
+	colorDelTurno = false;
 	numeroPiezas = 32;  
 	actualizarTablero(); //Se inicializan los movimientos posibles
 	 
 }
 
+/*
 Tablero::Tablero(const Tablero& tablero)
 {
 	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++)
@@ -167,6 +168,7 @@ Tablero::~Tablero()
 {
 	for (Pieza* p_pieza : tablero) delete p_pieza;
 }
+*/
 
 void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
 {

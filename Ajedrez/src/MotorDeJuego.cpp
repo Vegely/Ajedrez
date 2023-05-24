@@ -27,8 +27,23 @@ void MotorDeJuego::pintar(Posicion posSelec)
 			if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == posSelec) SetConsoleTextAttribute(hStdout, 160);
 			else
 			{
-				for (Posicion puedeMover : tablero.leer(posSelec)->getPuedeMover()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeMover) SetConsoleTextAttribute(hStdout, 176);
-				for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion()) SetConsoleTextAttribute(hStdout, 64);
+				for (Posicion puedeMover : tablero.leer(posSelec)->getPuedeMover()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeMover)
+				{
+					if (tablero.leer(posSelec)->getTipo() != Pieza::tipo_t::PEON || (puedeMover - tablero.leer(posSelec)->getPosicion()).x == 0)
+					{
+						SetConsoleTextAttribute(hStdout, 176);
+					}
+					else
+					{
+						SetConsoleTextAttribute(hStdout, 64);
+					}
+				}
+					
+				for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion())
+				{
+						SetConsoleTextAttribute(hStdout, 64);
+				}
+					
 			}
 				
 		}
@@ -64,14 +79,23 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 					else tablero.mover(Movimiento(Posicion(7, movimiento.inicio.y), Posicion(5, movimiento.inicio.y)));
 			}
 
-			tablero.actualizarHaMovido(movimiento);
+			
 
+			tablero.actualizarHaMovido(movimiento);
+			/*
+			if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && (puedeMover - tablero.leer(movimiento.inicio)->getPosicion()).x != 0)
+			{
+				Posicion desplazamientoBorrado = Posicion{ 0,(int)pow(-1,tablero.leer(movimiento.inicio)->getColor()) };
+				delete tablero.leer(movimiento.fin+desplazamientoBorrado);
+			}
+			*/
 			JugadaHecha = true; 
 			break; 
 		}
 	}
 		
 	if (!JugadaHecha) for (const Pieza* puedeComer : tablero.leer(movimiento.inicio)->getPuedeComer())
+	{
 		if (puedeComer->getPosicion() == movimiento.fin && tablero.leer(movimiento.fin) != nullptr)
 		{
 			tablero.actualizarHaMovido(movimiento);
@@ -80,6 +104,22 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 			JugadaHecha = true;
 			break;
 		}
+
+		/*
+		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON )
+		{
+			Posicion desplazamientoBorrado = Posicion{ 0,(int)pow(-1,tablero.leer(movimiento.inicio)->getColor()) };
+			if (puedeComer->getPosicion() == movimiento.fin+ desplazamientoBorrado && tablero.leer(movimiento.fin+ desplazamientoBorrado) != nullptr)
+			{
+				delete tablero.leer(movimiento.fin + desplazamientoBorrado);
+				JugadaHecha = true;
+				break;
+			}
+			
+		}*/
+
+	}
+		
 
 	if (JugadaHecha)
 	{
