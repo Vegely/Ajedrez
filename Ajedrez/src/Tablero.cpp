@@ -499,6 +499,7 @@ void Tablero::actualizarAlPaso()
 				jugadaIntermedia.x /= 2;
 				jugadaIntermedia.y /= 2;
 				leer(posicionPosible[i])->puede_mover.push_back(jugadaIntermedia);
+				leer(ultimaJugada.fin)->amenazas.push_back(leer(posicionPosible[i]));
 			}
 		}
 	}
