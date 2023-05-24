@@ -1,28 +1,11 @@
-
-
 #include "MotorDeJuego.h"
-#include <iostream>
 #include "graphics.h"
 
+//////////////////////////
+#include <iostream>
 
-//////////////////
-#include <string>
-#include <cctype>
 using namespace std;
-
-Posicion getInput()
-{
-	string input;
-
-	cin >> input;
-
-	int letra = toupper(input[0]) - 65;
-	int numero = input[1] - 49;
-	if (letra >= 0 && letra < 8 && numero >= 0 && numero < 8) return Posicion(letra, numero);
-
-	return Posicion(-1, -1);
-}
-//////////////////
+///////////////////////
 
 int main(int argc, char* argv[])
 {
@@ -30,51 +13,40 @@ int main(int argc, char* argv[])
 	MotorDeJuego juego;
 	////////////////////////
 
-	DatosFinal datosFinal;
-	bool exit = false;
-	bool pos1Selec = false;
-	while(!exit)
+	DatosFinal datosFinal = juego.motor();
+
+	////////////Tratamiento de la salida////////////
+	switch (datosFinal.codigoFinal)
 	{
-		Movimiento movimiento = juego.ensamblarMovimiento(getInput(), pos1Selec);
+	case CodigoFinal::JAQUE_MATE:
 		
-		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1)))
-		{
-			pos1Selec = !juego.hacerJugada(movimiento);
+		if (datosFinal.codigoFinal == CodigoFinal::JAQUE_MATE)
+			if (datosFinal.ganador) cout << "Gana blanco";
+			else cout << "Gana negro";
 
-			if (!pos1Selec) // Se hace la jugada
-			{
-				// se cambia el timer
+		break;
+	case CodigoFinal::REY_AHOGADO:
 
-				if (juego.jaqueMate())
-				{
-					datosFinal = { juego.colorDelTurno(), CodigoFinal::JAQUE_MATE };
-					exit = true;
-				}
-				else if (juego.tablasPorMaterialInsuficiente())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE;
-					cout << "Tablas por material insuficiente";
-					exit = true;
-				}
-				else if (juego.tablasPorRepeticion())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_REPETICION;
-					cout << "Tablas por repeticion";
-					exit = true;
-				}
-				else if (juego.tablasPorPasividad())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_PASIVIDAD;
-					cout << "Tablas por pasividad";
-					exit = true;
-				}
-			}
-		}
+		cout << "Tablas por rey ahogado";
+
+		break;
+	case CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE:
+
+		cout << "Tablas por material insuficiente";
+
+		break;
+	case CodigoFinal::TABLAS_POR_REPETICION:
+
+		cout << "Tablas por repeticion";
+
+		break;
+	case CodigoFinal::TABLAS_POR_PASIVIDAD:
+
+		cout << "Tablas por pasividad";
+
+		break;
 	}
-
-	if (datosFinal.codigoFinal == CodigoFinal::JAQUE_MATE)
-		if (datosFinal.ganador) cout << "Gana blanco";
-		else cout << "Gana negro";
+	//////////////////////////////////////////////////
 
 	return 0;
 }

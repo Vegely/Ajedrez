@@ -73,11 +73,10 @@ Tablero::Tablero()
 	//True == Blancas <-> False == Negras En color
 	//Blancas 
 	//Se añaden los peones
-	for (int i = 0; i < ANCHO_TABLERO; i++)
+	/*for (int i = 0; i < ANCHO_TABLERO; i++)
 	{
 		escribir(Posicion(i, 1), new Peon(*this, true));
-	}
-	escribir(Posicion(3, 4), new Peon(*this, true));
+	}*/
 
 	//escribir(Posicion(6, 5), new Peon(*this, true));
 
@@ -121,10 +120,10 @@ Tablero::Tablero()
 	//escribir(Posicion(5, 7), new Alfil(*this, false));
 
 	////Se escribe la dama y el rey
-	reyPos[0] = Posicion{ 4,7 };
+	reyPos[0] = Posicion{ 5, 7 };
 
 	//escribir(Posicion(3, 7), new Dama(*this, false));
-	escribir(Posicion(4, 7), new Rey(*this, false));
+	escribir(Posicion(5, 7), new Rey(*this, false));
 
 	colorDelTurno = true;
 	actualizarTablero(); //Se inicializan los movimientos posibles
@@ -170,10 +169,10 @@ Tablero::Tablero()
 //	this->reyPos[1] = tablero.reyPos[1];
 //}
 
-Tablero::~Tablero()
-{
-	//for (Pieza* p_pieza : tablero) delete p_pieza;
-}
+//Tablero::~Tablero()
+//{
+//	//for (Pieza* p_pieza : tablero) delete p_pieza;
+//}
 
 void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
 {

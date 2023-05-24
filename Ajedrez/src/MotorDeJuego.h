@@ -2,7 +2,7 @@
 
 #include "Tablero.h"
 
-enum class CodigoFinal { JAQUE_MATE, TABLAS_POR_MATERIAL_INSUFICIENTE, TABLAS_POR_REPETICION, TABLAS_POR_PASIVIDAD };	
+enum class CodigoFinal { JAQUE_MATE, REY_AHOGADO, TABLAS_POR_MATERIAL_INSUFICIENTE, TABLAS_POR_REPETICION, TABLAS_POR_PASIVIDAD };	
 
 struct DatosFinal
 {
@@ -20,16 +20,10 @@ class MotorDeJuego
 public:
 	MotorDeJuego() { pintar(); }
 
-	//void inicializar();
+	DatosFinal motor();
+
 	bool hacerJugada(Movimiento movimiento);
 
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec) const;
-	
-	bool colorDelTurno() { return tablero.colorDelTurno; }
-
-	bool jaqueMate() { return tablero.jaqueMate(); }
-	bool tablasPorMaterialInsuficiente() { return tablero.tablasMaterialInsuficiente(); }
-	bool tablasPorRepeticion() { return tablero.infoTablas.tablasPorRepeticion(); }
-	bool tablasPorPasividad() { return tablero.infoTablas.tablasPorPasividad(); }
 };
 

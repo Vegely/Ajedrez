@@ -9,6 +9,77 @@
 
 constexpr auto NUM_LINEAS = 40;
 
+//////////////////
+#include <iostream>
+#include <string>
+#include <cctype>
+using namespace std;
+
+Posicion getInput()
+{
+	string input;
+
+	cin >> input;
+
+	int letra = toupper(input[0]) - 65;
+	int numero = input[1] - 49;
+	if (letra >= 0 && letra < 8 && numero >= 0 && numero < 8) return Posicion(letra, numero);
+
+	return Posicion(-1, -1);
+}
+//////////////////
+
+DatosFinal MotorDeJuego::motor()
+{
+	DatosFinal datosFinal;
+	bool exit = false;
+	bool pos1Selec = false;
+	while (!exit)
+	{
+		Movimiento movimiento = ensamblarMovimiento(getInput(), pos1Selec);
+
+		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1)))
+		{
+			pos1Selec = !hacerJugada(movimiento);
+
+			if (!pos1Selec) // Se hace la jugada
+			{
+				// se cambia el timer
+
+				if (tablero.jaqueMate())
+				{
+					datosFinal = { !tablero.colorDelTurno, CodigoFinal::JAQUE_MATE};
+					exit = true;
+				}
+				else if (tablero.reyAhogado())
+				{
+					datosFinal.codigoFinal = CodigoFinal::REY_AHOGADO;
+					exit = true;
+				}
+				else if (tablero.tablasMaterialInsuficiente())
+				{
+					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE;
+					exit = true;
+				}
+				else if (tablero.infoTablas.tablasPorRepeticion())
+				{
+					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_REPETICION;
+					exit = true;
+				}
+				else if (tablero.infoTablas.tablasPorPasividad())
+				{
+					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_PASIVIDAD;
+					exit = true;
+				}
+			}
+		}
+	}
+
+	return datosFinal;
+}
+
+
+
 ////////////////////////
 
 #include <iostream>
@@ -74,7 +145,46 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 {
 	bool JugadaHecha = false;
 
-	for (const Posicion puedeMover : tablero.leer(movimiento.inicio)->getPuedeMover())
+	for (const Pieza* puedeComer : tablero.leer(movimiento.inicio)->getPuedeComer())
+	{
+		if (puedeComer->getPosicion() == movimiento.fin)
+		{
+			if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && puedeComer->getPosicion().y == movimiento.inicio.y);
+			else
+			{
+				tablero.actualizarHaMovido(movimiento);
+
+				delete tablero.leer(movimiento.fin);
+
+				tablero.infoTablas.clear();
+				tablero.numeroPiezas--;
+
+				JugadaHecha = true;
+				break;
+			}
+
+		}
+
+		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON)
+		{
+			Posicion aux = puedeComer->getPosicion() - 1 * !tablero.leer(movimiento.inicio)->getColor() * Posicion(0, 1);
+			if (aux == movimiento.fin)
+			{
+				tablero.actualizarHaMovido(movimiento);
+
+				tablero.tablero[puedeComer->getPosicion().indice()] = nullptr;
+				delete tablero.leer(aux);
+
+				tablero.infoTablas.clear();
+				tablero.numeroPiezas--;
+
+				JugadaHecha = true;
+				break;
+			}
+		}
+	}
+		
+	if (!JugadaHecha) for (const Posicion puedeMover : tablero.leer(movimiento.inicio)->getPuedeMover())
 	{
 		if (puedeMover == movimiento.fin)
 		{ 
@@ -90,49 +200,11 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 				}	
 			}
 
-			
-
 			tablero.actualizarHaMovido(movimiento);
-			/*
-			if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && (puedeMover - tablero.leer(movimiento.inicio)->getPosicion()).x != 0)
-			{
-				Posicion desplazamientoBorrado = Posicion{ 0,(int)pow(-1,tablero.leer(movimiento.inicio)->getColor()) };
-				delete tablero.leer(movimiento.fin+desplazamientoBorrado);
-			}
-			*/
+
 			JugadaHecha = true; 
 			break; 
 		}
-	}
-		
-	if (!JugadaHecha) for (const Pieza* puedeComer : tablero.leer(movimiento.inicio)->getPuedeComer())
-	{
-		if (puedeComer->getPosicion() == movimiento.fin && tablero.leer(movimiento.fin) != nullptr)
-		{
-			tablero.actualizarHaMovido(movimiento);
-
-			delete tablero.leer(movimiento.fin);
-
-			tablero.infoTablas.clear();
-			tablero.numeroPiezas--;
-
-			JugadaHecha = true;
-			break;
-		}
-
-		/*
-		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON )
-		{
-			Posicion desplazamientoBorrado = Posicion{ 0,(int)pow(-1,tablero.leer(movimiento.inicio)->getColor()) };
-			if (puedeComer->getPosicion() == movimiento.fin+ desplazamientoBorrado && tablero.leer(movimiento.fin+ desplazamientoBorrado) != nullptr)
-			{
-				delete tablero.leer(movimiento.fin + desplazamientoBorrado);
-				JugadaHecha = true;
-				break;
-			}
-			
-		}*/
-
 	}
 		
 
