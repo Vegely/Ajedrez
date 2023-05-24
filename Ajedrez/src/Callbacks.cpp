@@ -274,7 +274,7 @@ void OnReshape(int w, int h)
 // Each set time, performs the set functions.
 void OnTimer(int value)
 {
-	ajedrez.mundo.camara.movement(0.025);
+	ajedrez.mundo.camara_mundo.movement(0.025);
 	glutTimerFunc(25, OnTimer, 0);
 }
 
@@ -303,7 +303,7 @@ void OnKeyboardDown(const unsigned char key, int x_t, int y_t)
 
 void OnKeyboardUp(const unsigned char key, int x, int y)
 {
-	ajedrez.mundo.camara.setSpeed({ 0 });
+	ajedrez.mundo.camara_mundo.setSpeed({ 0 });
 
 	// End of keyboard reading code (do not erase or write anything afterwardas).
 	//glutPostRedisplay();

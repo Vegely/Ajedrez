@@ -4,7 +4,7 @@
 #include "Caja.h"
 #include <string>
 #include "CajaTexto.h"
-
+#include <iostream>
 
 void GestionMenus::imprimeMenuInicial() {
 
@@ -75,14 +75,13 @@ void GestionMenus::imprimeMenuInicial() {
 }
 
 void GestionMenus::imprimeMenuPausa() {
-	float fscala = 100;
 	gluLookAt(0, 7.5, 30, // posicion del ojo
 		0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 		0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 	static CajaTexto c_reanudar({ 1, 3.75 }, { -4, 3.75 }, { -4,  2.75 }, { 1, 2.75}, "tus muertos");
-	c_reanudar.dibuja();
+	//c_reanudar.dibuja();
 	static CajaTexto c_salir({-1, 0.75}, {-4, 0.75}, {-4,  -0.25}, {-1, -0.25}, "tus muertos");
-	c_salir.dibuja();
+	//c_salir.dibuja();
 	ETSIDI::setTextColor(1, 0, 0);
 	ETSIDI::setFont("ALGER.ttf", 60);
 	ETSIDI::printxy("PAUSA", -6, 12);
@@ -94,3 +93,101 @@ void GestionMenus::imprimeMenuPausa() {
 	ETSIDI::printxy("Salir", -4, 0);
 }
 
+void GestionMenus::imprimeMenuCargarPartida()
+{
+	gluLookAt(0, 7.5, 30, // posicion del ojo
+		0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
+		0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
+	static CajaTexto c_nombrepartida({ 1, 3.75 }, { -6, 3.75 }, { -6,  2.75 }, { 1, 2.75 }, "tus muertos");
+	c_nombrepartida.dibuja();
+	static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 }, "tus muertos");
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("prueba.png").id);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glTexCoord2d(0, 1); glVertex2f(-21, -8);
+	glTexCoord2d(1, 1); glVertex2f(21, -8);
+	glTexCoord2d(1, 0); glVertex2f(21, 24);
+	glTexCoord2d(0, 0); glVertex2f(-21, 24);
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+	
+	ETSIDI::setTextColor(0, 0, 0);
+	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::printxy("CARGAR PARTIDA", -8, 12);
+
+	ETSIDI::setTextColor(0, 0, 0);
+	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::printxy("Nombre de la partida:", -6, 4);
+
+	ETSIDI::setTextColor(0, 0, 1);
+	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::printxy("Volver", 26, -6);
+}
+
+void GestionMenus::imprimeMenuNuevaPartida()
+{
+	gluLookAt(0, 7.5, 30, // posicion del ojo
+		0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
+		0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
+	static CajaTexto c_nombrepartida({ 1, 3.75 }, { -6, 3.75 }, { -6,  2.75 }, { 1, 2.75 }, "tus muertos");
+	static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 }, "tus muertos");
+	c_nombrepartida.dibuja();
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("prueba.png").id);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glTexCoord2d(0, 1); glVertex2f(-21, -8);
+	glTexCoord2d(1, 1); glVertex2f(21, -8);
+	glTexCoord2d(1, 0); glVertex2f(21, 24);
+	glTexCoord2d(0, 0); glVertex2f(-21, 24);
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
+	ETSIDI::setTextColor(0, 0, 0);
+	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::printxy("NUEVA PARTIDA", -8, 12);
+
+	ETSIDI::setTextColor(0, 0, 0);
+	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::printxy("Nombre de la partida:", -6, 4);
+
+	ETSIDI::setTextColor(0, 0, 1);
+	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::printxy("Volver", 26, -6);
+}
+
+void GestionMenus::imprimeMenuRanking()
+{
+	gluLookAt(0, 7.5, 30, // posicion del ojo
+		0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
+		0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
+	static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 }, "tus muertos");
+	//c_volver.dibuja();
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("prueba.png").id);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glTexCoord2d(0, 1); glVertex2f(-21, -8);
+	glTexCoord2d(1, 1); glVertex2f(21, -8);
+	glTexCoord2d(1, 0); glVertex2f(21, 24);
+	glTexCoord2d(0, 0); glVertex2f(-21, 24);
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
+	ETSIDI::setTextColor(0, 0, 1);
+	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::printxy("RANKING PUNTUACIÓN", -15, 20);
+	ETSIDI::setTextColor(0, 0, 1);
+	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::printxy("Volver", 26, -6);
+	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::printxy("1. Conchatum", -10, 15);
+	
+}

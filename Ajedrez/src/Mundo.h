@@ -14,7 +14,7 @@ struct Model
 class Mundo
 {
 public:
-	Camera camara;
+	Camera camara_mundo;
 	std::vector<Model> models;
 
 	Mundo();

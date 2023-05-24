@@ -1,4 +1,27 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(516,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
-  GestionMenus.cpp
+  CoordinadorAjedrez.cpp
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(21,9): warning C4101: 'y': variable local sin referencia
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(67,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(67,22): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(71,27): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(71,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(75,34): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(75,31): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(81,33): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(81,30): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(91,28): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(91,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(93,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(93,22): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(107,33): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(107,30): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(110,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(110,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(118,33): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(118,30): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(121,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(121,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(128,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(128,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
   Ajedrez.vcxproj -> C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\bin\Ajedrez.exe

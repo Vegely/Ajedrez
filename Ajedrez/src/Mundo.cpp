@@ -2,9 +2,8 @@
 #include "freeglut.h"
 #include "Callbacks.h"
 
-Mundo::Mundo() : camara({ 0.0f, 10.0f, 10.0f }, { 0 }) {
+Mundo::Mundo() : camara_mundo({ 0.0f, 10.0f, 10.0f }, { 0 }) {}
 
-}
 
 void Mundo::dibuja() {
 	for (int i = 0; i < models.size(); i++)
@@ -14,10 +13,8 @@ void Mundo::dibuja() {
 		glTranslatef(-i * 10, 0, 0);
 	}
 	// Camera update
-	camara.update();
+	camara_mundo.update();
 
 	// Debug axis
 	debugAxis();
-
-	glTranslatef(0, 0, 0);
 }
