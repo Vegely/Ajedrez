@@ -17,7 +17,7 @@ void CajaTexto::dibuja() {
 
 bool CajaTexto::click(float x, float y) {
 	//std::cout << x << "cosita" << std::endl;
-	//std::cout << ANCHO_GL/*(abs(MAX_IZQD_GL - ul.x) / ANCHO_GL)*/ << " a ver que pasa" << std::endl;
+	//std::cout << (abs(MAX_IZQD_GL - ul.x) / ANCHO_GL)* glutGet(GLUT_WINDOW_WIDTH) << " a ver que pasa" << std::endl;
 	//std::cout << (float)glutGet(GLUT_WINDOW_WIDTH) << " que paso" << std::endl;
 	
 	if (x >= (abs(MAX_IZQD_GL - ul.x) * glutGet(GLUT_WINDOW_WIDTH) / ANCHO_GL) && x <= abs(MAX_IZQD_GL - ur.x) * glutGet(GLUT_WINDOW_WIDTH) / ANCHO_GL && 
