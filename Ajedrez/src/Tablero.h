@@ -4,6 +4,7 @@
 #include "Pieza.h"
 #include "Movimiento.h"
 #include "DatosBloqueoJaque.h"
+#include "InfoTablas.h"
 
 constexpr auto ANCHO_TABLERO = 8;
 
@@ -21,6 +22,8 @@ class Tablero
 
 	Movimiento ultimaJugada; //Se guardan los datos de la posicion tras la ultima jugada para implementar comer al paso
 
+	InfoTablas infoTablas;
+
 	void escribir(const Posicion& posicion, Pieza* pieza);											//Escribe una pieza en una posición	
 	void clearVariablesDePiezas() { for (Pieza* p_pieza : tablero) p_pieza->clearVariables(); }		//Limpia todas las variables de las piezas del tablero
 	void actualizarTablero();																		//Actualiza las variables de todas las piezas del tablero
@@ -29,9 +32,11 @@ class Tablero
 public:
 	friend class IA;
 	friend class MotorDeJuego;
+	friend class InfoTablas;
 
 	explicit Tablero();																									//Constructor
 	//explicit Tablero(const Tablero& tablero);
+
 	//virtual ~Tablero();
 
 	inline Posicion posicion(int i) const { return Posicion(i % ANCHO_TABLERO, i / ANCHO_TABLERO); }
@@ -55,8 +60,6 @@ public:
 
 	//Funcion temporal para imprimir tablero por consola
 	//void imprimeTablero();
-
 };
-
 
 #endif

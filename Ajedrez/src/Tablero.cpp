@@ -50,6 +50,7 @@ void Tablero::actualizarTablero()
 			}
 		}
 	}
+
 	leer(reyPos[0])->actualizarVariables(false, Posicion{ 0,0 }, tableroIlegalesRey);
 	leer(reyPos[1])->actualizarVariables(false, Posicion{ 0,0 }, tableroIlegalesRey);
 
@@ -78,33 +79,38 @@ Tablero::Tablero()
 	}
 	escribir(Posicion(3, 4), new Peon(*this, true));
 
+	//escribir(Posicion(6, 5), new Peon(*this, true));
+
 	////Se añaden las torres
-	escribir(Posicion(0, 0), new Torre(*this, true));
-	escribir(Posicion(7, 0), new Torre(*this, true));
+	escribir(Posicion(0, 6), new Torre(*this, true));
+	//escribir(Posicion(7, 0), new Torre(*this, true));
 
 	////Se escriben los caballos
 	//escribir(Posicion(1, 0), new Caballo(*this, true));
 	//escribir(Posicion(6, 0), new Caballo(*this, true));
 
 	////Se escriben los alfiles
-	escribir(Posicion(2, 0), new Alfil(*this, true));
-	escribir(Posicion(5, 0), new Alfil(*this, true));
+	//escribir(Posicion(2, 0), new Alfil(*this, true));
+	//escribir(Posicion(5, 0), new Alfil(*this, true));
 
 	////Se escribe la dama y el rey
 	reyPos[1] = Posicion{ 4,0 };
-	//escribir(Posicion(3, 0), new Dama(*this, true));
-	escribir(reyPos[1], new Rey(*this, true));
 
+	escribir(Posicion(2, 0), new Dama(*this, true));
+	escribir(Posicion(4, 0), new Rey(*this, true));
 
-	//Negras
-	//Se añaden los peones
-	for (int i = 0; i < ANCHO_TABLERO; i++)
-	{
-		escribir(Posicion(i, 6), new Peon(*this, false));
-	}
-	//Se añaden las torres
-	escribir(Posicion(0, 7), new Torre(*this, false));
-	escribir(Posicion(7, 7), new Torre(*this, false));
+	////Negras
+	////Se añaden los peones
+	//for (int i = 0; i < ANCHO_TABLERO; i++)
+	//{
+	//	escribir(Posicion(i, 6), new Peon(*this, false));
+	//}
+	// 
+	//escribir(Posicion(5, 1), new Peon(*this, false));
+	// 
+	////Se añaden las torres
+	//escribir(Posicion(0, 7), new Torre(*this, false));
+	//escribir(Posicion(7, 7), new Torre(*this, false));
 
 	////Se escriben los caballos
 	//escribir(Posicion(1, 7), new Caballo(*this, false));
@@ -116,59 +122,58 @@ Tablero::Tablero()
 
 	////Se escribe la dama y el rey
 	reyPos[0] = Posicion{ 4,7 };
-	escribir(Posicion(3, 7), new Dama(*this, false));
-	escribir(reyPos[0], new Rey(*this, false));
 
-	colorDelTurno = false;
-	numeroPiezas = 32;  
+	//escribir(Posicion(3, 7), new Dama(*this, false));
+	escribir(Posicion(4, 7), new Rey(*this, false));
+
+	colorDelTurno = true;
 	actualizarTablero(); //Se inicializan los movimientos posibles
-	 
+	numeroPiezas = 4;//32;
+
+	infoTablas.add(*this);
 }
 
-/*
-Tablero::Tablero(const Tablero& tablero)
-{
-	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++)
-	{
-		if (tablero.tablero[i] != nullptr)
-		{
-			switch (tablero.tablero[i]->tipo)
-			{
-			case Pieza::tipo_t::PEON:
-				escribir(tablero.posicion(i), new Peon(*this, tablero.tablero[i]->color));
-				break;
-			case Pieza::tipo_t::CABALLO:
-				escribir(tablero.posicion(i), new Caballo(*this, tablero.tablero[i]->color));
-				break;
-			case Pieza::tipo_t::ALFIL:
-				escribir(tablero.posicion(i), new Alfil(*this, tablero.tablero[i]->color));
-				break;
-			case Pieza::tipo_t::TORRE:
-				escribir(tablero.posicion(i), new Torre(*this, tablero.tablero[i]->color));
-				break;
-			case Pieza::tipo_t::DAMA:
-				escribir(tablero.posicion(i), new Dama(*this, tablero.tablero[i]->color));
-				break;
-			case Pieza::tipo_t::REY:
-				escribir(tablero.posicion(i), new Rey(*this, tablero.tablero[i]->color));
-				break;
-			}
-		}
-		else this->tablero[i] = nullptr;
-	}
-	//Copiar resto de variables
-	this->numeroPiezas = tablero.numeroPiezas;
-	this->colorDelTurno = tablero.colorDelTurno;
-	this->reyPos[0] = tablero.reyPos[0];
-	this->reyPos[1] = tablero.reyPos[1];
-
-}
+//Tablero::Tablero(const Tablero& tablero)
+//{
+//	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++)
+//	{
+//		if (tablero.tablero[i] != nullptr)
+//		{
+//			switch (tablero.tablero[i]->tipo)
+//			{
+//			case Pieza::tipo_t::PEON:
+//				escribir(tablero.posicion(i), new Peon(*this, tablero.tablero[i]->color));
+//				break;
+//			case Pieza::tipo_t::CABALLO:
+//				escribir(tablero.posicion(i), new Caballo(*this, tablero.tablero[i]->color));
+//				break;
+//			case Pieza::tipo_t::ALFIL:
+//				escribir(tablero.posicion(i), new Alfil(*this, tablero.tablero[i]->color));
+//				break;
+//			case Pieza::tipo_t::TORRE:
+//				escribir(tablero.posicion(i), new Torre(*this, tablero.tablero[i]->color));
+//				break;
+//			case Pieza::tipo_t::DAMA:
+//				escribir(tablero.posicion(i), new Dama(*this, tablero.tablero[i]->color));
+//				break;
+//			case Pieza::tipo_t::REY:
+//				escribir(tablero.posicion(i), new Rey(*this, tablero.tablero[i]->color));
+//				break;
+//			}
+//		}
+//		else this->tablero[i] = nullptr;
+//	}
+//	//Copiar resto de variables
+//	this->numeroPiezas = tablero.numeroPiezas;
+//	this->colorDelTurno = tablero.colorDelTurno;
+//	this->reyPos[0] = tablero.reyPos[0];
+//	this->reyPos[1] = tablero.reyPos[1];
+//}
 
 Tablero::~Tablero()
 {
-	for (Pieza* p_pieza : tablero) delete p_pieza;
+	//for (Pieza* p_pieza : tablero) delete p_pieza;
 }
-*/
 
 void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
 {
@@ -179,6 +184,9 @@ void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
 void Tablero::mover(const Movimiento& movimiento) {
 	escribir(movimiento.fin, leer(movimiento.inicio));
 	escribir(movimiento.inicio, nullptr);
+
+	if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY) infoTablas.clear();
+	infoTablas.add(*this);
 
 	if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY)
 	{
@@ -196,7 +204,7 @@ bool Tablero::jaqueMate() const
 	}
 	else
 	{
-		if (leer(reyPos[colorDelTurno])->getAmenazas().size()> 1)
+		if (leer(reyPos[colorDelTurno])->getAmenazas().size() > 1)
 		{
 			//Comprobar si el rey puede mover
 			if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
@@ -206,7 +214,7 @@ bool Tablero::jaqueMate() const
 		}
 		else
 		{
-			if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO|| distancia(leer(reyPos[colorDelTurno])->getAmenazas()[0]->posicion, leer(reyPos[colorDelTurno])->posicion)<2.0)
+			if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO || distancia(leer(reyPos[colorDelTurno])->getAmenazas()[0]->posicion, leer(reyPos[colorDelTurno])->posicion) < 2.0)
 			{
 				//Comprobar si el rey puede mover 
 				if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
@@ -222,7 +230,6 @@ bool Tablero::jaqueMate() const
 			}
 			else
 			{
-
 				//Comprobar si el rey puede mover (si no puede entonces jaque mate)
 				if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
 					return false;
@@ -234,6 +241,7 @@ bool Tablero::jaqueMate() const
 				//Comprobar si se puede poner algo en medio
 				std::vector<DatosBloqueoJaque> Bloquea = bloqueoJaque();
 				if(Bloquea.size()>0)
+
 					return false;
 
 				//Si ninguna jaque mate

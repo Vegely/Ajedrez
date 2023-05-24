@@ -1,20 +1,29 @@
 #include "InfoTablas.h"
 
+#include "Tablero.h"
+
 void InfoTablas::add(const Tablero tablero)
-{/*
-	auto iterator = std::find(posiciones.begin(), posiciones.end(), tablero);
-
 {
-	/*auto iterator = std::find(posiciones.begin(), posiciones.end(), tablero);
-
-	if (iterator != posiciones.end())
+	bool encontrado = false;
+	for (int i = 0; i < posiciones.size(); i++)
 	{
-		//if(repeticiones.at(iterator-posiciones.begin())++ == 3) boolRepeticion = true;
+		int j = 0;
+		for (int k = 0; k < ANCHO_TABLERO * ANCHO_TABLERO; k++)
+		{
+			if (posiciones[i].tablero[k] == tablero.tablero[k]) j++;
+		}
+		if (j == ANCHO_TABLERO * ANCHO_TABLERO)
+		{
+			if(++repeticiones[i] == 3) boolRepeticion = true;
+			encontrado = true;
+			break;
+		}
 	}
-	else
+	
+	if (!encontrado)
 	{
 		posiciones.push_back(tablero);
 		repeticiones.push_back(1);
 	}
-	contadorJugadas++;*/
+	contadorJugadas++;
 }

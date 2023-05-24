@@ -30,8 +30,6 @@ DatosClavada Peon::actualizarVariables(bool clavada, Posicion direccionClavada, 
 			if(!SPBN)
 				return piezaClavada;
 		}
-	
-
 	}
 	else
 	{
@@ -50,7 +48,6 @@ DatosClavada Peon::actualizarVariables(bool clavada, Posicion direccionClavada, 
 			if (!SPBN) //Si no puede mover en ninguna dirección esta clavado
 				return piezaClavada;
 		}
-
 	}
 		
 	for (Posicion direccion : direcciones) {
@@ -82,9 +79,7 @@ DatosClavada Peon::actualizarVariables(bool clavada, Posicion direccionClavada, 
 					{
 						tablero.leer(posicion_prueba)->addProtecciones(this);		//Añade la pieza amiga a esta_protegiendo
 					}
-
 				}
-
 			}
 		}
 	}

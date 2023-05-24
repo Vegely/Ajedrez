@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿  Alfil.cpp
   board.cpp
   Caballo.cpp
@@ -24,3 +25,13 @@ C:\Users\bogur\Desktop\Informatica\Trabajo\Ajedrez\Ajedrez\Ajedrez\src\Tablero.c
   Torre.cpp
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1096,5): error MSB6006: "link.exe" exited with code 1104.
 LINK : fatal error LNK1104: cannot open file 'freeglut.lib'
+=======
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
+  Tablero.cpp
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(10): warning C4305: 'argumento': truncamiento de 'const int' a 'const unsigned char'
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(10,85): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Tablero.cpp(231,27): warning C4390: ';': se encontró una instrucción controlada vacía; ¿es esa la intención?
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Tablero.cpp(465,28): warning C4390: ';': se encontró una instrucción controlada vacía; ¿es esa la intención?
+  Ajedrez.vcxproj -> C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\bin\Ajedrez.exe
+>>>>>>> Stashed changes

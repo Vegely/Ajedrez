@@ -15,7 +15,7 @@ constexpr auto VALOR_TORRE = 5;
 constexpr auto VALOR_DAMA = 9; 
 constexpr auto VALOR_REY = 1000;
 
-//Clase tablero vacía para tener una referencia al tablero dentro de las piezas
+//Clase tablero vacia para tener una referencia al tablero dentro de las piezas
 class Tablero;
 
 
@@ -56,7 +56,7 @@ public:
 	friend class Dama;
 	friend class Rey;
 
-	//Operadores básicos
+	//Operadores basicos
 
 	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const tipo_t tipo) : tablero(p_tablero), color(color), value(value), tipo(tipo){}
 	explicit Pieza(const Pieza& p) :tipo(p.tipo), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegida = p.esta_protegida; amenazas = p.amenazas; }
@@ -71,9 +71,6 @@ public:
 	inline const std::vector<Pieza*> getPuedeComer() const { return puede_comer; }
 	inline const std::vector<Pieza*> EstaProtegida() const { return esta_protegida; }
 	inline const std::vector<Pieza*> getAmenazas() const { return amenazas; }
-	
-	
-	
 };
 
 #endif // !_Pieza__H_ //

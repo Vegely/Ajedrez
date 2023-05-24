@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Tablero.h"
+class Tablero;
 
 class InfoTablas
 {
@@ -11,11 +11,14 @@ class InfoTablas
 	bool boolRepeticion;
 	int contadorJugadas;
 
+	
+
 public:
 	InfoTablas() { clear(); }
 
 	inline void clear() { posiciones.clear(); repeticiones.clear(); boolRepeticion = false; contadorJugadas = 0; }
 	void add(const Tablero tablero);
+	
 	inline bool tablasPorRepeticion() { return boolRepeticion; }
 	inline bool tablasPorPasividad() { return contadorJugadas > 50; }
 };
