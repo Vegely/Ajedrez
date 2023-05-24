@@ -73,12 +73,11 @@ Tablero::Tablero()
 	//True == Blancas <-> False == Negras En color
 	//Blancas 
 	//Se añaden los peones
-	/*for (int i = 0; i < ANCHO_TABLERO; i++)
+	for (int i = 0; i < ANCHO_TABLERO; i++)
 	{
 		escribir(Posicion(i, 1), new Peon(*this, true));
-	}*/
-
-	//escribir(Posicion(6, 5), new Peon(*this, true));
+	}
+	escribir(Posicion(3, 3), new Peon(*this, false));
 
 	////Se añaden las torres
 	escribir(Posicion(0, 6), new Torre(*this, true));
@@ -120,10 +119,10 @@ Tablero::Tablero()
 	//escribir(Posicion(5, 7), new Alfil(*this, false));
 
 	////Se escribe la dama y el rey
-	reyPos[0] = Posicion{ 5, 7 };
+	reyPos[0] = Posicion{ 3, 4 };
 
 	//escribir(Posicion(3, 7), new Dama(*this, false));
-	escribir(Posicion(5, 7), new Rey(*this, false));
+	escribir(Posicion(3, 4), new Rey(*this, false));
 
 	colorDelTurno = true;
 	actualizarTablero(); //Se inicializan los movimientos posibles
