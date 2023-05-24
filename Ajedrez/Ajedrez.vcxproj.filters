@@ -115,9 +115,6 @@
     <ClInclude Include="src\DatosBloqueoJaque.h">
       <Filter>Lógica\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\InfoErroque.h">
-      <Filter>Lógica\Headers</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lógica">

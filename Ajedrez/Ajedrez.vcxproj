@@ -48,7 +48,6 @@
     <ClInclude Include="src\freeglut.h" />
     <ClInclude Include="src\graphics.h" />
     <ClInclude Include="src\IA.h" />
-    <ClInclude Include="src\InfoErroque.h" />
     <ClInclude Include="src\InfoTablas.h" />
     <ClInclude Include="src\MotorDeJuego.h" />
     <ClInclude Include="src\Movimiento.h" />
