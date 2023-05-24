@@ -70,6 +70,7 @@ DatosClavada Peon::actualizarVariables(bool clavada, Posicion direccionClavada, 
 			}
 			else
 			{
+				tableroIlegalesRey[!color][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 				if (tablero.leer(posicion_prueba) != nullptr && direccion != direcciones[0]) //Para que no de error de atributos no inicializados
 				{
 					if (tablero.leer(posicion_prueba)->color != color)		//La casilla revisada tiene una pieza enemiga
@@ -80,7 +81,6 @@ DatosClavada Peon::actualizarVariables(bool clavada, Posicion direccionClavada, 
 					else	//La casilla revisada tiene una pieza amiga
 					{
 						tablero.leer(posicion_prueba)->addProtecciones(this);		//Añade la pieza amiga a esta_protegiendo
-						tableroIlegalesRey[!color][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 					}
 
 				}

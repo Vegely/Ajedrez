@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <algorithm>
 
 //constexpr auto NUM_LINEAS = 40;
 constexpr auto COEFF_DIFERENCIA_MATERIAL = 50.0;
@@ -17,9 +18,13 @@ constexpr auto VALOR_AMENAZAS_PELIGROSAS = 1.79769e+308;
 
 void Tablero::actualizarTablero()
 {
-	for (auto limpiezaAmenazas : tablero) {
-		if (limpiezaAmenazas!=nullptr)
-			limpiezaAmenazas->amenazas.clear();
+	for (auto limpiezaUnasAOtras : tablero) {
+		if (limpiezaUnasAOtras != nullptr)
+		{
+			limpiezaUnasAOtras->amenazas.clear();
+			limpiezaUnasAOtras->esta_protegida.clear();
+		}
+			
 	}
 
 	for (int i = 0; i < 2; i++)
@@ -32,6 +37,7 @@ void Tablero::actualizarTablero()
 			}
 		}
 	}
+
 	datosClavada.clear();
 
 	DatosClavada aux;
@@ -44,12 +50,16 @@ void Tablero::actualizarTablero()
 			}
 		}
 	}
+	leer(reyPos[0])->actualizarVariables(false, Posicion{ 0,0 }, tableroIlegalesRey);
+	leer(reyPos[1])->actualizarVariables(false, Posicion{ 0,0 }, tableroIlegalesRey);
+
 	for (int i = 0; i < datosClavada.size(); i++) //Clavar las piezas clavadas
 	{
 		datosClavada[i].PiezaClavada->actualizarVariables(true, datosClavada[i].DireccionClavada,tableroIlegalesRey);
 	}	
 
 	actualizarEnroque();
+	actualizarJaque();
 
 }
 
@@ -101,7 +111,7 @@ Tablero::Tablero()
 	//escribir(Posicion(5, 7), new Alfil(*this, false));
 
 	////Se escribe la dama y el rey
-	//escribir(Posicion(3, 7), new Dama(*this, false));
+	escribir(Posicion(3, 7), new Dama(*this, false));
 	escribir(Posicion(4, 7), new Rey(*this, false));
 	reyPos[0] = Posicion{ 4,7 };
 
@@ -217,8 +227,8 @@ bool Tablero::jaqueMate() const
 					return false;
 
 				//Comprobar si se puede poner algo en medio
-				std::vector<Pieza*> Bloquea = bloqueoJaque();
-				if(Bloquea.size()>0);
+				std::vector<DatosBloqueoJaque> Bloquea = bloqueoJaque();
+				if(Bloquea.size()>0)
 					return false;
 
 				//Si ninguna jaque mate
@@ -314,18 +324,17 @@ void Tablero::actualizarHaMovido(Movimiento movimiento)
 
 void Tablero::actualizarEnroque()
 {
-	bool aux = !this->colorDelTurno;
-	if (!haMovido[aux * 3]/* && !rey en jaque*/)
+	if (!haMovido[colorDelTurno * 3] && leer(reyPos[colorDelTurno])->getAmenazas().size() == 0)
 	{
 		// Enroque largo
-		if (!haMovido[1 + aux * 3] && leer(reyPos[aux] - Posicion(1, 0)) == nullptr && leer(reyPos[aux] - Posicion(2, 0)) == nullptr &&
-			!tableroIlegalesRey[aux][reyPos[aux].x - 1][reyPos[aux].y] && !tableroIlegalesRey[aux][reyPos[aux].x - 2][reyPos[aux].y])
-			tablero[reyPos[aux].indice()]->puede_mover.push_back(reyPos[aux] - Posicion(2, 0));
+		if (!haMovido[1 + colorDelTurno * 3] && leer(reyPos[colorDelTurno] - Posicion(1, 0)) == nullptr && leer(reyPos[colorDelTurno] - Posicion(2, 0)) == nullptr &&
+			!tableroIlegalesRey[colorDelTurno][reyPos[colorDelTurno].x - 1][reyPos[colorDelTurno].y] && !tableroIlegalesRey[colorDelTurno][reyPos[colorDelTurno].x - 2][reyPos[colorDelTurno].y])
+			tablero[reyPos[colorDelTurno].indice()]->puede_mover.push_back(reyPos[colorDelTurno] - Posicion(2, 0));
 		
 		// Enroque corto
-		if (!haMovido[2 + aux * 3] && leer(reyPos[aux] + Posicion(1, 0)) == nullptr && leer(reyPos[aux] + Posicion(2, 0)) == nullptr &&
-			!tableroIlegalesRey[aux][reyPos[aux].x + 1][reyPos[aux].y] && !tableroIlegalesRey[aux][reyPos[aux].x + 2][reyPos[aux].y])
-			tablero[reyPos[aux].indice()]->puede_mover.push_back(reyPos[aux] + Posicion(2, 0));	
+		if (!haMovido[2 + colorDelTurno * 3] && leer(reyPos[colorDelTurno] + Posicion(1, 0)) == nullptr && leer(reyPos[colorDelTurno] + Posicion(2, 0)) == nullptr &&
+			!tableroIlegalesRey[colorDelTurno][reyPos[colorDelTurno].x + 1][reyPos[colorDelTurno].y] && !tableroIlegalesRey[colorDelTurno][reyPos[colorDelTurno].x + 2][reyPos[colorDelTurno].y])
+			tablero[reyPos[colorDelTurno].indice()]->puede_mover.push_back(reyPos[colorDelTurno] + Posicion(2, 0));	
 	}
 }
 
@@ -379,86 +388,82 @@ double Tablero::evaluacion() const  //Valor negativo ventaja negras valor positi
 	return COEFF_DIFERENCIA_MATERIAL*valorTablero+COEFF_AMENAZAS_PELIGROSAS* amenazaPeligrosaReturn +COEFF_AMENAZAS_POCO_PELIGROSAS* amenazaPeligrosaReturn;
 }
 
-std::vector<Pieza*> Tablero::bloqueoJaque() const {
+std::vector<DatosBloqueoJaque> Tablero::bloqueoJaque() const
+{
+	std::vector<DatosBloqueoJaque> piezasBloquean;
 	Posicion direccion,posicionPrueba;
-	int distan = static_cast<int> (distancia(leer(reyPos[colorDelTurno])->posicion, leer(reyPos[colorDelTurno])->amenazas[0]->posicion));
-	direccion.x = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).x / distan;
-	direccion.y = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).y / distan;
+	int restaX = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).x;
+	int restaY = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).y;
 
+	int distan =  std::max(abs(restaX),abs(restaY));
 
-	std::vector<Pieza*> piezasBloquean;
-	for (int i = 1; i < distan; i++)
+	direccion.x = round(restaX / (float)distan);
+	direccion.y = round(restaY / (float)distan);
+
+	
+
+	DatosBloqueoJaque aux;
+
+	
+	int n = 0;
+	for (auto piezasMueven : tablero)
 	{
-		posicionPrueba = leer(reyPos[colorDelTurno])->amenazas[0]->posicion + Posicion{ i * direccion.x,i * direccion.y };
-		for (auto piezasMueven : tablero)
+		if (piezasMueven != nullptr&&piezasMueven->color==colorDelTurno)
 		{
-			if (piezasMueven != nullptr&&piezasMueven->color==colorDelTurno)
+			for (auto testPosiciones : piezasMueven->getPuedeMover())
 			{
-				for (auto testPosiciones : piezasMueven->getPuedeMover())
+				for (int i = 1; i < distan; i++)
 				{
+					posicionPrueba = leer(reyPos[colorDelTurno])->amenazas[0]->posicion + direccion * i;
 					if (testPosiciones == posicionPrueba)
 					{
-						piezasBloquean.push_back(piezasMueven);
+						aux.datosPieza = piezasMueven;
+						aux.posicionPieza = posicionPrueba;
+						piezasBloquean.push_back(aux);
 					}
-						
 				}
 			}
-			
 		}
-	}	
-	return piezasBloquean;
+		n++;
+	}
+
+	if (n >= 63) {
+		return piezasBloquean;
+	}
+	
+	return {};
 }
 
-bool Tablero::actualizarJaque() {
-	if (leer(reyPos[colorDelTurno])->getAmenazas().size() == 0)
+void Tablero::actualizarJaque() {
+	if (leer(reyPos[colorDelTurno])->getAmenazas().size() > 0)
 	{
-		return false;
-	}
-	else
-	{
-		if (leer(reyPos[colorDelTurno])->getAmenazas().size() > 1)
+		std::vector<DatosBloqueoJaque> Bloquea;
+		if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->tipo != Pieza::tipo_t::CABALLO && distancia(leer(reyPos[colorDelTurno])->getAmenazas()[0]->posicion, leer(reyPos[colorDelTurno])->posicion) >= 2.0)
 		{
-			//Comprobar si el rey puede mover
-			if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
-				return false;
-			//Si no jaque mate
-			return true;
+			Bloquea = bloqueoJaque();
 		}
-		else
+
+		for (auto borrarMov : tablero)
 		{
-			if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO || distancia(leer(reyPos[colorDelTurno])->getAmenazas()[0]->posicion, leer(reyPos[colorDelTurno])->posicion) < 2.0)
+			if (borrarMov != nullptr && borrarMov->color == colorDelTurno && borrarMov->tipo != Pieza::tipo_t::REY)
 			{
-				//Comprobar si el rey puede mover 
-				if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
-					return false;
-
-				//Comprobar si se puede comer el caballo
-				if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->getAmenazas().size() > 0)
-					return false;
-
-				//Si ninguna jaque mate
-				return true;
-
+				borrarMov->clearVariables();
 			}
-			else
+		}
+
+		if (leer(reyPos[colorDelTurno])->getAmenazas().size() ==1)//Si se puede solventar el jaque con una pieza que no sea el rey
+		{
+			for (auto Amenazas : leer(reyPos[colorDelTurno])->getAmenazas()[0]->getAmenazas()) //Si se puede comer la pieza se actualizan para que las piezas puedan comersela
 			{
-
-				//Comprobar si el rey puede mover (si no puede entonces jaque mate)
-				if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
-					return false;
-
-				//Comprobar si se puede comer la pieza
-				if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->getAmenazas().size() > 0)
-					return false;
-
-				//Comprobar si se puede poner algo en medio
-				std::vector<Pieza*> Bloquea = bloqueoJaque();
-				if (Bloquea.size() > 0);
-				return false;
-
-				//Si ninguna jaque mate
-				return true;
+				Amenazas->puede_comer.push_back(leer(reyPos[colorDelTurno])->getAmenazas()[0]);
 			}
+
+			//Comprobar si se puede poner algo en medio
+			for (auto Bloqueos : Bloquea)
+			{
+				Bloqueos.datosPieza->puede_mover.push_back(Bloqueos.posicionPieza);
+			}
+			
 		}
 	}
 }

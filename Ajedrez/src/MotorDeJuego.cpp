@@ -84,9 +84,9 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 
 	if (JugadaHecha)
 	{
+		tablero.cambiarTurno();
 		tablero.mover(movimiento);
 		tablero.ultimaJugada = movimiento;
-		tablero.cambiarTurno();
 		pintar();
 
 		return true;

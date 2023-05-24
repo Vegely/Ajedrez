@@ -55,9 +55,6 @@
     <ClInclude Include="src\DatosClavada.h">
       <Filter>Lógica\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="InfoErroque.h">
-      <Filter>Lógica\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="src\IA.h">
       <Filter>Lógica\Headers</Filter>
     </ClInclude>
@@ -114,6 +111,12 @@
     </ClInclude>
     <ClInclude Include="src\Torre.h">
       <Filter>Lógica\Headers\Piezas</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DatosBloqueoJaque.h">
+      <Filter>Lógica\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InfoErroque.h">
+      <Filter>Lógica\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

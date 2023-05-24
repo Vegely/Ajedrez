@@ -38,16 +38,17 @@
     <ClCompile Include="src\Torre.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InfoErroque.h" />
     <ClInclude Include="src\Alfil.h" />
     <ClInclude Include="src\board.h" />
     <ClInclude Include="src\Caballo.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\Dama.h" />
+    <ClInclude Include="src\DatosBloqueoJaque.h" />
     <ClInclude Include="src\DatosClavada.h" />
     <ClInclude Include="src\freeglut.h" />
     <ClInclude Include="src\graphics.h" />
     <ClInclude Include="src\IA.h" />
+    <ClInclude Include="src\InfoErroque.h" />
     <ClInclude Include="src\InfoTablas.h" />
     <ClInclude Include="src\MotorDeJuego.h" />
     <ClInclude Include="src\Movimiento.h" />

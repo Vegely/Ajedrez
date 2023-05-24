@@ -3,6 +3,7 @@
 
 #include "Pieza.h"
 #include "Movimiento.h"
+#include "DatosBloqueoJaque.h"
 
 constexpr auto ANCHO_TABLERO = 8;
 
@@ -47,10 +48,10 @@ public:
 
 	void actualizarHaMovido(Movimiento movimiento);
 	void actualizarEnroque();
-	bool actualizarJaque();
+	void actualizarJaque();
 
 	double evaluacion() const;
-	std::vector<Pieza*> bloqueoJaque() const;
+	std::vector<DatosBloqueoJaque> bloqueoJaque() const;
 
 	//Funcion temporal para imprimir tablero por consola
 	//void imprimeTablero();
