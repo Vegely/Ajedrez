@@ -1,12 +1,4 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
-  CajaTexto.cpp
-C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CajaTexto.cpp(7,33): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CajaTexto.cpp(13,34): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-  CoordinadorAjedrez.cpp
-C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(22,9): warning C4101: 'y': variable local sin referencia
-C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(51,18): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(51,16): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(516,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
   GestionMenus.cpp
-  Generando código...
-  Ajedrez.vcxproj -> C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\bin\Ajedrez.exe
+  Ajedrez.vcxproj -> C:\Users\Coronavirus\OneDrive\Documentos\GitHub\Ajedrez\Ajedrez\bin\Ajedrez.exe

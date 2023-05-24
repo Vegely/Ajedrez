@@ -2,7 +2,7 @@
 #include "Mundo.h"
 
 
-enum Estado { INICIO, JUEGO, PAUSA, FIN };
+enum Estado { INICIO, JUEGO, PAUSA, FIN, CARGAR, NUEVA, MODO, JUGADOR1, JUGADOR2, RANKING };
 
 class CoordinadorAjedrez
 {
