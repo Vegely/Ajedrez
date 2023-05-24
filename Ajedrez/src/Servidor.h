@@ -26,7 +26,7 @@ public:
 	// - Inicialización por defecto
 	// - Inicialización WinSock
 	// - Obtención de la ip del host
-	Servidor() { inicializaWinSock(); ipDir(); };
+	Servidor() { };
 
 	//No hace falta destructor (conflictos de copia/asignación eliminados), lo gestiona el SO
 
@@ -34,6 +34,7 @@ public:
 	Servidor(const Servidor&) = delete;
 	Servidor& operator= (const Servidor&) = delete;
 
+	void inicializa() { inicializaWinSock(); ipDir(); };
 	//Conecta el servidor
 	void conectarServidor();
 	//Desconecta el servidor
@@ -42,7 +43,7 @@ public:
 	//Genera un código de partida a partir de la ip del equipo
 	//@return String con código de la partida
 	//////////////////////////////////////
-	std::string generarCodigoPartida(); //
+	//std::string generarCodigoPartida(); //
 	//////////////////////////////////////
 
 	//Recibe una cadena de caracteres del cliente

@@ -2,6 +2,13 @@
 #include "ETSIDI.h"
 #include "GestionMenus.h"
 #include "Partida.h"
+#include <thread>
+
+void foo(Servidor* servidor, std::string* mov_cliente) {
+	servidor->conectarServidor();
+	servidor->recibirDeCliente(*mov_cliente);
+	std::cout << *mov_cliente;
+}
 
 CoordinadorAjedrez::CoordinadorAjedrez() {
 	estado = INICIO;
@@ -100,6 +107,24 @@ void CoordinadorAjedrez::dibuja() {
 		ETSIDI::setFont("Bitwise.ttf", 16);
 		ETSIDI::printxy("no existe", -5, 8);
 	}
+	else if (estado == CREAR_SALA) {
+		gluLookAt(0, 7.5, 30, // posicion del ojo
+			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
+			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
+		//GestionMenus::imprimePartidaNaExiste();
+		ETSIDI::setTextColor(1, 1, 0);
+		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::printxy(servidor->getip().c_str(), -5, 8);
+	}
+	else if (estado == UNIRSE_SALA) {
+		gluLookAt(0, 7.5, 30, // posicion del ojo
+			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
+			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
+		//GestionMenus::imprimePartidaNaExiste();
+		ETSIDI::setTextColor(1, 1, 0);
+		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::printxy(cliente.getIp().c_str(), -5, 8);
+	}
 }
 
 void CoordinadorAjedrez::tecla(unsigned char key) {
@@ -110,6 +135,16 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			estado = CARGAR_PARTIDA;
 		if (key == 'r')
 			estado = RANKING;
+		if (key == 'w') {
+			estado = CREAR_SALA;
+			servidor->inicializa();
+			//servidor->conectarServidor();
+			hilo_servidor = new std::thread(foo, servidor, &mov_cliente);
+		}
+		if (key == 'u') {
+			estado = UNIRSE_SALA;
+			cliente.inicializa();
+		}
 		if (key == 's')
 			exit(0);
 	}
@@ -183,11 +218,13 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 	else if (estado == JUEGO) {
 		if (key == 'p')
 			estado = PAUSA;
+		if ((int)key == 9)
+			cliente.enviarAServidor(mov_cliente);
 		if (key == 's')
 			exit(0);
 	}
 	else if (estado == CARGAR_PARTIDA) {
-		if ((int)key != 9 && (int)key!=10) //9 = tabulador
+		if ((int)key != 9) //9 = tabulador
 			datosPartida.getNombre() += key;
 		if ((int)key == 9) {
 			datosPartida.getNombre() += ".txt";
@@ -223,7 +260,22 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			datosPartida.getNombre() = "";
 		}
 	}
+	else if (estado == UNIRSE_SALA) {
+		if ((int)key != 9)
+			cliente.getIp() += key;
+		if ((int)key == 9) {
+			cliente.conectarCliente();
+			estado = JUEGO;
+		}
+	}
+	else if (estado == CREAR_SALA) {
+		if (key == 'v') {
+			estado = PAUSA;
+			//hilo_servidor->join();
+		}
+	}
 }
+
 
 void CoordinadorAjedrez::teclaEspecial(int key) {
 	if (estado == CARGAR_PARTIDA) {
@@ -248,6 +300,12 @@ void CoordinadorAjedrez::teclaEspecial(int key) {
 		if (key == GLUT_KEY_LEFT) {
 			if (datosPartida.getNombre().length() > 0)
 				datosPartida.getNombre() = datosPartida.getNombre().substr(0, datosPartida.getNombre().length() - 1);
+		}
+	}
+	else if (estado == UNIRSE_SALA) {
+		if (key == GLUT_KEY_LEFT) {
+			if (cliente.getIp().length() > 0)
+				cliente.getIp() = cliente.getIp().substr(0, cliente.getIp().length() - 1);
 		}
 	}
 	else if (estado == RANKING) {

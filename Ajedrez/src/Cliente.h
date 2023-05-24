@@ -21,13 +21,12 @@ private:
     Socket* sck = nullptr;
 
     //Guarda la dirección ip del host
-    std::string ipv4 = "192.168.0.21";
-
+    std::string ipv4 = "";//"192.168.0.21";
 public:
     //Constructor:
     // - Inicialización por defecto
     // - Inicialización Winsock
-    Cliente() { inicializaWinSock(); };
+    Cliente() { };
 
     //No hace falta destructor (conflictos de copia/asignación eliminados), lo gestiona el SO
 
@@ -35,6 +34,7 @@ public:
     Cliente(const Cliente&) = delete;
     Cliente& operator= (const Cliente&) = delete;
 
+    void inicializa() { inicializaWinSock(); };
     //Conecta el cliente
     void conectarCliente();
     //Desconecta el cliente
@@ -49,6 +49,7 @@ public:
     //@return Número de bytes recibidos
     int recibirDeServidor(std::string& s);
 
+    std::string& getIp() { return ipv4; };
 };
 
 // Main (poner la dirección ip que aparece en la pantalla del servidor en el campo ipv4 del cliente)
