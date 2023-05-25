@@ -10,7 +10,7 @@ void init(int* argc, char* argv[], const char* windowName, int windowLength, int
 // Continuously draws what it is specified to it.
 void OnDraw(void);
 // Each set time, performs the set functions.
-void OnTimer(int value);
+void OnTimer(int valor);
 // Reshapes the window if needed without resizing the objects and mantaining their proportions.
 void OnReshape(int w, int h);
 void OnMouseMotion(int x, int y);

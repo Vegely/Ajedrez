@@ -472,10 +472,10 @@ FGAPI int     FGAPIENTRY glutCreateMenu( void (* callback)( int menu ) );
 FGAPI void    FGAPIENTRY glutDestroyMenu( int menu );
 FGAPI int     FGAPIENTRY glutGetMenu( void );
 FGAPI void    FGAPIENTRY glutSetMenu( int menu );
-FGAPI void    FGAPIENTRY glutAddMenuEntry( const char* label, int value );
+FGAPI void    FGAPIENTRY glutAddMenuEntry( const char* label, int valor );
 FGAPI void    FGAPIENTRY glutAddSubMenu( const char* label, int subMenu );
-FGAPI void    FGAPIENTRY glutChangeToMenuEntry( int item, const char* label, int value );
-FGAPI void    FGAPIENTRY glutChangeToSubMenu( int item, const char* label, int value );
+FGAPI void    FGAPIENTRY glutChangeToMenuEntry( int item, const char* label, int valor );
+FGAPI void    FGAPIENTRY glutChangeToSubMenu( int item, const char* label, int valor );
 FGAPI void    FGAPIENTRY glutRemoveMenuItem( int item );
 FGAPI void    FGAPIENTRY glutAttachMenu( int button );
 FGAPI void    FGAPIENTRY glutDetachMenu( int button );
@@ -483,7 +483,7 @@ FGAPI void    FGAPIENTRY glutDetachMenu( int button );
 /*
  * Global callback functions, see fg_callbacks.c
  */
-FGAPI void    FGAPIENTRY glutTimerFunc( unsigned int time, void (* callback)( int ), int value );
+FGAPI void    FGAPIENTRY glutTimerFunc( unsigned int time, void (* callback)( int ), int valor );
 FGAPI void    FGAPIENTRY glutIdleFunc( void (* callback)( void ) );
 
 /*

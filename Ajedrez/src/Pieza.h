@@ -28,7 +28,7 @@ protected:
 	const tipo_t tipo;				//Nombre para identificar a la pieza
 	const Tablero& tablero;					//Referencia al tablero para que las piezas sepan en que tablero estan
 	const bool color;						//True == Blancas <-> False == Negras
-	const unsigned char value;				//Valor de la pieza
+	const unsigned char valor;				//Valor de la pieza
 	bool noHaMovido = true;					//Si se mueve pierde la posibilidad de enrocar aunque solo lo usen el rey y la torre es útil para manejar mediante polimorfismo
 	bool puedeEnrocar[2] = { false };		//Para que se pueda gestionar el enroque (solo lo usa el rey) útil para manejar mediante polimorfismo
 											//El valor en 0 simboliza enroque corto y 1 enroque en largo 
@@ -58,8 +58,8 @@ public:
 
 	//Operadores basicos
 
-	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char value, const tipo_t tipo) : tablero(p_tablero), color(color), value(value), tipo(tipo){}
-	explicit Pieza(const Pieza& p) :tipo(p.tipo), value(p.value), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegida = p.esta_protegida; amenazas = p.amenazas; }
+	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char valor, const tipo_t tipo) : tablero(p_tablero), color(color), valor(valor), tipo(tipo){}
+	explicit Pieza(const Pieza& p) :tipo(p.tipo), valor(p.valor), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegida = p.esta_protegida; amenazas = p.amenazas; }
 	virtual ~Pieza() {}
 
 	//Funciones para obtener las variables (deben poder usarse en un espacio de constness)
@@ -67,6 +67,7 @@ public:
 	inline bool getColor() const { return color; }
 	inline tipo_t getTipo() const { return tipo; }
 	virtual std::string getNombre() const = 0;
+	inline unsigned char getValor() { return valor; }
 	inline const std::vector<Posicion> getPuedeMover() const { return puede_mover; }
 	inline const std::vector<Pieza*> getPuedeComer() const { return puede_comer; }
 	inline const std::vector<Pieza*> EstaProtegida() const { return esta_protegida; }

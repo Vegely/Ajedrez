@@ -65,13 +65,13 @@ void OnDraw(void)
 	glutSwapBuffers();
 }
 
-void OnTimer(int value)
+void OnTimer(int valor)
 {
 	glTranslatef(player.getLookAt().x, player.getLookAt().y, player.getLookAt().z);
 	player.animationRotate(10.0f, 10.0f, player.getLookAt());
 	glTranslatef(-player.getLookAt().x, -player.getLookAt().y, -player.getLookAt().z);
 
-	glutTimerFunc(value, OnTimer, 0); // Recalls the timer
+	glutTimerFunc(valor, OnTimer, 0); // Recalls the timer
 	// End of timing code (do not erase or write anything afterwards).
 	glutPostRedisplay();
 }

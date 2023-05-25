@@ -2,6 +2,15 @@
 
 #include "Tablero.h"
 
+struct ConfiguracionDeJuego
+{
+	enum class FormasDeInteraccion { LOCAL, REMOTO, IA };
+	FormasDeInteraccion config[2];
+
+	FormasDeInteraccion operator[] (int i) const { return config[i]; }
+	FormasDeInteraccion operator[] (int i) { return config[i]; }
+};
+
 enum class CodigoFinal { JAQUE_MATE, REY_AHOGADO, TABLAS_POR_MATERIAL_INSUFICIENTE, TABLAS_POR_REPETICION, TABLAS_POR_PASIVIDAD };	
 
 struct DatosFinal
@@ -12,18 +21,23 @@ struct DatosFinal
 
 class MotorDeJuego
 {
+	const ConfiguracionDeJuego config;
+
 	Tablero tablero;
 
 	void pintar(Posicion piezaSelec = Posicion(-1, -1)) const;
+
 	void coronar(Posicion posicion);
 
-public:
-	MotorDeJuego() { pintar(); }
-
-	DatosFinal motor();
+	Movimiento seleccionarEntrada(bool pos1Selec) const;
 
 	bool hacerJugada(Movimiento movimiento);
 
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec) const;
+
+public:
+	MotorDeJuego(ConfiguracionDeJuego config) : config(config) { pintar(); }
+
+	DatosFinal motor();
 };
 

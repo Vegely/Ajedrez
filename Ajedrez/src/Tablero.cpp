@@ -10,11 +10,6 @@
 #include <cmath>
 #include <algorithm>
 
-//constexpr auto NUM_LINEAS = 40;
-constexpr auto COEFF_DIFERENCIA_MATERIAL = 50.0;
-constexpr auto COEFF_AMENAZAS_PELIGROSAS = 40.0;
-constexpr auto COEFF_AMENAZAS_POCO_PELIGROSAS = 10.0;
-constexpr auto VALOR_AMENAZAS_PELIGROSAS = 1.79769e+308;
 
 void Tablero::actualizarTablero()
 {
@@ -77,101 +72,101 @@ Tablero::Tablero()
 	{
 		escribir(Posicion(i, 1), new Peon(*this, true));
 	}
-	escribir(Posicion(3, 3), new Peon(*this, false));
 
-	////Se añaden las torres
-	escribir(Posicion(0, 6), new Torre(*this, true));
-	//escribir(Posicion(7, 0), new Torre(*this, true));
+	//Se añaden las torres
+	escribir(Posicion(0, 0), new Torre(*this, true));
+	escribir(Posicion(7, 0), new Torre(*this, true));
 
-	////Se escriben los caballos
-	//escribir(Posicion(1, 0), new Caballo(*this, true));
-	//escribir(Posicion(6, 0), new Caballo(*this, true));
+	//Se escriben los caballos
+	escribir(Posicion(1, 0), new Caballo(*this, true));
+	escribir(Posicion(6, 0), new Caballo(*this, true));
 
-	////Se escriben los alfiles
-	//escribir(Posicion(2, 0), new Alfil(*this, true));
-	//escribir(Posicion(5, 0), new Alfil(*this, true));
+	//Se escriben los alfiles
+	escribir(Posicion(2, 0), new Alfil(*this, true));
+	escribir(Posicion(5, 0), new Alfil(*this, true));
 
-	////Se escribe la dama y el rey
+	//Se escribe la dama y el rey
 	reyPos[1] = Posicion{ 4,0 };
 
-	escribir(Posicion(2, 0), new Dama(*this, true));
+	escribir(Posicion(3, 0), new Dama(*this, true));
 	escribir(Posicion(4, 0), new Rey(*this, true));
 
-	////Negras
-	////Se añaden los peones
-	//for (int i = 0; i < ANCHO_TABLERO; i++)
-	//{
-	//	escribir(Posicion(i, 6), new Peon(*this, false));
-	//}
-	// 
-	//escribir(Posicion(5, 1), new Peon(*this, false));
-	// 
-	////Se añaden las torres
-	//escribir(Posicion(0, 7), new Torre(*this, false));
-	//escribir(Posicion(7, 7), new Torre(*this, false));
+	//Negras
+	//Se añaden los peones
+	for (int i = 0; i < ANCHO_TABLERO; i++)
+	{
+		escribir(Posicion(i, 6), new Peon(*this, false));
+	}
+	 
+	//Se añaden las torres
+	escribir(Posicion(0, 7), new Torre(*this, false));
+	escribir(Posicion(7, 7), new Torre(*this, false));
 
-	////Se escriben los caballos
-	//escribir(Posicion(1, 7), new Caballo(*this, false));
-	//escribir(Posicion(6, 7), new Caballo(*this, false));
+	//Se escriben los caballos
+	escribir(Posicion(1, 7), new Caballo(*this, false));
+	escribir(Posicion(6, 7), new Caballo(*this, false));
 
-	////Se escriben los alfiles
-	//escribir(Posicion(2, 7), new Alfil(*this, false));
-	//escribir(Posicion(5, 7), new Alfil(*this, false));
+	//Se escriben los alfiles
+	escribir(Posicion(2, 7), new Alfil(*this, false));
+	escribir(Posicion(5, 7), new Alfil(*this, false));
 
-	////Se escribe la dama y el rey
-	reyPos[0] = Posicion{ 3, 4 };
+	//Se escribe la dama y el rey
+	reyPos[0] = Posicion{ 4, 7 };
 
-	//escribir(Posicion(3, 7), new Dama(*this, false));
-	escribir(Posicion(3, 4), new Rey(*this, false));
+	escribir(Posicion(3, 7), new Dama(*this, false));
+	escribir(Posicion(4, 7), new Rey(*this, false));
 
 	colorDelTurno = true;
 	actualizarTablero(); //Se inicializan los movimientos posibles
-	numeroPiezas = 4;//32;
+	numeroPiezas = 32;
 
 	infoTablas.add(*this);
 }
 
-//Tablero::Tablero(const Tablero& tablero)
-//{
-//	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++)
-//	{
-//		if (tablero.tablero[i] != nullptr)
-//		{
-//			switch (tablero.tablero[i]->tipo)
-//			{
-//			case Pieza::tipo_t::PEON:
-//				escribir(tablero.posicion(i), new Peon(*this, tablero.tablero[i]->color));
-//				break;
-//			case Pieza::tipo_t::CABALLO:
-//				escribir(tablero.posicion(i), new Caballo(*this, tablero.tablero[i]->color));
-//				break;
-//			case Pieza::tipo_t::ALFIL:
-//				escribir(tablero.posicion(i), new Alfil(*this, tablero.tablero[i]->color));
-//				break;
-//			case Pieza::tipo_t::TORRE:
-//				escribir(tablero.posicion(i), new Torre(*this, tablero.tablero[i]->color));
-//				break;
-//			case Pieza::tipo_t::DAMA:
-//				escribir(tablero.posicion(i), new Dama(*this, tablero.tablero[i]->color));
-//				break;
-//			case Pieza::tipo_t::REY:
-//				escribir(tablero.posicion(i), new Rey(*this, tablero.tablero[i]->color));
-//				break;
-//			}
-//		}
-//		else this->tablero[i] = nullptr;
-//	}
-//	//Copiar resto de variables
-//	this->numeroPiezas = tablero.numeroPiezas;
-//	this->colorDelTurno = tablero.colorDelTurno;
-//	this->reyPos[0] = tablero.reyPos[0];
-//	this->reyPos[1] = tablero.reyPos[1];
-//}
+Tablero::Tablero(const Tablero& tablero)
+{
+	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++)
+	{
+		if (tablero.tablero[i] != nullptr)
+		{
+			switch (tablero.tablero[i]->tipo)
+			{
+			case Pieza::tipo_t::PEON:
+				escribir(tablero.posicion(i), new Peon(*this, tablero.tablero[i]->color));
+				break;
+			case Pieza::tipo_t::CABALLO:
+				escribir(tablero.posicion(i), new Caballo(*this, tablero.tablero[i]->color));
+				break;
+			case Pieza::tipo_t::ALFIL:
+				escribir(tablero.posicion(i), new Alfil(*this, tablero.tablero[i]->color));
+				break;
+			case Pieza::tipo_t::TORRE:
+				escribir(tablero.posicion(i), new Torre(*this, tablero.tablero[i]->color));
+				break;
+			case Pieza::tipo_t::DAMA:
+				escribir(tablero.posicion(i), new Dama(*this, tablero.tablero[i]->color));
+				break;
+			case Pieza::tipo_t::REY:
+				escribir(tablero.posicion(i), new Rey(*this, tablero.tablero[i]->color));
+				break;
+			}
+		}
+		else this->tablero[i] = nullptr;
+	}
 
-//Tablero::~Tablero()
-//{
-//	//for (Pieza* p_pieza : tablero) delete p_pieza;
-//}
+	//Copiar resto de variables
+	colorDelTurno = tablero.colorDelTurno;
+	for (int i = 0; i < 2; i++) reyPos[i] = tablero.reyPos[i];
+
+	for (int i = 0; i < 6; i++) haMovido[i] = tablero.haMovido[i];
+	numeroPiezas = tablero.numeroPiezas;
+	for (int i = 0; i < 2; i++) for (int j = 0; j < 8; j++) for (int k = 0; k < 8; k++) tableroIlegalesRey[i][j][k] = tablero.tableroIlegalesRey[i][j][k];
+	datosClavada = tablero.datosClavada;
+
+	ultimaJugada = tablero.ultimaJugada;
+	
+	infoTablas = tablero.infoTablas;
+}
 
 void Tablero::escribir(const Posicion& posicion, Pieza* pieza)
 {
@@ -341,62 +336,12 @@ void Tablero::actualizarEnroque()
 		if (!haMovido[1 + colorDelTurno * 3] && leer(reyPos[colorDelTurno] - Posicion(1, 0)) == nullptr && leer(reyPos[colorDelTurno] - Posicion(2, 0)) == nullptr &&
 			!tableroIlegalesRey[colorDelTurno][reyPos[colorDelTurno].x - 1][reyPos[colorDelTurno].y] && !tableroIlegalesRey[colorDelTurno][reyPos[colorDelTurno].x - 2][reyPos[colorDelTurno].y])
 			tablero[reyPos[colorDelTurno].indice()]->puede_mover.push_back(reyPos[colorDelTurno] - Posicion(2, 0));
-		
+
 		// Enroque corto
 		if (!haMovido[2 + colorDelTurno * 3] && leer(reyPos[colorDelTurno] + Posicion(1, 0)) == nullptr && leer(reyPos[colorDelTurno] + Posicion(2, 0)) == nullptr &&
 			!tableroIlegalesRey[colorDelTurno][reyPos[colorDelTurno].x + 1][reyPos[colorDelTurno].y] && !tableroIlegalesRey[colorDelTurno][reyPos[colorDelTurno].x + 2][reyPos[colorDelTurno].y])
-			tablero[reyPos[colorDelTurno].indice()]->puede_mover.push_back(reyPos[colorDelTurno] + Posicion(2, 0));	
+			tablero[reyPos[colorDelTurno].indice()]->puede_mover.push_back(reyPos[colorDelTurno] + Posicion(2, 0));
 	}
-}
-
-double Tablero::evaluacion() const  //Valor negativo ventaja negras valor positivo ventaja blancas
-{
-	double amenazaPeligrosa = VALOR_AMENAZAS_PELIGROSAS; //Valor para luego comparar si hay amenazas de piezas de menor a piezas de mayor valor (se pone a un valor de error)
-	double amenazaPocoPeligrosa = 0;		//Valor para registrar valor de amenazas de mayor valor a una pieza de menor valor
-	double proteccion = 0;					//Valor de piezas que defienden de una amenaza poco peligrosa
-	double valorTablero = 0;
-
-	//Para llevar la cuenta
-	double amenazaPeligrosaReturn = 0;
-	double amenazaPocoPeligrosaReturn = 0;
-
-	for (auto piezaAnalizada : tablero) 
-	{
-
-		//Se reinicializan los valores en cada ciclo
-		amenazaPeligrosa = VALOR_AMENAZAS_PELIGROSAS;
-		amenazaPocoPeligrosa = 0;
-		proteccion = 0;
-
-
-		valorTablero += pow(-1, 1+piezaAnalizada->color) * piezaAnalizada->value; //Resta si es negra y suma si es blanca
-
-		for (auto piezasAmenazasAPiezaAnalizada : piezaAnalizada->getAmenazas())
-		{
-			if (piezaAnalizada->value - piezasAmenazasAPiezaAnalizada->value > 1) //Si la amenaza es peligrosa pieza de menor valor amenaza una de mayor valor
-			{
-				if (amenazaPeligrosa > abs(piezaAnalizada->value - piezasAmenazasAPiezaAnalizada->value)) //Se mete la pieza de menor valor que amenenaza a la de mayor valor
-					amenazaPeligrosa = pow(-1,piezaAnalizada->color) * abs(piezaAnalizada->value - piezasAmenazasAPiezaAnalizada->value); //Valor con signo para suma final
-			}
-			else
-			{
-				amenazaPocoPeligrosa += piezasAmenazasAPiezaAnalizada->value; //Valor sin signo temporal
-			}
-		}
-		for (auto piezasDefiendenAPiezaAnalizada : piezaAnalizada->EstaProtegida())
-		{
-			proteccion += piezasDefiendenAPiezaAnalizada->value; //Valor sin signo temporal
-		}
-
-		if (amenazaPeligrosa != VALOR_AMENAZAS_PELIGROSAS)
-		{
-			amenazaPeligrosaReturn += amenazaPeligrosa;
-		}
-			
-		amenazaPocoPeligrosaReturn += pow(-1,piezaAnalizada->color) * piezaAnalizada->value*abs(proteccion / piezaAnalizada->EstaProtegida().size()- amenazaPocoPeligrosa / piezaAnalizada->getAmenazas().size() );
-	}
-
-	return COEFF_DIFERENCIA_MATERIAL*valorTablero+COEFF_AMENAZAS_PELIGROSAS* amenazaPeligrosaReturn +COEFF_AMENAZAS_POCO_PELIGROSAS* amenazaPeligrosaReturn;
 }
 
 std::vector<DatosBloqueoJaque> Tablero::bloqueoJaque() const

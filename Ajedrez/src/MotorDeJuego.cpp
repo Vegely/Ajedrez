@@ -7,6 +7,8 @@
 #include "Rey.h"
 #include "Dama.h"
 
+#include "IA.h"
+
 constexpr auto NUM_LINEAS = 40;
 
 //////////////////
@@ -29,6 +31,30 @@ Posicion getInput()
 }
 //////////////////
 
+Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
+{
+	Movimiento movimiento;
+
+	switch (config[tablero.colorDelTurno])
+	{
+	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
+		movimiento = ensamblarMovimiento(getInput(), pos1Selec);
+		break;
+	case ConfiguracionDeJuego::FormasDeInteraccion::REMOTO:
+		// Leer la llegada de la red
+		break;
+	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
+		movimiento = IA::mover(tablero);
+		////////////
+		cout << movimiento.inicio.x << " " << movimiento.inicio.y << ", " << movimiento.fin.x << " " << movimiento.fin.y;
+		//////////////
+		// Delay ???
+		break;
+	}
+
+	return movimiento;
+}
+
 DatosFinal MotorDeJuego::motor()
 {
 	DatosFinal datosFinal;
@@ -36,10 +62,11 @@ DatosFinal MotorDeJuego::motor()
 	bool pos1Selec = false;
 	while (!exit)
 	{
-		Movimiento movimiento = ensamblarMovimiento(getInput(), pos1Selec);
+		Movimiento movimiento = seleccionarEntrada(pos1Selec);
 
 		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1)))
 		{
+
 			pos1Selec = !hacerJugada(movimiento);
 
 			if (!pos1Selec) // Se hace la jugada
@@ -98,40 +125,50 @@ void MotorDeJuego::pintar(Posicion posSelec) const
 	{
 		HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 
-		if (i % 8 == 0) std::cout << "    " << j++ << "\t"; // Pintar los numeros
+		if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
 
+		bool skip = false;
 		if (posSelec != Posicion(-1, -1)) // Seleccionar el color de fondo
 		{
-			if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == posSelec) SetConsoleTextAttribute(hStdout, 160);
+			if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == posSelec)
+				SetConsoleTextAttribute(hStdout, 160); // Seleccion de la pieza
 			else
 			{
 				for (Posicion puedeMover : tablero.leer(posSelec)->getPuedeMover()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeMover)
-				{
 					if (tablero.leer(posSelec)->getTipo() != Pieza::tipo_t::PEON || (puedeMover - tablero.leer(posSelec)->getPosicion()).x == 0)
 					{
-						SetConsoleTextAttribute(hStdout, 176);
+						SetConsoleTextAttribute(hStdout, 176); // Seleccion de movimento 
+						skip = true;
+						break;
 					}
-					else
-					{
-						SetConsoleTextAttribute(hStdout, 64);
-					}
-				}
-					
-				for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion())
+
+				if (!skip && tablero.leer(Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO)) != nullptr)
 				{
-						SetConsoleTextAttribute(hStdout, 64);
+					for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
+						if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() )
+						{
+							if (!(tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON && puedeComer->getPosicion().y == posSelec.y)) 
+								SetConsoleTextAttribute(hStdout, 64); // Seleccion de la comida
+							skip = true;
+							break;
+						}
 				}
-					
-			}
 				
+				if (!skip && tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON) for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
+					if (puedeComer->getPosicion().y == posSelec.y && Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() - 1 * !tablero.leer(posSelec)->getColor() * Posicion(0, 1))
+					{
+						SetConsoleTextAttribute(hStdout, 64); // Seleccion de la comida en pasada
+						break;
+					}
+			}
 		}
 		
-		if (tablero.tablero[x] == nullptr) std::cout << "---\t";
-		else std::cout << tablero.tablero[x]->getNombre() << " " << tablero.tablero[x]->getColor() << "\t";
+		if (tablero.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
+		else std::cout << tablero.tablero[x]->getNombre() << " " << tablero.tablero[x]->getColor() << "\t"; // Pintar pieza
 
-		SetConsoleTextAttribute(hStdout, 7);
+		SetConsoleTextAttribute(hStdout, 7); // Color de fondo
 
-		if (i++ % 8 == 7) std::cout << "\n\n";
+		if (i++ % 8 == 7) std::cout << "\n\n\n"; // Líneas de division de fila
 	}
 
 	std::cout << "\t";
