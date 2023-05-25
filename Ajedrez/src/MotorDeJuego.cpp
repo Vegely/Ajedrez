@@ -158,7 +158,7 @@ void MotorDeJuego::pintar(Posicion posSelec) const
 				}
 				
 				if (!skip && tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON) for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
-					if (puedeComer->getPosicion().y == posSelec.y && Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() - 1 * !tablero.leer(posSelec)->getColor() * Posicion(0, 1))
+					if (puedeComer->getPosicion().y == posSelec.y && Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() + (1 - 2 * !tablero.leer(posSelec)->getColor()) * Posicion(0, 1))
 					{
 						SetConsoleTextAttribute(hStdout, 64); // Seleccion de la comida en pasada
 						break;
@@ -207,7 +207,7 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 
 		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON)
 		{
-			Posicion aux = puedeComer->getPosicion() - 1 * !tablero.leer(movimiento.inicio)->getColor() * Posicion(0, 1);
+			Posicion aux = puedeComer->getPosicion() + (1 - 2 * !tablero.leer(movimiento.inicio)->getColor()) * Posicion(0, 1);
 			if (aux == movimiento.fin)
 			{
 				tablero.actualizarHaMovido(movimiento);
@@ -252,9 +252,9 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 	{
 		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
 		{
-			delete tablero.tablero[movimiento.inicio.indice()];
+			Pieza* p_pieza = tablero.leer(movimiento.inicio);
 			tablero.coronar(movimiento.fin, seleccionarEntradaCoronar(movimiento.inicio));
-			std::cin;
+			delete p_pieza;
 		}
 
 		tablero.cambiarTurno();

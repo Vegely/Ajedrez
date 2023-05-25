@@ -196,8 +196,10 @@ Pieza::tipo_t IA::coronar(const Tablero& tablero, Posicion posicion)
 	{
 		Tablero aux = Tablero::copiar(tablero);
 
-		delete aux.tablero[posicion.indice()];
-		aux.coronar(posicion - 1 * tablero.colorDelTurno * Posicion(0, 1), tipo);
+		Pieza* p_pieza = aux.leer(posicion);
+		aux.coronar(posicion, tipo);
+		aux.mover(Movimiento(posicion, posicion + (1 - 2 * !tablero.leer(posicion)->getColor()) * Posicion(0, 1)));
+		delete p_pieza;
 
 		MovimientoEvaluado movimientoEvaluado = minimax(tablero, PROFUNDIDAD_IA, tablero.colorDelTurno);
 

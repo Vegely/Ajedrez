@@ -14,21 +14,6 @@
     <ClCompile Include="src\InfoTablas.cpp">
       <Filter>Lógica\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\plane.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\structs.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\board.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\camera.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
     <ClCompile Include="src\Alfil.cpp">
       <Filter>Lógica\Source\Piezas</Filter>
     </ClCompile>
@@ -70,26 +55,8 @@
     <ClInclude Include="src\InfoTablas.h">
       <Filter>Lógica\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\board.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\camera.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\freeglut.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\plane.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="src\Posicion.h">
       <Filter>Lógica\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\structs.h">
-      <Filter>Gráficos\Headers</Filter>
     </ClInclude>
     <ClInclude Include="src\Alfil.h">
       <Filter>Lógica\Headers\Piezas</Filter>
