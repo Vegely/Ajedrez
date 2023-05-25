@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include <freeglut.h>
+#include "freeglut.h"
 
 constexpr double PI = 3.141592654f;
 

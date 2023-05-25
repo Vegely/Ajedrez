@@ -8,7 +8,7 @@ int Cliente::recibirDeServidor(std::string& s) {
 	return sck->recibe(s);
 }
 
-void Cliente::conectarCliente() {
+bool Cliente::conectarCliente() {
 	//IP del equipo al que se conecta ("127.0.0.1" --> localhost)
 	//NULL: no se especifican opciones en host_info
 	sck = new Socket{ NULL };
@@ -16,7 +16,9 @@ void Cliente::conectarCliente() {
 	sck->creaSocket(ipv4.c_str());
 
 
-	sck->conectarAServidor();
+	if (!sck->conectarAServidor())
+		return false;
+	return true;
 }
 
 void Cliente::desconectarCliente() {

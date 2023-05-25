@@ -1,4 +1,8 @@
 #include "MotorDeJuego.h"
+<<<<<<< Updated upstream
+=======
+#include "Callbacks.h"
+>>>>>>> Stashed changes
 
 //////////////////////////
 #include <iostream>
@@ -8,6 +12,8 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+	graphicsInit(&argc, argv); // Inicialización del motor gráfico
+
 	/////Mode selection/////
 	ConfiguracionDeJuego config{ ConfiguracionDeJuego::FormasDeInteraccion::IA, ConfiguracionDeJuego::FormasDeInteraccion::IA };
 	//////////Setup/////////

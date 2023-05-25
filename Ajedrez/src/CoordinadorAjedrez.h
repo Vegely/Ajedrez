@@ -3,20 +3,23 @@
 #include "Ranking.h"
 #include "Servidor.h"
 #include "Cliente.h"
+#include "MotorDeJuego.h"
 #include <thread>
 
 
 enum Estado { INICIO, NUEVA_PARTIDA, MODO, J1,J2, JUEGO, PAUSA, CARGAR_PARTIDA,RANKING,PARTIDA_EXISTE, PARTIDA_NO_EXISTE, CREAR_SALA, UNIRSE_SALA,
-				INIT};
+				INIT, COLORJ1, NO_CONECTADO};
 
 class CoordinadorAjedrez
 {
 protected:
 	Estado estado;
 
-	std::string mov_cliente = "hola";
+	std::string mov_cliente = "";
 	std::string mov_servidor = "";
 public:
+	MotorDeJuego juego;
+
 	Mundo mundo;
 	Partida datosPartida;
 	Ranking ranking;
@@ -35,8 +38,8 @@ public:
 	friend class menuInicial;
 };
 
-void hiloServidor(Servidor* servidor, std::string* mov_cliente);
-void hiloCliente(Cliente* cliente);
+void hiloServidor(Servidor* servidor, std::string* mov_cliente, Estado* estado);
+void hiloCliente(Cliente* cliente, Estado* estado);
 
 
 

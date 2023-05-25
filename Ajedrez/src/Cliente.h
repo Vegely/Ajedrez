@@ -36,7 +36,7 @@ public:
 
     void inicializa() { inicializaWinSock(); };
     //Conecta el cliente
-    void conectarCliente();
+    bool conectarCliente();
     //Desconecta el cliente
     void desconectarCliente();
 

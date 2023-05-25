@@ -21,7 +21,7 @@ struct DatosFinal
 
 class MotorDeJuego
 {
-	const ConfiguracionDeJuego config;
+	/*const*/ ConfiguracionDeJuego config;
 
 	Tablero tablero;
 
@@ -34,6 +34,7 @@ class MotorDeJuego
 	Pieza::tipo_t seleccionarEntradaCoronar(Posicion posicion) const;
 
 public:
+	MotorDeJuego() {}
 	MotorDeJuego(ConfiguracionDeJuego config) : config(config), tablero(Tablero(true)) { pintar(); }
 
 	~MotorDeJuego() { tablero.liberar(); }

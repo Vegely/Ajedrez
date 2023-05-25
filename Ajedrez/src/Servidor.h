@@ -36,7 +36,7 @@ public:
 
 	void inicializa() { inicializaWinSock(); ipDir(); };
 	//Conecta el servidor
-	void conectarServidor();
+	bool conectarServidor();
 	//Desconecta el servidor
 	void desconectarServidor();
 

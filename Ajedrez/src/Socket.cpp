@@ -84,7 +84,7 @@ void Socket::aceptaConexion(Socket& sck_aux) {
 	closesocket(sck);
 }
 
-void Socket::conectarAServidor() {
+bool Socket::conectarAServidor() {
 	int error_conexion;
 
 	//Establece una conexión entre los sockets del cliente y servidor 
@@ -96,10 +96,12 @@ void Socket::conectarAServidor() {
 		std::cout << "No se pudo conectar al servidor: " << error_conexion << std::endl;
 		closesocket(sck);
 		WSACleanup();
+		return false;
 	}
 
 	//Ya no es necesario host_info
 	freeaddrinfo(host_info);
+	return true;
 }
 
 int Socket::envia(std::string s) {

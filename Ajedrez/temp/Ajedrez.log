@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿  IA.cpp
 C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\IA.cpp(63,85): warning C4244: 'argumento': conversión de 'double' a 'eval_t'; posible pérdida de datos
   MotorDeJuego.cpp
@@ -15,3 +16,47 @@ C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Tablero.cpp(404,21): 
     24 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
   Ajedrez.vcxproj -> C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\bin\Ajedrez.exe
+=======
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
+  Callbacks.cpp
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\Socket.h(5,1): warning C4005: 'WIN32_LEAN_AND_MEAN': redefinición de macro
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\freeglut.h(58,1): message : vea la definición anterior de 'WIN32_LEAN_AND_MEAN'
+  CoordinadorAjedrez.cpp
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\Socket.h(5,1): warning C4005: 'WIN32_LEAN_AND_MEAN': redefinición de macro
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\freeglut.h(58,1): message : vea la definición anterior de 'WIN32_LEAN_AND_MEAN'
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(352,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(352,22): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(354,27): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(354,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(356,34): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(356,31): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(358,33): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(358,30): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(360,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(360,22): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(367,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(367,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(379,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(379,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(384,37): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(384,34): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(390,31): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(390,28): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(402,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(402,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(412,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(412,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(422,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(422,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(431,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(431,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(440,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(440,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+  MotorDeJuego.cpp
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(10,14): warning C4305: 'argumento': truncamiento de 'const int' a 'const unsigned char'
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\Rey.h(10,85): warning C4309: 'argumento': truncamiento de valor constante
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\MotorDeJuego.cpp(61,81): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+  Generando código...
+  Ajedrez.vcxproj -> C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\bin\Ajedrez.exe
+>>>>>>> Stashed changes

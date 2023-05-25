@@ -56,7 +56,7 @@ public:
 	//@param Socket& sck_aux: socket para la comunicación con el cliente
 	void aceptaConexion(Socket& sck_aux);
 	//Conecta el cliente con el servidor
-	void conectarAServidor();
+	bool conectarAServidor();
 	//Envía una cadena de caracteres al cliente/servidor
 	//@param std::string s: cadena de caracteres a enviar
 	//@return  Número de bytes enviados

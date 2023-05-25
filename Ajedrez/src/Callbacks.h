@@ -3,14 +3,8 @@
 #ifndef GLUTCALLBACKS_H
 #define GLUTCALLBAKCS_H
 
-#include <freeglut.h>
+#include "freeglut.h"
 #include "Globals.h"
-
-#include "Camera.h"
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
 
 #include <string>
 #include <iostream>

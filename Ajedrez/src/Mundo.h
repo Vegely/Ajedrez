@@ -1,12 +1,10 @@
 #pragma once
-#include "Camera.h"
 #include "Callbacks.h"
 #include <vector>
 #include "Partida.h"
 
 struct Model
 {
-	const aiScene* scene;
 	GLuint model_list;
 	std::vector<GLuint> textures;
 };
@@ -15,7 +13,6 @@ struct Model
 class Mundo
 {
 public:
-	Camera camara;
 	std::vector<Model> models;
 
 	Mundo();

@@ -5,15 +5,18 @@
 #include "Partida.h"
 #include <thread>
 
-void hiloServidor(Servidor* servidor, std::string* mov_cliente) {
+ConfiguracionDeJuego config;
+
+void hiloServidor(Servidor* servidor, std::string* mov_cliente, Estado* estado) {
 	servidor->conectarServidor();
-	servidor->recibirDeCliente(*mov_cliente);
-	std::cout << *mov_cliente;
+	*estado = J1;
+
 }
 
-void hiloCliente(Cliente* cliente) {
-	cliente->conectarCliente();
-	cliente->enviarAServidor("hola");
+void hiloCliente(Cliente* cliente, Estado* estado) {
+	if (!cliente->conectarCliente()) {
+		*estado = NO_CONECTADO;
+	}
 }
 
 CoordinadorAjedrez::CoordinadorAjedrez() {
@@ -31,13 +34,23 @@ void CoordinadorAjedrez::dibuja() {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
+		DatosFinal datosFinal = juego.motor();
 	//	mundo.dibuja();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("Bitwise.ttf", 16);
 		ETSIDI::printxy("juego", -5, 8);
 	}
+	else if (estado == COLORJ1) {
+		gluLookAt(0, 7.5, 30, // posicion del ojo
+			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
+			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
+		ETSIDI::setTextColor(1, 1, 0);
+		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::printxy("colorj1", -5, 8);
+	}
 	else if (estado == INIT) {
-
+		juego = MotorDeJuego(config);
+		estado = JUEGO;
 	}
 	else if (estado == PAUSA) {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
@@ -138,16 +151,6 @@ void CoordinadorAjedrez::dibuja() {
 
 void CoordinadorAjedrez::tecla(unsigned char key) {
 	if (estado == INICIO) {
-		if (key == 'w') {
-			estado = CREAR_SALA;
-			servidor->inicializa();
-			hilo_servidor = new std::thread(hiloServidor, servidor, &mov_cliente);
-		}
-		if (key == 'u') {
-			estado = UNIRSE_SALA;
-			cliente->inicializa();
-			hilo_cliente = new std::thread(hiloCliente, cliente);
-		}
 	}
 	else if (estado == NUEVA_PARTIDA) {
 		if((int)key != 9)
@@ -160,6 +163,18 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			datosPartida.getNombre() = "";
 		}
 	}
+	else if (estado == MODO) {
+		if (key == 'w') {
+			estado = CREAR_SALA;
+			servidor->inicializa();
+			hilo_servidor = new std::thread(hiloServidor, servidor, &mov_cliente, &estado);
+		}
+		if (key == 'u') {
+			estado = UNIRSE_SALA;
+			cliente->inicializa();
+			hilo_cliente = new std::thread(hiloCliente, cliente, &estado);
+		}
+	}
 	else if (estado == J1) {
 		if ((int)key != 9)
 			datosPartida.getJ1() += key;
@@ -169,7 +184,7 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			if (datosPartida.existe())
 				estado = PARTIDA_EXISTE; 
 			else {
-				estado = JUEGO;
+				estado = COLORJ1;
 				datosPartida.crearPartida();
 				ranking.aniadirJugador(datosPartida.getJ1(), 0);
 			}
@@ -193,7 +208,7 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			if (datosPartida.existe())
 				estado = PARTIDA_EXISTE;
 			else {
-				estado = JUEGO;
+				estado = COLORJ1;
 				datosPartida.crearPartida();
 				ranking.aniadirJugador(datosPartida.getJ2(), 0);
 			}
@@ -256,10 +271,30 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 	}
 	else if (estado == CREAR_SALA) {
 		if (key == 'v') {
-			estado = PAUSA;
-			servidor->enviarACliente("desconecta");
+			estado = MODO;
+			datosPartida.getModo() = "";
 			servidor->desconectarServidor();
 			hilo_servidor->join();
+		}
+	}
+	else if (estado == NO_CONECTADO) {
+		if (key == 'v') {
+			estado = MODO;
+			datosPartida.getModo() = "";
+			cliente->desconectarCliente();
+			hilo_cliente->join();
+		}
+	}
+	else if (estado == COLORJ1) {
+		static std::string aux = "";
+		if (key == 'b') {
+			estado = INIT;
+		}
+		if (key == 'n') {
+			estado = INIT;
+			aux = datosPartida.getJ1();
+			datosPartida.getJ1() = datosPartida.getJ2();
+			datosPartida.getJ1() = aux;
 		}
 	}
 }
@@ -354,6 +389,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 
 			else if (c_normal.click(x, y))
 			{
+				config = { ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::LOCAL };
 				datosPartida.getModo() += "Multijugador";
 				estado = J1;
 			}
