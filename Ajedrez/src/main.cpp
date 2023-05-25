@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	/////Mode selection/////
-	ConfiguracionDeJuego config{ ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::IA };
+	ConfiguracionDeJuego config{ ConfiguracionDeJuego::FormasDeInteraccion::IA, ConfiguracionDeJuego::FormasDeInteraccion::IA };
 	//////////Setup/////////
 	MotorDeJuego juego(config);
 	////////////////////////

@@ -30,13 +30,13 @@ class Tablero
 	
 
 public:
-	friend class IA;
-	friend class MotorDeJuego;
 	friend class InfoTablas;
+	friend class MotorDeJuego;
+	friend class IA;
+	
+	explicit Tablero(bool alocar = false);																									//Constructor
 
-	explicit Tablero();																									//Constructor
-
-	Tablero(const Tablero& tablero);
+	static Tablero copiar(const Tablero& tablero);
 
 	void liberar() { for (Pieza* p_pieza : tablero) delete p_pieza; }
 

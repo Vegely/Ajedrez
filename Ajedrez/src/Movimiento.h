@@ -21,9 +21,8 @@ struct Movimiento
 
 struct MovimientoEvaluado
 {
-	Movimiento movimiento;
+	std::vector<Movimiento> movimiento;
 	eval_t eval;
-
-	MovimientoEvaluado() {}
-	MovimientoEvaluado(Movimiento movimiento, eval_t eval) : movimiento(movimiento), eval(eval) {}
+	
+	explicit MovimientoEvaluado(eval_t eval) : eval(eval) { movimiento.clear(); }
 };

@@ -2,7 +2,7 @@
 
 #include "Tablero.h"
 
-void InfoTablas::add(const Tablero tablero)
+void InfoTablas::add(const Tablero& tablero)
 {
 	bool encontrado = false;
 	for (int i = 0; i < posiciones.size(); i++)
@@ -20,9 +20,11 @@ void InfoTablas::add(const Tablero tablero)
 		}
 	}
 	
+	Tablero aux = tablero;
+
 	if (!encontrado)
 	{
-		posiciones.push_back(tablero);
+		posiciones.push_back(aux);
 		repeticiones.push_back(1);
 	}
 	contadorJugadas++;

@@ -1,8 +1,11 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
-  Tablero.cpp
+  IA.cpp
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\IA.cpp(62,85): warning C4244: 'argumento': conversión de 'double' a 'eval_t'; posible pérdida de datos
+  main.cpp
+  MotorDeJuego.cpp
 C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(10): warning C4305: 'argumento': truncamiento de 'const int' a 'const unsigned char'
 C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(10,85): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Tablero.cpp(361,21): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Tablero.cpp(362,21): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\MotorDeJuego.cpp(61,81): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+  Generando código...
   Ajedrez.vcxproj -> C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\bin\Ajedrez.exe

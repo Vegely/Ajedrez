@@ -57,16 +57,19 @@ Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
 
 DatosFinal MotorDeJuego::motor()
 {
+	for (ConfiguracionDeJuego::FormasDeInteraccion configJugador : config.config) 
+		if (configJugador == ConfiguracionDeJuego::FormasDeInteraccion::IA) srand(time(NULL)); // Inicializar la semilla si hay IA
+
 	DatosFinal datosFinal;
 	bool exit = false;
 	bool pos1Selec = false;
+
 	while (!exit)
 	{
 		Movimiento movimiento = seleccionarEntrada(pos1Selec);
 
 		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1)))
 		{
-
 			pos1Selec = !hacerJugada(movimiento);
 
 			if (!pos1Selec) // Se hace la jugada
@@ -268,6 +271,8 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 
 Pieza::tipo_t getSelection()
 {
+	std::cout <<"Seleccione la pieza a la que se corona:\n\t1. Caballo\n\t2. Alfil\n\t3. Torre\n\t4. Dama\n";
+	
 	std::string input;
 	Pieza::tipo_t tipo;
 
@@ -300,10 +305,34 @@ Pieza::tipo_t getSelection()
 	return tipo;
 }
 
+/////////////////
+
+Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(Posicion posicion) const
+{
+	Pieza::tipo_t tipo;
+
+	switch (config[tablero.colorDelTurno])
+	{
+	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
+		tipo = getSelection();
+		break;
+	case ConfiguracionDeJuego::FormasDeInteraccion::REMOTO:
+		// Leer la llegada de la red
+		break;
+	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
+		tipo = IA::coronar(tablero, posicion);
+		////////////
+		cout << (int)tipo;
+		//////////////
+		// Delay ???
+		break;
+	}
+
+	return tipo;
+}
+
 void MotorDeJuego::coronar(Posicion posicion)
 {
-	std::cout <<"Seleccione la pieza a la que se corona:\n\t1. Caballo\n\t2. Alfil\n\t3. Torre\n\t4. Dama\n";
-
 	switch (getSelection())
 	{
 	case Pieza::tipo_t::PEON:
@@ -326,8 +355,6 @@ void MotorDeJuego::coronar(Posicion posicion)
 		break;
 	}
 }
-
-/////////////////
 
 Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, bool pos1Selec) const
 {
