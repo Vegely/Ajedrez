@@ -195,6 +195,25 @@ void Tablero::mover(const Movimiento& movimiento) {
 	actualizarTablero();
 }
 
+void Tablero::coronar(Posicion posicion, Pieza::tipo_t tipo)
+{
+	switch (tipo)
+	{
+	case Pieza::tipo_t::CABALLO:
+		escribir(posicion, new Caballo(*this, leer(posicion)->getColor()));
+		break;
+	case Pieza::tipo_t::ALFIL:
+		escribir(posicion, new Alfil(*this, leer(posicion)->getColor()));
+		break;
+	case Pieza::tipo_t::TORRE:
+		escribir(posicion, new Torre(*this, leer(posicion)->getColor()));
+		break;
+	case Pieza::tipo_t::DAMA:
+		escribir(posicion, new Dama(*this, leer(posicion)->getColor()));
+		break;
+	}
+}
+
 bool Tablero::jaqueMate() const 
 {
 	if (leer(reyPos[colorDelTurno])->getAmenazas().size() == 0)

@@ -46,6 +46,8 @@ public:
 
 	Movimiento getUltimaJugada() { return ultimaJugada; }
 
+	void coronar(Posicion posicion, Pieza::tipo_t tipo);
+
 	void cambiarTurno() { colorDelTurno = !colorDelTurno; }
 	bool jaqueMate() const;
 	bool reyAhogado() const;

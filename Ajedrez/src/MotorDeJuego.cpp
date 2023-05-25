@@ -251,7 +251,11 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 	if (JugadaHecha)
 	{
 		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
-			coronar(movimiento.inicio);
+		{
+			delete tablero.tablero[movimiento.inicio.indice()];
+			tablero.coronar(movimiento.fin, seleccionarEntradaCoronar(movimiento.inicio));
+			std::cin;
+		}
 
 		tablero.cambiarTurno();
 		tablero.ultimaJugada = movimiento;
@@ -329,31 +333,6 @@ Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(Posicion posicion) const
 	}
 
 	return tipo;
-}
-
-void MotorDeJuego::coronar(Posicion posicion)
-{
-	switch (getSelection())
-	{
-	case Pieza::tipo_t::PEON:
-		tablero.escribir(posicion, new Peon(tablero, tablero.leer(posicion)->getColor()));
-		break;
-	case Pieza::tipo_t::CABALLO:
-		tablero.escribir(posicion, new Caballo(tablero, tablero.leer(posicion)->getColor()));
-		break;
-	case Pieza::tipo_t::ALFIL:
-		tablero.escribir(posicion, new Alfil(tablero, tablero.leer(posicion)->getColor()));
-		break;
-	case Pieza::tipo_t::TORRE:
-		tablero.escribir(posicion, new Torre(tablero, tablero.leer(posicion)->getColor()));
-		break;
-	case Pieza::tipo_t::DAMA:
-		tablero.escribir(posicion, new Dama(tablero, tablero.leer(posicion)->getColor()));
-		break;
-	case Pieza::tipo_t::REY:
-		tablero.escribir(posicion, new Rey(tablero, tablero.leer(posicion)->getColor()));
-		break;
-	}
 }
 
 Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, bool pos1Selec) const

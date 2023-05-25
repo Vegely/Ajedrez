@@ -1,4 +1,5 @@
 #include "IA.h"
+#include "MotorDeJuego.h"
 
 #include <algorithm>
 
@@ -187,11 +188,27 @@ Movimiento IA::mover(const Tablero& tablero)
 
 Pieza::tipo_t IA::coronar(const Tablero& tablero, Posicion posicion)
 {
-	std::vector<Movimiento> movimientosPosibles;
+	std::vector<Pieza::tipo_t> tiposBuenos;
+	eval_t eval(-1 * tablero.colorDelTurno * MAX_EVAL_T);
 
-	/*Posicion
-	for (int i = 0; )
-	Tablero aux = Tablero::copiar(tablero);*/
+	Pieza::tipo_t tipos[] = { Pieza::tipo_t::DAMA, Pieza::tipo_t::ALFIL, Pieza::tipo_t::TORRE, Pieza::tipo_t::CABALLO };
+	for (Pieza::tipo_t tipo : tipos)
+	{
+		Tablero aux = Tablero::copiar(tablero);
 
-	return Pieza::tipo_t::ALFIL;
+		delete aux.tablero[posicion.indice()];
+		aux.coronar(posicion - 1 * tablero.colorDelTurno * Posicion(0, 1), tipo);
+
+		MovimientoEvaluado movimientoEvaluado = minimax(tablero, PROFUNDIDAD_IA, tablero.colorDelTurno);
+
+		if ((tablero.colorDelTurno && movimientoEvaluado.eval > eval) || (!tablero.colorDelTurno && movimientoEvaluado.eval < eval))
+		{
+			eval = movimientoEvaluado.eval;
+			tiposBuenos.push_back(tipo);
+		}
+
+		aux.liberar();
+	}
+	
+	return tiposBuenos.at(rand() % tiposBuenos.size());
 }
