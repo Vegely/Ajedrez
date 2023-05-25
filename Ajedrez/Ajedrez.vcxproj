@@ -44,6 +44,7 @@
     <ClCompile Include="src\Rey.cpp" />
     <ClCompile Include="src\Servidor.cpp" />
     <ClCompile Include="src\Socket.cpp" />
+    <ClCompile Include="src\Sonidos.cpp" />
     <ClCompile Include="src\Tablero.cpp" />
     <ClCompile Include="src\Torre.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="src\Rey.h" />
     <ClInclude Include="src\Servidor.h" />
     <ClInclude Include="src\Socket.h" />
+    <ClInclude Include="src\Sonidos.h" />
     <ClInclude Include="src\Tablero.h" />
     <ClInclude Include="src\Torre.h" />
     <ClInclude Include="src\Vector2D.h" />

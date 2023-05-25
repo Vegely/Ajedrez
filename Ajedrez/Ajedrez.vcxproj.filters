@@ -29,6 +29,7 @@
     <ClCompile Include="src\Vector2D.cpp" />
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\CajaTexto.cpp" />
+    <ClCompile Include="src\Sonidos.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Alfil.h" />
@@ -59,5 +60,6 @@
     <ClInclude Include="src\Vector2D.h" />
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\CajaTexto.h" />
+    <ClInclude Include="src\Sonidos.h" />
   </ItemGroup>
 </Project>
