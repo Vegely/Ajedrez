@@ -6,7 +6,8 @@
 #include <thread>
 
 
-enum Estado { INICIO, NUEVA_PARTIDA, MODO, J1,J2, JUEGO, PAUSA, CARGAR_PARTIDA,RANKING,PARTIDA_EXISTE, PARTIDA_NO_EXISTE, CREAR_SALA, UNIRSE_SALA };
+enum Estado { INICIO, NUEVA_PARTIDA, MODO, J1,J2, JUEGO, PAUSA, CARGAR_PARTIDA,RANKING,PARTIDA_EXISTE, PARTIDA_NO_EXISTE, CREAR_SALA, UNIRSE_SALA,
+				INIT};
 
 class CoordinadorAjedrez
 {
@@ -19,9 +20,10 @@ public:
 	Mundo mundo;
 	Partida datosPartida;
 	Ranking ranking;
-	Cliente cliente;
+	Cliente* cliente;
 	Servidor* servidor = new Servidor;
 	std::thread* hilo_servidor = nullptr;
+	std::thread* hilo_cliente = nullptr;
 
 	CoordinadorAjedrez();
 	void inicializa();
@@ -32,6 +34,9 @@ public:
 
 	friend class menuInicial;
 };
+
+void hiloServidor(Servidor* servidor, std::string* mov_cliente);
+void hiloCliente(Cliente* cliente);
 
 
 

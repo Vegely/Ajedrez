@@ -1,4 +1,3 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
-  GestionMenus.cpp
   Ajedrez.vcxproj -> C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\bin\Ajedrez.exe

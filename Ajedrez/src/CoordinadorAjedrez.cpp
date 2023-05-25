@@ -5,10 +5,15 @@
 #include "Partida.h"
 #include <thread>
 
-void foo(Servidor* servidor, std::string* mov_cliente) {
+void hiloServidor(Servidor* servidor, std::string* mov_cliente) {
 	servidor->conectarServidor();
 	servidor->recibirDeCliente(*mov_cliente);
 	std::cout << *mov_cliente;
+}
+
+void hiloCliente(Cliente* cliente) {
+	cliente->conectarCliente();
+	cliente->enviarAServidor("hola");
 }
 
 CoordinadorAjedrez::CoordinadorAjedrez() {
@@ -30,6 +35,9 @@ void CoordinadorAjedrez::dibuja() {
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("Bitwise.ttf", 16);
 		ETSIDI::printxy("juego", -5, 8);
+	}
+	else if (estado == INIT) {
+
 	}
 	else if (estado == PAUSA) {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
@@ -124,7 +132,7 @@ void CoordinadorAjedrez::dibuja() {
 		//GestionMenus::imprimePartidaNaExiste();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("Bitwise.ttf", 16);
-		ETSIDI::printxy(cliente.getIp().c_str(), -5, 8);
+		ETSIDI::printxy(cliente->getIp().c_str(), -5, 8);
 	}
 }
 
@@ -133,12 +141,12 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 		if (key == 'w') {
 			estado = CREAR_SALA;
 			servidor->inicializa();
-			//servidor->conectarServidor();
-			hilo_servidor = new std::thread(foo, servidor, &mov_cliente);
+			hilo_servidor = new std::thread(hiloServidor, servidor, &mov_cliente);
 		}
 		if (key == 'u') {
 			estado = UNIRSE_SALA;
-			cliente.inicializa();
+			cliente->inicializa();
+			hilo_cliente = new std::thread(hiloCliente, cliente);
 		}
 	}
 	else if (estado == NUEVA_PARTIDA) {
@@ -198,7 +206,7 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 		if (key == 'p')
 			estado = PAUSA;
 		if ((int)key == 9)
-			cliente.enviarAServidor(mov_cliente);
+			cliente->enviarAServidor(mov_cliente);
 		if (key == 's')
 			exit(0);
 	}
@@ -235,16 +243,23 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 	}
 	else if (estado == UNIRSE_SALA) {
 		if ((int)key != 9)
-			cliente.getIp() += key;
+			cliente->getIp() += key;
 		if ((int)key == 9) {
-			cliente.conectarCliente();
+			cliente->conectarCliente();
+			cliente->enviarAServidor("luismi es muy gay");
 			estado = JUEGO;
+		}
+		if (key == 'v') {
+			cliente->desconectarCliente();
+			hilo_cliente->join();
 		}
 	}
 	else if (estado == CREAR_SALA) {
 		if (key == 'v') {
 			estado = PAUSA;
-			//hilo_servidor->join();
+			servidor->enviarACliente("desconecta");
+			servidor->desconectarServidor();
+			hilo_servidor->join();
 		}
 	}
 }
@@ -277,8 +292,8 @@ void CoordinadorAjedrez::teclaEspecial(int key) {
 	}
 	else if (estado == UNIRSE_SALA) {
 		if (key == GLUT_KEY_LEFT) {
-			if (cliente.getIp().length() > 0)
-				cliente.getIp() = cliente.getIp().substr(0, cliente.getIp().length() - 1);
+			if (cliente->getIp().length() > 0)
+				cliente->getIp() = cliente->getIp().substr(0, cliente->getIp().length() - 1);
 		}
 	}
 	else if (estado == RANKING) {
@@ -309,6 +324,15 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 				estado = NUEVA_PARTIDA;
 			if (c_salas.click(x, y))
 				estado = CREAR_SALA;
+		}
+	}
+	else if (estado == NUEVA_PARTIDA) {
+		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+			if (c_volver.click(x, y)) {
+				datosPartida.getNombre() = "";
+				estado = INICIO;
+			}
 		}
 	}
 	else if (estado == MODO) {
