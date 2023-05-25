@@ -1,6 +1,7 @@
 #include "CoordinadorAjedrez.h"
 #include "ETSIDI.h"
 #include "GestionMenus.h"
+#include "CajaTexto.h"
 #include "Partida.h"
 #include <thread>
 
@@ -40,7 +41,7 @@ void CoordinadorAjedrez::dibuja() {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
-		//GestionMenus::imprimeRanking();
+		GestionMenus::imprimeMenuRanking();
 
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("Bitwise.ttf", 16);
@@ -51,7 +52,7 @@ void CoordinadorAjedrez::dibuja() {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
-		GestionMenus::imprimeNuevaPartida();
+		GestionMenus::imprimeMenuNuevaPartida();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("Bitwise.ttf", 16);
 		ETSIDI::printxy(datosPartida.getNombre().c_str(), -5, 8);
@@ -60,7 +61,7 @@ void CoordinadorAjedrez::dibuja() {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
-		GestionMenus::imprimeCargarPartida();
+		GestionMenus::imprimeMenuCargarPartida();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("Bitwise.ttf", 16);
 		ETSIDI::printxy(datosPartida.getNombre().c_str(), -5, 8);
@@ -69,7 +70,7 @@ void CoordinadorAjedrez::dibuja() {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
-		GestionMenus::imprimeJ1();
+		GestionMenus::imprimeMenuJugador(1);
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("Bitwise.ttf", 16);
 		ETSIDI::printxy(datosPartida.getJ1().c_str(), -5, 8);
@@ -78,7 +79,7 @@ void CoordinadorAjedrez::dibuja() {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
-		GestionMenus::imprimeJ2();
+		GestionMenus::imprimeMenuJugador(2);
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("Bitwise.ttf", 16);
 		ETSIDI::printxy(datosPartida.getJ2().c_str(), -5, 8);
@@ -87,7 +88,7 @@ void CoordinadorAjedrez::dibuja() {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
-		GestionMenus::imprimeModo();
+		GestionMenus::imprimeMenuModo();
 	}
 	else if (estado == PARTIDA_EXISTE) {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
@@ -129,12 +130,6 @@ void CoordinadorAjedrez::dibuja() {
 
 void CoordinadorAjedrez::tecla(unsigned char key) {
 	if (estado == INICIO) {
-		if (key == 'n')
-			estado = NUEVA_PARTIDA;
-		if (key == 'c')
-			estado = CARGAR_PARTIDA;
-		if (key == 'r')
-			estado = RANKING;
 		if (key == 'w') {
 			estado = CREAR_SALA;
 			servidor->inicializa();
@@ -145,12 +140,6 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			estado = UNIRSE_SALA;
 			cliente.inicializa();
 		}
-		if (key == 's')
-			exit(0);
-	}
-	else if (estado == RANKING) {
-		if (key == 'v')
-			estado = INICIO;
 	}
 	else if (estado == NUEVA_PARTIDA) {
 		if((int)key != 9)
@@ -161,16 +150,6 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 		}
 		if ((int)key == 127) {
 			datosPartida.getNombre() = "";
-		}
-	}
-	else if (estado == MODO) {
-		if (key == 'i') {
-			datosPartida.getModo() += "Individual";
-			estado = J1;
-		}
-		if (key == 'd') {
-			datosPartida.getModo() += "Multijugador";
-			estado = J1;
 		}
 	}
 	else if (estado == J1) {
@@ -254,12 +233,6 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			datosPartida.getModo() = "";
 		}
 	}
-	else if (estado == PARTIDA_NO_EXISTE) {
-		if (key == 'i'){
-			estado=INICIO;
-			datosPartida.getNombre() = "";
-		}
-	}
 	else if (estado == UNIRSE_SALA) {
 		if ((int)key != 9)
 			cliente.getIp() += key;
@@ -317,9 +290,100 @@ void CoordinadorAjedrez::teclaEspecial(int key) {
 	}
 }
 
-/*void CoordinadorAjedrez::click(int button, int state, int x, int y) {
+void CoordinadorAjedrez::click(int button, int state, int x, int y) {
+	if (estado == INICIO) {
+		static CajaTexto c_salir({ -1,-2.25 }, { -4,-2.25 }, { -4,-3.25 }, { -1,-3.25 });
+		static CajaTexto c_ranking({ 0, 0.75 }, { -4, 0.75 }, { -4,  -0.25 }, { 0,-0.25 });
+		static CajaTexto c_cargar_partida({ 4, 6.75 }, { -4, 6.75 }, { -4,  5.75 }, { 4,5.75 });
+		static CajaTexto c_nueva_partida({ 3.5, 9.75 }, { -4, 9.75 }, { -4,  8.75 }, { 3.5,8.75 });
+		static CajaTexto c_salas({ 3, 3.75 }, { -4, 3.75 }, { -4,  2.75 }, { 3, 2.75 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+		{
+			if (c_salir.click(x, y))
+				exit(0);
+			if (c_ranking.click(x, y))
+				estado = RANKING;
+			if (c_cargar_partida.click(x, y))
+				estado = CARGAR_PARTIDA;
+			if (c_nueva_partida.click(x, y))
+				estado = NUEVA_PARTIDA;
+			if (c_salas.click(x, y))
+				estado = CREAR_SALA;
+		}
+	}
+	else if (estado == MODO) {
+		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
+		static CajaTexto c_inteligencia({ 2.5, 8.75 }, { -9, 8.75 }, { -9,  7.75 }, { 2.5, 7.75 });
+		static CajaTexto c_normal({ -5.5, 4.75 }, { -9, 4.75 }, { -9,  3.75 }, { -5.5, 3.75 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+		{
+			if (c_volver.click(x, y))
+			{
+				datosPartida.getNombre() = "";
+				estado = NUEVA_PARTIDA;
+			}
+			else if (c_inteligencia.click(x, y))
+			{
+				datosPartida.getModo() += "Individual";
+				estado = J1;
+			}
 
-}*/
+			else if (c_normal.click(x, y))
+			{
+				datosPartida.getModo() += "Multijugador";
+				estado = J1;
+			}
+		}
+	}
+	else if (estado == J1) {
+		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+		{
+			if (c_volver.click(x, y)) {
+				datosPartida.getModo() = "";
+				estado = MODO;
+			}
+		}
+	}
+	else if(estado == J2) {
+		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+		{
+			if (c_volver.click(x, y)) {
+				datosPartida.getJ1() = "";
+				estado = J1;
+			}
+		}
+	}
+	else if (estado == CARGAR_PARTIDA) {
+		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+		{
+			if (c_volver.click(x, y)) {
+				datosPartida.getNombre() = "";
+				estado = INICIO;
+			}
+		}
+	}
+	else if (estado == PARTIDA_NO_EXISTE) {
+		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+			if (c_volver.click(x, y)) {
+				estado = INICIO;
+				datosPartida.getNombre() = "";
+			}
+		}
+	}
+	else if (estado == RANKING) {
+		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+			if (c_volver.click(x, y)) {
+				estado = INICIO;
+			}
+		}
+	}
+}
+
 
 
 

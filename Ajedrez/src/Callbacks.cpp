@@ -302,6 +302,7 @@ void OnKeyboardSpecial(int key, int x, int y)
 // 0 == left, 1 == middle, 2 == right, 3 == scroll up, 4 == scroll down.
 void OnMouseClick(int button, int state, int x, int y)
 {
+	ajedrez.click(button, state, x, y);
 	//ajedrez.click(button, state, x, y);
 	/*static std::string btn;
 	switch (button)
