@@ -5,6 +5,8 @@
 #include "Partida.h"
 #include <thread>
 
+#define DIR_FUENTE "fuentes/Bitwise.ttf"
+
 ConfiguracionDeJuego config;
 
 void hiloServidor(Servidor* servidor, std::string* mov_cliente, Estado* estado) {
@@ -35,9 +37,9 @@ void CoordinadorAjedrez::dibuja() {
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 		DatosFinal datosFinal = juego.motor();
-	//	mundo.dibuja();
+		mundo.dibuja();
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy("juego", -5, 8);
 	}
 	else if (estado == COLORJ1) {
@@ -45,7 +47,7 @@ void CoordinadorAjedrez::dibuja() {
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy("colorj1", -5, 8);
 	}
 	else if (estado == INIT) {
@@ -65,7 +67,7 @@ void CoordinadorAjedrez::dibuja() {
 		GestionMenus::imprimeMenuRanking();
 
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::setFont(DIR_FUENTE, 16);
 		ranking.print();
 		//ETSIDI::printxy(ranking.print(5).c_str(), -5, 8);
 	}
@@ -75,7 +77,7 @@ void CoordinadorAjedrez::dibuja() {
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 		GestionMenus::imprimeMenuNuevaPartida();
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy(datosPartida.getNombre().c_str(), -5, 8);
 	}
 	else if (estado == CARGAR_PARTIDA) {
@@ -84,7 +86,7 @@ void CoordinadorAjedrez::dibuja() {
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 		GestionMenus::imprimeMenuCargarPartida();
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy(datosPartida.getNombre().c_str(), -5, 8);
 	}
 	else if (estado == J1) {
@@ -93,7 +95,7 @@ void CoordinadorAjedrez::dibuja() {
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 		GestionMenus::imprimeMenuJugador(1);
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy(datosPartida.getJ1().c_str(), -5, 8);
 	}
 	else if (estado == J2) {
@@ -102,7 +104,7 @@ void CoordinadorAjedrez::dibuja() {
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 		GestionMenus::imprimeMenuJugador(2);
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy(datosPartida.getJ2().c_str(), -5, 8);
 	}
 	else if (estado == MODO) {
@@ -117,7 +119,7 @@ void CoordinadorAjedrez::dibuja() {
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 		//GestionMenus::imprimePartidaYaExiste();
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy("ya existe", -5, 8);
 	}
 	else if (estado == PARTIDA_NO_EXISTE) {
@@ -126,7 +128,7 @@ void CoordinadorAjedrez::dibuja() {
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 		//GestionMenus::imprimePartidaNaExiste();
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy("no existe", -5, 8);
 	}
 	else if (estado == CREAR_SALA) {
@@ -135,7 +137,7 @@ void CoordinadorAjedrez::dibuja() {
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 		//GestionMenus::imprimePartidaNaExiste();
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy(servidor->getip().c_str(), -5, 8);
 	}
 	else if (estado == UNIRSE_SALA) {
@@ -144,7 +146,7 @@ void CoordinadorAjedrez::dibuja() {
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
 		//GestionMenus::imprimePartidaNaExiste();
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("Bitwise.ttf", 16);
+		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy(cliente->getIp().c_str(), -5, 8);
 	}
 }

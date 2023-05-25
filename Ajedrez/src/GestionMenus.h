@@ -1,6 +1,6 @@
 #pragma once
 
-#define RUTA_MENU "Menus.png"
+#define RUTA_MENU "bin/Menus.png"
 
 class GestionMenus
 {

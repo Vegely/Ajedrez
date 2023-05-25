@@ -6,6 +6,8 @@
 #include "CajaTexto.h"
 #include <iostream>
 
+#define DIR_ALGER "fuentes/ALGER.ttf"
+
 void GestionMenus::imprimeMenuInicial() {
 	//static CajaTexto c({ 10,5 }, { -10,5 }, { -10,0 }, { 10,0 },"PUTA MADRE");
 	//static CajaTexto c({ 10,15 }, { -10,15 }, { -10,10 }, { 10,10 },"texto");
@@ -33,22 +35,22 @@ void GestionMenus::imprimeMenuInicial() {
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::setFont(DIR_ALGER, 60);
 	ETSIDI::printxy("AJEDREZ", -6, 12);
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Nueva Partida", -4, 9);
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Cargar Partida", -4, 6);
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Salas", -4, 3);
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Ranking", -4, 0);
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Salir", -4, -3);
 }
 
@@ -58,13 +60,13 @@ void GestionMenus::imprimeMenuPausa() {
 	static CajaTexto c_salir({-1, 0.75}, {-4, 0.75}, {-4,  -0.25}, {-1, -0.25});
 	//c_salir.dibuja();
 	ETSIDI::setTextColor(1, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::setFont(DIR_ALGER, 60);
 	ETSIDI::printxy("PAUSA", -6, 12);
 	ETSIDI::setTextColor(0, 1, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Reanudar", -4, 3);
 	ETSIDI::setTextColor(0, 1, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Salir", -4, 0);
 }
 
@@ -87,15 +89,15 @@ void GestionMenus::imprimeMenuCargarPartida()
 	glDisable(GL_TEXTURE_2D);
 	
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::setFont(DIR_ALGER, 60);
 	ETSIDI::printxy("CARGAR PARTIDA", -8, 12);
 
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Nombre de la partida:", -6, 4);
 
 	ETSIDI::setTextColor(0, 0, 1);
-	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::setFont(DIR_ALGER, 15);
 	ETSIDI::printxy("Volver", 26, -6);
 }
 
@@ -118,15 +120,15 @@ void GestionMenus::imprimeMenuNuevaPartida()
 	glDisable(GL_TEXTURE_2D);
 
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::setFont(DIR_ALGER, 60);
 	ETSIDI::printxy("NUEVA PARTIDA", -8, 12);
 
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Nombre de la partida:", -6, 4);
 
 	ETSIDI::setTextColor(0, 0, 1);
-	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::setFont(DIR_ALGER, 15);
 	ETSIDI::printxy("Volver", 26, -6);
 }
 
@@ -148,10 +150,10 @@ void GestionMenus::imprimeMenuRanking()
 	glDisable(GL_TEXTURE_2D);
 
 	ETSIDI::setTextColor(0, 0, 1);
-	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::setFont(DIR_ALGER, 60);
 	ETSIDI::printxy("RANKING PUNTUACIÓN", -15, 20);
 	ETSIDI::setTextColor(0, 0, 1);
-	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::setFont(DIR_ALGER, 15);
 	ETSIDI::printxy("Volver", 26, -6);
 }
 
@@ -177,19 +179,19 @@ void GestionMenus::imprimeMenuModo()
 	glDisable(GL_TEXTURE_2D);
 
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::setFont(DIR_ALGER, 60);
 	ETSIDI::printxy("MODO DE JUEGO", -11, 12);
 
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Inteligiencia artificial", -9, 8);
 
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Normal", -9, 4);
 
 	ETSIDI::setTextColor(0, 0, 1);
-	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::setFont(DIR_ALGER, 15);
 	ETSIDI::printxy("Volver", 26, -6);
 }
 
@@ -212,17 +214,17 @@ void GestionMenus::imprimeMenuJugador(int i)
 	if(i==1)
 	{
 		ETSIDI::setTextColor(0, 0, 0);
-		ETSIDI::setFont("ALGER.ttf", 60);
+		ETSIDI::setFont(DIR_ALGER, 60);
 		ETSIDI::printxy("JUGADOR 1", -11, 12);
 	}
 	if (i == 2)
 	{
 		ETSIDI::setTextColor(0, 0, 0);
-		ETSIDI::setFont("ALGER.ttf", 60);
+		ETSIDI::setFont(DIR_ALGER, 60);
 		ETSIDI::printxy("JUGADOR 2", -8, 12);
 	}
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Nombre del jugador: ", -6, 4);
 }
 
@@ -248,19 +250,19 @@ void GestionMenus::imprimeMenuSalas()
 	glDisable(GL_TEXTURE_2D);
 
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::setFont(DIR_ALGER, 60);
 	ETSIDI::printxy("MODO DE JUEGO", -11, 12);
 
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Crear una Sala", -9, 8);
 
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Unirse a una sala", -9, 4);
 
 	ETSIDI::setTextColor(0, 0, 1);
-	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::setFont(DIR_ALGER, 15);
 	ETSIDI::printxy("Volver", 26, -6);
 }
 
@@ -268,10 +270,10 @@ void GestionMenus::imprimeMenuNoExiste()
 {
 	static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
 	ETSIDI::setTextColor(1, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::setFont(DIR_ALGER, 60);
 	ETSIDI::printxy("EL ARCHIVO NO EXISTE", -14, 12);
 	ETSIDI::setTextColor(0, 0, 1);
-	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::setFont(DIR_ALGER, 15);
 	ETSIDI::printxy("Volver", 26, -6);
 }
 
@@ -291,16 +293,16 @@ void GestionMenus::imprimeMenuCrearSala()
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 40);
+	ETSIDI::setFont(DIR_ALGER, 40);
 	ETSIDI::printxy("Codigo de sala", -10, 12);
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("0385726", -8, 8);
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Usalo para conectarte en otro dispositivo", -12, 4);
 	ETSIDI::setTextColor(0, 0, 1);
-	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::setFont(DIR_ALGER, 15);
 	ETSIDI::printxy("Volver", 26, -6);
 }
 
@@ -323,15 +325,15 @@ void GestionMenus::imprimeMenuUnirseSala()
 	glDisable(GL_TEXTURE_2D);
 
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::setFont(DIR_ALGER, 60);
 	ETSIDI::printxy("UNIRSE A SALA", -8, 12);
 
 	ETSIDI::setTextColor(0, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 20);
+	ETSIDI::setFont(DIR_ALGER, 20);
 	ETSIDI::printxy("Codigo de sala:", -6, 4);
 
 	ETSIDI::setTextColor(0, 0, 1);
-	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::setFont(DIR_ALGER, 15);
 	ETSIDI::printxy("Volver", 26, -6);
 }
 
@@ -339,9 +341,9 @@ void GestionMenus::imprimeMenuNoEncontrado()
 {
 	static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
 	ETSIDI::setTextColor(1, 0, 0);
-	ETSIDI::setFont("ALGER.ttf", 60);
+	ETSIDI::setFont(DIR_ALGER, 60);
 	ETSIDI::printxy("EL CODIGO NO ES CORRECTO", -16, 12);
 	ETSIDI::setTextColor(0, 0, 1);
-	ETSIDI::setFont("ALGER.ttf", 15);
+	ETSIDI::setFont(DIR_ALGER, 15);
 	ETSIDI::printxy("Volver", 26, -6);
 }
