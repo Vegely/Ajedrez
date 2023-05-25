@@ -14,21 +14,6 @@
     <ClCompile Include="src\InfoTablas.cpp">
       <Filter>Lógica\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\plane.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\structs.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\board.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\camera.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
     <ClCompile Include="src\Alfil.cpp">
       <Filter>Lógica\Source\Piezas</Filter>
     </ClCompile>
@@ -50,6 +35,51 @@
     <ClCompile Include="src\Torre.cpp">
       <Filter>Lógica\Source\Piezas</Filter>
     </ClCompile>
+    <ClCompile Include="src\Caja.cpp">
+      <Filter>Motor General\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CajaTexto.cpp">
+      <Filter>Motor General\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Callbacks.cpp">
+      <Filter>Motor General\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cliente.cpp">
+      <Filter>Redes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CoordinadorAjedrez.cpp">
+      <Filter>Motor General\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Campo.cpp">
+      <Filter>Ficheros\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DatosRanking.cpp">
+      <Filter>Ficheros\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GestionMenus.cpp">
+      <Filter>Motor General\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mundo.cpp">
+      <Filter>Motor General\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NoFinalizadas.cpp">
+      <Filter>Ficheros\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Partida.cpp">
+      <Filter>Ficheros\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ranking.cpp">
+      <Filter>Ficheros\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Servidor.cpp">
+      <Filter>Redes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Socket.cpp">
+      <Filter>Redes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vector2D.cpp">
+      <Filter>Motor General\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DatosClavada.h">
@@ -70,26 +100,8 @@
     <ClInclude Include="src\InfoTablas.h">
       <Filter>Lógica\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\board.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\camera.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\freeglut.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\plane.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="src\Posicion.h">
       <Filter>Lógica\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\structs.h">
-      <Filter>Gráficos\Headers</Filter>
     </ClInclude>
     <ClInclude Include="src\Alfil.h">
       <Filter>Lógica\Headers\Piezas</Filter>
@@ -114,6 +126,51 @@
     </ClInclude>
     <ClInclude Include="src\DatosBloqueoJaque.h">
       <Filter>Lógica\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Caja.h">
+      <Filter>Motor General\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CajaTexto.h">
+      <Filter>Motor General\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Callbacks.h">
+      <Filter>Motor General\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cliente.h">
+      <Filter>Redes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CoordinadorAjedrez.h">
+      <Filter>Motor General\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Campo.h">
+      <Filter>Ficheros\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DatosRanking.h">
+      <Filter>Ficheros\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GestionMenus.h">
+      <Filter>Motor General\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mundo.h">
+      <Filter>Motor General\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NoFinalizadas.h">
+      <Filter>Ficheros\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Partida.h">
+      <Filter>Ficheros\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ranking.h">
+      <Filter>Ficheros\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Servidor.h">
+      <Filter>Redes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Socket.h">
+      <Filter>Redes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Vector2D.h">
+      <Filter>Motor General\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +215,15 @@
     </Filter>
     <Filter Include="Redes\Source">
       <UniqueIdentifier>{6c0eace9-8bec-4053-a07a-fb76e5f989bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ficheros">
+      <UniqueIdentifier>{ec708cb1-89eb-40a1-86aa-7eff1832d660}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ficheros\Headers">
+      <UniqueIdentifier>{52b076d6-00c9-4edf-9e80-22324eba2014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ficheros\Source">
+      <UniqueIdentifier>{7cef9e6f-c427-4882-9eba-8b80020fb7f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
