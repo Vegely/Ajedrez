@@ -141,5 +141,23 @@
     <Filter Include="Lógica\Source\Piezas">
       <UniqueIdentifier>{ce3353b7-6b65-4621-a2a4-31c3bd4c76d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Motor General">
+      <UniqueIdentifier>{5c2e767e-d000-4b24-9b68-04a659a65b2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor General\Headers">
+      <UniqueIdentifier>{b4c4e1a9-2423-490d-8c0f-7592e0ca405a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor General\Source">
+      <UniqueIdentifier>{c9762c5a-c84c-446b-80ed-2003d580a32d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Redes">
+      <UniqueIdentifier>{6c5f1464-82fe-4005-a905-d77cbeae1d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Redes\Headers">
+      <UniqueIdentifier>{bb41ff36-e523-429c-8040-884e7f647f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Redes\Source">
+      <UniqueIdentifier>{6c0eace9-8bec-4053-a07a-fb76e5f989bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
