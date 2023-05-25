@@ -6,22 +6,26 @@ Camara::Camara(const Point& position) :
 	position(position),
 	speed({0}),
 	look_at{ 0, 0, 0 },
-	rotation{0, 0, 1}
+	fov_y(60.0f),
+	rotation{0, 0, 1},
+	girado(false)
 {
-	light.position = { this->position.x, this->position.y, this->position.z, 1.0f };
-	light.ambient = { 0.2f, 0.2f, 0.2f, 0.1f };
-	light.diffuse = { 1.0f ,1.0f ,1.0f ,1.0f };
-	light.specular = { 1.0f ,1.0f ,1.0f ,1.0f };
+	light.position = { 0, 50.0f, 0, 1.0f };
+	light.ambient = { 255.0f, 255.0f, 255.0f, 0.1f };
+	light.diffuse = { 128.0f ,128.0f ,128.0f ,1.0f };
+	light.specular = { 128.0f ,128.0f ,128.0f ,1.0f };
 
 	std::cout << "Initial camera position set to " << this->position << std::endl;
 	std::cout << "Initial camera look-at point set to " << this->look_at << std::endl;
 }
 
-Camara::Camara(const Point& position, const Point& look_at) :
+Camara::Camara(const Point& position, const Point& look_at, float fov_y) :
 	position(position),
 	speed({0}),
 	look_at(look_at),
-	rotation{ 0, 0, 1 }
+	fov_y(fov_y),
+	rotation{ 0, 0, 1 },
+	girado(false)
 {
 	light.position = { 0.0f, 10.0f, 0.0f, 1.0f };
 	light.ambient = { 1.5f, 1.5f, 1.5f, 0.1f };

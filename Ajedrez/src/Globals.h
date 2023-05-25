@@ -38,6 +38,11 @@ public:
 	static Point zero;
 };
 
+struct Segmento
+{
+	Point p1, p2;
+};
+
 struct Rotation
 {
 	float x, y, angle;
@@ -64,5 +69,7 @@ public:
 Point getPointFromCoords(char letter, unsigned int number);
 
 void drawLine(const Point& p1, const Point& p2);
+
+float distanciaPuntos(const Point& p1, const Point& p2);
 
 #endif

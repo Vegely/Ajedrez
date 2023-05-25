@@ -159,3 +159,11 @@ void drawLine(const Point& p1, const Point& p2)
 	glVertex3f(p2.x, p2.y, p2.z);
 	glEnd();
 }
+
+float distanciaPuntos(const Point& p1, const Point& p2)
+{
+	float dist_x = p1.x - p2.x;
+	float dist_y = p1.y - p2.y;
+	float dist_z = p1.z - p2.z;
+	return sqrtf(dist_x * dist_x + dist_y * dist_y + dist_z * dist_z);
+}

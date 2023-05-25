@@ -63,7 +63,7 @@ void Plane::updateCorners(void)
 	position_corners.ur.z = position.z + y_dim / 2;
 	position_corners.ur.y = position.y;
 
-	printCorners();
+	//printCorners();
 }
 
 float Plane::getArea(void) const

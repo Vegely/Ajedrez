@@ -12,7 +12,7 @@
 // Mundo
 Mundo mundo;
 
-// Modelos a renderizar
+constexpr float fov_y = 60.0f;
 
 void motorGrafico(int* argc, char** argv)
 {
@@ -42,14 +42,14 @@ void motorGrafico(int* argc, char** argv)
 
 void registrarCallbacks(void)
 {
-	glutDisplayFunc(OnDraw);
-	glutIdleFunc(OnDraw);
-	glutReshapeFunc(OnReshape);
-	glutTimerFunc(25, OnTimer, 0);
-	glutKeyboardFunc(OnKeyboardDown);
-	glutKeyboardUpFunc(OnKeyboardUp);
-	glutSpecialFunc(OnKeyboardSpecial);
-	glutMouseFunc(OnMouseClick);
+   	      glutDisplayFunc(OnDraw);
+   	         glutIdleFunc(OnDraw);
+   	      glutReshapeFunc(OnReshape);
+   	 	    glutTimerFunc(25, OnTimer, 0);
+   	     glutKeyboardFunc(OnKeyboardDown);
+   	   glutKeyboardUpFunc(OnKeyboardUp);
+   	      glutSpecialFunc(OnKeyboardSpecial);
+   	 	    glutMouseFunc(OnMouseClick);
 	glutPassiveMotionFunc(OnMouseMotion);
 }
 
@@ -63,9 +63,10 @@ void OnDraw(void)
 	// Camera update
 	mundo.updateCamara();
 
-	// Debug axis
+	// Debug
 	mundo.renderizarHitboxes();
-	//debugAxis();
+	mundo.renderizarRayoRaton();
+	debugAxis();
 }
 
 // Reshapes the window if needed without resizing the objects and mantaining their proportions.
@@ -74,7 +75,7 @@ void OnReshape(int w, int h)
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h); //set the viewport to the current window specifications
 	glMatrixMode(GL_PROJECTION); //set the matrix to projection
 	glLoadIdentity();
-	gluPerspective(60, (GLfloat)w / (GLfloat)h, 1.0, 1000.0); //set the perspective (angle of sight, width, height, depth)
+	gluPerspective(mundo.getFovY(), (GLfloat)w / (GLfloat)h, 1.0, 1000.0); //set the perspective (angle of sight, width, height, depth)
 	glMatrixMode(GL_MODELVIEW); //set the matrix back to model
 }
 
@@ -108,37 +109,11 @@ void OnKeyboardSpecial(int key, int x, int y)
 // 0 == left, 1 == middle, 2 == right, 3 == scroll up, 4 == scroll down.
 void OnMouseClick(int button, int state, int x, int y)
 {
-	static std::string btn;
-	switch (button)
-	{
-	case 0:
-		btn = "left";
-		break;
-	case 1:
-		btn = "middle";
-		break;
-	case 2:
-		btn = "right";
-		break;
-	case 3:
-		btn = "scroll up";
-		break;
-	case 4:
-		btn = "scroll down";
-		break;
-	default:
-		break;
-	}
-
-	//if (state == GLUT_DOWN)
-	//{
-	//	std::cout << "Button: " << btn << std::endl;
-	//	std::cout << "X:" << x << std::endl;
-	//	std::cout << "Y:" << y << std::endl;
-	//}
-
-	// End of mouse reading code (do not erase or write anything afterwards).
-	//glutPostRedisplay();
+	//mundo.raycasting(button, state, x, y);
+	mundo.seleccionCasilla(button, state, x, y);
+	std::cout << "X: " << x << std::endl;
+	std::cout << "Y: " << y << std::endl << std::endl;
+	glutPostRedisplay();
 }
 
 void OnMouseMotion(int x, int y)

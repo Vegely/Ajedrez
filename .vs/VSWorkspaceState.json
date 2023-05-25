@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\Ajedrez",
-    "\\Ajedrez\\src"
+    "\\Ajedrez\\lib"
   ],
-  "SelectedNode": "\\Ajedrez\\src\\Callbacks.cpp",
+  "SelectedNode": "\\Ajedrez\\Ajedrez.sln",
   "PreviewInSolutionExplorer": false
 }

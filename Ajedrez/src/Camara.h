@@ -28,13 +28,15 @@ private:
 	Point speed;
 	Point look_at;
 	Light light;
+	float fov_y;
 	Rotation rotation;
+	bool girado;
 
 public:
 	/* CONSTRUCTOR */
 	Camara(void) = delete;
 	Camara(const Point& position);
-	Camara(const Point& position, const Point& look_at);
+	Camara(const Point& position, const Point& look_at, const float fov_y);
 
 	/* DESTRUCTOR */
 	virtual ~Camara(void);
@@ -44,16 +46,19 @@ public:
 	Point  getSpeed   (void) const { return this->speed; }
 	Point  getLookAt  (void) const { return this->look_at; }
 	Light  getLightRaw(void) const { return this->light; }
+	float  getFovY	  (void) const { return this->fov_y; }
 	float* getLightPos(void) const;
 	float* getLightAmb(void) const;
 	float* getLightDif(void) const;
 	float* getLightSpe(void) const;
+	bool getGirado(void) const { return this->girado; }
 
 	/* SETTERS */
 	void setPosition(const Point& pos);
 	void setSpeed   (const Point& sp);
 	void setLookAt  (const Point& pt);
 	void setLight   (const Light& lt) { this->light = lt; }
+	void cambiarGirado(void) { this->girado = !this->girado; }
 
 	/* MOVEMENT (OnTimer) */
 	void movement(const float time);

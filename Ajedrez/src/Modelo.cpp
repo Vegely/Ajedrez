@@ -15,7 +15,7 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string
 		std::cerr << "Failed to load model: " + model_path;
 	}
 	else
-		std::cout << "Created meshes for model " << tipo_pieza << "." << std::endl;
+		std::cout << "Created meshes for model type " << tipo_pieza << "." << std::endl;
 
 	switch (tipo_pieza)
 	{
