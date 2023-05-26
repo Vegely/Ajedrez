@@ -7,7 +7,7 @@
 
 #define DIR_FUENTE "fuentes/Bitwise.ttf"
 
-ConfiguracionDeJuego config;
+ConfiguracionDeJuego configuracion;
 
 void hiloServidor(Servidor* servidor, std::string* mov_cliente, Estado* estado) {
 	servidor->conectarServidor();
@@ -33,10 +33,27 @@ void CoordinadorAjedrez::dibuja() {
 		GestionMenus::imprimeMenuInicial();
 	}
 	else if (estado == JUEGO) {
+		static MotorDeJuego juego(configuracion);
+
+		if (inicializarPartida)
+		{
+			juego = MotorDeJuego(configuracion);
+
+			for (ConfiguracionDeJuego::FormasDeInteraccion configJugador : configuracion.config)
+				if (configJugador == ConfiguracionDeJuego::FormasDeInteraccion::IA) srand(time(NULL)); // Inicializar la semilla si hay IA
+
+			inicializarPartida = false;
+		}
+
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
-			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
+			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
+
 		DatosFinal datosFinal = juego.motor();
+
+		if (datosFinal.exit)
+			juego.liberar();// estado = GAMEOVER;
+
 		mundo.dibuja();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont(DIR_FUENTE, 16);
@@ -51,7 +68,7 @@ void CoordinadorAjedrez::dibuja() {
 		ETSIDI::printxy("colorj1", -5, 8);
 	}
 	else if (estado == INIT) {
-		juego = MotorDeJuego(config);
+		inicializarPartida = true;
 		estado = JUEGO;
 	}
 	else if (estado == PAUSA) {
@@ -391,7 +408,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 
 			else if (c_normal.click(x, y))
 			{
-				config = { ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::LOCAL };
+				configuracion = { ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::LOCAL };
 				datosPartida.getModo() += "Multijugador";
 				estado = J1;
 			}

@@ -114,7 +114,7 @@ Tablero::Tablero(bool alocar)
 		escribir(Posicion(5, 7), new Alfil(*this, false));
 		*/
 		//Se escribe la dama y el rey
-		reyPos[0] = Posicion{0, 3 };
+		reyPos[0] = Posicion{ 0, 3 };
 
 		//escribir(Posicion(3, 7), new Dama(*this, false));
 		escribir(reyPos[0], new Rey(*this, false));
@@ -453,7 +453,18 @@ void Tablero::actualizarJaque() {
 			for (auto Amenazas : leer(reyPos[colorDelTurno])->getAmenazas()[0]->getAmenazas()) //Si se puede comer la pieza se actualizan para que las piezas puedan comersela
 			{
 				if (Amenazas->tipo != Pieza::tipo_t::REY || tableroIlegalesRey[colorDelTurno][leer(reyPos[colorDelTurno])->getAmenazas()[0]->getPosicion().x][leer(reyPos[colorDelTurno])->getAmenazas()[0]->getPosicion().y] == false)
-				Amenazas->puede_comer.push_back(leer(reyPos[colorDelTurno])->getAmenazas()[0]);
+				{
+					Amenazas->puede_comer.push_back(leer(reyPos[colorDelTurno])->getAmenazas()[0]);
+
+					for (int i = 0; i < datosClavada.size();i++)
+					{
+						if (datosClavada[i].PiezaClavada == Amenazas)
+						{
+							Amenazas->puede_comer.clear();
+						}
+					}
+				}
+				
 			}
 
 			//Comprobar si se puede poner algo en medio

@@ -57,51 +57,29 @@ Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
 
 DatosFinal MotorDeJuego::motor()
 {
-	for (ConfiguracionDeJuego::FormasDeInteraccion configJugador : config.config) 
-		if (configJugador == ConfiguracionDeJuego::FormasDeInteraccion::IA) srand(time(NULL)); // Inicializar la semilla si hay IA
-
 	DatosFinal datosFinal;
-	bool exit = false;
-	bool pos1Selec = false;
+	static bool pos1Selec = false;
 
-	while (!exit)
+	Movimiento movimiento = seleccionarEntrada(pos1Selec);
+
+	if (movimiento != Movimiento(Posicion(), Posicion(-1, -1)))
 	{
-		Movimiento movimiento = seleccionarEntrada(pos1Selec);
+		pos1Selec = !hacerJugada(movimiento);
 
-		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1)))
+		if (!pos1Selec) // Se hace la jugada
 		{
-			pos1Selec = !hacerJugada(movimiento);
+			// se cambia el timer
 
-			if (!pos1Selec) // Se hace la jugada
-			{
-				// se cambia el timer
-
-				if (tablero.jaqueMate())
-				{
-					datosFinal = { !tablero.colorDelTurno, CodigoFinal::JAQUE_MATE};
-					exit = true;
-				}
-				else if (tablero.reyAhogado())
-				{
-					datosFinal.codigoFinal = CodigoFinal::REY_AHOGADO;
-					exit = true;
-				}
-				else if (tablero.tablasMaterialInsuficiente())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE;
-					exit = true;
-				}
-				else if (tablero.infoTablas.tablasPorRepeticion())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_REPETICION;
-					exit = true;
-				}
-				else if (tablero.infoTablas.tablasPorPasividad())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_PASIVIDAD;
-					exit = true;
-				}
-			}
+			if (tablero.jaqueMate())
+				datosFinal = { true, CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno};
+			else if (tablero.reyAhogado())
+				datosFinal = { true, CodigoFinal::REY_AHOGADO };
+			else if (tablero.tablasMaterialInsuficiente())
+				datosFinal = { true, CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE };
+			else if (tablero.infoTablas.tablasPorRepeticion())
+				datosFinal = { true, CodigoFinal::TABLAS_POR_REPETICION };
+			else if (tablero.infoTablas.tablasPorPasividad())
+				datosFinal = { true, CodigoFinal::TABLAS_POR_PASIVIDAD };
 		}
 	}
 

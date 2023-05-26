@@ -1,0 +1,14 @@
+Nombre de la partida: jdsvhb.txt
+Id partida: 0
+Modo: Multijugador
+Blancas: J1
+Negras: J2
+Finalizada: 0
+Ganada: defecto
+Tablas: defecto
+Tiempo inicial: 0
+Tiempo restante: 0
+Material (blancas - negras): 0
+$ - - - - - - - - - - - - - - - - - - $
+Desarrollo
+Blancas 	 Negras

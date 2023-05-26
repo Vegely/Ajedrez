@@ -18,7 +18,7 @@ protected:
 	std::string mov_cliente = "";
 	std::string mov_servidor = "";
 public:
-	MotorDeJuego juego;
+	bool inicializarPartida;
 
 	Mundo mundo;
 	Partida datosPartida;
@@ -29,7 +29,6 @@ public:
 	std::thread* hilo_cliente = nullptr;
 
 	CoordinadorAjedrez();
-	void inicializa();
 	void dibuja();
 	void tecla(unsigned char key);
 	void teclaEspecial(int key);
