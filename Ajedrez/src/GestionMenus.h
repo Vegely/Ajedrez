@@ -17,5 +17,6 @@ public:
 	static void imprimeMenuCrearSala();
 	static void imprimeMenuUnirseSala();
 	static void imprimeMenuNoEncontrado();
+	static void imprimeMenuColorJ1();
 };
 

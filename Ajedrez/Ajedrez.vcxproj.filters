@@ -44,26 +44,14 @@
     <ClCompile Include="src\CoordinadorAjedrez.cpp">
       <Filter>Motor General\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cliente.cpp">
-      <Filter>Motor General\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Servidor.cpp">
-      <Filter>Motor General\Source</Filter>
-    </ClCompile>
     <ClCompile Include="src\Socket.cpp">
       <Filter>Redes\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ranking.cpp">
-      <Filter>Motor General\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\Mundo.cpp">
       <Filter>Motor General\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\Vector2D.cpp">
       <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Partida.cpp">
-      <Filter>Motor General\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\CajaTexto.cpp">
       <Filter>Gráficos\Source</Filter>
@@ -78,6 +66,18 @@
       <Filter>Ficheros\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\NoFinalizadas.cpp">
+      <Filter>Ficheros\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Servidor.cpp">
+      <Filter>Redes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cliente.cpp">
+      <Filter>Redes\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Partida.cpp">
+      <Filter>Ficheros\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ranking.cpp">
       <Filter>Ficheros\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -133,29 +133,14 @@
     <ClInclude Include="src\Callbacks.h">
       <Filter>Motor General\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\CoordinadorAjedrez.h">
-      <Filter>Motor General\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cliente.h">
-      <Filter>Motor General\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Servidor.h">
-      <Filter>Motor General\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="src\Socket.h">
       <Filter>Redes\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ranking.h">
-      <Filter>Motor General\Headers</Filter>
     </ClInclude>
     <ClInclude Include="src\Mundo.h">
       <Filter>Motor General\Headers</Filter>
     </ClInclude>
     <ClInclude Include="src\Vector2D.h">
       <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Partida.h">
-      <Filter>Motor General\Headers</Filter>
     </ClInclude>
     <ClInclude Include="src\CajaTexto.h">
       <Filter>Gráficos\Headers</Filter>
@@ -170,6 +155,21 @@
       <Filter>Ficheros\Headers</Filter>
     </ClInclude>
     <ClInclude Include="src\NoFinalizadas.h">
+      <Filter>Ficheros\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cliente.h">
+      <Filter>Redes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Servidor.h">
+      <Filter>Redes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CoordinadorAjedrez.h">
+      <Filter>Motor General\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Partida.h">
+      <Filter>Ficheros\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ranking.h">
       <Filter>Ficheros\Headers</Filter>
     </ClInclude>
   </ItemGroup>

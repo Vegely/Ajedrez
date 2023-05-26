@@ -63,9 +63,7 @@ void CoordinadorAjedrez::dibuja() {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
-		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont(DIR_FUENTE, 16);
-		ETSIDI::printxy("colorj1", -5, 8);
+		GestionMenus::imprimeMenuColorJ1();
 	}
 	else if (estado == INIT) {
 		inicializarPartida = true;
@@ -152,7 +150,7 @@ void CoordinadorAjedrez::dibuja() {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
-		//GestionMenus::imprimePartidaNaExiste();
+		GestionMenus::imprimeMenuCrearSala();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy(servidor->getip().c_str(), -5, 8);
@@ -161,17 +159,21 @@ void CoordinadorAjedrez::dibuja() {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
-		//GestionMenus::imprimePartidaNaExiste();
+		GestionMenus::imprimeMenuUnirseSala();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy(cliente->getIp().c_str(), -5, 8);
 	}
+	else if (estado == NO_CONECTADO) {
+			estado = MODO;
+			datosPartida.getModo() = "";
+			cliente->desconectarCliente();
+			hilo_cliente->join();
+	}
 }
 
 void CoordinadorAjedrez::tecla(unsigned char key) {
-	if (estado == INICIO) {
-	}
-	else if (estado == NUEVA_PARTIDA) {
+	if (estado == NUEVA_PARTIDA) {
 		if((int)key != 9)
 			datosPartida.getNombre() += key;
 		if ((int)key == 9) {
@@ -180,18 +182,6 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 		}
 		if ((int)key == 127) {
 			datosPartida.getNombre() = "";
-		}
-	}
-	else if (estado == MODO) {
-		if (key == 'w') {
-			estado = CREAR_SALA;
-			servidor->inicializa();
-			hilo_servidor = new std::thread(hiloServidor, servidor, &mov_cliente, &estado);
-		}
-		if (key == 'u') {
-			estado = UNIRSE_SALA;
-			cliente->inicializa();
-			hilo_cliente = new std::thread(hiloCliente, cliente, &estado);
 		}
 	}
 	else if (estado == J1) {
@@ -239,10 +229,6 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 	else if (estado == JUEGO) {
 		if (key == 'p')
 			estado = PAUSA;
-		if ((int)key == 9)
-			cliente->enviarAServidor(mov_cliente);
-		if (key == 's')
-			exit(0);
 	}
 	else if (estado == CARGAR_PARTIDA) {
 		if ((int)key != 9) //9 = tabulador
@@ -279,45 +265,11 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 		if ((int)key != 9)
 			cliente->getIp() += key;
 		if ((int)key == 9) {
-			cliente->conectarCliente();
-			cliente->enviarAServidor("luismi es muy gay");
-			estado = JUEGO;
-		}
-		if (key == 'v') {
-			cliente->desconectarCliente();
-			hilo_cliente->join();
-		}
-	}
-	else if (estado == CREAR_SALA) {
-		if (key == 'v') {
-			estado = MODO;
-			datosPartida.getModo() = "";
-			servidor->desconectarServidor();
-			hilo_servidor->join();
-		}
-	}
-	else if (estado == NO_CONECTADO) {
-		if (key == 'v') {
-			estado = MODO;
-			datosPartida.getModo() = "";
-			cliente->desconectarCliente();
-			hilo_cliente->join();
-		}
-	}
-	else if (estado == COLORJ1) {
-		static std::string aux = "";
-		if (key == 'b') {
-			estado = INIT;
-		}
-		if (key == 'n') {
-			estado = INIT;
-			aux = datosPartida.getJ1();
-			datosPartida.getJ1() = datosPartida.getJ2();
-			datosPartida.getJ1() = aux;
+			cliente->inicializa();
+			hilo_cliente = new std::thread(hiloCliente, cliente, &estado);
 		}
 	}
 }
-
 
 void CoordinadorAjedrez::teclaEspecial(int key) {
 	if (estado == CARGAR_PARTIDA) {
@@ -361,11 +313,11 @@ void CoordinadorAjedrez::teclaEspecial(int key) {
 
 void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 	if (estado == INICIO) {
-		static CajaTexto c_salir({ -1,-2.25 }, { -4,-2.25 }, { -4,-3.25 }, { -1,-3.25 });
-		static CajaTexto c_ranking({ 0, 0.75 }, { -4, 0.75 }, { -4,  -0.25 }, { 0,-0.25 });
+		static CajaTexto c_salir({ 0, 0.75 }, { -4, 0.75 }, { -4,  -0.25 }, { 0,-0.25 });
+		static CajaTexto c_ranking({ 3, 3.75 }, { -4, 3.75 }, { -4,  2.75 }, { 3, 2.75 }); 
 		static CajaTexto c_cargar_partida({ 4, 6.75 }, { -4, 6.75 }, { -4,  5.75 }, { 4,5.75 });
 		static CajaTexto c_nueva_partida({ 3.5, 9.75 }, { -4, 9.75 }, { -4,  8.75 }, { 3.5,8.75 });
-		static CajaTexto c_salas({ 3, 3.75 }, { -4, 3.75 }, { -4,  2.75 }, { 3, 2.75 });
+		//static CajaTexto c_salas({ 3, 3.75 }, { -4, 3.75 }, { -4,  2.75 }, { 3, 2.75 });
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		{
 			if (c_salir.click(x, y))
@@ -376,8 +328,8 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 				estado = CARGAR_PARTIDA;
 			if (c_nueva_partida.click(x, y))
 				estado = NUEVA_PARTIDA;
-			if (c_salas.click(x, y))
-				estado = CREAR_SALA;
+			/*if (c_salas.click(x, y))
+				estado = CREAR_SALA;*/
 		}
 	}
 	else if (estado == NUEVA_PARTIDA) {
@@ -391,8 +343,10 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 	}
 	else if (estado == MODO) {
 		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
-		static CajaTexto c_inteligencia({ 2.5, 8.75 }, { -9, 8.75 }, { -9,  7.75 }, { 2.5, 7.75 });
-		static CajaTexto c_normal({ -5.5, 4.75 }, { -9, 4.75 }, { -9,  3.75 }, { -5.5, 3.75 });
+		static CajaTexto c_inteligencia({ 10, 6.75 }, { -4, 6.75 }, { -4,  5.75 }, { 10,5.75 });
+		static CajaTexto c_normal({ 0.5, 9.75 }, { -4, 9.75 }, { -4,  8.75 }, { 0.5,8.75 });
+		static CajaTexto c_crear_sala({ 3, 3.75 }, { -4, 3.75 }, { -4,  2.75 }, { 3, 2.75 });
+		static CajaTexto c_unirse_sala({ 7, 0.75 }, { -4, 0.75 }, { -4,  -0.25 }, { 7,-0.25 });
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		{
 			if (c_volver.click(x, y))
@@ -405,12 +359,21 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 				datosPartida.getModo() += "Individual";
 				estado = J1;
 			}
-
 			else if (c_normal.click(x, y))
 			{
 				configuracion = { ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::LOCAL };
 				datosPartida.getModo() += "Multijugador";
 				estado = J1;
+			}
+			else if (c_crear_sala.click(x, y)) {
+				datosPartida.getModo() = "Red";
+				estado = CREAR_SALA;
+				servidor->inicializa();
+				hilo_servidor = new std::thread(hiloServidor, servidor, &mov_cliente, &estado);
+			}
+			else if (c_unirse_sala.click(x, y)) {
+				datosPartida.getModo() = "Red";
+				estado = UNIRSE_SALA;
 			}
 		}
 	}
@@ -458,6 +421,76 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 			if (c_volver.click(x, y)) {
 				estado = INICIO;
+			}
+		}
+	}
+	else if (estado == CREAR_SALA) {
+		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+			if (c_volver.click(x,y)) {
+				estado = MODO;
+				datosPartida.getModo() = "";
+				servidor->desconectarServidor();
+				hilo_servidor->join();
+			}
+		}
+	}
+	else if (estado == UNIRSE_SALA) {
+		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+			if (c_volver.click(x, y)) {
+				estado = MODO;
+				datosPartida.getModo() = "";
+			}
+		}
+	}
+	else if (estado == COLORJ1) {
+		static std::string aux = "";
+		static CajaTexto c_blanco({ 0.5, 9.75 }, { -4, 9.75 }, { -4,  8.75 }, { 0.5,8.75 });
+		static CajaTexto c_negro({ 10, 6.75 }, { -4, 6.75 }, { -4,  5.75 }, { 10,5.75 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+			if (c_blanco.click(x, y)) {
+				estado = INIT;
+			}
+			if (c_negro.click(x, y)) {
+				estado = INIT;
+				aux = datosPartida.getJ1();
+				datosPartida.getJ1() = datosPartida.getJ2();
+				datosPartida.getJ1() = aux;
+			}
+		}
+	}
+	else if (estado == PAUSA) {
+		static CajaTexto c_reanudar({ 2, 9.75 }, { -4, 9.75 }, { -4,  8.75 }, { 2, 8.75 });
+		static CajaTexto c_salir({ 12, 3.75 }, { -8, 3.75 }, { -8,  2.75 }, { 12, 2.75 });
+		static CajaTexto c_guardar({ 13, 6.75 }, { -8, 6.75 }, { -8,  5.75 }, { 13, 5.75 });
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+			if (c_reanudar.click(x, y)) {
+				estado = JUEGO;
+			}
+			if (c_salir.click(x, y)) {
+				if (cliente != nullptr && datosPartida.getModo() == "Red") {
+					cliente->desconectarCliente();
+					hilo_cliente->join();
+				}
+				else if (servidor != nullptr && datosPartida.getModo() == "Red") {
+					servidor->desconectarServidor();
+					hilo_servidor->join();
+				}
+				estado = INICIO;
+				remove(datosPartida.getNombre().c_str());
+				datosPartida.getJ1() = "";
+				datosPartida.getJ2() = "";
+				datosPartida.getModo() = "";
+				datosPartida.getNombre() = "";
+			}
+			else if (c_guardar.click(x, y)) {
+				estado = INICIO;
+				datosPartida.guardarPartida();
+				datosPartida.getJ1() = "";
+				datosPartida.getJ2() = "";
+				datosPartida.getModo() = "";
+				datosPartida.getNombre() = "";
 			}
 		}
 	}

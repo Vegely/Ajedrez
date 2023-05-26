@@ -23,7 +23,7 @@ public:
 	Mundo mundo;
 	Partida datosPartida;
 	Ranking ranking;
-	Cliente* cliente;
+	Cliente* cliente = new Cliente;
 	Servidor* servidor = new Servidor;
 	std::thread* hilo_servidor = nullptr;
 	std::thread* hilo_cliente = nullptr;
