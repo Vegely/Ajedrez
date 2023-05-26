@@ -58,28 +58,47 @@ Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
 DatosFinal MotorDeJuego::motor()
 {
 	DatosFinal datosFinal;
-	static bool pos1Selec = false;
+	bool exit = false;
+	bool pos1Selec = false;
 
-	Movimiento movimiento = seleccionarEntrada(pos1Selec);
-
-	if (movimiento != Movimiento(Posicion(), Posicion(-1, -1)))
+	while (!exit)
 	{
-		pos1Selec = !hacerJugada(movimiento);
+		Movimiento movimiento = seleccionarEntrada(pos1Selec);
 
-		if (!pos1Selec) // Se hace la jugada
+		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1))) // Se hace la jugada
 		{
-			// se cambia el timer
+			pos1Selec = !hacerJugada(movimiento);
 
-			if (tablero.jaqueMate())
-				datosFinal = { true, CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno};
-			else if (tablero.reyAhogado())
-				datosFinal = { true, CodigoFinal::REY_AHOGADO };
-			else if (tablero.tablasMaterialInsuficiente())
-				datosFinal = { true, CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE };
-			else if (tablero.infoTablas.tablasPorRepeticion())
-				datosFinal = { true, CodigoFinal::TABLAS_POR_REPETICION };
-			else if (tablero.infoTablas.tablasPorPasividad())
-				datosFinal = { true, CodigoFinal::TABLAS_POR_PASIVIDAD };
+			if (!pos1Selec) // Se hace la jugada
+			{
+				// se cambia el timer
+
+				if (tablero.jaqueMate())
+				{
+					datosFinal = { !tablero.colorDelTurno, CodigoFinal::JAQUE_MATE };
+					exit = true;
+				}
+				else if (tablero.reyAhogado())
+				{
+					datosFinal.codigoFinal = CodigoFinal::REY_AHOGADO;
+					exit = true;
+				}
+				else if (tablero.tablasMaterialInsuficiente())
+				{
+					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE;
+					exit = true;
+				}
+				else if (tablero.infoTablas.tablasPorRepeticion())
+				{
+					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_REPETICION;
+					exit = true;
+				}
+				else if (tablero.infoTablas.tablasPorPasividad())
+				{
+					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_PASIVIDAD;
+					exit = true;
+				}
+			}
 		}
 	}
 

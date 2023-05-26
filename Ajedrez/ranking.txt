@@ -35,3 +35,5 @@ Pos  Punt 	 Jug 		 Id
 19 	 0.0 	 j2 	 0
 >>>>>>> Stashed changes
 35 	 0.0 	 gf 	 0
+36 	 0.0 	 vbskb 	 0
+37 	 0.0 	 ivrbirb 	 0
