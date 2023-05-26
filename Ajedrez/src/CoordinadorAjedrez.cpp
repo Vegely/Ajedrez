@@ -9,15 +9,33 @@
 
 ConfiguracionDeJuego configuracion;
 
-void hiloServidor(Servidor* servidor, std::string* mov_cliente, Estado* estado) {
+void hiloServidor(Servidor* servidor, std::string* mov_cliente, Estado* estado, bool* salir, std::string* m_cliente, bool* reset) {
 	servidor->conectarServidor();
 	*estado = J1;
 
+	while (!(*salir)) {
+		if (m_cliente->c_str() == "") {
+			servidor->recibirDeCliente(*m_cliente);
+			std::cout << *m_cliente;
+		}
+		if (*reset) {
+			*m_cliente = "";
+		}
+	}
 }
 
-void hiloCliente(Cliente* cliente, Estado* estado) {
+void hiloCliente(Cliente* cliente, Estado* estado, bool* salir, std::string* m_servidor, bool* reset) {
 	if (!cliente->conectarCliente()) {
 		*estado = NO_CONECTADO;
+	}
+	while (!(*salir)) {
+		if (m_servidor->c_str() == "") {
+			cliente->recibirDeServidor(*m_servidor);
+			std::cout << *m_servidor;
+		}
+		if (*reset) {
+			*m_servidor = "";
+		}
 	}
 }
 
@@ -33,7 +51,7 @@ void CoordinadorAjedrez::dibuja() {
 		GestionMenus::imprimeMenuInicial();
 	}
 	else if (estado == JUEGO) {
-		static MotorDeJuego juego(configuracion);
+	/*	static MotorDeJuego juego(configuracion);
 
 		if (inicializarPartida)
 		{
@@ -43,21 +61,22 @@ void CoordinadorAjedrez::dibuja() {
 				if (configJugador == ConfiguracionDeJuego::FormasDeInteraccion::IA) srand(time(NULL)); // Inicializar la semilla si hay IA
 
 			inicializarPartida = false;
-		}
+		}*/
 
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
+		
+		//DatosFinal datosFinal = juego.motor();
 
-		DatosFinal datosFinal = juego.motor();
+		//if (datosFinal.exit)
+		//	juego.liberar();// estado = GAMEOVER;
+			
 
-		if (datosFinal.exit)
-			juego.liberar();// estado = GAMEOVER;
-
-		mundo.dibuja();
+		//mundo.dibuja();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont(DIR_FUENTE, 16);
-		ETSIDI::printxy("juego", -5, 8);
+		//ETSIDI::printxy("juego", -5, 8);
 	}
 	else if (estado == COLORJ1) {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
@@ -229,6 +248,14 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 	else if (estado == JUEGO) {
 		if (key == 'p')
 			estado = PAUSA;
+		if (key == 'a' && datosPartida.getModo() == "Red") {
+			cliente->enviarAServidor("hola");
+		}
+		if (key == 'b' && datosPartida.getModo() == "Red") {
+			servidor->enviarACliente("mundo");
+		}
+		if (key == 'r')
+			reset = 1;
 	}
 	else if (estado == CARGAR_PARTIDA) {
 		if ((int)key != 9) //9 = tabulador
@@ -266,7 +293,7 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			cliente->getIp() += key;
 		if ((int)key == 9) {
 			cliente->inicializa();
-			hilo_cliente = new std::thread(hiloCliente, cliente, &estado);
+			hilo_cliente = new std::thread(hiloCliente, cliente, &estado, &salir, &mov_cliente, &reset);
 		}
 	}
 }
@@ -356,6 +383,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 			}
 			else if (c_inteligencia.click(x, y))
 			{
+				configuracion = { ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::IA };
 				datosPartida.getModo() += "Individual";
 				estado = J1;
 			}
@@ -369,7 +397,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 				datosPartida.getModo() = "Red";
 				estado = CREAR_SALA;
 				servidor->inicializa();
-				hilo_servidor = new std::thread(hiloServidor, servidor, &mov_cliente, &estado);
+				hilo_servidor = new std::thread(hiloServidor, servidor, &mov_cliente, &estado, &salir, &mov_servidor, &reset);
 			}
 			else if (c_unirse_sala.click(x, y)) {
 				datosPartida.getModo() = "Red";
@@ -457,6 +485,9 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 				aux = datosPartida.getJ1();
 				datosPartida.getJ1() = datosPartida.getJ2();
 				datosPartida.getJ1() = aux;
+
+				if(datosPartida.getModo()=="Individual")
+					configuracion = { ConfiguracionDeJuego::FormasDeInteraccion::IA, ConfiguracionDeJuego::FormasDeInteraccion::LOCAL };
 			}
 		}
 	}

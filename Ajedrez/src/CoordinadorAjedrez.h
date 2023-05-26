@@ -15,8 +15,12 @@ class CoordinadorAjedrez
 protected:
 	Estado estado;
 
-	std::string mov_cliente = "";
+	std::string mov_cliente = "1";
 	std::string mov_servidor = "";
+
+	bool turno = 0; //0 -> cliente, 1 -> servidor
+	bool salir = 0;
+	bool reset = 0;
 public:
 	bool inicializarPartida;
 
@@ -37,8 +41,8 @@ public:
 	friend class menuInicial;
 };
 
-void hiloServidor(Servidor* servidor, std::string* mov_cliente, Estado* estado);
-void hiloCliente(Cliente* cliente, Estado* estado);
+void hiloServidor(Servidor* servidor, std::string* mov_cliente, Estado* estado, bool* salir, std::string* m_cliente, bool* reset);
+void hiloCliente(Cliente* cliente, Estado* estado, bool* salir, std::string* m_servidor, bool* reset);
 
 
 
