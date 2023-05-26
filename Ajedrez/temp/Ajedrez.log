@@ -1,62 +1,24 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
+  Hitbox.cpp
+  Entity.cpp
+  Modelo.cpp
   Callbacks.cpp
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Socket.h(5,1): warning C4005: 'WIN32_LEAN_AND_MEAN': redefinición de macro
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\freeglut.h(58,1): message : vea la definición anterior de 'WIN32_LEAN_AND_MEAN'
-  CoordinadorAjedrez.cpp
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Socket.h(5,1): warning C4005: 'WIN32_LEAN_AND_MEAN': redefinición de macro
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\freeglut.h(58,1): message : vea la definición anterior de 'WIN32_LEAN_AND_MEAN'
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(70,77): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(369,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(369,22): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(371,27): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(371,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(373,34): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(373,31): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(375,33): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(375,30): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(382,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(382,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(398,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(398,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(403,37): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(403,34): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(409,31): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(409,28): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(415,35): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(415,32): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(423,36): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(423,33): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(429,29): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(429,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(440,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(440,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(450,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(450,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(460,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(460,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(469,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(469,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(478,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(478,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(486,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(486,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(497,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(497,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(508,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(508,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(511,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(511,22): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(527,28): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(527,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(530,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(530,22): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(546,32): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(546,29): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-  MotorDeJuego.cpp
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(10): warning C4305: 'argumento': truncamiento de 'const int' a 'const unsigned char'
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(10,85): warning C4309: 'argumento': truncamiento de valor constante
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Socket.h(5,1): warning C4005: 'WIN32_LEAN_AND_MEAN': redefinición de macro
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\freeglut.h(58,1): message : vea la definición anterior de 'WIN32_LEAN_AND_MEAN'
+E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\src\Callbacks.cpp(60,13): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\src\Callbacks.cpp(65,13): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\src\Callbacks.cpp(93,23): warning C4305: 'argumento': truncamiento de 'double' a 'const float'
+  Camara.cpp
+  Globals.cpp
+E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\src\Globals.cpp(125,12): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+  main.cpp
+  Mundo.cpp
+  Plane.cpp
+E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\src\Plane.cpp(123,12): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
   Generando código...
-  Ajedrez.vcxproj -> C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\bin\Ajedrez.exe
+E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\src\Plane.cpp(105): warning C4715: 'Plane::getCornersPosition': no todas las rutas de acceso de control devuelven un valor
+E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\src\Camara.cpp(53): warning C4172: devolución de dirección de la variable local o temporal: result
+E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\src\Camara.cpp(63): warning C4172: devolución de dirección de la variable local o temporal: result
+E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\src\Camara.cpp(73): warning C4172: devolución de dirección de la variable local o temporal: result
+E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\src\Camara.cpp(83): warning C4172: devolución de dirección de la variable local o temporal: result
+  LINK : no se encontró E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\\bin\Ajedrez.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+  Ajedrez.vcxproj -> E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\bin\Ajedrez.exe

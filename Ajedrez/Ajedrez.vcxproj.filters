@@ -1,238 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="src\Pieza.cpp" />
+    <ClCompile Include="src\Plane.cpp" />
+    <ClCompile Include="src\Rey.cpp" />
+    <ClCompile Include="src\Tablero.cpp" />
+    <ClCompile Include="src\Torre.cpp" />
+    <ClCompile Include="src\Alfil.cpp" />
+    <ClCompile Include="src\Caballo.cpp" />
+    <ClCompile Include="src\Callbacks.cpp" />
+    <ClCompile Include="src\Camara.cpp" />
+    <ClCompile Include="src\CoordinadorAjedrez.cpp" />
+    <ClCompile Include="src\Dama.cpp" />
+    <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\Globals.cpp" />
+    <ClCompile Include="src\Hitbox.cpp" />
+    <ClCompile Include="src\IA.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Tablero.cpp">
-      <Filter>Lógica\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MotorDeJuego.cpp">
-      <Filter>Lógica\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IA.cpp">
-      <Filter>Lógica\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\InfoTablas.cpp">
-      <Filter>Lógica\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alfil.cpp">
-      <Filter>Lógica\Source\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Caballo.cpp">
-      <Filter>Lógica\Source\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Dama.cpp">
-      <Filter>Lógica\Source\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Peon.cpp">
-      <Filter>Lógica\Source\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Pieza.cpp">
-      <Filter>Lógica\Source\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rey.cpp">
-      <Filter>Lógica\Source\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Torre.cpp">
-      <Filter>Lógica\Source\Piezas</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GestionMenus.cpp">
-      <Filter>Motor General\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Callbacks.cpp">
-      <Filter>Motor General\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CoordinadorAjedrez.cpp">
-      <Filter>Motor General\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Socket.cpp">
-      <Filter>Redes\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mundo.cpp">
-      <Filter>Motor General\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Vector2D.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CajaTexto.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Caja.cpp">
-      <Filter>Gráficos\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Campo.cpp">
-      <Filter>Ficheros\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DatosRanking.cpp">
-      <Filter>Ficheros\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\NoFinalizadas.cpp">
-      <Filter>Ficheros\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Servidor.cpp">
-      <Filter>Redes\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cliente.cpp">
-      <Filter>Redes\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Partida.cpp">
-      <Filter>Ficheros\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ranking.cpp">
-      <Filter>Ficheros\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Sonidos.cpp">
-      <Filter>Sonidos</Filter>
-    </ClCompile>
+    <ClCompile Include="src\Modelo.cpp" />
+    <ClCompile Include="src\MotorDeJuego.cpp" />
+    <ClCompile Include="src\Mundo.cpp" />
+    <ClCompile Include="src\Peon.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\DatosClavada.h">
-      <Filter>Lógica\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IA.h">
-      <Filter>Lógica\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MotorDeJuego.h">
-      <Filter>Lógica\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Movimiento.h">
-      <Filter>Lógica\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tablero.h">
-      <Filter>Lógica\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\InfoTablas.h">
-      <Filter>Lógica\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Posicion.h">
-      <Filter>Lógica\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alfil.h">
-      <Filter>Lógica\Headers\Piezas</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Caballo.h">
-      <Filter>Lógica\Headers\Piezas</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Dama.h">
-      <Filter>Lógica\Headers\Piezas</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Peon.h">
-      <Filter>Lógica\Headers\Piezas</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Pieza.h">
-      <Filter>Lógica\Headers\Piezas</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rey.h">
-      <Filter>Lógica\Headers\Piezas</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Torre.h">
-      <Filter>Lógica\Headers\Piezas</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DatosBloqueoJaque.h">
-      <Filter>Lógica\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GestionMenus.h">
-      <Filter>Motor General\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Callbacks.h">
-      <Filter>Motor General\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Socket.h">
-      <Filter>Redes\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mundo.h">
-      <Filter>Motor General\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vector2D.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CajaTexto.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Caja.h">
-      <Filter>Gráficos\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Campo.h">
-      <Filter>Ficheros\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DatosRanking.h">
-      <Filter>Ficheros\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NoFinalizadas.h">
-      <Filter>Ficheros\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cliente.h">
-      <Filter>Redes\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Servidor.h">
-      <Filter>Redes\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CoordinadorAjedrez.h">
-      <Filter>Motor General\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Partida.h">
-      <Filter>Ficheros\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ranking.h">
-      <Filter>Ficheros\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Sonidos.h">
-      <Filter>Sonidos</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Lógica">
-      <UniqueIdentifier>{65a2120e-ef59-4673-9238-172df42e1e07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lógica\Headers">
-      <UniqueIdentifier>{a621be31-753f-4701-b113-7b9f25bb0109}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lógica\Source">
-      <UniqueIdentifier>{f3ff2f4a-3334-412b-a308-209dc187c6a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gráficos">
-      <UniqueIdentifier>{6e7e1763-0500-49de-92be-2ff86e7f1ee3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gráficos\Headers">
-      <UniqueIdentifier>{7cc1e42b-14b8-4031-ade4-94c288713498}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gráficos\Source">
-      <UniqueIdentifier>{1da390d0-b90a-47cb-b60a-14ff29640f0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lógica\Headers\Piezas">
-      <UniqueIdentifier>{dfe4c8f3-4633-43c1-9ee7-4f2326c370a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lógica\Source\Piezas">
-      <UniqueIdentifier>{ce3353b7-6b65-4621-a2a4-31c3bd4c76d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Motor General">
-      <UniqueIdentifier>{5c2e767e-d000-4b24-9b68-04a659a65b2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Motor General\Headers">
-      <UniqueIdentifier>{b4c4e1a9-2423-490d-8c0f-7592e0ca405a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Motor General\Source">
-      <UniqueIdentifier>{c9762c5a-c84c-446b-80ed-2003d580a32d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Redes">
-      <UniqueIdentifier>{6c5f1464-82fe-4005-a905-d77cbeae1d52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Redes\Headers">
-      <UniqueIdentifier>{bb41ff36-e523-429c-8040-884e7f647f3b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Redes\Source">
-      <UniqueIdentifier>{6c0eace9-8bec-4053-a07a-fb76e5f989bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ficheros">
-      <UniqueIdentifier>{ec708cb1-89eb-40a1-86aa-7eff1832d660}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ficheros\Headers">
-      <UniqueIdentifier>{52b076d6-00c9-4edf-9e80-22324eba2014}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ficheros\Source">
-      <UniqueIdentifier>{7cef9e6f-c427-4882-9eba-8b80020fb7f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sonidos">
-      <UniqueIdentifier>{f17309c4-b350-48c7-9b47-044c3fa0be46}</UniqueIdentifier>
-    </Filter>
+    <ClInclude Include="src\Pieza.h" />
+    <ClInclude Include="src\Plane.h" />
+    <ClInclude Include="src\Posicion.h" />
+    <ClInclude Include="src\Rey.h" />
+    <ClInclude Include="src\Tablero.h" />
+    <ClInclude Include="src\Torre.h" />
+    <ClInclude Include="src\Alfil.h" />
+    <ClInclude Include="src\Caballo.h" />
+    <ClInclude Include="src\Callbacks.h" />
+    <ClInclude Include="src\Camara.h" />
+    <ClInclude Include="src\CoordinadorAjedrez.h" />
+    <ClInclude Include="src\Dama.h" />
+    <ClInclude Include="src\DatosClavada.h" />
+    <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\Globals.h" />
+    <ClInclude Include="src\Hitbox.h" />
+    <ClInclude Include="src\IA.h" />
+    <ClInclude Include="src\Modelo.h" />
+    <ClInclude Include="src\MotorDeJuego.h" />
+    <ClInclude Include="src\Movimiento.h" />
+    <ClInclude Include="src\Mundo.h" />
+    <ClInclude Include="src\Peon.h" />
   </ItemGroup>
 </Project>
