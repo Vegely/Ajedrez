@@ -39,9 +39,6 @@ public:
 
 	void liberar() { tablero.liberar(); }
 
-	void setConfig( ConfiguracionDeJuego config2) { config.config[0] = config.config[0];config.config[1] = config2.config[1]; }
-	void initTablero() { tablero = Tablero(true); }
-
 	DatosFinal motor();
 };
 

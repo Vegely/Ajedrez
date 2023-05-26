@@ -31,8 +31,12 @@ public:
 	Servidor* servidor = new Servidor;
 	std::thread* hilo_servidor = nullptr;
 	std::thread* hilo_cliente = nullptr;
+	std::thread* motor;
+
+	DatosFinal datosFinal;
 
 	CoordinadorAjedrez();
+	void onTimer();
 	void dibuja();
 	void tecla(unsigned char key);
 	void teclaEspecial(int key);
@@ -43,7 +47,7 @@ public:
 
 void hiloServidor(Servidor* servidor, std::string* mov_cliente, Estado* estado, bool* salir, std::string* m_cliente, bool* reset);
 void hiloCliente(Cliente* cliente, Estado* estado, bool* salir, std::string* m_servidor, bool* reset);
-
+void threadMotor(const ConfiguracionDeJuego* configuracion, CoordinadorAjedrez* coordinador);
 
 
 

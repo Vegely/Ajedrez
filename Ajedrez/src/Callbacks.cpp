@@ -274,6 +274,7 @@ void OnReshape(int w, int h)
 // Each set time, performs the set functions.
 void OnTimer(int value)
 {
+	ajedrez.onTimer();
 	glutTimerFunc(25, OnTimer, 0);
 }
 

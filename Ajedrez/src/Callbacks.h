@@ -5,7 +5,6 @@
 
 #include "freeglut.h"
 
-
 #include <string>
 #include <iostream>
 #include <vector>

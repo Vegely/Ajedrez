@@ -1,9 +1,11 @@
 #include "CoordinadorAjedrez.h"
+
 #include "ETSIDI.h"
 #include "GestionMenus.h"
 #include "CajaTexto.h"
 #include "Partida.h"
 #include <thread>
+#include "Sonidos.h"
 
 #define DIR_FUENTE "fuentes/Bitwise.ttf"
 
@@ -40,9 +42,27 @@ void hiloCliente(Cliente* cliente, Estado* estado, bool* salir, std::string* m_s
 		//}
 	}
 }
-#include "Sonidos.h"
+
+void threadMotor(const ConfiguracionDeJuego* configuracion, CoordinadorAjedrez* p_coordinador)
+{
+	MotorDeJuego motor(*configuracion);
+
+	p_coordinador->datosFinal = motor.motor();
+
+	motor.liberar();
+}
+
 CoordinadorAjedrez::CoordinadorAjedrez() {
 	estado = INICIO;
+}
+
+void CoordinadorAjedrez::onTimer()
+{
+	if (estado == JUEGO && inicializarPartida)
+	{
+		motor = new std::thread(threadMotor, &configuracion, this);
+		inicializarPartida = false;
+	}
 }
 
 void CoordinadorAjedrez::dibuja() {
@@ -53,27 +73,10 @@ void CoordinadorAjedrez::dibuja() {
 		GestionMenus::imprimeMenuInicial();
 	}
 	else if (estado == JUEGO) {
-	/*	static MotorDeJuego juego(configuracion);
-
-		if (inicializarPartida)
-		{
-			juego = MotorDeJuego(configuracion);
-
-			for (ConfiguracionDeJuego::FormasDeInteraccion configJugador : configuracion.config)
-				if (configJugador == ConfiguracionDeJuego::FormasDeInteraccion::IA) srand(time(NULL)); // Inicializar la semilla si hay IA
-
-			inicializarPartida = false;
-		}*/
-
+			
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
-		
-		//DatosFinal datosFinal = juego.motor();
-
-		//if (datosFinal.exit)
-		//	juego.liberar();// estado = GAMEOVER;
-			
 
 		//mundo.dibuja();
 		ETSIDI::setTextColor(1, 1, 0);
@@ -186,10 +189,10 @@ void CoordinadorAjedrez::dibuja() {
 		ETSIDI::printxy(cliente->getIp().c_str(), -5, 8);
 	}
 	else if (estado == NO_CONECTADO) {
-			estado = MODO;
-			datosPartida.getModo() = "";
-			cliente->desconectarCliente();
-			hilo_cliente->join();
+		estado = MODO;
+		datosPartida.getModo() = "";
+		cliente->desconectarCliente();
+		hilo_cliente->join();
 	}
 }
 
