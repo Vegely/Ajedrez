@@ -1,5 +1,6 @@
 #include "MotorDeJuego.h"
-
+#include "Sonidos.h"
+#include "Callbacks.h"
 
 //////////////////////////
 #include <iostream>
@@ -9,6 +10,8 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+	graphicsInit(&argc, argv);
+	/*
 	/////Mode selection/////
 	ConfiguracionDeJuego config{ ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::LOCAL };
 	//////////Setup/////////
@@ -47,7 +50,7 @@ int main(int argc, char* argv[])
 		cout << "Tablas por pasividad";
 
 		break;
-	}
+	}*/
 	//////////////////////////////////////////////////
 
 	return 0;

@@ -1,11 +1,8 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
-  Callbacks.cpp
-C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\Socket.h(5,1): warning C4005: 'WIN32_LEAN_AND_MEAN': redefinición de macro
-C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\freeglut.h(58,1): message : vea la definición anterior de 'WIN32_LEAN_AND_MEAN'
   Generando código
-  0 of 1026 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\src\Ranking.cpp(70): warning C4715: 'Ranking::aniadirJugador': no todas las rutas de acceso de control devuelven un valor
+  All 619 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Generación de código finalizada
   Ajedrez.vcxproj -> C:\Users\jorge\OneDrive\Documentos\Universidad\3er curso\Informática industrial y comunicaciones\Ajedrez\Ajedrez\Ajedrez\bin\Ajedrez.exe

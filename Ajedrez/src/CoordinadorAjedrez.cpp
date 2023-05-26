@@ -40,7 +40,7 @@ void hiloCliente(Cliente* cliente, Estado* estado, bool* salir, std::string* m_s
 		//}
 	}
 }
-
+#include "Sonidos.h"
 CoordinadorAjedrez::CoordinadorAjedrez() {
 	estado = INICIO;
 }
