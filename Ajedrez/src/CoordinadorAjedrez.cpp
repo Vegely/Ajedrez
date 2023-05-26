@@ -14,13 +14,13 @@ void hiloServidor(Servidor* servidor, std::string* mov_cliente, Estado* estado, 
 	*estado = J1;
 
 	while (!(*salir)) {
-		if (m_cliente->c_str() == "") {
+		//if (m_cliente->c_str() == "") {
 			servidor->recibirDeCliente(*m_cliente);
 			std::cout << *m_cliente;
-		}
-		if (*reset) {
+		//}
+		/*if (*reset) {
 			*m_cliente = "";
-		}
+		}*/
 	}
 }
 
@@ -28,14 +28,16 @@ void hiloCliente(Cliente* cliente, Estado* estado, bool* salir, std::string* m_s
 	if (!cliente->conectarCliente()) {
 		*estado = NO_CONECTADO;
 	}
+	else
+		*estado = JUEGO;
 	while (!(*salir)) {
-		if (m_servidor->c_str() == "") {
+		//if (m_servidor->c_str() == "") {
 			cliente->recibirDeServidor(*m_servidor);
 			std::cout << *m_servidor;
-		}
-		if (*reset) {
-			*m_servidor = "";
-		}
+		//}
+		//if (*reset) {
+		//	*m_servidor = "";
+		//}
 	}
 }
 
@@ -76,7 +78,7 @@ void CoordinadorAjedrez::dibuja() {
 		//mundo.dibuja();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont(DIR_FUENTE, 16);
-		//ETSIDI::printxy("juego", -5, 8);
+		ETSIDI::printxy("juego", -5, 8);
 	}
 	else if (estado == COLORJ1) {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
@@ -248,7 +250,7 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 	else if (estado == JUEGO) {
 		if (key == 'p')
 			estado = PAUSA;
-		if (key == 'a' && datosPartida.getModo() == "Red") {
+		if (key == 'a' /* && datosPartida.getModo() == "Red"*/) {
 			cliente->enviarAServidor("hola");
 		}
 		if (key == 'b' && datosPartida.getModo() == "Red") {
@@ -292,7 +294,7 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 		if ((int)key != 9)
 			cliente->getIp() += key;
 		if ((int)key == 9) {
-			cliente->inicializa();
+			cliente->4();
 			hilo_cliente = new std::thread(hiloCliente, cliente, &estado, &salir, &mov_cliente, &reset);
 		}
 	}

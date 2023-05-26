@@ -16,7 +16,7 @@ protected:
 	Estado estado;
 
 	std::string mov_cliente = "1";
-	std::string mov_servidor = "";
+	std::string mov_servidor = "1";
 
 	bool turno = 0; //0 -> cliente, 1 -> servidor
 	bool salir = 0;
