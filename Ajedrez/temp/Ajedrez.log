@@ -1,25 +1,4 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  Callbacks.cpp
-C:\Users\adria\Documents\GitHub\Ajedrez\Ajedrez\src\Callbacks.cpp(85,23): warning C4305: 'argument': truncation from 'double' to 'const float'
-  Mundo.cpp
-C:\Users\adria\Documents\GitHub\Ajedrez\Ajedrez\src\Mundo.cpp(180,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\adria\Documents\GitHub\Ajedrez\Ajedrez\src\Mundo.cpp(181,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\adria\Documents\GitHub\Ajedrez\Ajedrez\src\Mundo.cpp(182,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-Hitbox.obj : warning LNK4099: PDB '' was not found with 'Hitbox.obj' or at ''; linking object as if no debug info
-Entity.obj : warning LNK4099: PDB '' was not found with 'Entity.obj' or at ''; linking object as if no debug info
-Modelo.obj : warning LNK4099: PDB '' was not found with 'Modelo.obj' or at ''; linking object as if no debug info
-Alfil.obj : warning LNK4099: PDB '' was not found with 'Alfil.obj' or at ''; linking object as if no debug info
-Caballo.obj : warning LNK4099: PDB '' was not found with 'Caballo.obj' or at ''; linking object as if no debug info
-Dama.obj : warning LNK4099: PDB '' was not found with 'Dama.obj' or at ''; linking object as if no debug info
-Globals.obj : warning LNK4099: PDB '' was not found with 'Globals.obj' or at ''; linking object as if no debug info
-IA.obj : warning LNK4099: PDB '' was not found with 'IA.obj' or at ''; linking object as if no debug info
-Movimiento.obj : warning LNK4099: PDB '' was not found with 'Movimiento.obj' or at ''; linking object as if no debug info
-Peon.obj : warning LNK4099: PDB '' was not found with 'Peon.obj' or at ''; linking object as if no debug info
-Pieza.obj : warning LNK4099: PDB '' was not found with 'Pieza.obj' or at ''; linking object as if no debug info
-Plane.obj : warning LNK4099: PDB '' was not found with 'Plane.obj' or at ''; linking object as if no debug info
-Rey.obj : warning LNK4099: PDB '' was not found with 'Rey.obj' or at ''; linking object as if no debug info
-Tablero.obj : warning LNK4099: PDB '' was not found with 'Tablero.obj' or at ''; linking object as if no debug info
-Torre.obj : warning LNK4099: PDB '' was not found with 'Torre.obj' or at ''; linking object as if no debug info
+  Modelo.cpp
   Ajedrez.vcxproj -> C:\Users\adria\Documents\GitHub\Ajedrez\Ajedrez\bin\Ajedrez.exe

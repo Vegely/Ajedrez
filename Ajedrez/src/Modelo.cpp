@@ -184,13 +184,6 @@ void Modelo::render(void)
 bool Modelo::cargarTextura(void)
 {
 	int ancho, alto, num_componentes;
-	unsigned char* datos_imagen = stbi_load(this->texture_path.c_str(), &ancho, &alto, &num_componentes, STBI_rgb);
-
-	if (datos_imagen == nullptr)
-	{
-		std::cerr << "Failed to load texture file: " << this->texture_path.c_str();
-		return false;
-	}
 
 	glGenTextures(1, &this->texture_ID);
 	if (this == nullptr)
@@ -199,6 +192,19 @@ bool Modelo::cargarTextura(void)
 		return false;
 	}
 	glBindTexture(GL_TEXTURE_2D, this->texture_ID);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	unsigned char* datos_imagen = stbi_load(this->texture_path.c_str(), &ancho, &alto, &num_componentes, STBI_rgb);
+
+	if (datos_imagen == nullptr)
+	{
+		std::cerr << "Failed to load texture file: " << this->texture_path.c_str();
+		return false;
+	}
 	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, ancho, alto, GL_RGB, GL_UNSIGNED_BYTE, datos_imagen);
 
 	stbi_image_free(datos_imagen);

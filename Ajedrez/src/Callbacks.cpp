@@ -13,6 +13,7 @@
 Mundo mundo;
 
 constexpr float fov_y = 60.0f;
+int rotation = 180;
 
 void motorGrafico(int* argc, char** argv)
 {
@@ -20,22 +21,21 @@ void motorGrafico(int* argc, char** argv)
 	glutInit(argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(1920, 1080);
-	glutCreateWindow("FlatChess - ATdU, BBB, JBP, JNJP");
+	glutCreateWindow("FlatChess - Adrián Teixeira, Bogurad Barañski, Jorge Bengoa, Juan Nicolás Jiménez, Luis Miguel Muro");
 
-	inicializarEstadoOpenGL();
 	mundo.inicializarIluminacion();
-
-	// Set up the camera and viewport
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+	inicializarEstadoOpenGL();
+	
+	//// Set up the camera and viewport
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//gluPerspective(60.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 
 	registrarCallbacks();
 
 	mundo.updateCamara();
 	mundo.asignarModelos();
 	mundo.cargarTexturas();
-	mundo.renderizarModelos();
 
 	glutMainLoop();
 }
@@ -56,17 +56,25 @@ void registrarCallbacks(void)
 // Continuously draws what it is specified to it.
 void OnDraw(void)
 {
-	mundo.renderizarModelos();
+	if (mundo.getGirado())
+		glRotatef(rotation, 0, 1, 0);
+
+		mundo.renderizarModelos();
+
+	if (mundo.getGirado())
+		glRotatef(-rotation, 0, 1, 0);
+
 	glutSwapBuffers();
 	glutPostRedisplay();
 
 	// Camera update
 	mundo.updateCamara();
+	mundo.dibujarFondo();
 
 	// Debug
-	mundo.renderizarHitboxes();
-	mundo.renderizarRayoRaton();
-	debugAxis();
+	//mundo.renderizarHitboxes();
+	//mundo.renderizarRayoRaton();
+	//debugAxis();
 }
 
 // Reshapes the window if needed without resizing the objects and mantaining their proportions.
@@ -83,7 +91,7 @@ void OnReshape(int w, int h)
 void OnTimer(int value)
 {
 	mundo.movimiento(0.03);
-
+	//rotation++;
 	glutTimerFunc(30, OnTimer, 0);
 }
 
