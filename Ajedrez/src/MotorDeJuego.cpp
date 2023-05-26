@@ -57,51 +57,29 @@ Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
 
 DatosFinal MotorDeJuego::motor()
 {
-	for (ConfiguracionDeJuego::FormasDeInteraccion configJugador : config.config) 
-		if (configJugador == ConfiguracionDeJuego::FormasDeInteraccion::IA) srand(time(NULL)); // Inicializar la semilla si hay IA
-
 	DatosFinal datosFinal;
-	bool exit = false;
-	bool pos1Selec = false;
+	static bool pos1Selec = false;
 
-	while (!exit)
+	Movimiento movimiento = seleccionarEntrada(pos1Selec);
+
+	if (movimiento != Movimiento(Posicion(), Posicion(-1, -1)))
 	{
-		Movimiento movimiento = seleccionarEntrada(pos1Selec);
+		pos1Selec = !hacerJugada(movimiento);
 
-		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1)))
+		if (!pos1Selec) // Se hace la jugada
 		{
-			pos1Selec = !hacerJugada(movimiento);
+			// se cambia el timer
 
-			if (!pos1Selec) // Se hace la jugada
-			{
-				// se cambia el timer
-
-				if (tablero.jaqueMate())
-				{
-					datosFinal = { !tablero.colorDelTurno, CodigoFinal::JAQUE_MATE};
-					exit = true;
-				}
-				else if (tablero.reyAhogado())
-				{
-					datosFinal.codigoFinal = CodigoFinal::REY_AHOGADO;
-					exit = true;
-				}
-				else if (tablero.tablasMaterialInsuficiente())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE;
-					exit = true;
-				}
-				else if (tablero.infoTablas.tablasPorRepeticion())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_REPETICION;
-					exit = true;
-				}
-				else if (tablero.infoTablas.tablasPorPasividad())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_PASIVIDAD;
-					exit = true;
-				}
-			}
+			if (tablero.jaqueMate())
+				datosFinal = { true, CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno};
+			else if (tablero.reyAhogado())
+				datosFinal = { true, CodigoFinal::REY_AHOGADO };
+			else if (tablero.tablasMaterialInsuficiente())
+				datosFinal = { true, CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE };
+			else if (tablero.infoTablas.tablasPorRepeticion())
+				datosFinal = { true, CodigoFinal::TABLAS_POR_REPETICION };
+			else if (tablero.infoTablas.tablasPorPasividad())
+				datosFinal = { true, CodigoFinal::TABLAS_POR_PASIVIDAD };
 		}
 	}
 
@@ -158,7 +136,7 @@ void MotorDeJuego::pintar(Posicion posSelec) const
 				}
 				
 				if (!skip && tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON) for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
-					if (puedeComer->getPosicion().y == posSelec.y && Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() - 1 * !tablero.leer(posSelec)->getColor() * Posicion(0, 1))
+					if (puedeComer->getPosicion().y == posSelec.y && Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() + (1 - 2 * !tablero.leer(posSelec)->getColor()) * Posicion(0, 1))
 					{
 						SetConsoleTextAttribute(hStdout, 64); // Seleccion de la comida en pasada
 						break;
@@ -171,7 +149,7 @@ void MotorDeJuego::pintar(Posicion posSelec) const
 
 		SetConsoleTextAttribute(hStdout, 7); // Color de fondo
 
-		if (i++ % 8 == 7) std::cout << "\n\n\n"; // Lï¿½neas de division de fila
+		if (i++ % 8 == 7) std::cout << "\n\n\n"; // Líneas de division de fila
 	}
 
 	std::cout << "\t";
@@ -207,7 +185,7 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 
 		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON)
 		{
-			Posicion aux = puedeComer->getPosicion() - 1 * !tablero.leer(movimiento.inicio)->getColor() * Posicion(0, 1);
+			Posicion aux = puedeComer->getPosicion() + (1 - 2 * !tablero.leer(movimiento.inicio)->getColor()) * Posicion(0, 1);
 			if (aux == movimiento.fin)
 			{
 				tablero.actualizarHaMovido(movimiento);
@@ -252,9 +230,9 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 	{
 		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
 		{
-			delete tablero.tablero[movimiento.inicio.indice()];
-			tablero.coronar(movimiento.fin, seleccionarEntradaCoronar(movimiento.inicio));
-			std::cin;
+			Pieza* p_pieza = tablero.leer(movimiento.inicio);
+			tablero.coronar(movimiento.inicio, seleccionarEntradaCoronar(movimiento.inicio));
+			delete p_pieza;
 		}
 
 		tablero.cambiarTurno();
