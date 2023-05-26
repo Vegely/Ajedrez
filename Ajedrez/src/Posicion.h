@@ -9,6 +9,7 @@ struct Posicion
 	int x, y;
 
 	explicit Posicion(int x = 0, int y = 0) : x(x), y(y) {}
+	Posicion(const Casilla& casilla) { x = casilla.letra; y = casilla.numero; }
 
 	inline int indice() const { return x + 8 * y; }
 

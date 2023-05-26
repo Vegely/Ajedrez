@@ -6,8 +6,7 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string
 	texture_path(texture_path),
 	tipo_pieza(tipo_pieza),
 	hitbox(0, 0, 0, {0}),
-	
-	(initial_pos, Colors::White, "Modelo " + tipo_pieza)
+	Entity(initial_pos, Colors::White, "Modelo " + tipo_pieza)
 {
 	this->scene = nullptr;
 	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate | aiProcess_FlipUVs);

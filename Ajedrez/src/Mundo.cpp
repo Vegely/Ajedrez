@@ -47,6 +47,8 @@ Mundo::Mundo(void) :
 	camara({ 0.0f, 205.0f, 156.0f }, { 0 }, 60.0f),
 	casilla_leida({0})
 {
+	asignarModelos();
+
 	arrayModelos.push_back(&rey_blanco);
 	arrayModelos.push_back(&rey_negro);
 	arrayModelos.push_back(&dama_blanca);

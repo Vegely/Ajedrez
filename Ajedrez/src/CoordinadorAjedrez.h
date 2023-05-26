@@ -4,7 +4,7 @@
 #include <thread>
 
 
-enum Estado { INICIO, JUEGO, FIN};
+enum Estado { INICIO, JUEGO, FIN };
 
 class CoordinadorAjedrez
 {

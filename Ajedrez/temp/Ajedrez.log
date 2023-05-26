@@ -1,13 +1,4 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
-  CoordinadorAjedrez.cpp
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(12,77): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
-  IA.cpp
-  InfoTablas.cpp
-  MotorDeJuego.cpp
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(10): warning C4305: 'argumento': truncamiento de 'const int' a 'const unsigned char'
-C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(10,85): warning C4309: 'argumento': truncamiento de valor constante
   Mundo.cpp
-  Torre.cpp
-  Generando código...
-  Ajedrez.vcxproj -> E:\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez-2243d560fd5bdd91b27299354e61047597728af4\Ajedrez\bin\Ajedrez.exe
+  Ajedrez.vcxproj -> C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\bin\Ajedrez.exe
