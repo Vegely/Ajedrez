@@ -21,29 +21,13 @@ Proyecto de programación de un ajedrez en C++ con la librería gráfica [Glut](
     - Jaque mate.
     - Tablas.
     - Tablas por rey ahogado.
+    - Tablas por material insuficiente.
 - Inteligencia Artificial.
-- Temporizadores.
-- Modos de juego alternativos.
-- Problemas.
+    - MiniMax.
 ### Funciones auxiliares:
 - Apartado gráfico.
 - Audio y efectos de sonido.
-- Control de ficheros: lectura y escritura de partidas y encriptación de archivos.
+- Control de ficheros: lectura y escritura de partidas.
 - Menús: principal, pausa y ajustes.
 - Lectura de inputs.
-
-## Atributos de las piezas:
-- Valor.
-- Color.
-- Posición.
-- Puede comer.
-- Puede defender.
-- Amenazada.
-
-## Convenio de nomenclatura:
-- Variables: `var_var`
-- Funciones: `funcionFuncion`
-- Clases: `Clase`
-- Definiciones compilador: `#define DEF_VALOR`
-- Nombres de funciones y variables en español.
-- Comentar inputs y outputs de funciones y qué implementa (el cómo dentro).
+- Redes y juego local.
