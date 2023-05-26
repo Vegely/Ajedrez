@@ -16,6 +16,7 @@
 // Librerías propias 
 #include "Globals.h" // Clases útiles genéricas
 #include "Hitbox.h"
+#include "Movimiento.h"
 
 enum TipoPieza { NONE, REY, DAMA, ALFIL, CABALLO, TORRE, PEON };
 
@@ -50,6 +51,7 @@ public:
 	void setModelPath  (std::string path) { this->model_path   = path; }
 	void setTexturePath(std::string path) { this->texture_path = path; }
 	void setTextureID  (GLuint ID)		  { this->texture_ID   = ID; }
+	void moverModelo(const Movimiento& movimiento);
 
 	/* FUNCIONES */
 	void render(void);

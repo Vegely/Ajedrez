@@ -4,11 +4,10 @@
 
 class Pieza;
 
-//
 struct DatosClavada
 {
 	bool ExisteClavada=false;
-	Posicion DireccionClavada;
-	Pieza* PiezaClavada;
+	Posicion DireccionClavada = Posicion{ -1, -1 };
+	Pieza* PiezaClavada = nullptr;
 };
 

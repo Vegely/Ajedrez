@@ -14,7 +14,6 @@ struct Movimiento
 
 	Movimiento() {}
 	Movimiento(Posicion inicio, Posicion fin) : inicio(inicio), fin(fin) {}
-	Movimiento(const std::string& str) { std::stringstream ss; ss << str; ss >> inicio.x >> inicio.y >> fin.x >> fin.y; }
 
 	inline std::string toString() { std::string str; str += inicio.x + ' ' + inicio.y + ' ' + fin.x + ' ' + fin.y; return str; }
 

@@ -4,16 +4,13 @@
 #include <vector>
 #include "Modelo.h"
 #include "Camara.h"
-
-struct Casilla
-{
-	int letra;
-	int numero;
-};
+#include "Movimiento.h"
+#include "Casilla.h"
 
 class Mundo
 {
 private:
+	std::vector<Modelo*> arrayModelos;
 	Camara camara;
 	Casilla casilla_leida;
 
@@ -37,6 +34,8 @@ public:
 	bool getGirado(void) { return camara.getGirado(); }
 	void dibujarFondo(void);
 	Casilla getCasilla(void) { return this->casilla_leida; }
+
+	void moverModelo(const Movimiento& movimiento);
 };
 
 

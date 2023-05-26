@@ -104,6 +104,22 @@ Point getPointFromCoords(char letter, unsigned int number)
 	return Point{ -175.0f + first * 50.0f, 0, -175.0f + second * 50.0f };
 }
 
+Casilla getCoordFromPosition(const Point& pt)
+{
+	Casilla result;
+	result.letra = pt.x / 50.0f + 175.0f;
+	result.numero = pt.z / 50.0f + 175.0f;
+	return result;
+}
+
+Point getPointFromCoords(const Posicion& pos)
+{
+	Point result;
+	result.x = pos.x * 50 - 175.0f;
+	result.y = pos.y * 50 - 175.0f;
+	return result;
+}
+
 bool operator == (const Point& lhs, const Point& rhs)
 {
 	if (lhs.x == rhs.x &&

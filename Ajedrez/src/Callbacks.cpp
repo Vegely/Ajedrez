@@ -56,25 +56,7 @@ void registrarCallbacks(void)
 // Continuously draws what it is specified to it.
 void OnDraw(void)
 {
-	if (mundo.getGirado())
-		glRotatef(rotation, 0, 1, 0);
 
-		mundo.renderizarModelos();
-
-	if (mundo.getGirado())
-		glRotatef(-rotation, 0, 1, 0);
-
-	glutSwapBuffers();
-	glutPostRedisplay();
-
-	// Camera update
-	mundo.updateCamara();
-	mundo.dibujarFondo();
-
-	// Debug
-	//mundo.renderizarHitboxes();
-	//mundo.renderizarRayoRaton();
-	//debugAxis();
 }
 
 // Reshapes the window if needed without resizing the objects and mantaining their proportions.

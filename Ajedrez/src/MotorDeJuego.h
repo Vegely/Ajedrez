@@ -23,7 +23,7 @@ struct DatosFinal
 
 class MotorDeJuego
 {
-	Mundo* p_motorGrafico;
+	Mundo* p_motorGrafico = nullptr;
 
 	void pintar(Posicion piezaSelec = Posicion(-1, -1)) const;	
 

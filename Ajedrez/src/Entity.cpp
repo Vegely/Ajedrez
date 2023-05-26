@@ -162,7 +162,7 @@ void Entity::setName(const std::string& new_name)
 /* MOVEMENTS */
 void Entity::move(const Point& vel)
 {
-	//std::cout << "Velocity of entity " << this->name << " set to " << vel << "." << std::endl;
+	std::cout << "Velocity of " << this->name << " set to " << vel << "." << std::endl;
 	this->velocity = vel;
 }
 

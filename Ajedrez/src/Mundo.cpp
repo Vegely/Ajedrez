@@ -43,9 +43,30 @@ Modelo marcos(NONE, { 0 }, ruta_marcos, ruta_textura_negro_claro);
 Modelo letras(NONE, { 0 }, ruta_letras, ruta_textura_blanco_oscuro);
 
 Mundo::Mundo(void) :
-	camara({ 0.0f, 205.0f, 156.0f }, { 0 }, 60.0f)
+	arrayModelos(0),
+	camara({ 0.0f, 205.0f, 156.0f }, { 0 }, 60.0f),
+	casilla_leida({0})
 {
+	arrayModelos.push_back(&rey_blanco);
+	arrayModelos.push_back(&rey_negro);
+	arrayModelos.push_back(&dama_blanca);
+	arrayModelos.push_back(&dama_negra);
 
+	for (int i = 0; i < 8; i++)
+	{
+		arrayModelos.push_back(&peones_blancos[i]);
+		arrayModelos.push_back(&peones_negros[i]);
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		arrayModelos.push_back(&alfiles_blancos[i]);
+		arrayModelos.push_back(&alfiles_negros[i]);
+		arrayModelos.push_back(&caballos_blancos[i]);
+		arrayModelos.push_back(&caballos_negros[i]);
+		arrayModelos.push_back(&torres_blancas[i]);
+		arrayModelos.push_back(&torres_negras[i]);
+	}
 }
 
 void Mundo::asignarModelos(void)
@@ -515,4 +536,12 @@ void Mundo::dibujarFondo(void)
 	glDisable(GL_TEXTURE_2D);
 	glRotatef(-90.0f, 1, 0, 0);
 	glTranslatef(-100, 10, 0);
+}
+
+void Mundo::moverModelo(const Movimiento& movimiento)
+{
+	for (auto iterador : arrayModelos)
+	{
+		iterador->moverModelo(movimiento);
+	}
 }

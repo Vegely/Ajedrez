@@ -2,7 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\Ajedrez",
-    "\\Ajedrez\\src"
+    "\\Ajedrez\\lib"
   ],
+  "SelectedNode": "\\Ajedrez\\Ajedrez.sln",
   "PreviewInSolutionExplorer": false
 }
