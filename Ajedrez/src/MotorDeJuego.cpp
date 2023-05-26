@@ -231,7 +231,7 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
 		{
 			Pieza* p_pieza = tablero.leer(movimiento.inicio);
-			tablero.coronar(movimiento.fin, seleccionarEntradaCoronar(movimiento.inicio));
+			tablero.coronar(movimiento.inicio, seleccionarEntradaCoronar(movimiento.inicio));
 			delete p_pieza;
 		}
 

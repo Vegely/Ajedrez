@@ -18,8 +18,7 @@ void Tablero::actualizarTablero()
 		{
 			limpiezaUnasAOtras->amenazas.clear();
 			limpiezaUnasAOtras->esta_protegida.clear();
-		}
-			
+		}	
 	}
 
 	for (int i = 0; i < 2; i++)
