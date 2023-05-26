@@ -14,8 +14,8 @@
 #define ruta_marcos           "modelos/marcos.obj"
 #define ruta_letras           "modelos/letras.obj"
 
-#define ruta_textura_blanco			"texturas/rocks2.tga"
-#define ruta_textura_negro			"texturas/rocks.tga"
+#define ruta_textura_blanco			"texturas/marmol_blanco.jpg"
+#define ruta_textura_negro			"texturas/marmol_negro.jpg"
 #define ruta_textura_blanco_oscuro "texturas/marmol_blanco_oscuro.jpg"
 #define ruta_textura_negro_claro   "texturas/marmol_negro_claro.jpg"
 

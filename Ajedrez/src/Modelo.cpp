@@ -16,7 +16,7 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string
 	}
 	else
 		std::cout << "Created meshes for model type " << tipo_pieza << "." << std::endl;
-
+	
 	switch (tipo_pieza)
 	{
 	case NONE:
