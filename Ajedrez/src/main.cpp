@@ -1,5 +1,5 @@
 #include "MotorDeJuego.h"
-#include "graphics.h"
+
 
 //////////////////////////
 #include <iostream>

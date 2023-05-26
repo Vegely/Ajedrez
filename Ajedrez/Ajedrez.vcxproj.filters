@@ -80,6 +80,9 @@
     <ClCompile Include="src\Ranking.cpp">
       <Filter>Ficheros\Source</Filter>
     </ClCompile>
+    <ClCompile Include="src\Sonidos.cpp">
+      <Filter>Sonidos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DatosClavada.h">
@@ -172,6 +175,9 @@
     <ClInclude Include="src\Ranking.h">
       <Filter>Ficheros\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="src\Sonidos.h">
+      <Filter>Sonidos</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lógica">
@@ -224,6 +230,9 @@
     </Filter>
     <Filter Include="Ficheros\Source">
       <UniqueIdentifier>{7cef9e6f-c427-4882-9eba-8b80020fb7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sonidos">
+      <UniqueIdentifier>{f17309c4-b350-48c7-9b47-044c3fa0be46}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

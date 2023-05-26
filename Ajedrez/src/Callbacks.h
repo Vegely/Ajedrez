@@ -4,7 +4,7 @@
 #define GLUTCALLBAKCS_H
 
 #include "freeglut.h"
-#include "Globals.h"
+
 
 #include <string>
 #include <iostream>
