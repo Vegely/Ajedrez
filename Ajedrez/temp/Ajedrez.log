@@ -1,39 +1,62 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(502,5): warning MSB8004: El directorio Intermediate no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Intermediate.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(503,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
+  Callbacks.cpp
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Socket.h(5,1): warning C4005: 'WIN32_LEAN_AND_MEAN': redefinición de macro
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\freeglut.h(58,1): message : vea la definición anterior de 'WIN32_LEAN_AND_MEAN'
+  CoordinadorAjedrez.cpp
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Socket.h(5,1): warning C4005: 'WIN32_LEAN_AND_MEAN': redefinición de macro
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\freeglut.h(58,1): message : vea la definición anterior de 'WIN32_LEAN_AND_MEAN'
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(70,77): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(369,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(369,22): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(371,27): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(371,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(373,34): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(373,31): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(375,33): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(375,30): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(382,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(382,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(398,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(398,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(403,37): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(403,34): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(409,31): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(409,28): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(415,35): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(415,32): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(423,36): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(423,33): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(429,29): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(429,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(440,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(440,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(450,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(450,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(460,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(460,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(469,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(469,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(478,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(478,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(486,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(486,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(497,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(497,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(508,26): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(508,23): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(511,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(511,22): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(527,28): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(527,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(530,25): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(530,22): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(546,32): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\CoordinadorAjedrez.cpp(546,29): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
   MotorDeJuego.cpp
 C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(10): warning C4305: 'argumento': truncamiento de 'const int' a 'const unsigned char'
 C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Rey.h(10,85): warning C4309: 'argumento': truncamiento de valor constante
-  Generando código
-  3 of 1297 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
-  Generación de código finalizada
-CajaTexto.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-CajaTexto.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-CajaTexto.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Cliente.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Cliente.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Cliente.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Cliente.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Dama.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-DatosRanking.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-GestionMenus.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-main.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-main.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-NoFinalizadas.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-NoFinalizadas.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-NoFinalizadas.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-NoFinalizadas.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-NoFinalizadas.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Pieza.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Pieza.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Servidor.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Servidor.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Sonidos.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Servidor.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Sonidos.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Sonidos.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Vector2D.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-Vector2D.obj : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
-kernel32.lib(KERNEL32.dll) : warning LNK4020: un registro de tipo de '' está dañado; puede que algunos símbolos y tipos no sean accesibles desde el depurador
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\Socket.h(5,1): warning C4005: 'WIN32_LEAN_AND_MEAN': redefinición de macro
+C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\src\freeglut.h(58,1): message : vea la definición anterior de 'WIN32_LEAN_AND_MEAN'
+  Generando código...
   Ajedrez.vcxproj -> C:\Users\Rubikrazy\source\repos\Vegely\Ajedrez\Ajedrez\bin\Ajedrez.exe
