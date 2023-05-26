@@ -36,6 +36,7 @@ DatosClavada Caballo::actualizarVariables(bool clavada, Posicion direccionClavad
 				tableroIlegalesRey[!color][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 			}
 		}
+
 	}
 	return piezaClavada;
 }

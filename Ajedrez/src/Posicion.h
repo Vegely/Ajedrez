@@ -1,8 +1,6 @@
 #ifndef _POSICION__H_
 #define _POSICION__H_
 
-#include <sstream>
-#include <string>
 //Clase para hacer las comparaciones y modificaciones de casillas mas sencillas
 struct Posicion
 {
@@ -16,8 +14,6 @@ struct Posicion
 	inline Posicion& operator+= (const Posicion& rhs) { x += rhs.x; y += rhs.y; return *this; }
 	inline Posicion& operator-= (Posicion rhs) { *this += ( - rhs); return *this; }
 	inline Posicion& operator*= (const int& rhs) { x *= rhs; y *= rhs; return *this; }
-	inline std::string toString() { std::string str = ""; str += x; str += " "; str += y; return str; }
-	inline void toPosicion(const std::string& str) { std::stringstream ss; ss << str; ss >> x >> y; }
 };
 
 inline Posicion operator+ (Posicion lhs, const Posicion& rhs) { return lhs += rhs; }
@@ -31,6 +27,7 @@ inline bool operator< (const Posicion& lhs, const Posicion& rhs) { return lhs.x 
 inline bool operator> (const Posicion& lhs, const Posicion& rhs) { return rhs < lhs; }
 inline bool operator<= (const Posicion& lhs, const Posicion& rhs) { return lhs.x <= rhs.x && lhs.y <= rhs.y; }
 inline bool operator>= (const Posicion& lhs, const Posicion& rhs) { return rhs <= lhs; }
-inline double distancia(const Posicion p1, const Posicion p2) {	return sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));}
+inline double distancia(const Posicion p1, const Posicion p2) {	return sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+}
 
 #endif

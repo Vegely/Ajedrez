@@ -18,7 +18,8 @@ void Tablero::actualizarTablero()
 		{
 			limpiezaUnasAOtras->amenazas.clear();
 			limpiezaUnasAOtras->esta_protegida.clear();
-		}	
+		}
+			
 	}
 
 	for (int i = 0; i < 2; i++)
@@ -69,12 +70,11 @@ Tablero::Tablero(bool alocar)
 		//True == Blancas <-> False == Negras En color
 		//Blancas 
 		//Se añaden los peones
-		
 		for (int i = 0; i < ANCHO_TABLERO; i++)
 		{
-			escribir(Posicion(i, 6), new Peon(*this, true));
+			escribir(Posicion(i, 1), new Peon(*this, true));
 		}
-		/*
+
 		//Se añaden las torres
 		escribir(Posicion(0, 0), new Torre(*this, true));
 		escribir(Posicion(7, 0), new Torre(*this, true));
@@ -86,20 +86,20 @@ Tablero::Tablero(bool alocar)
 		//Se escriben los alfiles
 		escribir(Posicion(2, 0), new Alfil(*this, true));
 		escribir(Posicion(5, 0), new Alfil(*this, true));
-		*/
-		//Se escribe la dama y el rey
-		reyPos[1] = Posicion{ 4,3 };
 
-		//escribir(Posicion(3, 0), new Dama(*this, true));
-		escribir(reyPos[1], new Rey(*this, true));
+		//Se escribe la dama y el rey
+		reyPos[1] = Posicion{ 4,0 };
+
+		escribir(Posicion(3, 0), new Dama(*this, true));
+		escribir(Posicion(4, 0), new Rey(*this, true));
 
 		//Negras
 		//Se añaden los peones
 		for (int i = 0; i < ANCHO_TABLERO; i++)
 		{
-			escribir(Posicion(i, 1), new Peon(*this, false));
+			escribir(Posicion(i, 6), new Peon(*this, false));
 		}
-		/*
+
 		//Se añaden las torres
 		escribir(Posicion(0, 7), new Torre(*this, false));
 		escribir(Posicion(7, 7), new Torre(*this, false));
@@ -111,12 +111,12 @@ Tablero::Tablero(bool alocar)
 		//Se escriben los alfiles
 		escribir(Posicion(2, 7), new Alfil(*this, false));
 		escribir(Posicion(5, 7), new Alfil(*this, false));
-		*/
-		//Se escribe la dama y el rey
-		reyPos[0] = Posicion{ 0, 3 };
 
-		//escribir(Posicion(3, 7), new Dama(*this, false));
-		escribir(reyPos[0], new Rey(*this, false));
+		//Se escribe la dama y el rey
+		reyPos[0] = Posicion{ 4, 7 };
+
+		escribir(Posicion(3, 7), new Dama(*this, false));
+		escribir(Posicion(4, 7), new Rey(*this, false));
 
 		colorDelTurno = true;
 		actualizarTablero(); //Se inicializan los movimientos posibles
@@ -163,10 +163,9 @@ Tablero Tablero::copiar(const Tablero& tablero)
 	for (int i = 0; i < 2; i++) aux.reyPos[i] = tablero.reyPos[i];
 
 	for (int i = 0; i < 6; i++) aux.haMovido[i] = tablero.haMovido[i];
-		aux.numeroPiezas = tablero.numeroPiezas;
+	aux.numeroPiezas = tablero.numeroPiezas;
 	for (int i = 0; i < 2; i++) for (int j = 0; j < 8; j++) for (int k = 0; k < 8; k++) aux.tableroIlegalesRey[i][j][k] = tablero.tableroIlegalesRey[i][j][k];
-	for (int i = 0; i < tablero.datosClavada.size(); i++)
-		aux.datosClavada.push_back(tablero.datosClavada.at(i));
+	aux.datosClavada = tablero.datosClavada;
 
 	aux.ultimaJugada = tablero.ultimaJugada;
 	
@@ -451,19 +450,7 @@ void Tablero::actualizarJaque() {
 		{
 			for (auto Amenazas : leer(reyPos[colorDelTurno])->getAmenazas()[0]->getAmenazas()) //Si se puede comer la pieza se actualizan para que las piezas puedan comersela
 			{
-				if (Amenazas->tipo != Pieza::tipo_t::REY || tableroIlegalesRey[colorDelTurno][leer(reyPos[colorDelTurno])->getAmenazas()[0]->getPosicion().x][leer(reyPos[colorDelTurno])->getAmenazas()[0]->getPosicion().y] == false)
-				{
-					Amenazas->puede_comer.push_back(leer(reyPos[colorDelTurno])->getAmenazas()[0]);
-
-					for (int i = 0; i < datosClavada.size();i++)
-					{
-						if (datosClavada[i].PiezaClavada == Amenazas)
-						{
-							Amenazas->puede_comer.clear();
-						}
-					}
-				}
-				
+				Amenazas->puede_comer.push_back(leer(reyPos[colorDelTurno])->getAmenazas()[0]);
 			}
 
 			//Comprobar si se puede poner algo en medio
