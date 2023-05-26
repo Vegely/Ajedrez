@@ -4,6 +4,7 @@
 #include "CajaTexto.h"
 #include "Partida.h"
 #include <thread>
+#include "Sonidos.h"
 
 #define DIR_FUENTE "fuentes/Bitwise.ttf"
 
@@ -43,6 +44,7 @@ void hiloCliente(Cliente* cliente, Estado* estado, bool* salir, std::string* m_s
 
 CoordinadorAjedrez::CoordinadorAjedrez() {
 	estado = INICIO;
+	Sonidos::con_comerAlPaso();
 }
 
 void CoordinadorAjedrez::dibuja() {
@@ -162,10 +164,10 @@ void CoordinadorAjedrez::dibuja() {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
-		//GestionMenus::imprimePartidaNaExiste();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont(DIR_FUENTE, 16);
 		ETSIDI::printxy("no existe", -5, 8);
+		GestionMenus::imprimeMenuNoExiste();
 	}
 	else if (estado == CREAR_SALA) {
 		gluLookAt(0, 7.5, 30, // posicion del ojo
@@ -198,6 +200,7 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 		if((int)key != 9)
 			datosPartida.getNombre() += key;
 		if ((int)key == 9) {
+			Sonidos::son_seleccionMenu();
 			estado = MODO;
 			datosPartida.getNombre() += ".txt";
 		}
@@ -212,7 +215,10 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			if (datosPartida.getJ1() == "")
 				datosPartida.getJ1() = "J1"; //En el caso de que el jugador no introduzca un nombre se pone uno por defecto
 			if (datosPartida.existe())
-				estado = PARTIDA_EXISTE; 
+			{
+				Sonidos::son_seleccionMenu();
+				estado = PARTIDA_EXISTE;
+			}
 			else {
 				estado = COLORJ1;
 				datosPartida.crearPartida();
@@ -220,6 +226,7 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			}
 		}
 		if ((int)key == 9 && datosPartida.getModo() == "Multijugador") {
+			Sonidos::son_seleccionMenu();
 			estado = J2;
 			if (datosPartida.getJ1() == "")
 				datosPartida.getJ1() = "J1";
@@ -236,7 +243,9 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 			if (datosPartida.getJ2() == "")
 				datosPartida.getJ2() = "J2";
 			if (datosPartida.existe())
+			{
 				estado = PARTIDA_EXISTE;
+			}
 			else {
 				estado = COLORJ1;
 				datosPartida.crearPartida();
@@ -249,6 +258,8 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 	}
 	else if (estado == JUEGO) {
 		if (key == 'p')
+		{
+			Sonidos::son_seleccionMenu();
 			estado = PAUSA;
 		if (key == 'a' /* && datosPartida.getModo() == "Red"*/) {
 			cliente->enviarAServidor("hola");
@@ -265,10 +276,12 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 		if ((int)key == 9) {
 			datosPartida.getNombre() += ".txt";
 			if (datosPartida.existe()) {
+				Sonidos::son_seleccionMenu();
 				datosPartida.cargarPartida();
 				estado = JUEGO;
 			}
 			else {
+				Sonidos::son_seleccionMenu();
 				estado = PARTIDA_NO_EXISTE;
 			}
 
@@ -279,6 +292,7 @@ void CoordinadorAjedrez::tecla(unsigned char key) {
 	}
 	else if (estado == PARTIDA_EXISTE) {
 		if (key == 'c') {
+			Sonidos::son_seleccionMenu();
 			estado = JUEGO;
 			datosPartida.cargarPartida();
 		}
@@ -350,12 +364,23 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		{
 			if (c_salir.click(x, y))
+			{
+				Sonidos::son_seleccionMenu();
 				exit(0);
+			}
 			if (c_ranking.click(x, y))
+			{
+				Sonidos::son_seleccionMenu();
 				estado = RANKING;
+			}
 			if (c_cargar_partida.click(x, y))
+			{
+				Sonidos::son_seleccionMenu();
 				estado = CARGAR_PARTIDA;
+			}
 			if (c_nueva_partida.click(x, y))
+			{
+				Sonidos::son_seleccionMenu();
 				estado = NUEVA_PARTIDA;
 			/*if (c_salas.click(x, y))
 				estado = CREAR_SALA;*/
@@ -365,6 +390,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 			if (c_volver.click(x, y)) {
+				Sonidos::son_seleccionMenu();
 				datosPartida.getNombre() = "";
 				estado = INICIO;
 			}
@@ -380,6 +406,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 		{
 			if (c_volver.click(x, y))
 			{
+				Sonidos::son_seleccionMenu();
 				datosPartida.getNombre() = "";
 				estado = NUEVA_PARTIDA;
 			}
@@ -412,6 +439,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		{
 			if (c_volver.click(x, y)) {
+				Sonidos::son_seleccionMenu();
 				datosPartida.getModo() = "";
 				estado = MODO;
 			}
@@ -422,6 +450,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		{
 			if (c_volver.click(x, y)) {
+				Sonidos::son_seleccionMenu();
 				datosPartida.getJ1() = "";
 				estado = J1;
 			}
@@ -432,6 +461,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 		{
 			if (c_volver.click(x, y)) {
+				Sonidos::son_seleccionMenu();
 				datosPartida.getNombre() = "";
 				estado = INICIO;
 			}
@@ -441,6 +471,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 			if (c_volver.click(x, y)) {
+				Sonidos::son_seleccionMenu();
 				estado = INICIO;
 				datosPartida.getNombre() = "";
 			}
@@ -450,6 +481,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y) {
 		static CajaTexto c_volver({ 29, -5.25 }, { 26, -5.25 }, { 26,  -6.25 }, { 29, -6.25 });
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 			if (c_volver.click(x, y)) {
+				Sonidos::son_seleccionMenu();
 				estado = INICIO;
 			}
 		}
