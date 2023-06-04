@@ -47,7 +47,7 @@ Mundo::Mundo(void) :
 	camara({ 0.0f, 205.0f, 156.0f }, { 0 }, 60.0f),
 	casilla_leida({0})
 {
-	asignarModelos();
+	/*asignarModelos();
 
 	arrayModelos.push_back(&rey_blanco);
 	arrayModelos.push_back(&rey_negro);
@@ -68,7 +68,7 @@ Mundo::Mundo(void) :
 		arrayModelos.push_back(&caballos_negros[i]);
 		arrayModelos.push_back(&torres_blancas[i]);
 		arrayModelos.push_back(&torres_negras[i]);
-	}
+	}*/
 }
 
 void Mundo::asignarModelos(void)

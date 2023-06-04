@@ -126,17 +126,11 @@
     <ClInclude Include="src\Camara.h">
       <Filter>2_Graficos\0_Glut\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Casilla.h">
-      <Filter>2_Graficos\1_Consola\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\CoordinadorAjedrez.h">
       <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Entity.h">
       <Filter>2_Graficos\0_Glut\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Globals.h">
-      <Filter>2_Graficos\1_Consola\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Hitbox.h">
       <Filter>2_Graficos\0_Glut\Header Files</Filter>
@@ -152,6 +146,12 @@
     </ClInclude>
     <ClInclude Include="src\SalidasConsola.h">
       <Filter>2_Graficos\1_Consola\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Globals.h">
+      <Filter>2_Graficos\0_Glut\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Casilla.h">
+      <Filter>2_Graficos\0_Glut\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +203,6 @@
     <ClCompile Include="src\Entity.cpp">
       <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
     </ClCompile>
-    <ClCompile Include="src\Globals.cpp">
-      <Filter>2_Graficos\1_Consola\Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Hitbox.cpp">
       <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
     </ClCompile>
@@ -220,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="src\SalidasConsola.cpp">
       <Filter>2_Graficos\1_Consola\Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Globals.cpp">
+      <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

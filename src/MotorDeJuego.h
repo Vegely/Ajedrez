@@ -36,7 +36,7 @@ class MotorDeJuego
 public:
 	
 
-	MotorDeJuego(ConfiguracionDeJuego config) : config(config), tablero(Tablero(true)) { pintar(); }
+	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { pintar(); }
 
 	void liberar() { tablero.liberar(); }
 

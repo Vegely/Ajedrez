@@ -38,8 +38,8 @@ Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
 	switch (config[tablero.colorDelTurno])
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
-		movimiento = ensamblarMovimiento(p_motorGrafico->getCasilla(), pos1Selec);
-		break;
+		//movimiento = ensamblarMovimiento(p_motorGrafico->getCasilla(), pos1Selec);
+		//break;
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
 		movimiento = IA::mover(tablero);
 		break;
@@ -66,7 +66,7 @@ DatosFinal MotorDeJuego::motor()
 			{
 				if (tablero.jaqueMate())
 				{
-					datosFinal = { !tablero.colorDelTurno, CodigoFinal::JAQUE_MATE };
+					datosFinal = { CodigoFinal::JAQUE_MATE,!tablero.colorDelTurno };
 					exit = true;
 				}
 				else if (tablero.reyAhogado())
@@ -159,7 +159,7 @@ void MotorDeJuego::pintar(Posicion posSelec) const
 
 		SetConsoleTextAttribute(hStdout, 7); // Color de fondo
 
-		if (i++ % 8 == 7) std::cout << "\n\n\n"; // Líneas de division de fila
+		if (i++ % 8 == 7) std::cout << "\n\n\n"; // Lï¿½neas de division de fila
 	}
 
 	std::cout << "\t";

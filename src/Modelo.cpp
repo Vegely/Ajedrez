@@ -213,8 +213,8 @@ bool Modelo::cargarTextura(void)
 
 void Modelo::moverModelo(const Movimiento& movimiento)
 {
-	if (movimiento.inicio == getCoordFromPosition(this->position))
-	{
-		this->position = getPointFromCoords(movimiento.fin);
-	}
+	//if (movimiento.inicio == getcoordfromposition(this->position))
+	//{
+	//	this->position = getpointfromcoords(movimiento.fin);
+	//}
 }

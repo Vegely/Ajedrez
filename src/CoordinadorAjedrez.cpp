@@ -6,7 +6,7 @@ ConfiguracionDeJuego configuracion;
 
 void threadMotor(const ConfiguracionDeJuego* p_configuracion, Mundo* p_motorGrafico, DatosFinal* p_datosFinal)
 {
-	MotorDeJuego motor(*p_configuracion, p_motorGrafico);
+	MotorDeJuego motor(*p_configuracion);
 	
 	for (ConfiguracionDeJuego::FormasDeInteraccion config : p_configuracion->config) 
 			if (config == ConfiguracionDeJuego::FormasDeInteraccion::IA) { srand(time(NULL)); break; }

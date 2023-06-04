@@ -33,9 +33,9 @@ void motorGrafico(int* argc, char** argv)
 
 	registrarCallbacks();
 
-	mundo.updateCamara();
+	/*mundo.updateCamara();
 	mundo.asignarModelos();
-	mundo.cargarTexturas();
+	mundo.cargarTexturas();*/
 
 	glutMainLoop();
 }
