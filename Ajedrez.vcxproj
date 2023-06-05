@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)\bin</OutDir>
+    <OutDir>$(SolutionDir)bin</OutDir>
     <IntDir>$(SolutionDir)\temp</IntDir>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)\bin</OutDir>
+    <OutDir>$(SolutionDir)bin</OutDir>
     <IntDir>$(SolutionDir)\temp</IntDir>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -154,7 +154,6 @@
     <ClInclude Include="src\DatosClavada.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Globals.h" />
-    <ClInclude Include="src\Hitbox.h" />
     <ClInclude Include="src\IA.h" />
     <ClInclude Include="src\InfoTablas.h" />
     <ClInclude Include="src\Modelo.h" />
@@ -179,7 +178,6 @@
     <ClCompile Include="src\Dama.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Globals.cpp" />
-    <ClCompile Include="src\Hitbox.cpp" />
     <ClCompile Include="src\IA.cpp" />
     <ClCompile Include="src\InfoTablas.cpp" />
     <ClCompile Include="src\main.cpp" />

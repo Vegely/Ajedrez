@@ -27,6 +27,7 @@ Modelo dama_blanca(DAMA, getPointFromCoords('d', 1), ruta_dama, ruta_textura_bla
 Modelo   rey_negro(REY,  getPointFromCoords('e', 8), ruta_rey,  ruta_textura_negro);
 Modelo  dama_negra(DAMA, getPointFromCoords('d', 8), ruta_dama, ruta_textura_negro);
 
+
 std::vector<Modelo>  alfiles_blancos;
 std::vector<Modelo> caballos_blancos;
 std::vector<Modelo>   torres_blancas;
@@ -42,23 +43,25 @@ Modelo casillas_negras (NONE, { 0, 0, 0 }, ruta_casillas_negras,  ruta_textura_n
 Modelo marcos(NONE, { 0 }, ruta_marcos, ruta_textura_negro_claro);
 Modelo letras(NONE, { 0 }, ruta_letras, ruta_textura_blanco_oscuro);
 
+
+
 Mundo::Mundo(void) :
 	arrayModelos(0),
 	camara({ 0.0f, 205.0f, 156.0f }, { 0 }, 60.0f),
 	casilla_leida({0})
 {
-	/*asignarModelos();
+	asignarModelos();
 
 	arrayModelos.push_back(&rey_blanco);
 	arrayModelos.push_back(&rey_negro);
 	arrayModelos.push_back(&dama_blanca);
 	arrayModelos.push_back(&dama_negra);
 
-	for (int i = 0; i < 8; i++)
+	/*for (int i = 0; i < 8; i++)
 	{
 		arrayModelos.push_back(&peones_blancos[i]);
 		arrayModelos.push_back(&peones_negros[i]);
-	}
+	}*/
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -68,16 +71,25 @@ Mundo::Mundo(void) :
 		arrayModelos.push_back(&caballos_negros[i]);
 		arrayModelos.push_back(&torres_blancas[i]);
 		arrayModelos.push_back(&torres_negras[i]);
-	}*/
+	}
 }
 
 void Mundo::asignarModelos(void)
 {
-	for (int i = 0; i < 8; i++)
+	//peones_blancos.push_back(Modelo(PEON, Point{ (float)0,2 }, ruta_peon, ruta_textura_blanco));
+	//peones_blancos.push_back(Modelo(PEON, Point{ (float)1,2 }, ruta_peon, ruta_textura_blanco));
+	//peones_blancos.push_back(Modelo(PEON, Point{ (float)2,2 }, ruta_peon, ruta_textura_blanco));
+	//peones_blancos.push_back(Modelo(PEON, Point{ (float)3,2 }, ruta_peon, ruta_textura_blanco));
+	//peones_blancos.push_back(Modelo(PEON, Point{ (float)4,2 }, ruta_peon, ruta_textura_blanco));
+	//peones_blancos.push_back(Modelo(PEON, Point{ (float)5,2 }, ruta_peon, ruta_textura_blanco));
+	//peones_blancos.push_back(Modelo(PEON, Point{ (float)6,2 }, ruta_peon, ruta_textura_blanco));
+	//peones_blancos.push_back(Modelo(PEON, Point{ (float)7,2 }, ruta_peon, ruta_textura_blanco));
+	
+	/*for (int i = 0; i < 8; i++)
 	{
-		peones_blancos.push_back(Modelo(PEON, getPointFromCoords('a' + i, 2), ruta_peon, ruta_textura_blanco));
-		 peones_negros.push_back(Modelo(PEON, getPointFromCoords('a' + i, 7), ruta_peon, ruta_textura_negro));
-	}
+		peones_blancos.push_back(Modelo(PEON,Point{(float)i,2}, ruta_peon, ruta_textura_blanco));
+		peones_negros.push_back(Modelo(PEON, Point{(float)i,7}, ruta_peon, ruta_textura_negro));
+	}*/
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -149,34 +161,6 @@ void Mundo::renderizarModelos(void)
 			  //letras.render();
 }
 
-void Mundo::renderizarHitboxes(void)
-{
-	 rey_blanco.renderHitbox();
-	  rey_negro.renderHitbox();
-	dama_blanca.renderHitbox();
-	 dama_negra.renderHitbox();
-
-	for (int i = 0; i < 2; i++)
-	{
-		 alfiles_blancos[i].renderHitbox();
-		  alfiles_negros[i].renderHitbox();
-		caballos_blancos[i].renderHitbox();
-		 caballos_negros[i].renderHitbox();
-		  torres_blancas[i].renderHitbox();
-		   torres_negras[i].renderHitbox();
-	}
-
-	for (int i = 0; i < 8; i++)
-	{
-		peones_blancos[i].renderHitbox();
-		 peones_negros[i].renderHitbox();
-	}
-
-	casillas_blancas.renderHitbox();
-	 casillas_negras.renderHitbox();
-			  marcos.renderHitbox();
-			  letras.renderHitbox();
-}
 
 void Mundo::inicializarIluminacion(void)
 {
@@ -272,65 +256,6 @@ void Mundo::keylift(unsigned char tecla)
 	camara.printPosition(std::cout);
 }
 
-//void Mundo::raycasting(int button, int state, int x_mouse, int y_mouse)
-//{
-	//if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-	//{
-	//	// Inicializaci�n de variables necesarias
-	//	Point proj  = { 0 };
-	//	float radius = 0;
-	//	float gamma = 0;
-	//	float phi   = 0;
-	//	float alpha = 0;
-	//	float beta  = 0;
-	//	float dist_cam_lookat = distanciaPuntos(camara.getPosition(), camara.getLookAt());
-	//	float w_screen = glutGet(GLUT_WINDOW_WIDTH);
-	//	float h_screen = glutGet(GLUT_WINDOW_HEIGHT);
-	//	float dist_cam_screen = h_screen / tan((camara.getFovY() * (PI / 180)) / 2);
-	//	// Obtenci�n del �ngulo del segmento camara-lookAt con el origen
-	//	radius = sqrtf(
-	//		camara.getPosition().x * camara.getPosition().x + 
-	//		camara.getPosition().y * camara.getPosition().y + 
-	//		camara.getPosition().z * camara.getPosition().z);
-	//	gamma = atan(camara.getPosition().z / camara.getPosition().x);
-	//	phi   = acos(camara.getPosition().y / radius);
-	//	// C�lculo de los �ngulos del rayo con el segmento camara-lookAt
-	//	if (y_mouse > h_screen / 2)
-	//		beta = atan((y_mouse - h_screen / 2) / dist_cam_screen);
-	//	else if (y_mouse < h_screen / 2)
-	//		beta = -atan(h_screen / 2 - y_mouse / dist_cam_screen);
-	//	else
-	//		beta = 0;
-	//	if (x_mouse < w_screen / 2)
-	//		alpha = -atan(w_screen / 2 - x_mouse / dist_cam_screen);
-	//	else if (x_mouse > w_screen / 2)
-	//		alpha = atan((x_mouse - w_screen / 2) / dist_cam_screen);
-	//	else
-	//		alpha = 0;
-	//	// �ngulos finales
-	//	float gamma_final = gamma + alpha;
-	//	float   phi_final = phi   + beta;
-	//	// Paso de coordenadas esf�ricas a cartesianas (r = 1)
-	//	proj.x = sin(phi_final) * cos(gamma_final);
-	//	proj.z = cos(phi_final) * sin(gamma_final);
-	//	proj.y = cos(phi_final);
-	//	// Normalizaci�n del vector director
-	//	Point vec_dir = (camara.getPosition() - proj) / distanciaPuntos(camara.getPosition(), proj);
-	//	// Rayo final
-	//	// rayo_raton = { camara.getPosition(), Point{100, 100, 100} };
-	//	rayo_raton = { camara.getPosition(), camara.getPosition() + vec_dir * 1000 };
-
-	//	std::cout << "d_c_la: " << dist_cam_lookat << std::endl;
-	//	std::cout << "d_c_sc: " << dist_cam_screen << std::endl;
-	//	std::cout << "Alpha:  " << alpha  << std::endl;
-	//	std::cout << "Beta :  " << beta   << std::endl;
-	//	std::cout << "Radius: " << radius << std::endl;
-	//	std::cout << "Gamma:  " << gamma  << std::endl;
-	//	std::cout << "Phi:    " << phi    << std::endl;
-	//}
-	//else
-	//	rayo_raton = { 0 };
-//}
 
 void Mundo::seleccionCasilla(int button, int state, int x_mouse, int y_mouse)
 {

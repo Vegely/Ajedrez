@@ -8,23 +8,6 @@
     <Filter Include="1_Lógica">
       <UniqueIdentifier>{0476e130-29f1-45b0-80bb-e785c01104be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1_Lógica\Piezas">
-      <UniqueIdentifier>{7fb223d9-39c1-40ec-b77f-b07f9d8a13b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1_Lógica\Piezas\Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="1_Lógica\Piezas\Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="1_Lógica\Header Files">
-      <UniqueIdentifier>{8b59940e-313e-4a22-9fed-f1b4ebfe02e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1_Lógica\Resource Files">
-      <UniqueIdentifier>{e4bece3b-8506-4749-a4b2-678186ab8e5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="2_Graficos">
       <UniqueIdentifier>{e371ce88-681a-4e4e-8076-01bf3297903f}</UniqueIdentifier>
     </Filter>
@@ -73,6 +56,23 @@
     <Filter Include="2_Graficos\0_Glut\Header Files">
       <UniqueIdentifier>{944cdfb4-f9d3-49c7-a68a-f950046343ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="1_Lógica\0_Resource Files">
+      <UniqueIdentifier>{e4bece3b-8506-4749-a4b2-678186ab8e5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Lógica\0_Header Files">
+      <UniqueIdentifier>{8b59940e-313e-4a22-9fed-f1b4ebfe02e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Lógica\Piezas">
+      <UniqueIdentifier>{7fb223d9-39c1-40ec-b77f-b07f9d8a13b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Lógica\Piezas\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="1_Lógica\Piezas\Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Caballo.h">
@@ -85,22 +85,22 @@
       <Filter>1_Lógica\Piezas\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DatosClavada.h">
-      <Filter>1_Lógica\Header Files</Filter>
+      <Filter>1_Lógica\0_Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DatosBloqueoJaque.h">
-      <Filter>1_Lógica\Header Files</Filter>
+      <Filter>1_Lógica\0_Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IA.h">
-      <Filter>1_Lógica\Header Files</Filter>
+      <Filter>1_Lógica\0_Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\InfoTablas.h">
-      <Filter>1_Lógica\Header Files</Filter>
+      <Filter>1_Lógica\0_Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\MotorDeJuego.h">
-      <Filter>1_Lógica\Header Files</Filter>
+      <Filter>1_Lógica\0_Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Movimiento.h">
-      <Filter>1_Lógica\Header Files</Filter>
+      <Filter>1_Lógica\0_Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Peon.h">
       <Filter>1_Lógica\Piezas\Header Files</Filter>
@@ -109,13 +109,13 @@
       <Filter>1_Lógica\Piezas\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Posicion.h">
-      <Filter>1_Lógica\Header Files</Filter>
+      <Filter>1_Lógica\0_Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Rey.h">
       <Filter>1_Lógica\Piezas\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tablero.h">
-      <Filter>1_Lógica\Header Files</Filter>
+      <Filter>1_Lógica\0_Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Torre.h">
       <Filter>1_Lógica\Piezas\Header Files</Filter>
@@ -130,9 +130,6 @@
       <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Entity.h">
-      <Filter>2_Graficos\0_Glut\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Hitbox.h">
       <Filter>2_Graficos\0_Glut\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Modelo.h">
@@ -165,16 +162,16 @@
       <Filter>1_Lógica\Piezas\Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="src\IA.cpp">
-      <Filter>1_Lógica\Resource Files</Filter>
+      <Filter>1_Lógica\0_Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="src\InfoTablas.cpp">
-      <Filter>1_Lógica\Resource Files</Filter>
+      <Filter>1_Lógica\0_Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>0_Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MotorDeJuego.cpp">
-      <Filter>1_Lógica\Resource Files</Filter>
+      <Filter>1_Lógica\0_Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Peon.cpp">
       <Filter>1_Lógica\Piezas\Resource Files</Filter>
@@ -186,7 +183,7 @@
       <Filter>1_Lógica\Piezas\Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Tablero.cpp">
-      <Filter>1_Lógica\Resource Files</Filter>
+      <Filter>1_Lógica\0_Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Torre.cpp">
       <Filter>1_Lógica\Piezas\Resource Files</Filter>
@@ -201,9 +198,6 @@
       <Filter>3_Menus_Máquina_Estados\Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Entity.cpp">
-      <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Hitbox.cpp">
       <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
     </ClCompile>
     <ClCompile Include="src\Modelo.cpp">

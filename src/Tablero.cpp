@@ -34,15 +34,27 @@ void Tablero::actualizarTablero()
 
 	datosClavada.clear();
 
+	
+	if (tablero[33] != nullptr)
+	{
+		std::cout << "Pieza 33? " << std::endl;
+		std::cout << tablero[33]->tablero.reyPos[1].x<<":"<<tablero[33]->tablero.reyPos[1].y << std::endl;
+	}
+	
 	DatosClavada aux;
+	int i = 0;
 	for (Pieza* p_pieza : tablero) {
+
+
 		if (p_pieza != nullptr) {
 			aux=p_pieza->actualizarVariables(false,Posicion{0,0}, tableroIlegalesRey);
+
 			if (aux.ExisteClavada == true)
 			{
 				datosClavada.push_back(aux);
 			}
 		}
+		i++;
 	}
 
 	leer(reyPos[0])->actualizarVariables(false, Posicion{ 0,0 }, tableroIlegalesRey);
@@ -74,7 +86,7 @@ Tablero::Tablero(bool alocar)
 		{
 			escribir(Posicion(i, 6), new Peon(*this, true));
 		}
-		/*
+		
 		//Se añaden las torres
 		escribir(Posicion(0, 0), new Torre(*this, true));
 		escribir(Posicion(7, 0), new Torre(*this, true));
@@ -86,11 +98,11 @@ Tablero::Tablero(bool alocar)
 		//Se escriben los alfiles
 		escribir(Posicion(2, 0), new Alfil(*this, true));
 		escribir(Posicion(5, 0), new Alfil(*this, true));
-		*/
+		
 		//Se escribe la dama y el rey
-		reyPos[1] = Posicion{ 4,3 };
+		reyPos[1] = Posicion{ 4,0 };
 
-		//escribir(Posicion(3, 0), new Dama(*this, true));
+		escribir(Posicion(3, 0), new Dama(*this, true));
 		escribir(reyPos[1], new Rey(*this, true));
 
 		//Negras
@@ -99,7 +111,7 @@ Tablero::Tablero(bool alocar)
 		{
 			escribir(Posicion(i, 1), new Peon(*this, false));
 		}
-		/*
+		
 		//Se añaden las torres
 		escribir(Posicion(0, 7), new Torre(*this, false));
 		escribir(Posicion(7, 7), new Torre(*this, false));
@@ -111,11 +123,11 @@ Tablero::Tablero(bool alocar)
 		//Se escriben los alfiles
 		escribir(Posicion(2, 7), new Alfil(*this, false));
 		escribir(Posicion(5, 7), new Alfil(*this, false));
-		*/
+		
 		//Se escribe la dama y el rey
-		reyPos[0] = Posicion{ 0, 3 };
+		reyPos[0] = Posicion{ 4, 7 };
 
-		//escribir(Posicion(3, 7), new Dama(*this, false));
+		escribir(Posicion(3, 7), new Dama(*this, false));
 		escribir(reyPos[0], new Rey(*this, false));
 
 		colorDelTurno = true;

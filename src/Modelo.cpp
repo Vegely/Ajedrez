@@ -5,10 +5,9 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string
 	model_path(model_path),
 	texture_path(texture_path),
 	tipo_pieza(tipo_pieza),
-	hitbox(0, 0, 0, {0}),
+	scene(nullptr),
 	Entity(initial_pos, Colors::White, "Modelo " + tipo_pieza)
 {
-	this->scene = nullptr;
 	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
 	if (this->scene == nullptr || this->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !this->scene->mRootNode)
 	{
@@ -16,30 +15,6 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string
 	}
 	else
 		std::cout << "Created meshes for model type " << tipo_pieza << "." << std::endl;
-	
-	switch (tipo_pieza)
-	{
-	case NONE:
-		break;
-	case REY:
-		hitbox = Hitbox(40, 90, 40, initial_pos);
-		break;
-	case DAMA:
-		hitbox = Hitbox(40, 85, 40, initial_pos);
-		break;
-	case ALFIL:
-		hitbox = Hitbox(36, 82, 36, initial_pos);
-		break;
-	case CABALLO:
-		hitbox = Hitbox(40, 78, 40, initial_pos);
-		break;
-	case TORRE:
-		hitbox = Hitbox(36, 64, 36, initial_pos);
-		break;
-	case PEON:
-		hitbox = Hitbox(30, 58, 30, initial_pos);
-		break;
-	}
 }
 
 Modelo::Modelo(const Modelo& m)
@@ -51,34 +26,9 @@ Modelo::Modelo(const Modelo& m)
 	this->model_path   = m.model_path;
 	this->texture_path = m.texture_path;
 	this->tipo_pieza   = m.tipo_pieza;
-	this->hitbox = m.hitbox;
 	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
 	if (!scene || scene->mRootNode == nullptr) // Comprobaci�n de lectura correcta del archivo.
 		std::cerr << "Failed to load 3D model file: " << importer.GetErrorString();
-
-	switch (tipo_pieza)
-	{
-	case NONE:
-		break;
-	case REY:
-		hitbox = Hitbox(40, 90, 40, m.position);
-		break;
-	case DAMA:
-		hitbox = Hitbox(40, 85, 40, m.position);
-		break;
-	case ALFIL:
-		hitbox = Hitbox(36, 82, 36, m.position);
-		break;
-	case CABALLO:
-		hitbox = Hitbox(40, 78, 40, m.position);
-		break;
-	case TORRE:
-		hitbox = Hitbox(36, 64, 36, m.position);
-		break;
-	case PEON:
-		hitbox = Hitbox(30, 58, 30, m.position);
-		break;
-	}
 }
 
 Modelo& Modelo::operator = (const Modelo& rhs)
@@ -94,29 +44,6 @@ Modelo& Modelo::operator = (const Modelo& rhs)
 	if (!scene || scene->mRootNode == nullptr) // Comprobaci�n de lectura correcta del archivo.
 		std::cerr << "Failed to load 3D model file: " << importer.GetErrorString();
 
-	switch (tipo_pieza)
-	{
-	case NONE:
-		break;
-	case REY:
-		hitbox = Hitbox(40, 90, 40, rhs.position);
-		break;
-	case DAMA:
-		hitbox = Hitbox(40, 85, 40, rhs.position);
-		break;
-	case ALFIL:
-		hitbox = Hitbox(36, 82, 36, rhs.position);
-		break;
-	case CABALLO:
-		hitbox = Hitbox(40, 78, 40, rhs.position);
-		break;
-	case TORRE:
-		hitbox = Hitbox(36, 64, 36, rhs.position);
-		break;
-	case PEON:
-		hitbox = Hitbox(30, 58, 30, rhs.position);
-		break;
-	}
 
 	return *this;
 }

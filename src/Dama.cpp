@@ -1,5 +1,4 @@
 #include "Dama.h"
-
 #include "Tablero.h"
 #include "Torre.h"
 
@@ -21,6 +20,7 @@ DatosClavada Dama::actualizarVariables(bool clavada, Posicion direccionClavada, 
 	{
 		direcciones = { direccionClavada,-direccionClavada };
 	}
+
 
 	for (Posicion direccion : direcciones)
 	{
@@ -61,6 +61,7 @@ DatosClavada Dama::actualizarVariables(bool clavada, Posicion direccionClavada, 
 					tableroIlegalesRey[!color][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 					break;
 				}
+			
 			}
 			else
 			{
@@ -82,5 +83,7 @@ DatosClavada Dama::actualizarVariables(bool clavada, Posicion direccionClavada, 
 			}
 		}
 	}
+
+
 	return piezaClavada;
 }

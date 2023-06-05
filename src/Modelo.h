@@ -15,7 +15,7 @@
 #include <vector>
 // Librer�as propias 
 #include "Globals.h" // Clases �tiles gen�ricas
-#include "Hitbox.h"
+#include "Entity.h"
 #include "Movimiento.h"
 
 enum TipoPieza { NONE, REY, DAMA, ALFIL, CABALLO, TORRE, PEON };
@@ -27,7 +27,6 @@ private:
 	std::string model_path;
 	std::string texture_path;
 	TipoPieza   tipo_pieza;
-	Hitbox		hitbox;
 
 public:
 	const aiScene*   scene;
@@ -56,7 +55,6 @@ public:
 	/* FUNCIONES */
 	void render(void);
 	void renderNodo(const aiNode* nodo);
-	void renderHitbox(void) { hitbox.render(); }
 	bool cargarTextura(void);
 };
 
