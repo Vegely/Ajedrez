@@ -57,12 +57,10 @@ DatosClavada Peon::actualizarVariables(bool clavada, Posicion direccionClavada, 
 			if (direccion == direcciones[0] && tablero.leer(posicion_prueba) == nullptr)
 			{
 				puede_mover.push_back(posicion_prueba);			//Añade los vacios de la linea a puede_mover
-				//tableroIlegalesRey[!color][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 				posicion_prueba += direcciones[0];
 				if (posicion.y == YInicio && tablero.leer(posicion_prueba ) == nullptr) //Si esta en la casilla inicial puede mover 2
 				{
 					puede_mover.push_back(posicion_prueba);
-					//tableroIlegalesRey[!color][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 				}
 			}
 			else

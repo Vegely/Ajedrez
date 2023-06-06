@@ -48,7 +48,9 @@ DatosClavada Torre::actualizarVariables(bool clavada, Posicion direccionClavada,
 					{
 						puede_comer.push_back(tablero.leer(posicion_prueba));		//A�ade la pieza enemiga a puede_comer
 						tablero.leer(posicion_prueba)->addAmenazas(this);		//Se a�ade a las amenazas de la otra pieza
-						tableroIlegalesRey[!color][posicion_prueba.x+direccion.x][posicion_prueba.y+ direccion.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
+						Posicion posIlegal = Posicion{ posicion_prueba.x + direccion.x ,posicion_prueba.y + direccion.y };
+						if (posIlegal >= Posicion(0, 0) && posIlegal < Posicion(8, 8))
+							tableroIlegalesRey[!color][posIlegal.x][posIlegal.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
 						break;
 					}
 					

@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-constexpr auto COEFF_DIFERENCIA_MATERIAL = 50.0;
+constexpr auto COEFF_DIFERENCIA_MATERIAL = 150.0;
 constexpr auto COEFF_AMENAZAS_PELIGROSAS = 40.0;
 constexpr auto COEFF_AMENAZAS_POCO_PELIGROSAS = 10.0;
 constexpr auto VALOR_AMENAZAS_PELIGROSAS = 1.79769e+308;

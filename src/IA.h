@@ -2,7 +2,7 @@
 
 #include "Tablero.h"
 
-#define PROFUNDIDAD_IA 1
+#define PROFUNDIDAD_IA 3
 
 class IA
 {

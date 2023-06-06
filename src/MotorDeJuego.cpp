@@ -22,6 +22,7 @@ constexpr auto NUM_LINEAS = 40;
 //	string input;
 //
 //	cin >> input;
+// 
 //
 //	int letra = toupper(input[0]) - 65;
 //	int numero = input[1] - 49;

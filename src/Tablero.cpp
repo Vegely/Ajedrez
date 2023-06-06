@@ -5,7 +5,6 @@
 #include "Alfil.h"
 #include "Torre.h"
 #include "Dama.h"
-#include <iostream>
 #include <string>
 #include <cmath>
 #include <algorithm>
@@ -34,12 +33,6 @@ void Tablero::actualizarTablero()
 
 	datosClavada.clear();
 
-	
-	if (tablero[33] != nullptr)
-	{
-		std::cout << "Pieza 33? " << std::endl;
-		std::cout << tablero[33]->tablero.reyPos[1].x<<":"<<tablero[33]->tablero.reyPos[1].y << std::endl;
-	}
 	
 	DatosClavada aux;
 	int i = 0;
@@ -84,7 +77,7 @@ Tablero::Tablero(bool alocar)
 		
 		for (int i = 0; i < ANCHO_TABLERO; i++)
 		{
-			escribir(Posicion(i, 6), new Peon(*this, true));
+			escribir(Posicion(i, 1), new Peon(*this, true));
 		}
 		
 		//Se añaden las torres
@@ -109,7 +102,7 @@ Tablero::Tablero(bool alocar)
 		//Se añaden los peones
 		for (int i = 0; i < ANCHO_TABLERO; i++)
 		{
-			escribir(Posicion(i, 1), new Peon(*this, false));
+			escribir(Posicion(i, 6), new Peon(*this, false));
 		}
 		
 		//Se añaden las torres
