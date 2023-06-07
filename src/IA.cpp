@@ -7,6 +7,7 @@ constexpr auto COEFF_DIFERENCIA_MATERIAL = 150.0;
 constexpr auto COEFF_AMENAZAS_PELIGROSAS = 40.0;
 constexpr auto COEFF_AMENAZAS_POCO_PELIGROSAS = 10.0;
 constexpr auto VALOR_AMENAZAS_PELIGROSAS = 1.79769e+308;
+constexpr auto VALOR_JAQUE_MATE = 10e50;
 
 double IA::evaluacion(const Tablero& tablero)  //Valor negativo ventaja negras valor positivo ventaja blancas
 {
@@ -28,14 +29,14 @@ double IA::evaluacion(const Tablero& tablero)  //Valor negativo ventaja negras v
 		proteccion = 0;
 
 
-		valorTablero += pow(-1, 1 + piezaAnalizada->getColor()) * piezaAnalizada->getValor(); //Resta si es negra y suma si es blanca
+		valorTablero += (1 - 2 * !piezaAnalizada->getColor()) * piezaAnalizada->getValor(); //Resta si es negra y suma si es blanca
 
 		for (auto piezasAmenazasAPiezaAnalizada : piezaAnalizada->getAmenazas())
 		{
 			if (piezaAnalizada->getValor() - piezasAmenazasAPiezaAnalizada->getValor() > 1) //Si la amenaza es peligrosa pieza de menor valor amenaza una de mayor valor
 			{
 				if (amenazaPeligrosa > abs(piezaAnalizada->getValor() - piezasAmenazasAPiezaAnalizada->getValor())) //Se mete la pieza de menor valor que amenenaza a la de mayor valor
-					amenazaPeligrosa = pow(-1, piezaAnalizada->getColor()) * abs(piezaAnalizada->getValor() - piezasAmenazasAPiezaAnalizada->getValor()); //Valor con signo para suma final
+					amenazaPeligrosa = (1 - 2 * piezaAnalizada->getColor()) * abs(piezaAnalizada->getValor() - piezasAmenazasAPiezaAnalizada->getValor()); //Valor con signo para suma final
 			}
 			else
 			{
@@ -54,6 +55,16 @@ double IA::evaluacion(const Tablero& tablero)  //Valor negativo ventaja negras v
 
 		amenazaPocoPeligrosaReturn += (1 - 2 * piezaAnalizada->getColor()) * piezaAnalizada->getValor() * abs(proteccion / (piezaAnalizada->EstaProtegida().size() + 1) - amenazaPocoPeligrosa / (piezaAnalizada->getAmenazas().size()) + 1);
 	}
+
+	if (tablero.jaqueMate())
+	{
+		return (1 - 2 * tablero.colorDelTurno) * VALOR_JAQUE_MATE;
+	}
+	else if (tablero.reyAhogado()|| tablero.tablasMaterialInsuficiente()|| tablero.infoTablas.tablasPorRepeticion()|| tablero.infoTablas.tablasPorPasividad())
+	{
+		return 0;
+	}
+
 
 	return COEFF_DIFERENCIA_MATERIAL * valorTablero + COEFF_AMENAZAS_PELIGROSAS * amenazaPeligrosaReturn + COEFF_AMENAZAS_POCO_PELIGROSAS * amenazaPeligrosaReturn;
 }

@@ -17,7 +17,7 @@ public:
 	inline void clear() { posiciones.clear(); repeticiones.clear(); boolRepeticion = false; contadorJugadas = 0; }
 	void add(const Tablero& tablero);
 	
-	inline bool tablasPorRepeticion() { return boolRepeticion; }
-	inline bool tablasPorPasividad() { return contadorJugadas > 50; }
+	inline bool tablasPorRepeticion() const{ return boolRepeticion; }
+	inline bool tablasPorPasividad() const{ return contadorJugadas > 50; }
 };
 

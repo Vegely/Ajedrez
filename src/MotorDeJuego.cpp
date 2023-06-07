@@ -166,6 +166,7 @@ void MotorDeJuego::pintar(Posicion posSelec) const
 	std::cout << "\t";
 	for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
 	std::cout << std::endl;
+	std::cout <<"Evaluacion del tablero: "<< IA::evaluacion(tablero) << std::endl;
 }
 
 ////////////////////////
