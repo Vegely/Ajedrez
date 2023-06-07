@@ -15,9 +15,8 @@ class Tablero
 	bool colorDelTurno;
 
 	bool haMovido[6] = {};
-public:
+
 	Posicion reyPos[2];
-private:
 
 	int numeroPiezas;
 	bool tableroIlegalesRey[2][8][8] = { false };
