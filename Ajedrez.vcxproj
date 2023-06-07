@@ -166,6 +166,7 @@
     <ClInclude Include="src\Posicion.h" />
     <ClInclude Include="src\Rey.h" />
     <ClInclude Include="src\SalidasConsola.h" />
+    <ClInclude Include="src\Sonidos.h" />
     <ClInclude Include="src\Tablero.h" />
     <ClInclude Include="src\Torre.h" />
   </ItemGroup>
@@ -189,6 +190,7 @@
     <ClCompile Include="src\Plane.cpp" />
     <ClCompile Include="src\Rey.cpp" />
     <ClCompile Include="src\SalidasConsola.cpp" />
+    <ClCompile Include="src\Sonidos.cpp" />
     <ClCompile Include="src\Tablero.cpp" />
     <ClCompile Include="src\Torre.cpp" />
   </ItemGroup>

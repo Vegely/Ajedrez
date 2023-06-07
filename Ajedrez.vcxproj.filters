@@ -150,6 +150,9 @@
     <ClInclude Include="src\Casilla.h">
       <Filter>2_Graficos\0_Glut\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Sonidos.h">
+      <Filter>5_Sonido\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Caballo.cpp">
@@ -214,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="src\Globals.cpp">
       <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sonidos.cpp">
+      <Filter>5_Sonido\Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
