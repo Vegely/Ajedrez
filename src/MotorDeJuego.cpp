@@ -11,26 +11,26 @@
 
 constexpr auto NUM_LINEAS = 40;
 
-////////////////////
-//#include <iostream>
-//#include <string>
-//#include <cctype>
-//using namespace std;
-//
-//Posicion getInput()
-//{
-//	string input;
-//
-//	cin >> input;
-// 
-//
-//	int letra = toupper(input[0]) - 65;
-//	int numero = input[1] - 49;
-//	if (letra >= 0 && letra < 8 && numero >= 0 && numero < 8) return Posicion(letra, numero);
-//
-//	return Posicion(-1, -1);
-//}
-////////////////////
+//////////////////
+#include <iostream>
+#include <string>
+#include <cctype>
+using namespace std;
+
+Posicion getInput()
+{
+	string input;
+
+	cin >> input;
+ 
+
+	int letra = toupper(input[0]) - 65;
+	int numero = input[1] - 49;
+	if (letra >= 0 && letra < 8 && numero >= 0 && numero < 8) return Posicion(letra, numero);
+
+	return Posicion(-1, -1);
+}
+//////////////////
 
 Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
 {
@@ -39,8 +39,8 @@ Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
 	switch (config[tablero.colorDelTurno])
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
-		//movimiento = ensamblarMovimiento(p_motorGrafico->getCasilla(), pos1Selec);
-		//break;
+		movimiento = ensamblarMovimiento(getInput(), pos1Selec);
+		break;
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
 		movimiento = IA::mover(tablero);
 		break;
@@ -166,7 +166,6 @@ void MotorDeJuego::pintar(Posicion posSelec) const
 	std::cout << "\t";
 	for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
 	std::cout << std::endl;
-	std::cout <<"Evaluacion del tablero: "<< IA::evaluacion(tablero) << std::endl;
 }
 
 ////////////////////////

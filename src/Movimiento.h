@@ -28,5 +28,5 @@ struct MovimientoEvaluado
 	std::vector<Movimiento> movimiento;
 	eval_t eval;
 	
-	explicit MovimientoEvaluado(eval_t eval) : eval(eval) { movimiento.clear(); }
+	explicit MovimientoEvaluado(const eval_t& eval) : eval(eval) { movimiento.clear(); }
 };

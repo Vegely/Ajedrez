@@ -9,7 +9,6 @@
 #include <cmath>
 #include <algorithm>
 
-
 void Tablero::actualizarTablero()
 {
 	for (auto limpiezaUnasAOtras : tablero) {
@@ -32,10 +31,9 @@ void Tablero::actualizarTablero()
 	}
 
 	datosClavada.clear();
-
 	
 	DatosClavada aux;
-	int i = 0;
+
 	for (Pieza* p_pieza : tablero) {
 
 
@@ -47,7 +45,7 @@ void Tablero::actualizarTablero()
 				datosClavada.push_back(aux);
 			}
 		}
-		i++;
+
 	}
 
 	leer(reyPos[0])->actualizarVariables(false, Posicion{ 0,0 }, tableroIlegalesRey);
@@ -62,7 +60,6 @@ void Tablero::actualizarTablero()
 
 	actualizarEnroque();
 	actualizarJaque();
-	
 }
 Tablero::Tablero(bool alocar)
 {
@@ -74,58 +71,67 @@ Tablero::Tablero(bool alocar)
 		//True == Blancas <-> False == Negras En color
 		//Blancas 
 		//Se añaden los peones
-		
-		for (int i = 0; i < ANCHO_TABLERO; i++)
-		{
-			escribir(Posicion(i, 1), new Peon(*this, true));
-		}
-		
-		//Se añaden las torres
-		escribir(Posicion(0, 0), new Torre(*this, true));
-		escribir(Posicion(7, 0), new Torre(*this, true));
+		//
+		//for (int i = 0; i < ANCHO_TABLERO; i++)
+		//{
+		//	escribir(Posicion(i, 1), new Peon(*this, true));
+		//}
+		//
+		////Se añaden las torres
+		//escribir(Posicion(0, 0), new Torre(*this, true));
+		//escribir(Posicion(7, 0), new Torre(*this, true));
 
-		//Se escriben los caballos
-		escribir(Posicion(1, 0), new Caballo(*this, true));
-		escribir(Posicion(6, 0), new Caballo(*this, true));
+		////Se escriben los caballos
+		//escribir(Posicion(1, 0), new Caballo(*this, true));
+		//escribir(Posicion(6, 0), new Caballo(*this, true));
 
-		//Se escriben los alfiles
-		escribir(Posicion(2, 0), new Alfil(*this, true));
-		escribir(Posicion(5, 0), new Alfil(*this, true));
-		
-		//Se escribe la dama y el rey
-		reyPos[1] = Posicion{ 4,0 };
+		////Se escriben los alfiles
+		//escribir(Posicion(2, 0), new Alfil(*this, true));
+		//escribir(Posicion(5, 0), new Alfil(*this, true));
+		//
+		////Se escribe la dama y el rey
+		//reyPos[1] = Posicion{ 4,0 };
 
-		escribir(Posicion(3, 0), new Dama(*this, true));
-		escribir(reyPos[1], new Rey(*this, true));
+		//escribir(Posicion(3, 0), new Dama(*this, true));
+		//escribir(reyPos[1], new Rey(*this, true));
 
-		//Negras
-		//Se añaden los peones
-		for (int i = 0; i < ANCHO_TABLERO; i++)
-		{
-			escribir(Posicion(i, 6), new Peon(*this, false));
-		}
-		
-		//Se añaden las torres
-		escribir(Posicion(0, 7), new Torre(*this, false));
-		escribir(Posicion(7, 7), new Torre(*this, false));
+		////Negras
+		////Se añaden los peones
+		//for (int i = 0; i < ANCHO_TABLERO; i++)
+		//{
+		//	escribir(Posicion(i, 6), new Peon(*this, false));
+		//}
+		//
+		////Se añaden las torres
+		//escribir(Posicion(0, 7), new Torre(*this, false));
+		//escribir(Posicion(7, 7), new Torre(*this, false));
 
-		//Se escriben los caballos
-		escribir(Posicion(1, 7), new Caballo(*this, false));
-		escribir(Posicion(6, 7), new Caballo(*this, false));
+		////Se escriben los caballos
+		//escribir(Posicion(1, 7), new Caballo(*this, false));
+		//escribir(Posicion(6, 7), new Caballo(*this, false));
 
-		//Se escriben los alfiles
-		escribir(Posicion(2, 7), new Alfil(*this, false));
-		escribir(Posicion(5, 7), new Alfil(*this, false));
-		
-		//Se escribe la dama y el rey
-		reyPos[0] = Posicion{ 4, 7 };
+		////Se escriben los alfiles
+		//escribir(Posicion(2, 7), new Alfil(*this, false));
+		//escribir(Posicion(5, 7), new Alfil(*this, false));
+		//
+		////Se escribe la dama y el rey
+		//reyPos[0] = Posicion{ 4, 7 };
 
-		escribir(Posicion(3, 7), new Dama(*this, false));
+		//escribir(Posicion(3, 7), new Dama(*this, false));
+		//escribir(reyPos[0], new Rey(*this, false));
+
+		reyPos[0] = Posicion{ 6,7 };
+		reyPos[1] = Posicion{ 5,0 };
 		escribir(reyPos[0], new Rey(*this, false));
-
+		escribir(reyPos[1], new Rey(*this, true));
+		escribir(Posicion{6,5}, new Peon(*this, true));
+		escribir(Posicion{1,1}, new Alfil(*this, true));
+		escribir(Posicion{3,7}, new Caballo(*this, true));
+		
 		colorDelTurno = true;
+
 		actualizarTablero(); //Se inicializan los movimientos posibles
-		numeroPiezas = 32;
+		numeroPiezas = 5;
 
 		infoTablas.add(*this);
 	}
@@ -296,6 +302,8 @@ bool Tablero::jaqueMate() const
 	
 }
 
+
+
 bool Tablero::reyAhogado() const // como se llama al jaque mate antes no es necesario revisar si el rey tiene amenazas.
 {
 	for (auto piezasColor : tablero)
@@ -305,8 +313,8 @@ bool Tablero::reyAhogado() const // como se llama al jaque mate antes no es nece
 				return false;
 		}
 	}
+	
 	return true;
-
 }
 
 bool Tablero::tablasMaterialInsuficiente() const {

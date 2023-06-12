@@ -34,7 +34,7 @@ DatosClavada Peon::actualizarVariables(bool clavada, Posicion direccionClavada, 
 	else
 	{
 		direcciones = { Posicion(0, -1),						//Direccion	  mover
-								Posicion(-1, -1), Posicion(1,-1) };		//Direcciones Comer
+								Posicion(-1, -1), Posicion(1, -1) };		//Direcciones Comer
 		if (clavada) {
 			bool SPBN = true;
 			for (auto movDirec : direcciones)
@@ -58,14 +58,18 @@ DatosClavada Peon::actualizarVariables(bool clavada, Posicion direccionClavada, 
 			{
 				puede_mover.push_back(posicion_prueba);			//Añade los vacios de la linea a puede_mover
 				posicion_prueba += direcciones[0];
-				if (posicion.y == YInicio && tablero.leer(posicion_prueba ) == nullptr) //Si esta en la casilla inicial puede mover 2
+				if (posicion.y == YInicio && tablero.leer(posicion_prueba) == nullptr) //Si esta en la casilla inicial puede mover 2
 				{
 					puede_mover.push_back(posicion_prueba);
 				}
 			}
 			else
 			{
-				tableroIlegalesRey[!color][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
+				if (direccion != direcciones[0])
+				{
+					tableroIlegalesRey[!color][posicion_prueba.x][posicion_prueba.y] = true; //Asignar como posible amenaza para el rey rival, por eso se cambia el color
+				}
+
 				if (tablero.leer(posicion_prueba) != nullptr && direccion != direcciones[0]) //Para que no de error de atributos no inicializados
 				{
 					if (tablero.leer(posicion_prueba)->color != color)		//La casilla revisada tiene una pieza enemiga

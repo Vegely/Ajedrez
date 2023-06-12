@@ -10,7 +10,6 @@ int SalidasConsola::enRango(int nElem)
 	{
 		string str;
 		cin >> str;
-
 		int aux = str.at(0) - 49;
 		if (str.size() == 1 && aux >= 0 && aux < nElem) { cout << "\n\n"; return aux; }
 	}
