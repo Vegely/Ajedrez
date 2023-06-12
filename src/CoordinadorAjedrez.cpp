@@ -16,9 +16,7 @@ void threadMotor(const ConfiguracionDeJuego* p_configuracion, Mundo* p_motorGraf
 	motor.liberar();
 }
 
-CoordinadorAjedrez::CoordinadorAjedrez() {
-	estado = INICIO;
-}
+CoordinadorAjedrez::CoordinadorAjedrez() : estado(INICIO) { }
 
 void CoordinadorAjedrez::onTimer()
 {

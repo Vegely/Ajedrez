@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Tablero.h"
-#include "Mundo.h"
 
 struct ConfiguracionDeJuego
 {

@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include "Casilla.h"
 #include "Posicion.h"
 
 constexpr double PI = 3.141592654f;
@@ -68,14 +67,14 @@ public:
 	static bool delay(const float milliseconds);
 };
 
-Point getPointFromCoords(char letter, unsigned int number);
+Point getPointFromCoords(unsigned int letter, unsigned int number);
 Point getPointFromCoords(const Posicion& pos);
 
 void drawLine(const Point& p1, const Point& p2);
 
 float distanciaPuntos(const Point& p1, const Point& p2);
 
-Casilla getCoordFromPosition(const Point& pt);
+Posicion getCoordFromPosition(const Point& pt);
 
 
 

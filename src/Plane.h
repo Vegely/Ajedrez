@@ -8,6 +8,8 @@ template<typename Type>
 struct Corners
 {
 	Type ll, lr, ul, ur;
+
+	Corners(void) : ll(), lr(), ul(), ur() { }
 };
 
 class Plane : public Entity

@@ -147,11 +147,11 @@
     <ClInclude Include="src\Globals.h">
       <Filter>2_Graficos\0_Glut\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Casilla.h">
-      <Filter>2_Graficos\0_Glut\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Sonidos.h">
       <Filter>5_Sonido\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Casilla.h">
+      <Filter>2_Graficos\0_Glut\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

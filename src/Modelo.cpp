@@ -1,5 +1,13 @@
 #include "Modelo.h"
 
+Modelo::Modelo(void) :
+	texture_ID(0),
+	model_path(""),
+	texture_path(""),
+	tipo_pieza(NONE),
+	scene(nullptr),
+	Entity() { }
+
 Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path) :
 	texture_ID(0),
 	model_path(model_path),
@@ -8,7 +16,12 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string
 	scene(nullptr),
 	Entity(initial_pos, Colors::White, "Modelo " + tipo_pieza)
 {
-	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate
+		| aiProcess_OptimizeMeshes
+		| aiProcess_JoinIdenticalVertices
+		| aiProcess_Triangulate
+		| aiProcess_CalcTangentSpace
+		| aiProcess_FlipUVs);
 	if (this->scene == nullptr || this->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !this->scene->mRootNode)
 	{
 		std::cerr << "Failed to load model: " + model_path;
@@ -43,7 +56,6 @@ Modelo& Modelo::operator = (const Modelo& rhs)
 	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
 	if (!scene || scene->mRootNode == nullptr) // Comprobaci�n de lectura correcta del archivo.
 		std::cerr << "Failed to load 3D model file: " << importer.GetErrorString();
-
 
 	return *this;
 }
@@ -94,22 +106,33 @@ void Modelo::renderNodo(const aiNode* nodo)
 		}
 		glEnd();
 	}
-	// Renderiza los nodos hijos utilizando esta misma funci�n hasta que no queden nodos hijos
+	// Renderiza los nodos hijos utilizando esta misma funcion hasta que no queden nodos hijos
 	for (unsigned int i = 0; i < nodo->mNumChildren; i++)
 		renderNodo(nodo->mChildren[i]);
 }
 
 void Modelo::render(void)
 {
+	if (this->scene == nullptr)
+		return;
+
 	//glDisable(GL_LIGHTING);
+	
 	glTranslatef  (this->position.x,  this->position.y,  this->position.z);
+		glRotatef(-90, 1, 0, 0);
 		renderNodo(this->scene->mRootNode);
+		glRotatef(90, 1, 0, 0);
 	glTranslatef (-this->position.x, -this->position.y, -this->position.z);
+	
+	
 	//glEnable(GL_LIGHTING);
 }
 
 bool Modelo::cargarTextura(void)
 {
+	if (this->scene == nullptr)
+		return false;
+
 	int ancho, alto, num_componentes;
 
 	glGenTextures(1, &this->texture_ID);
@@ -120,11 +143,6 @@ bool Modelo::cargarTextura(void)
 	}
 	glBindTexture(GL_TEXTURE_2D, this->texture_ID);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
 	unsigned char* datos_imagen = stbi_load(this->texture_path.c_str(), &ancho, &alto, &num_componentes, STBI_rgb);
 
 	if (datos_imagen == nullptr)
@@ -132,9 +150,15 @@ bool Modelo::cargarTextura(void)
 		std::cerr << "Failed to load texture file: " << this->texture_path.c_str();
 		return false;
 	}
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, ancho, alto, GL_RGB, GL_UNSIGNED_BYTE, datos_imagen);
 
 	stbi_image_free(datos_imagen);
+	std::cout << "Texture binded." << std::endl;
 	return true;
 }
 

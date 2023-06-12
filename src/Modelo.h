@@ -14,7 +14,6 @@
 #include <iostream>
 #include <vector>
 // Librer�as propias 
-#include "Globals.h" // Clases �tiles gen�ricas
 #include "Entity.h"
 #include "Movimiento.h"
 
@@ -33,7 +32,8 @@ public:
 	Assimp::Importer importer;
 
 public: 
-	/* FORMA CAN�NICA */
+	/* FORMA CANÓNICA */
+	Modelo(void);
 	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path);
     virtual ~Modelo(void) { /*delete scene;*/ }
 	Modelo(const Modelo& m);
@@ -50,12 +50,12 @@ public:
 	void setModelPath  (std::string path) { this->model_path   = path; }
 	void setTexturePath(std::string path) { this->texture_path = path; }
 	void setTextureID  (GLuint ID)		  { this->texture_ID   = ID; }
-	void moverModelo(const Movimiento& movimiento);
-
+	
 	/* FUNCIONES */
 	void render(void);
 	void renderNodo(const aiNode* nodo);
 	bool cargarTextura(void);
+	void moverModelo(const Movimiento& movimiento);
 };
 
 #endif

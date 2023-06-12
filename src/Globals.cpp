@@ -66,49 +66,16 @@ Point operator / (const Point& lhs, const float rhs)
 	return result;
 }
 
-Point getPointFromCoords(char letter, unsigned int number)
+Point getPointFromCoords(unsigned int letter, unsigned int number)
 {
-	int first = 0, second = 0;
-	switch (letter)
-	{
-	case 'a':
-		first = 0;
-		break;
-	case 'b':
-		first = 1;
-		break;
-	case 'c':
-		first = 2;
-		break;
-	case 'd':
-		first = 3;
-		break;
-	case 'e':
-		first = 4;
-		break;
-	case 'f':
-		first = 5;
-		break;
-	case 'g':
-		first = 6;
-		break;
-	case 'h':
-		first = 7;
-		break;
-	default:
-		std::cerr << "Not a valid coordinate." << std::endl;
-		break;
-	}
-	second = number - 1;
-
-	return Point{ -175.0f + first * 50.0f, 0, -175.0f + second * 50.0f };
+	return Point{ -17.5f + (letter - 1) * 5.0f, 0, -17.5f + (number - 1) * 5.0f };
 }
 
-Casilla getCoordFromPosition(const Point& pt)
+Posicion getCoordFromPosition(const Point& pt)
 {
-	Casilla result;
-	result.letra = pt.x / 50.0f + 175.0f;
-	result.numero = pt.z / 50.0f + 175.0f;
+	Posicion result;
+	result.x = pt.x / 50.0f + 175.0f;
+	result.y = pt.z / 50.0f + 175.0f;
 	return result;
 }
 

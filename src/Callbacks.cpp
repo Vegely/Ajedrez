@@ -1,6 +1,6 @@
 // Callbacks.cpp | Source file for callback functions
 
-#define STB_IMAGE_IMPLEMENTATION // Para la librer�a stb_image.h
+#define STB_IMAGE_IMPLEMENTATION // Para la libreria stb_image.h
 #include "Callbacks.h"
 #include "Mundo.h"
 
@@ -21,7 +21,7 @@ void motorGrafico(int* argc, char** argv)
 	glutInit(argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(1920, 1080);
-	glutCreateWindow("FlatChess - Adri�n Teixeira, Bogurad Bara�ski, Jorge Bengoa, Juan Nicol�s Jim�nez, Luis Miguel Muro");
+	glutCreateWindow("FlatChess");
 
 	mundo.inicializarIluminacion();
 	inicializarEstadoOpenGL();
@@ -33,7 +33,6 @@ void motorGrafico(int* argc, char** argv)
 
 	registrarCallbacks();
 
-	mundo.updateCamara();
 	mundo.asignarModelos();
 	mundo.cargarTexturas();
 
@@ -42,21 +41,24 @@ void motorGrafico(int* argc, char** argv)
 
 void registrarCallbacks(void)
 {
-   	      glutDisplayFunc(OnDraw);
-   	         glutIdleFunc(OnDraw);
-   	      glutReshapeFunc(OnReshape);
-   	 	    glutTimerFunc(25, OnTimer, 0);
-   	     glutKeyboardFunc(OnKeyboardDown);
-   	   glutKeyboardUpFunc(OnKeyboardUp);
-   	      glutSpecialFunc(OnKeyboardSpecial);
-   	 	    glutMouseFunc(OnMouseClick);
+	glutDisplayFunc(OnDraw);
+	glutIdleFunc(OnDraw);
+	glutReshapeFunc(OnReshape);
+	glutTimerFunc(25, OnTimer, 0);
+	glutKeyboardFunc(OnKeyboardDown);
+	glutKeyboardUpFunc(OnKeyboardUp);
+	glutSpecialFunc(OnKeyboardSpecial);
+	glutMouseFunc(OnMouseClick);
 	glutPassiveMotionFunc(OnMouseMotion);
 }
 
 // Continuously draws what it is specified to it.
 void OnDraw(void)
 {
-
+	mundo.updateCamara();
+	mundo.renderizarModelos();
+	glutSwapBuffers();
+	glutPostRedisplay();
 }
 
 // Reshapes the window if needed without resizing the objects and mantaining their proportions.

@@ -357,7 +357,6 @@ bool Tablero::tablasMaterialInsuficiente() const {
 								}
 							}
 						}
-						
 					}	
 				}
 			}
