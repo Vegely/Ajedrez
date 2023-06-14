@@ -29,9 +29,6 @@ protected:
 	const Tablero& tablero;					//Referencia al tablero para que las piezas sepan en que tablero estan
 	const bool color;						//True == Blancas <-> False == Negras
 	const unsigned char valor;				//Valor de la pieza
-	bool noHaMovido = true;					//Si se mueve pierde la posibilidad de enrocar aunque solo lo usen el rey y la torre es útil para manejar mediante polimorfismo
-	bool puedeEnrocar[2] = { false };		//Para que se pueda gestionar el enroque (solo lo usa el rey) útil para manejar mediante polimorfismo
-											//El valor en 0 simboliza enroque corto y 1 enroque en largo 
 
 	Posicion posicion;						//Casilla del tablero donde esta la pieza (0-7)x(0-7)
 	std::vector<Posicion> puede_mover;		//Lugares disponibles para mover
@@ -43,6 +40,7 @@ protected:
 	virtual DatosClavada actualizarVariables(bool clavada, Posicion direccionClavada, bool tableroIlegalesRey[2][8][8]) = 0;	//Funcion para actualizar todos los elementos de vector
 	inline void addAmenazas(Pieza* p_pieza) { amenazas.push_back(p_pieza); }	 //Función general de gestión de las amenazas desde el gestor
 	inline void addProtecciones(Pieza* p_pieza) { esta_protegida.push_back(p_pieza); }	 //Función general de gestión de las amenazas desde el gestor
+
 public:
 	//Para que el tablero pueda modificar las piezas
 	friend class Tablero;
@@ -57,9 +55,8 @@ public:
 	friend class Rey;
 
 	//Operadores basicos
-
 	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char valor, const tipo_t tipo) : tablero(p_tablero), color(color), valor(valor), tipo(tipo){}
-	explicit Pieza(const Pieza& p) :tipo(p.tipo), valor(p.valor), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegida = p.esta_protegida; amenazas = p.amenazas; }
+	explicit Pieza(const Pieza& p) : tipo(p.tipo), valor(p.valor), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegida = p.esta_protegida; amenazas = p.amenazas; }
 	virtual ~Pieza() {}
 
 	//Funciones para obtener las variables (deben poder usarse en un espacio de constness)
@@ -72,6 +69,9 @@ public:
 	inline const std::vector<Pieza*> getPuedeComer() const { return puede_comer; }
 	inline const std::vector<Pieza*> EstaProtegida() const { return esta_protegida; }
 	inline const std::vector<Pieza*> getAmenazas() const { return amenazas; }
+
+	// Operadores
+	Pieza& operator=(const Pieza& rhs);
 };
 
 #endif // !_Pieza__H_ //

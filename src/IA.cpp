@@ -68,15 +68,45 @@ double IA::evaluacion(const Tablero& tablero)  //Valor negativo ventaja negras v
 
 	double respuesta = COEFF_DIFERENCIA_MATERIAL* valorTablero + COEFF_AMENAZAS_PELIGROSAS * amenazaPeligrosaReturn + COEFF_AMENAZAS_POCO_PELIGROSAS * amenazaPocoPeligrosaReturn;
 
-	if (respuesta == 1.79769e+308)
-		std::cout << "CUIDADO UWU";
+	///
+	//if (abs(respuesta) >= 100000000000000000)
+	//	std::cout << "CUIDADO UWU";
+	//
+	////Insertar lineas vacias para limpiar consola
+	//for (int i = 0; i < 8; i++) {
+	//	std::cout << std::endl;
+	//}
+
+	//// Pintar el tablero
+	//int i = 0, j = 1;
+	//for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
+	//{
+	//	if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
+
+	//	if (tablero.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
+	//	else std::cout << tablero.tablero[x]->getNombre() << " " << tablero.tablero[x]->getColor() << "\t"; // Pintar pieza
+
+
+	//	if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
+	//}
+
+	//std::cout << "\t";
+	//for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
+	//std::cout << std::endl;
+
+	//std::cout << respuesta << std::endl;
+
+	//if (tablero.reyAhogado() == 1)
+	//	std::cout << "CUIDADO UWU_2";
+	///
 
 	return respuesta;
 }
 
 MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad, bool coloraMaximizar, eval_t alfa, eval_t beta)
 {
-	if (profundidad == 0 || tablero.jaqueMate()) { return MovimientoEvaluado(evaluacion(tablero)); }
+	if (profundidad == 0 || tablero.jaqueMate() || tablero.reyAhogado() || tablero.tablasMaterialInsuficiente() || tablero.infoTablas.tablasPorRepeticion() || tablero.infoTablas.tablasPorPasividad())
+		return MovimientoEvaluado(evaluacion(tablero));
 
 	if (coloraMaximizar)
 	{
@@ -88,36 +118,36 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			for (Posicion posicion : p_pieza->getPuedeMover())
 			{
 				Tablero aux = Tablero::copiar(tablero);
-				aux.mover(Movimiento(p_pieza->getPosicion(), posicion));
+				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), posicion));
 
 				///
-				//Insertar lineas vacias para limpiar consola
-				for (int i = 0; i < 8; i++) {
-					std::cout << std::endl;
-				}
-				std::cout << (int)profundidad << std::endl;
-				// Pintar el tablero
-				int i = 0, j = 1;
-				for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
-				{
-					if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
+				////Insertar lineas vacias para limpiar consola
+				//for (int i = 0; i < 8; i++) {
+				//	std::cout << std::endl;
+				//}
+				//std::cout << PROFUNDIDAD_IA - (int)profundidad << std::endl;
+				//// Pintar el tablero
+				//int i = 0, j = 1;
+				//for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
+				//{
+				//	if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
 
-					if (aux.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
-					else std::cout << aux.tablero[x]->getNombre() << " " << aux.tablero[x]->getColor() << "\t"; // Pintar pieza
+				//	if (aux.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
+				//	else std::cout << aux.tablero[x]->getNombre() << " " << aux.tablero[x]->getColor() << "\t"; // Pintar pieza
 
 
-					if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
-				}
+				//	if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
+				//}
 
-				std::cout << "\t";
-				for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
-				std::cout << std::endl;
+				//std::cout << "\t";
+				//for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
+				//std::cout << std::endl;
 
-				if (aux.reyAhogado() == 1)
-					std::cout << "CUIDADO UWU_2";
+				//if (aux.reyAhogado() == 1)
+				//	std::cout << "CUIDADO UWU_2";
 				///
 
-				MovimientoEvaluado eval = minimax(aux, profundidad - 1, false, alfa, beta);
+				MovimientoEvaluado eval(0); eval = minimax(aux, profundidad - 1, false, alfa, beta);
 				aux.liberar();
 
 				if (eval.eval >= maxEval.eval) // Guarda los movimientos de maximo valor en la ultima vuelta antes de salir
@@ -129,12 +159,17 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 				}
 
 				///
-				if (profundidad == PROFUNDIDAD_IA) std::cout << eval.eval << ": " << (char)(p_pieza->getPosicion().x + 65) << ", " << p_pieza->getPosicion().y + 1 << "; " << (char)(posicion.x + 65) << ", " << posicion.y + 1 << std::endl;
+				if (profundidad == PROFUNDIDAD_IA)
+				{
+					if (eval.eval >= 100000000000000000)
+						std::cout << "vbekvirwgbiw" << std::endl;
+					std::cout << eval.eval << ": " << (char)(p_pieza->getPosicion().x + 65) << ", " << p_pieza->getPosicion().y + 1 << "; " << (char)(posicion.x + 65) << ", " << posicion.y + 1 << std::endl;
+				}
 				///
 
 				alfa = std::max(alfa, eval.eval);
 
-				if (beta <= alfa)
+				if (beta < alfa)
 				{
 					exit = true;
 					break;
@@ -144,33 +179,33 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			if (!exit) for (Pieza* p_piezaComida : p_pieza->getPuedeComer())
 			{
 				Tablero aux = Tablero::copiar(tablero);
-				aux.mover(Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()));
+				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()));
 
 				///
-				//Insertar lineas vacias para limpiar consola
-				for (int i = 0; i < 8; i++) {
-					std::cout << std::endl;
-				}
-				std::cout << (int)profundidad << std::endl;
-				// Pintar el tablero
-				int i = 0, j = 1;
-				for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
-				{
-					if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
+				////Insertar lineas vacias para limpiar consola
+				//for (int i = 0; i < 8; i++) {
+				//	std::cout << std::endl;
+				//}
+				//std::cout << PROFUNDIDAD_IA - (int)profundidad << std::endl;
+				//// Pintar el tablero
+				//int i = 0, j = 1;
+				//for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
+				//{
+				//	if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
 
-					if (aux.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
-					else std::cout << aux.tablero[x]->getNombre() << " " << aux.tablero[x]->getColor() << "\t"; // Pintar pieza
+				//	if (aux.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
+				//	else std::cout << aux.tablero[x]->getNombre() << " " << aux.tablero[x]->getColor() << "\t"; // Pintar pieza
 
 
-					if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
-				}
+				//	if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
+				//}
 
-				std::cout << "\t";
-				for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
-				std::cout << std::endl;
+				//std::cout << "\t";
+				//for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
+				//std::cout << std::endl;
 
-				if (aux.reyAhogado() == 1)
-					std::cout << "CUIDADO UWU_2";
+				//if (aux.reyAhogado() == 1)
+				//	std::cout << "CUIDADO UWU_2";
 				///
 
 				MovimientoEvaluado eval = minimax(aux, profundidad - 1, false, alfa, beta);
@@ -188,7 +223,7 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 
 				alfa = std::max(alfa, eval.eval);
 
-				if (beta <= alfa)
+				if (beta < alfa)
 				{
 					exit = true;
 					break;
@@ -209,33 +244,33 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			for (Posicion posicion : p_pieza->getPuedeMover())
 			{
 				Tablero aux = Tablero::copiar(tablero);
-				aux.mover(Movimiento(p_pieza->getPosicion(), posicion));
+				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), posicion));
 
 				///
-				//Insertar lineas vacias para limpiar consola
-				for (int i = 0; i < 8; i++) {
-					std::cout << std::endl;
-				}
-				std::cout << (int)profundidad << std::endl;
-				// Pintar el tablero
-				int i = 0, j = 1;
-				for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
-				{
-					if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
+				////Insertar lineas vacias para limpiar consola
+				//for (int i = 0; i < 8; i++) {
+				//	std::cout << std::endl;
+				//}
+				//std::cout << PROFUNDIDAD_IA - (int)profundidad << std::endl;
+				//// Pintar el tablero
+				//int i = 0, j = 1;
+				//for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
+				//{
+				//	if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
 
-					if (aux.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
-					else std::cout << aux.tablero[x]->getNombre() << " " << aux.tablero[x]->getColor() << "\t"; // Pintar pieza
+				//	if (aux.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
+				//	else std::cout << aux.tablero[x]->getNombre() << " " << aux.tablero[x]->getColor() << "\t"; // Pintar pieza
 
 
-					if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
-				}
+				//	if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
+				//}
 
-				std::cout << "\t";
-				for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
-				std::cout << std::endl;
+				//std::cout << "\t";
+				//for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
+				//std::cout << std::endl;
 
-				if (aux.reyAhogado() == 1)
-					std::cout << "CUIDADO UWU_2";
+				//if (aux.reyAhogado() == 1)
+				//	std::cout << "CUIDADO UWU_2";
 				///
 
 				MovimientoEvaluado eval = minimax(aux, profundidad - 1, true, alfa, beta);
@@ -253,7 +288,7 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 
 				beta = std::min(beta, eval.eval);
 
-				if (beta <= alfa)
+				if (beta < alfa)
 				{
 					exit = true;
 					break;
@@ -263,33 +298,33 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			if (!exit) for (Pieza* p_piezaComida : p_pieza->getPuedeComer())
 			{
 				Tablero aux = Tablero::copiar(tablero);
-				aux.mover(Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()));
+				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()));
 
 				///
-				//Insertar lineas vacias para limpiar consola
-				for (int i = 0; i < 8; i++) {
-					std::cout << std::endl;
-				}
-				std::cout << (int)profundidad << std::endl;
-				// Pintar el tablero
-				int i = 0, j = 1;
-				for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
-				{
-					if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
+				////Insertar lineas vacias para limpiar consola
+				//for (int i = 0; i < 8; i++) {
+				//	std::cout << std::endl;
+				//}
+				//std::cout << PROFUNDIDAD_IA - (int)profundidad << std::endl;
+				//// Pintar el tablero
+				//int i = 0, j = 1;
+				//for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
+				//{
+				//	if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
 
-					if (aux.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
-					else std::cout << aux.tablero[x]->getNombre() << " " << aux.tablero[x]->getColor() << "\t"; // Pintar pieza
+				//	if (aux.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
+				//	else std::cout << aux.tablero[x]->getNombre() << " " << aux.tablero[x]->getColor() << "\t"; // Pintar pieza
 
 
-					if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
-				}
+				//	if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
+				//}
 
-				std::cout << "\t";
-				for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
-				std::cout << std::endl;
+				//std::cout << "\t";
+				//for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
+				//std::cout << std::endl;
 
-				if (aux.reyAhogado() == 1)
-					std::cout << "CUIDADO UWU_2";
+				//if (aux.reyAhogado() == 1)
+				//	std::cout << "CUIDADO UWU_2";
 				///
 
 				MovimientoEvaluado eval = minimax(aux, profundidad - 1, true, alfa, beta);
@@ -305,7 +340,7 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 				///
 				beta = std::min(beta, eval.eval);
 
-				if (beta <= alfa)
+				if (beta < alfa)
 				{
 					exit = true;
 					break;
@@ -342,7 +377,7 @@ Pieza::tipo_t IA::coronar(const Tablero& tablero, Posicion posicion)
 
 		Pieza* p_pieza = aux.leer(posicion);
 		aux.coronar(posicion, tipo);
-		aux.mover(Movimiento(posicion, posicion + (1 - 2 * !tablero.leer(posicion)->getColor()) * Posicion(0, 1)));
+		aux.hacerJugada(Movimiento(posicion, posicion + (1 - 2 * !tablero.leer(posicion)->getColor()) * Posicion(0, 1)));
 		delete p_pieza;
 
 		MovimientoEvaluado movimientoEvaluado = minimax(tablero, PROFUNDIDAD_IA, tablero.colorDelTurno);

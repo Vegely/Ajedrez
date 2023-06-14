@@ -53,18 +53,20 @@ DatosFinal MotorDeJuego::motor()
 {
 	DatosFinal datosFinal;
 	bool exit = false;
-	bool pos1Selec = false;
+	bool jugadaHecha = true;
 
 	while (!exit)
 	{
-		Movimiento movimiento = seleccionarEntrada(pos1Selec);
+		Movimiento movimiento = seleccionarEntrada(!jugadaHecha);
 
 		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1))) // Se hace la jugada
 		{
-			pos1Selec = !hacerJugada(movimiento);
+			jugadaHecha = tablero.hacerJugada(movimiento);
 
-			if (!pos1Selec) // Se hace la jugada
+			if (jugadaHecha) // Se hace la jugada
 			{
+				pintar();
+
 				if (tablero.jaqueMate())
 				{
 					datosFinal = { CodigoFinal::JAQUE_MATE,!tablero.colorDelTurno };
@@ -170,93 +172,90 @@ void MotorDeJuego::pintar(Posicion posSelec) const
 
 ////////////////////////
 
-bool MotorDeJuego::hacerJugada(Movimiento movimiento)
-{
-	bool JugadaHecha = false;
-
-	for (const Pieza* puedeComer : tablero.leer(movimiento.inicio)->getPuedeComer())
-	{
-		if (puedeComer->getPosicion() == movimiento.fin)
-		{
-			if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && puedeComer->getPosicion().y == movimiento.inicio.y);
-			else
-			{
-				tablero.actualizarHaMovido(movimiento);
-
-				delete tablero.leer(movimiento.fin);
-
-				tablero.infoTablas.clear();
-				tablero.numeroPiezas--;
-
-				JugadaHecha = true;
-				break;
-			}
-
-		}
-
-		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON)
-		{
-			Posicion aux = puedeComer->getPosicion() + (1 - 2 * !tablero.leer(movimiento.inicio)->getColor()) * Posicion(0, 1);
-			if (aux == movimiento.fin)
-			{
-				tablero.actualizarHaMovido(movimiento);
-
-				tablero.tablero[puedeComer->getPosicion().indice()] = nullptr;
-				delete tablero.leer(aux);
-
-				tablero.infoTablas.clear();
-				tablero.numeroPiezas--;
-
-				JugadaHecha = true;
-				break;
-			}
-		}
-	}
-		
-	if (!JugadaHecha) for (const Posicion puedeMover : tablero.leer(movimiento.inicio)->getPuedeMover())
-	{
-		if (puedeMover == movimiento.fin)
-		{ 
-			if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::REY)
-			{
-				Posicion aux = movimiento.fin - movimiento.inicio;
-				if (abs(aux.x) == 2)
-				{
-					if (aux.x < 0) tablero.mover(Movimiento(Posicion(0, movimiento.inicio.y), Posicion(3, movimiento.inicio.y)));
-					else tablero.mover(Movimiento(Posicion(7, movimiento.inicio.y), Posicion(5, movimiento.inicio.y)));
-
-					tablero.infoTablas.clear();
-				}	
-			}
-
-			tablero.actualizarHaMovido(movimiento);
-
-			JugadaHecha = true; 
-			break; 
-		}
-	}
-		
-
-	if (JugadaHecha)
-	{
-		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
-		{
-			Pieza* p_pieza = tablero.leer(movimiento.inicio);
-			tablero.coronar(movimiento.inicio, seleccionarEntradaCoronar(movimiento.inicio));
-			delete p_pieza;
-		}
-
-		tablero.cambiarTurno();
-		tablero.ultimaJugada = movimiento;
-		tablero.mover(movimiento);
-		
-		pintar();
-
-		return true;
-	}
-
-	return false;
-}
+//bool MotorDeJuego::hacerJugada(Movimiento movimiento, Tablero& tablero, const ConfiguracionDeJuego& config)
+//{
+//	bool jugadaHecha = false;
+//
+//	for (const Pieza* puedeComer : tablero.leer(movimiento.inicio)->getPuedeComer())
+//	{
+//		if (puedeComer->getPosicion() == movimiento.fin)
+//		{
+//			if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && puedeComer->getPosicion().y == movimiento.inicio.y);
+//			else
+//			{
+//				tablero.actualizarHaMovido(movimiento);
+//
+//				delete tablero.leer(movimiento.fin);
+//
+//				tablero.infoTablas.clear();
+//				tablero.numeroPiezas--;
+//
+//				jugadaHecha = true;
+//				break;
+//			}
+//		}
+//
+//		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON)
+//		{
+//			Posicion aux = puedeComer->getPosicion() + (1 - 2 * !tablero.leer(movimiento.inicio)->getColor()) * Posicion(0, 1);
+//			if (aux == movimiento.fin)
+//			{
+//				tablero.actualizarHaMovido(movimiento);
+//
+//				tablero.tablero[puedeComer->getPosicion().indice()] = nullptr;
+//				delete tablero.leer(aux);
+//
+//				tablero.infoTablas.clear();
+//				tablero.numeroPiezas--;
+//
+//				jugadaHecha = true;
+//				break;
+//			}
+//		}
+//	}
+//		
+//	if (!jugadaHecha) for (const Posicion puedeMover : tablero.leer(movimiento.inicio)->getPuedeMover())
+//	{
+//		if (puedeMover == movimiento.fin)
+//		{ 
+//			if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::REY)
+//			{
+//				Posicion aux = movimiento.fin - movimiento.inicio;
+//				if (abs(aux.x) == 2)
+//				{
+//					if (aux.x < 0) tablero.mover(Movimiento(Posicion(0, movimiento.inicio.y), Posicion(3, movimiento.inicio.y)));
+//					else tablero.mover(Movimiento(Posicion(7, movimiento.inicio.y), Posicion(5, movimiento.inicio.y)));
+//
+//					tablero.infoTablas.clear();
+//				}	
+//			}
+//
+//			tablero.actualizarHaMovido(movimiento);
+//
+//			jugadaHecha = true; 
+//			break; 
+//		}
+//	}
+//		
+//
+//	if (jugadaHecha)
+//	{
+//		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
+//		{
+//			Pieza* p_pieza = tablero.leer(movimiento.inicio);
+//			tablero.coronar(movimiento.inicio, seleccionarEntradaCoronar(movimiento.inicio, tablero, config));
+//			delete p_pieza;
+//		}
+//
+//		tablero.cambiarTurno();
+//		tablero.ultimaJugada = movimiento;
+//		tablero.mover(movimiento);
+//
+//		return true;
+//	}
+//
+//	return false;
+//}
 
 /////////////////
 
@@ -298,8 +297,8 @@ Pieza::tipo_t getSelection()
 }
 
 /////////////////
-
-Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(Posicion posicion) const
+ConfiguracionDeJuego MotorDeJuego::config;
+Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Posicion& posicion, const Tablero& tablero)
 {
 	Pieza::tipo_t tipo;
 

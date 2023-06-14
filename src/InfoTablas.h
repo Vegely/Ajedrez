@@ -19,5 +19,7 @@ public:
 	
 	inline bool tablasPorRepeticion() const{ return boolRepeticion; }
 	inline bool tablasPorPasividad() const{ return contadorJugadas > 50; }
+
+	InfoTablas(const InfoTablas& rhs) : posiciones(rhs.posiciones), repeticiones(rhs.repeticiones), boolRepeticion(rhs.boolRepeticion), contadorJugadas(rhs.contadorJugadas) {}
 };
 

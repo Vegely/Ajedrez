@@ -2,6 +2,7 @@
 
 #include "Tablero.h"
 #include "Mundo.h"
+#include "IA.h";
 
 struct ConfiguracionDeJuego
 {
@@ -22,21 +23,20 @@ struct DatosFinal
 
 class MotorDeJuego
 {
-	const ConfiguracionDeJuego config;
+	static ConfiguracionDeJuego config;
 	
 	Tablero tablero;
 
-	void pintar(Posicion piezaSelec = Posicion(-1, -1)) const;	
+	void pintar(Posicion piezaSelec = Posicion(-1, -1)) const;
 
 	Movimiento seleccionarEntrada(bool pos1Selec) const;
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec) const;
-	bool hacerJugada(Movimiento movimiento);
-
-	Pieza::tipo_t seleccionarEntradaCoronar(Posicion posicion) const;
-public:
 	
+public:
+	MotorDeJuego(const ConfiguracionDeJuego& config) : tablero(Tablero(true)) { pintar(); this->config = config; }
 
-	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { pintar(); }
+	static Pieza::tipo_t seleccionarEntradaCoronar(const Posicion& posicion, const Tablero& tablero);
+	//static bool hacerJugada(Movimiento movimiento, Tablero& tablero, const ConfiguracionDeJuego& config);
 
 	void liberar() { tablero.liberar(); }
 

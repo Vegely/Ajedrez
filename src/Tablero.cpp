@@ -1,3 +1,7 @@
+#include <string>
+#include <cmath>
+#include <algorithm>
+
 #include "Tablero.h"
 #include "Caballo.h"
 #include "Rey.h"
@@ -5,9 +9,8 @@
 #include "Alfil.h"
 #include "Torre.h"
 #include "Dama.h"
-#include <string>
-#include <cmath>
-#include <algorithm>
+
+#include "MotorDeJuego.h"
 
 void Tablero::actualizarTablero()
 {
@@ -68,9 +71,9 @@ Tablero::Tablero(bool alocar)
 	
 	if (alocar)
 	{
-		//True == Blancas <-> False == Negras En color
-		//Blancas 
-		//Se añaden los peones
+		////True == Blancas <-> False == Negras En color
+		////Blancas 
+		////Se añaden los peones
 		//
 		//for (int i = 0; i < ANCHO_TABLERO; i++)
 		//{
@@ -114,19 +117,19 @@ Tablero::Tablero(bool alocar)
 		//escribir(Posicion(2, 7), new Alfil(*this, false));
 		//escribir(Posicion(5, 7), new Alfil(*this, false));
 		//
-		////Se escribe la dama y el rey
+		////Se escribe la dama y el rey4
 		//reyPos[0] = Posicion{ 4, 7 };
 
 		//escribir(Posicion(3, 7), new Dama(*this, false));
 		//escribir(reyPos[0], new Rey(*this, false));
 
-		reyPos[0] = Posicion{ 6,7 };
-		reyPos[1] = Posicion{ 5,0 };
+		reyPos[0] = Posicion{ 5,6 };
+		reyPos[1] = Posicion{ 4,3 };
 		escribir(reyPos[0], new Rey(*this, false));
 		escribir(reyPos[1], new Rey(*this, true));
-		escribir(Posicion{6,5}, new Peon(*this, true));
-		escribir(Posicion{1,1}, new Alfil(*this, true));
-		escribir(Posicion{3,7}, new Caballo(*this, true));
+		escribir(Posicion{6,6}, new Peon(*this, true));
+		escribir(Posicion{0,2}, new Alfil(*this, true));
+		escribir(Posicion{4,6}, new Caballo(*this, true));
 		
 		colorDelTurno = true;
 
@@ -140,6 +143,8 @@ Tablero::Tablero(bool alocar)
 Tablero Tablero::copiar(const Tablero& tablero)
 {
 	Tablero aux;
+
+	// Alocar la copia de las piezas en memoria
 	for (int i = 0; i < ANCHO_TABLERO * ANCHO_TABLERO; i++)
 	{
 		if (tablero.tablero[i] != nullptr)
@@ -165,6 +170,8 @@ Tablero Tablero::copiar(const Tablero& tablero)
 				aux.escribir(tablero.posicion(i), new Rey(aux, tablero.tablero[i]->color));
 				break;
 			}
+
+			*aux.tablero[i] = *tablero.tablero[i];
 		}
 		else aux.tablero[i] = nullptr;
 	}
@@ -196,7 +203,7 @@ void Tablero::mover(const Movimiento& movimiento) {
 	escribir(movimiento.fin, leer(movimiento.inicio));
 	escribir(movimiento.inicio, nullptr);
 
-	if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY) infoTablas.clear();
+	if (leer(movimiento.fin)->tipo == Pieza::tipo_t::PEON) infoTablas.clear();
 	infoTablas.add(*this);
 
 	if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY)
@@ -205,6 +212,91 @@ void Tablero::mover(const Movimiento& movimiento) {
 	}
 
 	actualizarTablero();
+}
+
+bool Tablero::hacerJugada(const Movimiento& movimiento)
+{
+	bool jugadaHecha = false;
+
+	for (const Pieza* puedeComer : leer(movimiento.inicio)->getPuedeComer())
+	{
+		if (puedeComer->getPosicion() == movimiento.fin)
+		{
+			if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && puedeComer->getPosicion().y == movimiento.inicio.y);
+			else
+			{
+				actualizarHaMovido(movimiento);
+
+				delete leer(movimiento.fin);
+
+				infoTablas.clear();
+				numeroPiezas--;
+
+				jugadaHecha = true;
+				break;
+			}
+		}
+
+		if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON)
+		{
+			Posicion aux = puedeComer->getPosicion() + (1 - 2 * !leer(movimiento.inicio)->getColor()) * Posicion(0, 1);
+			if (aux == movimiento.fin)
+			{
+				actualizarHaMovido(movimiento);
+
+				tablero[puedeComer->getPosicion().indice()] = nullptr;
+				delete leer(aux);
+
+				infoTablas.clear();
+				numeroPiezas--;
+
+				jugadaHecha = true;
+				break;
+			}
+		}
+	}
+
+	if (!jugadaHecha) for (const Posicion puedeMover : leer(movimiento.inicio)->getPuedeMover())
+	{
+		if (puedeMover == movimiento.fin)
+		{
+			if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::REY)
+			{
+				Posicion aux = movimiento.fin - movimiento.inicio;
+				if (abs(aux.x) == 2)
+				{
+					if (aux.x < 0) mover(Movimiento(Posicion(0, movimiento.inicio.y), Posicion(3, movimiento.inicio.y)));
+					else mover(Movimiento(Posicion(7, movimiento.inicio.y), Posicion(5, movimiento.inicio.y)));
+
+					infoTablas.clear();
+				}
+			}
+
+			actualizarHaMovido(movimiento);
+
+			jugadaHecha = true;
+			break;
+		}
+	}
+
+
+	if (jugadaHecha)
+	{
+		if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
+		{
+			Pieza* p_pieza = leer(movimiento.inicio);
+			coronar(movimiento.inicio, MotorDeJuego::seleccionarEntradaCoronar(movimiento.inicio, *this));
+			delete p_pieza;
+		}
+
+		cambiarTurno();
+		ultimaJugada = movimiento;
+		mover(movimiento);
+
+		return true;
+	}
+
+	return false;
 }
 
 void Tablero::coronar(Posicion posicion, Pieza::tipo_t tipo)
@@ -286,7 +378,6 @@ bool Tablero::jaqueMate() const
 						}
 					}
 				}
-					
 
 				//Comprobar si se puede poner algo en medio
 				std::vector<DatosBloqueoJaque> Bloquea = bloqueoJaque();
