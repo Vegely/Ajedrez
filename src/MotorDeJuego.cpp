@@ -9,10 +9,12 @@
 
 #include "IA.h"
 
+#include <iostream>
+
 constexpr auto NUM_LINEAS = 40;
 
 ////////////////////
-//#include <iostream>
+
 //#include <string>
 //#include <cctype>
 //using namespace std;
@@ -40,7 +42,7 @@ Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
 		//movimiento = ensamblarMovimiento(p_motorGrafico->getCasilla(), pos1Selec);
-		//break;
+		break;
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
 		movimiento = IA::mover(tablero);
 		break;
@@ -97,79 +99,77 @@ DatosFinal MotorDeJuego::motor()
 	return datosFinal;
 }
 
-
-
-////////////////////////
-
-#include <iostream>
-#include <windows.h>
-
-void MotorDeJuego::pintar(Posicion posSelec) const
-{
-	//Insertar lineas vacias para limpiar consola
-	for (int i = 0; i < NUM_LINEAS; i++) {
-		std::cout<< std::endl;
-	}
-
-	// Pintar el tablero
-	int i = 0, j = 1;
-	for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
-	{
-		HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-
-		if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
-
-		bool skip = false;
-		if (posSelec != Posicion(-1, -1)) // Seleccionar el color de fondo
-		{
-			if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == posSelec)
-				SetConsoleTextAttribute(hStdout, 160); // Seleccion de la pieza
-			else
-			{
-				for (Posicion puedeMover : tablero.leer(posSelec)->getPuedeMover()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeMover)
-					if (tablero.leer(posSelec)->getTipo() != Pieza::tipo_t::PEON || (puedeMover - tablero.leer(posSelec)->getPosicion()).x == 0)
-					{
-						SetConsoleTextAttribute(hStdout, 176); // Seleccion de movimento 
-						skip = true;
-						break;
-					}
-
-				if (!skip && tablero.leer(Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO)) != nullptr)
-				{
-					for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
-						if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() )
-						{
-							if (!(tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON && puedeComer->getPosicion().y == posSelec.y)) 
-								SetConsoleTextAttribute(hStdout, 64); // Seleccion de la comida
-							skip = true;
-							break;
-						}
-				}
-				
-				if (!skip && tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON) for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
-					if (puedeComer->getPosicion().y == posSelec.y && Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() + (1 - 2 * !tablero.leer(posSelec)->getColor()) * Posicion(0, 1))
-					{
-						SetConsoleTextAttribute(hStdout, 64); // Seleccion de la comida en pasada
-						break;
-					}
-			}
-		}
-		
-		if (tablero.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
-		else std::cout << tablero.tablero[x]->getNombre() << " " << tablero.tablero[x]->getColor() << "\t"; // Pintar pieza
-
-		SetConsoleTextAttribute(hStdout, 7); // Color de fondo
-
-		if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
-	}
-
-	std::cout << "\t";
-	for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
-	std::cout << std::endl;
-	std::cout <<"Evaluacion del tablero: "<< IA::evaluacion(tablero) << std::endl;
-}
-
-////////////////////////
+//////////////////////////
+//
+//#include <iostream>
+//#include <windows.h>
+//
+//void MotorDeJuego::pintar(Posicion posSelec) const
+//{
+//	//Insertar lineas vacias para limpiar consola
+//	for (int i = 0; i < NUM_LINEAS; i++) {
+//		std::cout<< std::endl;
+//	}
+//
+//	// Pintar el tablero
+//	int i = 0, j = 1;
+//	for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
+//	{
+//		HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+//
+//		if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
+//
+//		bool skip = false;
+//		if (posSelec != Posicion(-1, -1)) // Seleccionar el color de fondo
+//		{
+//			if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == posSelec)
+//				SetConsoleTextAttribute(hStdout, 160); // Seleccion de la pieza
+//			else
+//			{
+//				for (Posicion puedeMover : tablero.leer(posSelec)->getPuedeMover()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeMover)
+//					if (tablero.leer(posSelec)->getTipo() != Pieza::tipo_t::PEON || (puedeMover - tablero.leer(posSelec)->getPosicion()).x == 0)
+//					{
+//						SetConsoleTextAttribute(hStdout, 176); // Seleccion de movimento 
+//						skip = true;
+//						break;
+//					}
+//
+//				if (!skip && tablero.leer(Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO)) != nullptr)
+//				{
+//					for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
+//						if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() )
+//						{
+//							if (!(tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON && puedeComer->getPosicion().y == posSelec.y)) 
+//								SetConsoleTextAttribute(hStdout, 64); // Seleccion de la comida
+//							skip = true;
+//							break;
+//						}
+//				}
+//				
+//				if (!skip && tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON) for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
+//					if (puedeComer->getPosicion().y == posSelec.y && Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() + (1 - 2 * !tablero.leer(posSelec)->getColor()) * Posicion(0, 1))
+//					{
+//						SetConsoleTextAttribute(hStdout, 64); // Seleccion de la comida en pasada
+//						break;
+//					}
+//			}
+//		}
+//		
+//		if (tablero.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
+//		else std::cout << tablero.tablero[x]->getNombre() << " " << tablero.tablero[x]->getColor() << "\t"; // Pintar pieza
+//
+//		SetConsoleTextAttribute(hStdout, 7); // Color de fondo
+//
+//		if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
+//	}
+//
+//	std::cout << "\t";
+//	for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
+//	std::cout << std::endl;
+//	std::cout <<"Evaluacion del tablero: "<< IA::evaluacion(tablero) << std::endl;
+//}
+//
+//////////////////////////
 
 bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 {
@@ -251,7 +251,7 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 		tablero.ultimaJugada = movimiento;
 		tablero.mover(movimiento);
 		
-		pintar();
+		//pintar();
 
 		return true;
 	}

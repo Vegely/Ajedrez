@@ -2,272 +2,173 @@
 #include <ETSIDI.h>
 #include <string>
 
-#define ruta_modelo_rey     "modelos/rey.obj"
-#define ruta_modelo_dama    "modelos/dama.obj"
-#define ruta_modelo_alfil   "modelos/alfil.obj"
-#define ruta_modelo_caballo "modelos/caballo.obj"
-#define ruta_modelo_torre   "modelos/torre.obj"
-#define ruta_modelo_peon    "modelos/peon.obj"
-
-#define ruta_modelo_casillas_negras  "modelos/casillas_negras.obj"
-#define ruta_modelo_casillas_blancas "modelos/casillas_blancas.obj"
-#define ruta_modelo_marcos           "modelos/marcos.obj"
-#define ruta_modelo_letras           "modelos/letras.obj"
-
-#define ruta_textura_blanco		   "texturas/marmol_blanco.jpg"
-#define ruta_textura_negro		   "texturas/marmol_negro.jpg"
-#define ruta_textura_blanco_oscuro "texturas/marmol_blanco_oscuro.jpg"
-#define ruta_textura_negro_claro   "texturas/marmol_negro_claro.jpg"
-#define ruta_textura_marco		   "texturas/marmol_negro_marco.jpg"
-
-#define ruta_fondo "texturas/espacio.png"
+CasillasTablero casillas_tablero_array;
 
 Mundo::Mundo(void) :
-	rey_blanco(),
-	rey_negro(),
-	damas_blancas(),
-	damas_negras(),
-	alfiles_blancos(),
-	alfiles_negros(),
-	caballos_blancos(),
-	caballos_negros(),
-	torres_blancas(),
-	torres_negras(),
-	peones_blancos(),
-	peones_negros(),
+	tablero_anterior(),
+	tablero_actual(),
+	rey_blanco(1),
+	rey_negro(1),
+	damas_blancas(9),
+	damas_negras(9),
+	alfiles_blancos(10),
+	alfiles_negros(10),
+	caballos_blancos(10),
+	caballos_negros(10),
+	torres_blancas(10),
+	torres_negras(10),
+	peones_blancos(8),
+	peones_negros(8),
 	casillas_blancas(),
 	casillas_negras(),
 	marcos(),
 	letras(),
-	modelos(0),
 	camara({ 0.0f, 20.5f, -15.6f }),
-	casilla_leida({ 0 }),
+	casillas_leidas(),
 	casillas_px()
 {
-	casillas_blancas = new Modelo(NONE, { 0 }, ruta_modelo_casillas_blancas, ruta_textura_blanco_oscuro);
-	casillas_negras  = new Modelo(NONE, { 0 }, ruta_modelo_casillas_negras,  ruta_textura_negro_claro);
-	marcos			 = new Modelo(NONE, { 0 }, ruta_modelo_marcos, ruta_textura_marco);
-	letras			 = new Modelo(NONE, { 0 }, ruta_modelo_letras, ruta_textura_blanco);
 
-	rey_blanco = new Modelo(REY, getPointFromCoords(5, 1), ruta_modelo_rey, ruta_textura_blanco);
-	rey_negro  = new Modelo(REY, getPointFromCoords(5, 8), ruta_modelo_rey, ruta_textura_negro);
+}
 
-	for (int i = 0; i < 10; i++)
-	{
-		// Damas
-		if (i < 9)
-		{
-			if (i == 0)
-			{
-				damas_blancas[i] = new Modelo(DAMA, getPointFromCoords(4, 1), ruta_modelo_dama, ruta_textura_blanco);
-				damas_negras [i] = new Modelo(DAMA, getPointFromCoords(4, 8), ruta_modelo_dama, ruta_textura_negro);
-			}
-			else
-			{
-				damas_blancas[i] = new Modelo();
-				damas_negras [i] = new Modelo();
-			}
-		}
-		// Resto de piezas excepto peones
-		if (i == 0 || i == 1)
-		{
-			torres_blancas  [i] = new Modelo(TORRE, getPointFromCoords(1 + i * 7, 1), ruta_modelo_torre, ruta_textura_blanco);
-			torres_negras   [i] = new Modelo(TORRE, getPointFromCoords(1 + i * 7, 8), ruta_modelo_torre, ruta_textura_negro);
-
-			caballos_blancos[i] = new Modelo(CABALLO, getPointFromCoords(2 + i * 5, 1), ruta_modelo_caballo, ruta_textura_blanco);
-			caballos_negros [i] = new Modelo(CABALLO, getPointFromCoords(2 + i * 5, 8), ruta_modelo_caballo, ruta_textura_negro);
-
-			alfiles_blancos [i] = new Modelo(ALFIL, getPointFromCoords(3 + i * 3, 1), ruta_modelo_alfil, ruta_textura_blanco);
-			alfiles_negros  [i] = new Modelo(ALFIL, getPointFromCoords(3 + i * 3, 8), ruta_modelo_alfil, ruta_textura_negro);
-		}
-		else
-		{
-			torres_blancas  [i] = new Modelo();
-			torres_negras   [i] = new Modelo();
-			caballos_blancos[i] = new Modelo();
-			caballos_negros [i] = new Modelo();
-			alfiles_blancos [i] = new Modelo();
-			alfiles_negros  [i] = new Modelo();
-		}
-		// Peones
-		if (i < 8)
-		{
-			peones_blancos  [i] = new Modelo(ALFIL, getPointFromCoords(1 + i, 2), ruta_modelo_peon, ruta_textura_blanco);
-			peones_negros   [i] = new Modelo(ALFIL, getPointFromCoords(1 + i, 7), ruta_modelo_peon, ruta_textura_negro);
-		}
-	}
+void Mundo::init(void)
+{
+	asignarModelos();
+	cargarTexturas();
 }
 
 void Mundo::asignarModelos(void)
 {
-	modelos.push_back(casillas_blancas);
-	modelos.push_back(casillas_negras);
-	modelos.push_back(marcos);
-	modelos.push_back(letras);
+	casillas_blancas = new Modelo(NONE, Posicion(0, 0), Modelo::ruta_modelo_casillas_blancas, Modelo::ruta_textura_blanco_oscuro);
+	casillas_negras  = new Modelo(NONE, Posicion(0, 0), Modelo::ruta_modelo_casillas_negras,  Modelo::ruta_textura_negro_claro);
+	marcos			 = new Modelo(NONE, Posicion(0, 0), Modelo::ruta_modelo_marcos,			  Modelo::ruta_textura_marco);
+	letras			 = new Modelo(NONE, Posicion(0, 0), Modelo::ruta_modelo_letras,			  Modelo::ruta_textura_blanco);
 
-	modelos.push_back(rey_blanco);
-	modelos.push_back(rey_negro);
+	rey_blanco.addElem(new Modelo(REY, Posicion(5, 1), true ));
+	rey_negro .addElem(new Modelo(REY, Posicion(5, 8), false));
 
-	for (int i = 0; i < 9; i++)
-	{
-		modelos.push_back(damas_blancas[i]);
-		modelos.push_back(damas_negras[i]);
-	}
-	for (int i = 0; i < 10; i++)
-	{
-		modelos.push_back(torres_blancas[i]);
-		modelos.push_back(torres_negras[i]);
-		modelos.push_back(caballos_blancos[i]);
-		modelos.push_back(caballos_negros[i]);
-		modelos.push_back(alfiles_blancos[i]);
-		modelos.push_back(alfiles_negros[i]);
-	}
 	for (int i = 0; i < 8; i++)
 	{
-		modelos.push_back(peones_blancos[i]);
-		modelos.push_back(peones_negros[i]);
+		// Damas
+		if (i == 0)
+		{
+			damas_blancas.addElem(new Modelo(DAMA, Posicion(4, 1), true ));
+			damas_negras .addElem(new Modelo(DAMA, Posicion(4, 8), false));
+		}
+		// Resto de piezas excepto peones
+		if (i == 0 || i == 1)
+		{
+			torres_blancas  .addElem(new Modelo(TORRE,   Posicion(1 + i * 7, 1), true ));
+			torres_negras   .addElem(new Modelo(TORRE,   Posicion(1 + i * 7, 8), false));
+
+			caballos_blancos.addElem(new Modelo(CABALLO, Posicion(2 + i * 5, 1), true ));
+			caballos_negros .addElem(new Modelo(CABALLO, Posicion(2 + i * 5, 8), false));
+
+			alfiles_blancos .addElem(new Modelo(ALFIL,   Posicion(3 + i * 3, 1), true ));
+			alfiles_negros  .addElem(new Modelo(ALFIL,   Posicion(3 + i * 3, 8), false));
+		}
+		// Peones
+		peones_blancos  .addElem(new Modelo(PEON, Posicion(1 + i, 2), true ));
+		peones_negros   .addElem(new Modelo(PEON, Posicion(1 + i, 7), false));
 	}
+
+	casillas_leidas.inicio = Posicion{ -1, -1 };
+	casillas_leidas.fin    = Posicion{ -1, -1 };
 
 	std::cout << "Modelos asignados." << std::endl;
 }
 
 void Mundo::cargarTexturas(void)
 {
-	for (auto i : modelos)
-		i->cargarTextura();
+	rey_blanco       .cargarTexturas();
+	rey_negro        .cargarTexturas();
+	damas_blancas    .cargarTexturas();
+	damas_negras     .cargarTexturas();
+	alfiles_blancos  .cargarTexturas();
+	alfiles_negros   .cargarTexturas();
+	caballos_blancos .cargarTexturas();
+	caballos_negros  .cargarTexturas();
+	torres_blancas   .cargarTexturas();
+	torres_negras    .cargarTexturas();
+	peones_blancos   .cargarTexturas();
+	peones_negros    .cargarTexturas();
+	casillas_blancas->cargarTextura();
+	casillas_negras ->cargarTextura();
+	marcos          ->cargarTextura();
+	letras          ->cargarTextura();
+}
 
-	//rey_blanco->cargarTextura();
-	//rey_negro ->cargarTextura();
+void Mundo::dibujarTablero(const Tablero& tablero)
+{
+	tablero_anterior.copiar(tablero_actual);
+	tablero_actual  .copiar(tablero);
+	static Pieza* pieza_anterior = nullptr;
+	static Pieza* pieza_actual   = nullptr;
 
-	//for (int i = 0; i < 9; i++)
-	//{
-	//	damas_blancas[i]->cargarTextura();
-	//	damas_negras [i]->cargarTextura();
-	//}
+	for (int i = 0; i < 64; i++)
+	{
+		pieza_anterior = tablero_anterior.leer(casillas_tablero_array[i]);
+		pieza_actual   = tablero_actual  .leer(casillas_tablero_array[i]);
 
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	alfiles_blancos [i]->cargarTextura();
-	//	alfiles_negros  [i]->cargarTextura();
-	//	caballos_blancos[i]->cargarTextura();
-	//	caballos_negros [i]->cargarTextura();
-	//	torres_blancas  [i]->cargarTextura();
-	//	torres_negras   [i]->cargarTextura();
-	//}
+		if (pieza_anterior != nullptr || pieza_actual != nullptr) // Si la casilla no sigue vacía
+		{
+			// Si los tipos y colores son iguales no ha pasado nada
+			if (pieza_anterior->getTipo() == pieza_actual->getTipo() && pieza_anterior->getColor() == pieza_actual->getColor())
+				return;
+			// Si los tipos son pieza y pieza una ha comido a la otra o ha ocurrido una coronación
+			if (pieza_anterior != nullptr && pieza_actual != nullptr)
+			{
+				if (pieza_anterior->getColor() != pieza_actual->getColor()) // Una ha comido a la otra. Se sustituye la nueva por la antigua.
+				{
+					seleccionarLista(pieza_anterior->getColor(), pieza_anterior->getTipo())->
+					deleteFromCoord(pieza_anterior->getPosicion());
 
-	//for (int i = 0; i < 8; i++)
-	//{
-	//	peones_blancos[i]->cargarTextura();
-	//	 peones_negros[i]->cargarTextura();
-	//}
+					seleccionarLista(pieza_actual->getColor(), pieza_actual->getTipo())->
+					addElem(new Modelo(Modelo::castTipo(pieza_actual->getTipo()), pieza_actual->getPosicion(), pieza_actual->getColor()));
+				}
+				else if (pieza_anterior->getTipo() == Pieza::tipo_t::PEON) // Ha ocurrido una coronación
+				{
+					seleccionarLista(pieza_anterior->getColor(), pieza_anterior->getTipo())->
+					deleteFromCoord(pieza_anterior->getPosicion());
 
-	//casillas_blancas->cargarTextura();
-	//casillas_negras ->cargarTextura();
+					seleccionarLista(pieza_actual->getColor(), pieza_actual->getTipo())->
+					addElem(new Modelo(Modelo::castTipo(pieza_actual->getTipo()), pieza_actual->getPosicion(), pieza_actual->getColor()));
+				}
+			}
+			// Si los tipos son nullptr y pieza o viceversa, una pieza se ha movido.
+			else if (pieza_anterior == nullptr && pieza_actual != nullptr || pieza_anterior != nullptr && pieza_actual == nullptr)
+			{
+				if (pieza_actual == nullptr)
+					seleccionarLista(pieza_anterior->getColor(), pieza_anterior->getTipo())->
+					deleteFromCoord(pieza_anterior->getPosicion());
+				else
+					seleccionarLista(pieza_actual->getColor(), pieza_actual->getTipo())->
+					addElem(new Modelo(Modelo::castTipo(pieza_actual->getTipo()), pieza_actual->getPosicion(), pieza_actual->getColor()));
+			}
+		}
+	}
 }
 
 void Mundo::renderizarModelos(void)
 {
-	for (auto i : modelos)
-		i->render();
-
-	//rey_blanco->render();
-	//rey_negro ->render();
-
-	//for (int i = 0; i < 9; i++)
-	//{
-	//	damas_blancas[i]->render();
-	//	damas_negras [i]->render();
-	//}
-
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	alfiles_blancos [i]->render();
-	//	alfiles_negros  [i]->render();
-	//	caballos_blancos[i]->render();
-	//	caballos_negros [i]->render();
-	//	torres_blancas  [i]->render();
-	//	torres_negras   [i]->render();
-	//}
-
-	//for (int i = 0; i < 8; i++)
-	//{
-	//	peones_blancos[i]->render();
-	//	 peones_negros[i]->render();
-	//}
-
-	//casillas_blancas->render();
-	//casillas_negras ->render();
+	rey_blanco       .renderModelos();
+	rey_negro        .renderModelos();
+	damas_blancas    .renderModelos();
+	damas_negras     .renderModelos();
+	alfiles_blancos  .renderModelos();
+	alfiles_negros   .renderModelos();
+	caballos_blancos .renderModelos();
+	caballos_negros  .renderModelos();
+	torres_blancas   .renderModelos();
+	torres_negras    .renderModelos();
+	peones_blancos   .renderModelos();
+	peones_negros    .renderModelos();
+	casillas_blancas->render();
+	casillas_negras ->render();
+	marcos          ->render();
+	letras          ->render();
 }
 
-void Mundo::inicializarIluminacion(void)
-{
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);  
-	//glEnable(GL_LIGHT1);  
-	//glEnable(GL_LIGHT2);  
-	//glEnable(GL_LIGHT3);  
-	//glEnable(GL_LIGHT4);
-	//glEnable(GL_LIGHT5);
-	//glEnable(GL_LIGHT6);
-	//glEnable(GL_LIGHT7);
-
-	// Light 0 properties (from above)
-	GLfloat light0_position[] = {  1.0,  1.0,   1.0, 0.0 };
-	GLfloat light1_position[] = { -1.0,  1.0,   1.0, 0.0 };
-	GLfloat light2_position[] = {  1.0,  1.0,  -1.0, 0.0 };
-	GLfloat light3_position[] = { -1.0,  1.0,  -1.0, 0.0 };
-	GLfloat light4_position[] = {  1.0,  1.0,   1.0, 0.0 };
-	GLfloat light5_position[] = { -1.0, -1.0,   1.0, 0.0 };
-	GLfloat light6_position[] = {  1.0, -1.0,  -1.0, 0.0 };
-	GLfloat light7_position[] = { -1.0, -1.0,  -1.0, 0.0 };
-
-	GLfloat light_ambient[]  = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat light_diffuse[]  = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-
-	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
-	glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-
-	//glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
-	//glLightfv(GL_LIGHT1, GL_AMBIENT,  light_ambient);
-	//glLightfv(GL_LIGHT1, GL_DIFFUSE,  light_diffuse);
-	//glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
-
-	//glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
-	//glLightfv(GL_LIGHT2, GL_AMBIENT,  light_ambient);
-	//glLightfv(GL_LIGHT2, GL_DIFFUSE,  light_diffuse);
-	//glLightfv(GL_LIGHT2, GL_SPECULAR, light_specular);
-
-	//glLightfv(GL_LIGHT3, GL_POSITION, light3_position);
-	//glLightfv(GL_LIGHT3, GL_AMBIENT,  light_ambient);
-	//glLightfv(GL_LIGHT3, GL_DIFFUSE,  light_diffuse);
-	//glLightfv(GL_LIGHT3, GL_SPECULAR, light_specular);
-
-	//glLightfv(GL_LIGHT4, GL_POSITION, light4_position);
-	//glLightfv(GL_LIGHT4, GL_AMBIENT,  light_ambient);
-	//glLightfv(GL_LIGHT4, GL_DIFFUSE,  light_diffuse);
-	//glLightfv(GL_LIGHT4, GL_SPECULAR, light_specular);
-
-	//glLightfv(GL_LIGHT5, GL_POSITION, light5_position);
-	//glLightfv(GL_LIGHT5, GL_AMBIENT,  light_ambient);
-	//glLightfv(GL_LIGHT5, GL_DIFFUSE,  light_diffuse);
-	//glLightfv(GL_LIGHT5, GL_SPECULAR, light_specular);
-
-	//glLightfv(GL_LIGHT6, GL_POSITION, light6_position);
-	//glLightfv(GL_LIGHT6, GL_AMBIENT,  light_ambient);
-	//glLightfv(GL_LIGHT6, GL_DIFFUSE,  light_diffuse);
-	//glLightfv(GL_LIGHT6, GL_SPECULAR, light_specular);
-
-	//glLightfv(GL_LIGHT7, GL_POSITION, light7_position);
-	//glLightfv(GL_LIGHT7, GL_AMBIENT,  light_ambient);
-	//glLightfv(GL_LIGHT7, GL_DIFFUSE,  light_diffuse);
-	//glLightfv(GL_LIGHT7, GL_SPECULAR, light_specular);
-
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-}
-
+/* PROVISIONAL */
 void Mundo::keypress(unsigned char tecla)
 {
 	static bool flag = false;
@@ -287,6 +188,7 @@ void Mundo::keypress(unsigned char tecla)
 	}
 }
 
+/* PROBABLEMENTE INUTIL */
 void Mundo::keylift(unsigned char tecla)
 {
 	camara.setSpeed({ 0 });
@@ -295,8 +197,12 @@ void Mundo::keylift(unsigned char tecla)
 
 void Mundo::seleccionCasilla(int button, int state, int x_mouse, int y_mouse)
 {
+	static bool elem_casilla = false;
 	Posicion result = Posicion{ 0 };
 	Corners<Point> slot;
+
+	if (state == 1 || button != 0)
+		return;
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -308,22 +214,36 @@ void Mundo::seleccionCasilla(int button, int state, int x_mouse, int y_mouse)
 		}
 	}
 
-	if (!camara.getGirado())
+	if (camara.getGirado())
 	{
 		result.x = 9 - result.x;
 		result.y = 9 - result.y;
 	}
 
-	std::cout << result.x << result.y << std::endl;
-	casilla_leida = result;
+	if (!elem_casilla)
+	{
+		casillas_leidas.inicio = result;
+		elem_casilla = !elem_casilla;
+	}
+	else
+	{
+		casillas_leidas.fin = result;
+		elem_casilla = !elem_casilla;
+	}
+
+	std::cout << casillas_leidas.inicio.x << casillas_leidas.inicio.y << std::endl;
+	std::cout << casillas_leidas.fin.x << casillas_leidas.fin.y << std::endl << std::endl;
+
+	moverModelos();
 }
 
+/* REVISAR */
 void Mundo::dibujarFondo(void)
 {
 	glTranslatef(100, -10, 0);
 	glRotatef(90.0f, 1, 0, 0);
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta_fondo).id);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(Modelo::ruta_fondo.c_str()).id);
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
 	glColor3f(1, 1, 1);
@@ -338,13 +258,165 @@ void Mundo::dibujarFondo(void)
 	glTranslatef(-100, 10, 0);
 }
 
-void Mundo::moverModelo(const Movimiento& movimiento)
+void Mundo::moverModelos(void)
 {
-	for (int i = 0; i < 8; i++)
+	if (casillas_leidas.inicio != Posicion{-1, -1} && casillas_leidas.fin != Posicion{ -1, -1 })
 	{
-		for (int j = 0; j < 8; j++)
+		rey_blanco       .moverModelos(casillas_leidas);
+		rey_negro        .moverModelos(casillas_leidas);
+		damas_blancas    .moverModelos(casillas_leidas);
+		damas_negras     .moverModelos(casillas_leidas);
+		alfiles_blancos  .moverModelos(casillas_leidas);
+		alfiles_negros   .moverModelos(casillas_leidas);
+		caballos_blancos .moverModelos(casillas_leidas);
+		caballos_negros  .moverModelos(casillas_leidas);
+		torres_blancas   .moverModelos(casillas_leidas);
+		torres_negras    .moverModelos(casillas_leidas);
+		peones_blancos   .moverModelos(casillas_leidas);
+		peones_negros    .moverModelos(casillas_leidas);
+
+		casillas_leidas = Movimiento{ Posicion{-1, -1}, Posicion{-1, -1} };
+	}
+}
+
+void Mundo::movimiento(const float time)
+{ 
+	camara.movement(time);
+}
+
+/* REVISAR */
+void Mundo::coronarPeon(const Posicion& pos) // Promocionar (comprobaciones)
+{
+	bool flag = false; // To check if there has been a promotion later in the code.
+	bool color = true; // true == white, false == black;
+	if (pos.y == 0)	   // If the position is at the beggining of the board (white's POV), the piece will always be black,
+		color = false; // since the pawns can't move backwards.
+	int tipo_nuevo = 0;
+
+	if (color)
+	{
+		for (int i = 0; i < peones_blancos.size(); i++)
 		{
-			
+			if (peones_blancos.getPosicion(i).y == pos.y && pos.y == 8) // The pawn reached the end of the board.
+			{
+				peones_blancos.deleteElem(i);
+				flag = true;
+			}
 		}
+	}
+	else
+	{
+		for (int i = 0; i < peones_negros.size(); i++)
+		{
+			if (peones_negros.getPosicion(i).y == pos.y && pos.y == 0) // The pawn reached the end of the board.
+			{
+				peones_negros.deleteElem(i);
+				flag = true;
+			}
+		}
+	}
+	if (flag == false) return;
+
+	std::cout << "Promotion is possible. Select a piece to promote to:" << std::endl;
+	std::cout << "2: Queen\n4: Knight\n3: Bishop\n5: Rook" << std::endl;
+	std::cin >> tipo_nuevo;
+
+	switch (tipo_nuevo)
+	{
+	case DAMA:
+		if (color)
+			this->damas_blancas.addElem(new Modelo(static_cast<TipoPieza>(tipo_nuevo), pos, Modelo::ruta_modelo_dama, Modelo::ruta_textura_blanco));
+		else
+			this->damas_negras .addElem(new Modelo(static_cast<TipoPieza>(tipo_nuevo), pos, Modelo::ruta_modelo_dama, Modelo::ruta_textura_negro));
+		break;
+
+	case ALFIL:
+		if (color)
+			this->alfiles_blancos.addElem(new Modelo(static_cast<TipoPieza>(tipo_nuevo), pos, Modelo::ruta_modelo_alfil, Modelo::ruta_textura_blanco));
+		else
+			this->alfiles_negros .addElem(new Modelo(static_cast<TipoPieza>(tipo_nuevo), pos, Modelo::ruta_modelo_alfil, Modelo::ruta_textura_negro));
+		break;
+
+	case CABALLO:
+		if (color)
+			this->caballos_blancos.addElem(new Modelo(static_cast<TipoPieza>(tipo_nuevo), pos, Modelo::ruta_modelo_caballo, Modelo::ruta_textura_blanco));
+		else
+			this->caballos_negros .addElem(new Modelo(static_cast<TipoPieza>(tipo_nuevo), pos, Modelo::ruta_modelo_caballo, Modelo::ruta_textura_negro));
+		break;
+
+	case TORRE:
+		if (color)
+			this->torres_blancas.addElem(new Modelo(static_cast<TipoPieza>(tipo_nuevo), pos, Modelo::ruta_modelo_torre, Modelo::ruta_textura_blanco));
+		else
+			this->torres_negras .addElem(new Modelo(static_cast<TipoPieza>(tipo_nuevo), pos, Modelo::ruta_modelo_torre, Modelo::ruta_textura_negro));
+		break;
+
+	default:
+		break;
+	}
+}
+
+void Mundo::borrarPieza(const Posicion& pos)
+{
+	damas_blancas   .deleteFromCoord(pos);
+	damas_negras    .deleteFromCoord(pos);
+	alfiles_blancos .deleteFromCoord(pos);
+	alfiles_negros  .deleteFromCoord(pos);
+	caballos_blancos.deleteFromCoord(pos);
+	caballos_negros .deleteFromCoord(pos);
+	torres_blancas  .deleteFromCoord(pos);
+	torres_negras   .deleteFromCoord(pos);
+	peones_blancos  .deleteFromCoord(pos);
+	peones_negros   .deleteFromCoord(pos);
+}
+
+ListaModelo* Mundo::seleccionarLista(bool color, Pieza::tipo_t tipo_pieza)
+{
+	switch (tipo_pieza)
+	{
+	case Pieza::tipo_t::REY:
+		if (color)
+			return &rey_blanco;
+		else
+			return &rey_negro;
+		break;
+
+	case Pieza::tipo_t::DAMA:
+		if (color)
+			return &damas_blancas;
+		else
+			return &damas_negras;
+		break;
+
+	case Pieza::tipo_t::ALFIL:
+		if (color)
+			return &alfiles_blancos;
+		else
+			return &alfiles_negros;
+		break;
+
+	case Pieza::tipo_t::CABALLO:
+		if (color)
+			return &caballos_blancos;
+		else
+			return &caballos_negros;
+		break;
+
+	case Pieza::tipo_t::TORRE:
+		if (color)
+			return &torres_blancas;
+		else
+			return &torres_negras;
+		break;
+
+	case Pieza::tipo_t::PEON:
+		if (color)
+			return &peones_blancos;
+		else
+			return &peones_negros;
+		break;
+
+	default:
+		break;
 	}
 }

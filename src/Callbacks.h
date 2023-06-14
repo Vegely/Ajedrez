@@ -22,5 +22,6 @@ void OnKeyboardSpecial(int key, int x, int y);
 void debugAxis(void);
 /* OPENGL INIT */
 void inicializarEstadoOpenGL(void);
+void inicializarIluminacion(void);
 
 #endif

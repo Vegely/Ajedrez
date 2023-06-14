@@ -25,16 +25,16 @@ class MotorDeJuego
 	
 	Tablero tablero;
 
-	void pintar(Posicion piezaSelec = Posicion(-1, -1)) const;	
+	//void pintar(Posicion piezaSelec = Posicion(-1, -1)) const;	
+	Tablero* getTablero(void) { return &this->tablero; }
 
 	Movimiento seleccionarEntrada(bool pos1Selec) const;
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec) const;
 	bool hacerJugada(Movimiento movimiento);
 
 	Pieza::tipo_t seleccionarEntradaCoronar(Posicion posicion) const;
-public:
-	
 
+public:
 	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { pintar(); }
 
 	void liberar() { tablero.liberar(); }

@@ -71,19 +71,11 @@ Point getPointFromCoords(unsigned int letter, unsigned int number)
 	return Point{ -17.5f + (letter - 1) * 5.0f, 0, -17.5f + (number - 1) * 5.0f };
 }
 
-Posicion getCoordFromPosition(const Point& pt)
-{
-	Posicion result;
-	result.x = pt.x / 50.0f + 175.0f;
-	result.y = pt.z / 50.0f + 175.0f;
-	return result;
-}
-
 Point getPointFromCoords(const Posicion& pos)
 {
 	Point result;
-	result.x = pos.x * 50 - 175.0f;
-	result.y = pos.y * 50 - 175.0f;
+	result.x = -(-17.5f + (pos.x - 1) * 5.0f);
+	result.z = -17.5f + (pos.y - 1) * 5.0f;
 	return result;
 }
 
@@ -121,18 +113,6 @@ std::ostream& operator << (std::ostream& out, const CRGB& obj)
 {
 	out << "[" << static_cast<int>(obj.r) << ", " << static_cast<int>(obj.g) << ", " << static_cast<int>(obj.b) << "]";
 	return out;
-}
-
-bool Delay::delay(const float milliseconds)
-{
-	clock_t start_time = clock();
-
-	while (clock() - start_time < 200)
-	{
-		std::cout << "Clock running for " << milliseconds << " milliseconds." << std::endl;
-		return false;
-	}
-	return true;
 }
 
 void drawLine(const Point& p1, const Point& p2)

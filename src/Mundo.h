@@ -2,10 +2,11 @@
 #define MUNDO_H
 
 #include <vector>
-#include "Modelo.h"
+#include "ListaModelo.h"
 #include "Camara.h"
 #include "Movimiento.h"
 #include "Plane.h"
+#include "Tablero.h"
 
 class Casilla
 {
@@ -139,47 +140,53 @@ public:
 class Mundo
 {
 private:
-	Modelo* rey_blanco;
-	Modelo* rey_negro;
-	Modelo* damas_blancas[9];
-	Modelo* damas_negras[9];
-	Modelo* alfiles_blancos[10];
-	Modelo* alfiles_negros[10];
-	Modelo* caballos_blancos[10];
-	Modelo* caballos_negros[10];
-	Modelo* torres_blancas[10];
-	Modelo* torres_negras[10];
-	Modelo* peones_blancos[8];
-	Modelo* peones_negros[8];
+	Tablero tablero_anterior;
+	Tablero tablero_actual;
+
+	ListaModelo rey_blanco;
+	ListaModelo rey_negro;
+	ListaModelo damas_blancas;
+	ListaModelo damas_negras;
+	ListaModelo alfiles_blancos;
+	ListaModelo alfiles_negros;
+	ListaModelo caballos_blancos;
+	ListaModelo caballos_negros;
+	ListaModelo torres_blancas;
+	ListaModelo torres_negras;
+	ListaModelo peones_blancos;
+	ListaModelo peones_negros;
 	Modelo* casillas_blancas;
 	Modelo* casillas_negras;
 	Modelo* marcos;
 	Modelo* letras;
 
-	std::vector<Modelo*> modelos;
-
 	Camara camara;
-	Posicion casilla_leida;
+	Movimiento casillas_leidas;
 	Casilla casillas_px;
 
 public:
 	Mundo(void);
+	void init(void);
+	void asignarModelos(void);
+	void cargarTexturas(void);
 
-	void asignarModelos    (void);
-	void cargarTexturas    (void);
-	void renderizarModelos (void);
-	void inicializarIluminacion(void);
+	void dibujarTablero(const Tablero& tablero);
+
+	void renderizarModelos(void);
 	void updateCamara(void) { camara.update(); }
-	void movimiento(const float time) { camara.movement(time); }
+	void movimiento(const float time);
 	void keypress(unsigned char tecla);
 	void keylift(unsigned char tecla);
-	float getFovY(void) const { return camara.getFovY(); }
 	void seleccionCasilla(int button, int state, int x_mouse, int y_mouse);
 	bool getGirado(void) { return camara.getGirado(); }
 	void dibujarFondo(void);
-	Posicion getCasilla(void) { return this->casilla_leida; }
+	void coronarPeon(const Posicion& pos);
+	void borrarPieza(const Posicion& pos);
+	void moverModelos(void);
+	Movimiento getCasilla(void) { return this->casillas_leidas; }
 
-	void moverModelo(const Movimiento& movimiento);
+	/* SELECCION LISTA DE MODELO */
+	ListaModelo* seleccionarLista(bool color, Pieza::tipo_t tipo_pieza);
 };
 
 

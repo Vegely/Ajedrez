@@ -23,7 +23,7 @@ void motorGrafico(int* argc, char** argv)
 	glutInitWindowSize(1920, 1080);
 	glutCreateWindow("FlatChess");
 
-	mundo.inicializarIluminacion();
+	inicializarIluminacion();
 	inicializarEstadoOpenGL();
 	
 	//// Set up the camera and viewport
@@ -33,8 +33,7 @@ void motorGrafico(int* argc, char** argv)
 
 	registrarCallbacks();
 
-	mundo.asignarModelos();
-	mundo.cargarTexturas();
+	mundo.init();
 
 	glutMainLoop();
 }
@@ -67,7 +66,7 @@ void OnReshape(int w, int h)
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h); //set the viewport to the current window specifications
 	glMatrixMode(GL_PROJECTION); //set the matrix to projection
 	glLoadIdentity();
-	gluPerspective(mundo.getFovY(), (GLfloat)w / (GLfloat)h, 1.0, 1000.0); //set the perspective (angle of sight, width, height, depth)
+	gluPerspective(fov_y, (GLfloat)w / (GLfloat)h, 1.0, 1000.0); //set the perspective (angle of sight, width, height, depth)
 	glMatrixMode(GL_MODELVIEW); //set the matrix back to model
 }
 
@@ -75,7 +74,7 @@ void OnReshape(int w, int h)
 void OnTimer(int value)
 {
 	mundo.movimiento(0.03);
-	//rotation++;
+
 	glutTimerFunc(30, OnTimer, 0);
 }
 
@@ -103,8 +102,8 @@ void OnMouseClick(int button, int state, int x, int y)
 {
 	//mundo.raycasting(button, state, x, y);
 	mundo.seleccionCasilla(button, state, x, y);
-	std::cout << "X: " << x << std::endl;
-	std::cout << "Y: " << y << std::endl << std::endl;
+	//std::cout << "X: " << x << std::endl;
+	//std::cout << "Y: " << y << std::endl << std::endl;
 	glutPostRedisplay();
 }
 
@@ -120,6 +119,76 @@ void inicializarEstadoOpenGL(void)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 }
+
+void inicializarIluminacion(void)
+{
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT1);  
+	//glEnable(GL_LIGHT2);  
+	//glEnable(GL_LIGHT3);  
+	//glEnable(GL_LIGHT4);
+	//glEnable(GL_LIGHT5);
+	//glEnable(GL_LIGHT6);
+	//glEnable(GL_LIGHT7);
+
+	// Light 0 properties (from above)
+	GLfloat light0_position[] = { 1.0,  1.0,   1.0, 0.0 };
+	GLfloat light1_position[] = { -1.0,  1.0,   1.0, 0.0 };
+	GLfloat light2_position[] = { 1.0,  1.0,  -1.0, 0.0 };
+	GLfloat light3_position[] = { -1.0,  1.0,  -1.0, 0.0 };
+	GLfloat light4_position[] = { 1.0,  1.0,   1.0, 0.0 };
+	GLfloat light5_position[] = { -1.0, -1.0,   1.0, 0.0 };
+	GLfloat light6_position[] = { 1.0, -1.0,  -1.0, 0.0 };
+	GLfloat light7_position[] = { -1.0, -1.0,  -1.0, 0.0 };
+
+	GLfloat light_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+
+	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+
+	//glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
+	//glLightfv(GL_LIGHT1, GL_AMBIENT,  light_ambient);
+	//glLightfv(GL_LIGHT1, GL_DIFFUSE,  light_diffuse);
+	//glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
+
+	//glLightfv(GL_LIGHT2, GL_POSITION, light2_position);
+	//glLightfv(GL_LIGHT2, GL_AMBIENT,  light_ambient);
+	//glLightfv(GL_LIGHT2, GL_DIFFUSE,  light_diffuse);
+	//glLightfv(GL_LIGHT2, GL_SPECULAR, light_specular);
+
+	//glLightfv(GL_LIGHT3, GL_POSITION, light3_position);
+	//glLightfv(GL_LIGHT3, GL_AMBIENT,  light_ambient);
+	//glLightfv(GL_LIGHT3, GL_DIFFUSE,  light_diffuse);
+	//glLightfv(GL_LIGHT3, GL_SPECULAR, light_specular);
+
+	//glLightfv(GL_LIGHT4, GL_POSITION, light4_position);
+	//glLightfv(GL_LIGHT4, GL_AMBIENT,  light_ambient);
+	//glLightfv(GL_LIGHT4, GL_DIFFUSE,  light_diffuse);
+	//glLightfv(GL_LIGHT4, GL_SPECULAR, light_specular);
+
+	//glLightfv(GL_LIGHT5, GL_POSITION, light5_position);
+	//glLightfv(GL_LIGHT5, GL_AMBIENT,  light_ambient);
+	//glLightfv(GL_LIGHT5, GL_DIFFUSE,  light_diffuse);
+	//glLightfv(GL_LIGHT5, GL_SPECULAR, light_specular);
+
+	//glLightfv(GL_LIGHT6, GL_POSITION, light6_position);
+	//glLightfv(GL_LIGHT6, GL_AMBIENT,  light_ambient);
+	//glLightfv(GL_LIGHT6, GL_DIFFUSE,  light_diffuse);
+	//glLightfv(GL_LIGHT6, GL_SPECULAR, light_specular);
+
+	//glLightfv(GL_LIGHT7, GL_POSITION, light7_position);
+	//glLightfv(GL_LIGHT7, GL_AMBIENT,  light_ambient);
+	//glLightfv(GL_LIGHT7, GL_DIFFUSE,  light_diffuse);
+	//glLightfv(GL_LIGHT7, GL_SPECULAR, light_specular);
+
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+}
+
 
 void debugAxis(void)
 {
