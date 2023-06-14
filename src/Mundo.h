@@ -176,14 +176,13 @@ public:
 	void updateCamara(void) { camara.update(); }
 	void movimiento(const float time);
 	void keypress(unsigned char tecla);
-	void keylift(unsigned char tecla);
 	void seleccionCasilla(int button, int state, int x_mouse, int y_mouse);
 	bool getGirado(void) { return camara.getGirado(); }
 	void dibujarFondo(void);
 	void coronarPeon(const Posicion& pos);
 	void borrarPieza(const Posicion& pos);
 	void moverModelos(void);
-	Movimiento getCasilla(void) { return this->casillas_leidas; }
+	Movimiento getCasilla(void) const { return this->casillas_leidas; }
 
 	/* SELECCION LISTA DE MODELO */
 	ListaModelo* seleccionarLista(bool color, Pieza::tipo_t tipo_pieza);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Tablero.h"
+#include "Mundo.h"
 
 struct ConfiguracionDeJuego
 {
@@ -22,23 +23,20 @@ struct DatosFinal
 class MotorDeJuego
 {
 	const ConfiguracionDeJuego config;
-	
 	Tablero tablero;
 
 	//void pintar(Posicion piezaSelec = Posicion(-1, -1)) const;	
-	Tablero* getTablero(void) { return &this->tablero; }
-
-	Movimiento seleccionarEntrada(bool pos1Selec) const;
+	Movimiento seleccionarEntrada(bool pos1Selec, const Mundo& p_motorGrafico) const;
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec) const;
 	bool hacerJugada(Movimiento movimiento);
 
 	Pieza::tipo_t seleccionarEntradaCoronar(Posicion posicion) const;
 
 public:
-	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { pintar(); }
-
+	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { /*pintar();*/ }
+	Tablero* getTablero(void) { return &this->tablero; }
 	void liberar() { tablero.liberar(); }
 
-	DatosFinal motor();
+	DatosFinal motor(const Mundo& mundoGrafico);
 };
 

@@ -2,18 +2,15 @@
 
 #define STB_IMAGE_IMPLEMENTATION // Para la libreria stb_image.h
 #include "Callbacks.h"
-#include "Mundo.h"
+#include "CoordinadorAjedrez.h"
 
 #include <fstream>
 #include <sstream>
 
 #include <ETSIDI.h>
 
-// Mundo
-Mundo mundo;
-
-constexpr float fov_y = 60.0f;
-int rotation = 180;
+// Coordinador
+CoordinadorAjedrez coordinador;
 
 void motorGrafico(int* argc, char** argv)
 {
@@ -25,15 +22,10 @@ void motorGrafico(int* argc, char** argv)
 
 	inicializarIluminacion();
 	inicializarEstadoOpenGL();
-	
-	//// Set up the camera and viewport
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	//gluPerspective(60.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 
 	registrarCallbacks();
 
-	mundo.init();
+	coordinador.initGraficos();
 
 	glutMainLoop();
 }
@@ -51,41 +43,41 @@ void registrarCallbacks(void)
 	glutPassiveMotionFunc(OnMouseMotion);
 }
 
-// Continuously draws what it is specified to it.
-void OnDraw(void)
-{
-	mundo.updateCamara();
-	mundo.renderizarModelos();
-	glutSwapBuffers();
-	glutPostRedisplay();
-}
-
 // Reshapes the window if needed without resizing the objects and mantaining their proportions.
 void OnReshape(int w, int h)
 {
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h); //set the viewport to the current window specifications
 	glMatrixMode(GL_PROJECTION); //set the matrix to projection
 	glLoadIdentity();
-	gluPerspective(fov_y, (GLfloat)w / (GLfloat)h, 1.0, 1000.0); //set the perspective (angle of sight, width, height, depth)
+	gluPerspective(60.0f, (GLfloat)w / (GLfloat)h, 1.0, 1000.0); //set the perspective (angle of sight, width, height, depth)
 	glMatrixMode(GL_MODELVIEW); //set the matrix back to model
+}
+
+// Continuously draws what it is specified to it.
+void OnDraw(void)
+{
+	coordinador.Draw();
+
+	glutSwapBuffers();
+	glutPostRedisplay();
 }
 
 // Each set time, performs the set functions.
 void OnTimer(int value)
 {
-	mundo.movimiento(0.03);
+	coordinador.Timer(0.03);
 
 	glutTimerFunc(30, OnTimer, 0);
 }
 
 void OnKeyboardDown(const unsigned char key, int x_t, int y_t)
 {
-	mundo.keypress(key);
+	coordinador.Keypress(key);
 }
 
 void OnKeyboardUp(const unsigned char key, int x, int y)
 {
-	mundo.keylift(key);
+	coordinador.Keylift(key);
 
 	// End of keyboard reading code (do not erase or write anything afterwardas).
 	//glutPostRedisplay();
@@ -93,6 +85,8 @@ void OnKeyboardUp(const unsigned char key, int x, int y)
 
 void OnKeyboardSpecial(int key, int x, int y)
 {
+	coordinador.SpecialKeypress(key);
+
 	// End of keyboard reading code (do not erase or write anything afterwardas).
 	//glutPostRedisplay();
 }
@@ -100,10 +94,7 @@ void OnKeyboardSpecial(int key, int x, int y)
 // 0 == left, 1 == middle, 2 == right, 3 == scroll up, 4 == scroll down.
 void OnMouseClick(int button, int state, int x, int y)
 {
-	//mundo.raycasting(button, state, x, y);
-	mundo.seleccionCasilla(button, state, x, y);
-	//std::cout << "X: " << x << std::endl;
-	//std::cout << "Y: " << y << std::endl << std::endl;
+	coordinador.Click(button, state, x, y);
 	glutPostRedisplay();
 }
 

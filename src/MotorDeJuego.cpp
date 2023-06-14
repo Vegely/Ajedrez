@@ -8,6 +8,7 @@
 #include "Dama.h"
 
 #include "IA.h"
+#include "Mundo.h"
 
 #include <iostream>
 
@@ -34,15 +35,17 @@ constexpr auto NUM_LINEAS = 40;
 //}
 ////////////////////
 
-Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
+Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec, const Mundo& p_motorGrafico) const
 {
 	Movimiento movimiento;
 
 	switch (config[tablero.colorDelTurno])
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
-		//movimiento = ensamblarMovimiento(p_motorGrafico->getCasilla(), pos1Selec);
+		//movimiento = ensamblarMovimiento(p_motorGrafico.getCasilla(), pos1Selec);
+		movimiento = p_motorGrafico.getCasilla();
 		break;
+
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
 		movimiento = IA::mover(tablero);
 		break;
@@ -51,7 +54,7 @@ Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
 	return movimiento;
 }
 
-DatosFinal MotorDeJuego::motor()
+DatosFinal MotorDeJuego::motor(const Mundo& mundoGrafico)
 {
 	DatosFinal datosFinal;
 	bool exit = false;
@@ -59,7 +62,7 @@ DatosFinal MotorDeJuego::motor()
 
 	while (!exit)
 	{
-		Movimiento movimiento = seleccionarEntrada(pos1Selec);
+		Movimiento movimiento = seleccionarEntrada(pos1Selec, mundoGrafico);
 
 		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1))) // Se hace la jugada
 		{
@@ -327,7 +330,7 @@ Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, bool pos1Selec) 
 		if (tablero.leer(posicion) != nullptr && tablero.leer(posicion)->getColor() == tablero.colorDelTurno)
 		{
 			inicio = posicion;
-			pintar(posicion);
+			//pintar(posicion);
 			aux = true;
 		}
 		else if (aux || pos1Selec)

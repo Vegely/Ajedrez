@@ -188,13 +188,6 @@ void Mundo::keypress(unsigned char tecla)
 	}
 }
 
-/* PROBABLEMENTE INUTIL */
-void Mundo::keylift(unsigned char tecla)
-{
-	camara.setSpeed({ 0 });
-	camara.printPosition(std::cout);
-}
-
 void Mundo::seleccionCasilla(int button, int state, int x_mouse, int y_mouse)
 {
 	static bool elem_casilla = false;

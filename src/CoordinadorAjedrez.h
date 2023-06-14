@@ -1,33 +1,43 @@
-#pragma once
+#ifndef COORDINADORAJEDREZ_H
+#define COORDINADORAJEDREZ_H
+
 #include "MotorDeJuego.h"
 #include "Mundo.h"
 #include <thread>
 
-
 enum Estado { INICIO, JUEGO, FIN };
 
+void threadMotor(MotorDeJuego* motor, const Mundo& p_motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal);
+
 class CoordinadorAjedrez
-{
-protected:
+{	
+	friend class menuInicial;
+private:
+	/* ESTADO DEL JUEGO */
 	Estado estado;
-
-public:
-	Mundo motorGrafico;
-
-	bool inicializarPartida;
-
+	/* MOTORES LÓGICO Y GRÁFICO */
+	Mundo mundoGrafico;
+	MotorDeJuego motorLogico;
 	std::thread* motor = new std::thread;
-
+	/* VARIABLES DE GESTIÓN DE INICIALIZACIÓN Y FINALIZACIÓN */
+	bool inicializarPartida;
 	DatosFinal datosFinal;
 
-	CoordinadorAjedrez();
-	void onTimer();
-	void dibuja();
-	void tecla(unsigned char key);
-	void teclaEspecial(int key);
-	void click(int button, int state, int x, int y);
+public:
+	/* FORMA CANÓNICA */
+	CoordinadorAjedrez(void);
 
-	friend class menuInicial;
+	/* FUNCIONES PARA CALLBACKS */
+	void initGraficos(void) { mundoGrafico.init(); }
+	void Draw(void);
+	void Timer(int value);
+	void Keypress(unsigned char key);
+	void Keylift (unsigned char key);
+	void SpecialKeypress(int key);
+	void Click(int button, int state, int x, int y);
+	
+	/* COORDINACIÓN LÓGICA - GRÁFICOS */
+	void comunicacionLogicaGraficos(void);
 };
 
-void threadMotor(const ConfiguracionDeJuego* p_configuracion, Mundo* p_motorGrafico, DatosFinal* p_datosFinal);
+#endif
