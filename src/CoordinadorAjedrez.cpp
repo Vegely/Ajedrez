@@ -53,7 +53,6 @@ void CoordinadorAjedrez::dibuja()
 	if (estado == INICIO) {
 		
 		pantallaInicio.dibuja();
-
 	}
 	else if (estado == JUEGO) {
 	
@@ -119,13 +118,17 @@ void CoordinadorAjedrez::dibuja()
 	glBegin(GL_POLYGON);
 	glColor3f(1, 1, 1);
 
-	glTexCoord2d(0, 1); glVertex2f(-31.5, -8);
-	glTexCoord2d(1, 1); glVertex2f(31.5, -8);
-	glTexCoord2d(1, 0); glVertex2f(31.5, 25);
-	glTexCoord2d(0, 0); glVertex2f(-31.5, 25);
+	glTexCoord3d(0, 1,-0.1); glVertex3f(-31.5, -8,-0.1);
+	glTexCoord3d(1, 1,-0.1); glVertex3f(31.5, -8,-0.1);
+	glTexCoord3d(1, 0,-0.1); glVertex3f(31.5, 25,-0.1);
+	glTexCoord3d(0, 0,-0.1); glVertex3f(-31.5, 25,-0.1);
 	glEnd();
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
+
+	ETSIDI::setFont("bin/fuentes/arial.ttf", 30);
+	ETSIDI::setTextColor(0, 255, 0);
+	ETSIDI::printxy("hola mundo", 1, 1, 1);
 }
 
 
