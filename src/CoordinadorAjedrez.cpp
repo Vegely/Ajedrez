@@ -1,10 +1,21 @@
 #include "CoordinadorAjedrez.h"
 #include <ETSIDI.h>
 #include <thread>
-#include "UI.h"
 
 ConfiguracionDeJuego configuracion;
-UI ui;
+
+PantallaElegirRol pantallaElegirRol;
+PantallaInicio pantallaInicio;
+PantallaJugadorLocal pantallaJugadorLocal;
+PantallaModoDeJuego pantallaModoJuego;
+PantallaColorJugador pantallaColorJugador;
+PantallaFalloConexion pantallaFalloConexion;
+PantallaFinPartida pantallaFinPartida;
+PantallaCliente pantallaCliente;
+PantallaPausa pantallaPausa;
+PantallaServidor pantallaServidor;
+PantallaCargarPartida pantallaCargarPartida;
+PantallaRankings pantallaRanking;
 
 void threadMotor(const ConfiguracionDeJuego* p_configuracion, Mundo* p_motorGrafico, DatosFinal* p_datosFinal)
 {
@@ -19,7 +30,7 @@ void threadMotor(const ConfiguracionDeJuego* p_configuracion, Mundo* p_motorGraf
 }
 
 CoordinadorAjedrez::CoordinadorAjedrez() {
-	estado = INICIO;
+	estado=INICIO;
 }
 
 void CoordinadorAjedrez::onTimer()
@@ -29,34 +40,94 @@ void CoordinadorAjedrez::onTimer()
 		motor = new std::thread(threadMotor, &configuracion, &motorGrafico, &datosFinal);
 		inicializarPartida = false;
 	}
+
 }
 
 void CoordinadorAjedrez::dibuja() 
 {
+
+	gluLookAt(0, 7.5, 30, // posicion del ojo
+		0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
+		0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
+
 	if (estado == INICIO) {
 		
-		
-		gluLookAt(0, 7.5, 30, // posicion del ojo
-			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
-			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
-		ui.pp.dibuja();
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/pantallas/pausa.png").id);
-
-		glDisable(GL_LIGHTING);
-		glBegin(GL_POLYGON);
-		glColor3f(1, 1, 1);
-
-		glTexCoord2d(0, 1); glVertex2f(-31.5, -8);
-		glTexCoord2d(1, 1); glVertex2f(31.5, -8);
-		glTexCoord2d(1, 0); glVertex2f(31.5, 25);
-		glTexCoord2d(0, 0); glVertex2f(-31.5, 25);
-		glEnd();
-		glEnable(GL_LIGHTING);
-		glDisable(GL_TEXTURE_2D);
+		pantallaInicio.dibuja();
 
 	}
+	else if (estado == JUEGO) {
+	
+	}
+	else if (estado == COLOR_SERVIDOR)
+	{
+		pantallaElegirRol.dibuja();
+	}
+	else if (estado == MODO_LOCAL)
+	{
+		pantallaJugadorLocal.dibuja();
+	}
+	
+	else if (estado == MODO)
+	{
+		pantallaModoJuego.dibuja();
+	}
+	
+	else if (estado == COLOR)
+	{
+		pantallaColorJugador.dibuja();
+	}
+
+	else if (estado == FALLO_CONEXION)
+	{
+		pantallaFalloConexion.dibuja();
+	}
+
+	else if (estado == FIN)
+	{
+		pantallaFinPartida.dibuja();
+	}
+
+	else if (estado ==CLIENTE)
+	{
+		pantallaCliente.dibuja();
+	}
+
+	else if (estado ==PAUSA)
+	{
+		pantallaPausa.dibuja();
+	}
+
+	else if (estado ==SERVIDOR)
+	{
+		pantallaServidor.dibuja();
+	}
+
+	else if (estado ==CARGAR)
+	{
+		pantallaCargarPartida.dibuja();
+	}
+
+	else if (estado ==RANKING)
+	{
+		pantallaRanking.dibuja();
+	}
+
+	
+	glEnable(GL_TEXTURE_2D);
+
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+
+	glTexCoord2d(0, 1); glVertex2f(-31.5, -8);
+	glTexCoord2d(1, 1); glVertex2f(31.5, -8);
+	glTexCoord2d(1, 0); glVertex2f(31.5, 25);
+	glTexCoord2d(0, 0); glVertex2f(-31.5, 25);
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
 }
+
 
 void CoordinadorAjedrez::tecla(unsigned char key) 
 {
@@ -70,6 +141,30 @@ void CoordinadorAjedrez::teclaEspecial(int key)
 
 void CoordinadorAjedrez::click(int button, int state, int x, int y)
 {
+	float yg=aCoordenadasGlutY(y);
+	float xg=aCoordenadasGlutX(x);
+	if (estado == INICIO)
+	{
+		if(pantallaInicio.salir.enCaja(xg,yg))
+			exit(0);
+		if (pantallaInicio.nuevaPartida.enCaja(xg, yg))
+		estado = MODO;
+		if (pantallaInicio.cargarPartida.enCaja(xg, yg))
+			estado = CARGAR;
+		if (pantallaInicio.mostrarRankings.enCaja(xg, yg))
+			estado = RANKING;
+	}
+
+}
+
+float aCoordenadasGlutX(float p)
+{
+	return W_MIN + p * ((W_MAX - W_MIN) / (float)glutGet(GLUT_WINDOW_WIDTH));
+}
+
+float aCoordenadasGlutY(float p)
+{
+	return H_MAX - p * ((-H_MIN + H_MAX) / (float)glutGet(GLUT_WINDOW_HEIGHT));
 }
 
 

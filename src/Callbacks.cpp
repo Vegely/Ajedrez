@@ -105,9 +105,10 @@ void OnKeyboardSpecial(int key, int x, int y)
 void OnMouseClick(int button, int state, int x, int y)
 {
 	//mundo.raycasting(button, state, x, y);
-	ajedrez.motorGrafico.seleccionCasilla(button, state, x, y);
-	std::cout << "X: " << x << std::endl;
-	std::cout << "Y: " << y << std::endl << std::endl;
+	//ajedrez.motorGrafico.seleccionCasilla(button, state, x, y);
+	//std::cout << "X: " << x << std::endl;
+	//std::cout << "Y: " << y << std::endl << std::endl;
+	ajedrez.click(button,state,x,y);
 	glutPostRedisplay();
 }
 
