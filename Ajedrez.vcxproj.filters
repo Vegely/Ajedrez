@@ -153,13 +153,13 @@
     <ClInclude Include="src\Sonidos.h">
       <Filter>5_Sonido\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Pantalla.h">
-      <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Punto.h">
       <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Caja.h">
+      <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI.h">
       <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -230,10 +230,10 @@
     <ClCompile Include="src\Sonidos.cpp">
       <Filter>5_Sonido\Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Pantalla.cpp">
+    <ClCompile Include="src\Caja.cpp">
       <Filter>3_Menus_Máquina_Estados\Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Caja.cpp">
+    <ClCompile Include="src\UI.cpp">
       <Filter>3_Menus_Máquina_Estados\Resource Files</Filter>
     </ClCompile>
   </ItemGroup>

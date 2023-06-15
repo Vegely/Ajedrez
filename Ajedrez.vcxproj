@@ -161,7 +161,6 @@
     <ClInclude Include="src\MotorDeJuego.h" />
     <ClInclude Include="src\Movimiento.h" />
     <ClInclude Include="src\Mundo.h" />
-    <ClInclude Include="src\Pantalla.h" />
     <ClInclude Include="src\Peon.h" />
     <ClInclude Include="src\Pieza.h" />
     <ClInclude Include="src\Plane.h" />
@@ -172,6 +171,7 @@
     <ClInclude Include="src\Sonidos.h" />
     <ClInclude Include="src\Tablero.h" />
     <ClInclude Include="src\Torre.h" />
+    <ClInclude Include="src\UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Alfil.cpp" />
@@ -189,7 +189,6 @@
     <ClCompile Include="src\Modelo.cpp" />
     <ClCompile Include="src\MotorDeJuego.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
-    <ClCompile Include="src\Pantalla.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
     <ClCompile Include="src\Plane.cpp" />
@@ -198,6 +197,7 @@
     <ClCompile Include="src\Sonidos.cpp" />
     <ClCompile Include="src\Tablero.cpp" />
     <ClCompile Include="src\Torre.cpp" />
+    <ClCompile Include="src\UI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

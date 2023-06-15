@@ -259,7 +259,7 @@ void Mundo::keylift(unsigned char tecla)
 
 void Mundo::seleccionCasilla(int button, int state, int x_mouse, int y_mouse)
 {
-	Casilla result;
+	Casilla result = { -1, -1 };
 	if (y_mouse < 900 && y_mouse > 790)
 		result.numero = 1;
 	if (y_mouse < 790 && y_mouse > 690)

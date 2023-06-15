@@ -1,9 +1,10 @@
 #include "CoordinadorAjedrez.h"
 #include <ETSIDI.h>
-#include "Pantalla.h"
 #include <thread>
+#include "UI.h"
 
 ConfiguracionDeJuego configuracion;
+UI ui;
 
 void threadMotor(const ConfiguracionDeJuego* p_configuracion, Mundo* p_motorGrafico, DatosFinal* p_datosFinal)
 {
@@ -33,21 +34,21 @@ void CoordinadorAjedrez::onTimer()
 void CoordinadorAjedrez::dibuja() 
 {
 	if (estado == INICIO) {
-		static Caja c(-10.0, 15.0, 10.0, 0.0);
+		
 		
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
-		c.dibuja();
+		ui.pcj.dibuja();
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/pantallas/guardar.png").id);
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/pantallas/seleccion color.png").id);
 
 		glDisable(GL_LIGHTING);
 		glBegin(GL_POLYGON);
 		glColor3f(1, 1, 1);
 
-		glTexCoord2d(0, 1); glVertex2f(-31.5, -10);
-		glTexCoord2d(1, 1); glVertex2f(31.5, -10);
+		glTexCoord2d(0, 1); glVertex2f(-31.5, -8);
+		glTexCoord2d(1, 1); glVertex2f(31.5, -8);
 		glTexCoord2d(1, 0); glVertex2f(31.5, 25);
 		glTexCoord2d(0, 0); glVertex2f(-31.5, 25);
 		glEnd();
@@ -69,7 +70,6 @@ void CoordinadorAjedrez::teclaEspecial(int key)
 
 void CoordinadorAjedrez::click(int button, int state, int x, int y)
 {
-	
 }
 
 

@@ -13,6 +13,8 @@ bool Caja::enCaja(float x, float y)
 {
 	if (x<dr.x && x>ul.x && y<ul.y && y>dr.y)
 		return true;
+
+	std::cout << "gay";
 	return false;
 }
 
