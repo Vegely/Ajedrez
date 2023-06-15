@@ -3,14 +3,14 @@
 #define STB_IMAGE_IMPLEMENTATION // Para la librer�a stb_image.h
 #include "Callbacks.h"
 #include "Mundo.h"
+#include "CoordinadorAjedrez.h"
 
 #include <fstream>
 #include <sstream>
 
-#include <ETSIDI.h>
+#include "ETSIDI.h"
 
-// Mundo
-Mundo mundo;
+CoordinadorAjedrez ajedrez;
 
 constexpr float fov_y = 60.0f;
 int rotation = 180;
@@ -23,19 +23,14 @@ void motorGrafico(int* argc, char** argv)
 	glutInitWindowSize(1920, 1080);
 	glutCreateWindow("FlatChess - Adri�n Teixeira, Bogurad Bara�ski, Jorge Bengoa, Juan Nicol�s Jim�nez, Luis Miguel Muro");
 
-	mundo.inicializarIluminacion();
-	inicializarEstadoOpenGL();
-	
-	//// Set up the camera and viewport
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	//gluPerspective(60.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_COLOR_MATERIAL);
+	glMatrixMode(GL_PROJECTION);
+	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
 
 	registrarCallbacks();
-
-	mundo.updateCamara();
-	mundo.asignarModelos();
-	mundo.cargarTexturas();
 
 	glutMainLoop();
 }
@@ -56,6 +51,16 @@ void registrarCallbacks(void)
 // Continuously draws what it is specified to it.
 void OnDraw(void)
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Para definir el punto de vista
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	ajedrez.dibuja();
+
+	//no borrar esta linea ni poner nada despues
+	glutSwapBuffers();
 
 }
 
@@ -65,26 +70,26 @@ void OnReshape(int w, int h)
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h); //set the viewport to the current window specifications
 	glMatrixMode(GL_PROJECTION); //set the matrix to projection
 	glLoadIdentity();
-	gluPerspective(mundo.getFovY(), (GLfloat)w / (GLfloat)h, 1.0, 1000.0); //set the perspective (angle of sight, width, height, depth)
+	gluPerspective(ajedrez.motorGrafico.getFovY(), (GLfloat)w / (GLfloat)h, 1.0, 1000.0); //set the perspective (angle of sight, width, height, depth)
 	glMatrixMode(GL_MODELVIEW); //set the matrix back to model
 }
 
 // Each set time, performs the set functions.
 void OnTimer(int value)
 {
-	mundo.movimiento(0.03);
+	ajedrez.motorGrafico.movimiento(0.03);
 	//rotation++;
 	glutTimerFunc(30, OnTimer, 0);
 }
 
 void OnKeyboardDown(const unsigned char key, int x_t, int y_t)
 {
-	mundo.keypress(key);
+	ajedrez.motorGrafico.keypress(key);
 }
 
 void OnKeyboardUp(const unsigned char key, int x, int y)
 {
-	mundo.keylift(key);
+	ajedrez.motorGrafico.keylift(key);
 
 	// End of keyboard reading code (do not erase or write anything afterwardas).
 	//glutPostRedisplay();
@@ -100,7 +105,7 @@ void OnKeyboardSpecial(int key, int x, int y)
 void OnMouseClick(int button, int state, int x, int y)
 {
 	//mundo.raycasting(button, state, x, y);
-	mundo.seleccionCasilla(button, state, x, y);
+	ajedrez.motorGrafico.seleccionCasilla(button, state, x, y);
 	std::cout << "X: " << x << std::endl;
 	std::cout << "Y: " << y << std::endl << std::endl;
 	glutPostRedisplay();
