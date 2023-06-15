@@ -149,6 +149,7 @@
     <ClInclude Include="src\Callbacks.h" />
     <ClInclude Include="src\Camara.h" />
     <ClInclude Include="src\Casilla.h" />
+    <ClInclude Include="src\Cliente.h" />
     <ClInclude Include="src\CoordinadorAjedrez.h" />
     <ClInclude Include="src\Dama.h" />
     <ClInclude Include="src\DatosBloqueoJaque.h" />
@@ -168,6 +169,8 @@
     <ClInclude Include="src\Punto.h" />
     <ClInclude Include="src\Rey.h" />
     <ClInclude Include="src\SalidasConsola.h" />
+    <ClInclude Include="src\Servidor.h" />
+    <ClInclude Include="src\Socket.h" />
     <ClInclude Include="src\Sonidos.h" />
     <ClInclude Include="src\Tablero.h" />
     <ClInclude Include="src\Torre.h" />
@@ -179,6 +182,7 @@
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\Callbacks.cpp" />
     <ClCompile Include="src\Camara.cpp" />
+    <ClCompile Include="src\Cliente.cpp" />
     <ClCompile Include="src\CoordinadorAjedrez.cpp" />
     <ClCompile Include="src\Dama.cpp" />
     <ClCompile Include="src\Entity.cpp" />
@@ -194,6 +198,8 @@
     <ClCompile Include="src\Plane.cpp" />
     <ClCompile Include="src\Rey.cpp" />
     <ClCompile Include="src\SalidasConsola.cpp" />
+    <ClCompile Include="src\Servidor.cpp" />
+    <ClCompile Include="src\Socket.cpp" />
     <ClCompile Include="src\Sonidos.cpp" />
     <ClCompile Include="src\Tablero.cpp" />
     <ClCompile Include="src\Torre.cpp" />
