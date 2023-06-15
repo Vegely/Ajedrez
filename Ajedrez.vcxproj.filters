@@ -73,6 +73,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="1_Lógica\Piezas\Ficheros">
+      <UniqueIdentifier>{12c2d96b-bb82-4677-a31c-bf2c66072683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Lógica\Piezas\Ficheros\Header Files">
+      <UniqueIdentifier>{746f6a2f-a7c1-4bd4-bac8-f3d7fb468f69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Lógica\Piezas\Ficheros\Source Files">
+      <UniqueIdentifier>{7ebdd345-3de5-4a34-b9ff-95e58348c30a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Caballo.h">
@@ -162,6 +171,21 @@
     <ClInclude Include="src\UI.h">
       <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Socket.h">
+      <Filter>4_Redes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Servidor.h">
+      <Filter>4_Redes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cliente.h">
+      <Filter>4_Redes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DatosRanking.h">
+      <Filter>1_Lógica\Piezas\Ficheros\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ranking.h">
+      <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Caballo.cpp">
@@ -234,6 +258,21 @@
       <Filter>3_Menus_Máquina_Estados\Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="src\UI.cpp">
+      <Filter>3_Menus_Máquina_Estados\Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Socket.cpp">
+      <Filter>4_Redes\Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Servidor.cpp">
+      <Filter>4_Redes\Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cliente.cpp">
+      <Filter>4_Redes\Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DatosRanking.cpp">
+      <Filter>1_Lógica\Piezas\Ficheros\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ranking.cpp">
       <Filter>3_Menus_Máquina_Estados\Resource Files</Filter>
     </ClCompile>
   </ItemGroup>

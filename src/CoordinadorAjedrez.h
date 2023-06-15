@@ -41,3 +41,4 @@ float aCoordenadasGlutX(float p);
 
 float aCoordenadasGlutY(float p);
 
+void escrituraGlut();

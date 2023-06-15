@@ -77,19 +77,20 @@ void OnReshape(int w, int h)
 // Each set time, performs the set functions.
 void OnTimer(int value)
 {
-	ajedrez.motorGrafico.movimiento(0.03);
+	//ajedrez.motorGrafico.movimiento(0.03);
 	//rotation++;
 	glutTimerFunc(30, OnTimer, 0);
 }
 
 void OnKeyboardDown(const unsigned char key, int x_t, int y_t)
 {
-	ajedrez.motorGrafico.keypress(key);
+	ajedrez.tecla(key);
+	//ajedrez.motorGrafico.keypress(key);
 }
 
 void OnKeyboardUp(const unsigned char key, int x, int y)
 {
-	ajedrez.motorGrafico.keylift(key);
+	//ajedrez.motorGrafico.keylift(key);
 
 	// End of keyboard reading code (do not erase or write anything afterwardas).
 	//glutPostRedisplay();
@@ -97,6 +98,7 @@ void OnKeyboardUp(const unsigned char key, int x, int y)
 
 void OnKeyboardSpecial(int key, int x, int y)
 {
+	ajedrez.teclaEspecial(key);
 	// End of keyboard reading code (do not erase or write anything afterwardas).
 	//glutPostRedisplay();
 }

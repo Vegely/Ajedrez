@@ -2,19 +2,19 @@
 #include "freeglut.h"
 #include "ETSIDI.h"
 
-constexpr const char* RUTA_COLOR_JUGADOR = "bin/pantallas/seleccion color.png";
-constexpr const char* RUTA_SERVIDOR = "bin/pantallas/servidor.png";
-constexpr const char* RUTA_CLIENTE = "bin/pantallas/cliente.png";
-constexpr const char* RUTA_GUARDAR = "bin/pantallas/guardar.png";
-constexpr const char* RUTA_ROL_RED = "bin/pantallas/rol red.png";
-constexpr const char* RUTA_PAUSA = "bin/pantallas/pausa.png";
-constexpr const char* RUTA_MODO_DE_JUEGO = "bin/pantallas/modo de juego.png";
-constexpr const char* RUTA_JUEGO_LOCAL = "bin/pantallas/juego local.png";
-constexpr const char* RUTA_INICIO = "bin/pantallas/inicio.png";
-constexpr const char* RUTA_FIN_DE_PARTIDA = "bin/pantallas/fin de la partida.png";
-constexpr const char* RUTA_FALLO_CONEXION = "bin/pantallas/fallo de conexion.png";
-constexpr const char* RUTA_CARGAR_PARTIDA = "bin/pantallas/cargar partida pag intermedia.png";
-constexpr const char* RUTA_RANKINGS = "bin/pantallas/rankings pag intermedia.png";
+constexpr const char* RUTA_COLOR_JUGADOR = "pantallas/seleccion color.png";
+constexpr const char* RUTA_SERVIDOR = "pantallas/servidor.png";
+constexpr const char* RUTA_CLIENTE = "pantallas/cliente.png";
+constexpr const char* RUTA_GUARDAR = "pantallas/guardar.png";
+constexpr const char* RUTA_ROL_RED = "pantallas/rol red.png";
+constexpr const char* RUTA_PAUSA = "pantallas/pausa.png";
+constexpr const char* RUTA_MODO_DE_JUEGO = "pantallas/modo de juego.png";
+constexpr const char* RUTA_JUEGO_LOCAL = "pantallas/juego local.png";
+constexpr const char* RUTA_INICIO = "pantallas/inicio.png";
+constexpr const char* RUTA_FIN_DE_PARTIDA = "pantallas/fin de la partida.png";
+constexpr const char* RUTA_FALLO_CONEXION = "pantallas/fallo de conexion.png";
+constexpr const char* RUTA_CARGAR_PARTIDA = "pantallas/cargar partida pag intermedia.png";
+constexpr const char* RUTA_RANKINGS = "pantallas/rankings pag intermedia.png";
 
 struct PantallaBase {
 	std::string ruta;
@@ -32,9 +32,9 @@ struct PantallaColorJugador :public PantallaBase
 	void dibuja() 
 	{
 		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id);
-		negro.dibuja();
+		/*negro.dibuja();
 		blanco.dibuja();
-		atras.dibuja();
+		atras.dibuja();*/
 	}
 
 
@@ -45,14 +45,14 @@ struct PantallaFalloConexion :public PantallaBase {
 
 	PantallaFalloConexion():PantallaBase(RUTA_FALLO_CONEXION) {}
 
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); aceptar.dibuja(); }
+	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*aceptar.dibuja();*/ }
 };
 
 struct PantallaFinPartida :public PantallaBase {
 	Caja guardar_y_salir{ -8.5, 9.9, 8.1, 5.9 };
 	Caja salir_sin_guardar{ -9.7, 4.9, 9.3, 1.0 };
 	PantallaFinPartida(): PantallaBase(RUTA_FIN_DE_PARTIDA){}
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); guardar_y_salir.dibuja(); salir_sin_guardar.dibuja(); }
+	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*guardar_y_salir.dibuja(); salir_sin_guardar.dibuja();*/ }
 };
 
 struct PantallaCliente :public PantallaBase {
@@ -60,21 +60,21 @@ struct PantallaCliente :public PantallaBase {
 	Caja atras{ 25.4,-2.3,29.8,-6.3 };
 	PantallaCliente(): PantallaBase(RUTA_CLIENTE){}
 
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); cliente.dibuja(); atras.dibuja(); }
+	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*cliente.dibuja(); atras.dibuja();*/ }
 };
 
 struct PantallaPausa :public PantallaBase {
 	Caja guardar_y_salir{ -8.5, 9.9, 8.1, 5.9 };
 	Caja salir_sin_guardar{ -9.7, 4.9, 9.3, 1.0 };
 	PantallaPausa():PantallaBase(RUTA_PAUSA){}
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); guardar_y_salir.dibuja(); salir_sin_guardar.dibuja(); }
+	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*guardar_y_salir.dibuja(); salir_sin_guardar.dibuja();*/ }
 };
 
 struct PantallaServidor :public PantallaBase {
 	Caja servidor{ -9.6, 9.9, 9.3, 6.0 };
 	Caja atras{ 25.4,-2.3,29.8,-6.3 };
 	PantallaServidor(): PantallaBase(RUTA_SERVIDOR){}
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); servidor.dibuja(); atras.dibuja(); }
+	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*servidor.dibuja(); atras.dibuja();*/ }
 };
 
 struct PantallaCargarPartida :public PantallaBase {
@@ -83,7 +83,7 @@ struct PantallaCargarPartida :public PantallaBase {
 	Caja anterior{ -24.3,-2.3,-19.9,-6.3 };
 	PantallaCargarPartida(): PantallaBase(RUTA_CARGAR_PARTIDA){}
 
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); atras.dibuja(); siguiente.dibuja(); anterior.dibuja(); }
+	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*atras.dibuja(); siguiente.dibuja(); anterior.dibuja();*/ }
 };
 
 struct PantallaRankings :public PantallaBase {
@@ -91,7 +91,7 @@ struct PantallaRankings :public PantallaBase {
 	Caja siguiente{ 20.0,-2.3,24.5,-6.3 };
 	Caja anterior{ -24.3,-2.3,-19.9,-6.3 };
 	PantallaRankings(): PantallaBase(RUTA_RANKINGS){}
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); atras.dibuja(); siguiente.dibuja(); anterior.dibuja(); }
+	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*atras.dibuja(); siguiente.dibuja(); anterior.dibuja();*/ }
 };
 
 struct PantallaElegirRol :public PantallaBase
@@ -103,9 +103,9 @@ struct PantallaElegirRol :public PantallaBase
 	void dibuja() 
 	{
 		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id);
-		servidor.dibuja();
+		/*servidor.dibuja();
 		cliente.dibuja();
-		atras.dibuja();
+		atras.dibuja();*/
 	}
 };
 struct PantallaInicio :public PantallaBase
@@ -130,10 +130,10 @@ struct PantallaJugadorLocal :public PantallaBase
 	void dibuja()
 	{
 		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id);
-		jugadorIA.dibuja();
+		/*jugadorIA.dibuja();
 		dosJugadores.dibuja();
 		atras.dibuja();
-		IAIA.dibuja();
+		IAIA.dibuja();*/
 	}
 	//Estado click(int button, int state, float x, float y) override;
 };
@@ -147,9 +147,9 @@ struct PantallaModoDeJuego :public PantallaBase
 	void dibuja()
 	{
 		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id);
-		local.dibuja();
+		/*local.dibuja();
 		red.dibuja();
-		salir.dibuja();
+		salir.dibuja();*/
 	}
 };
 

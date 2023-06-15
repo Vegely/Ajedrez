@@ -50,6 +50,7 @@ void CoordinadorAjedrez::dibuja()
 		0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 		0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
 
+
 	if (estado == INICIO) {
 		
 		pantallaInicio.dibuja();
@@ -111,35 +112,34 @@ void CoordinadorAjedrez::dibuja()
 		pantallaRanking.dibuja();
 	}
 
-	
+
 	glEnable(GL_TEXTURE_2D);
 
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
 	glColor3f(1, 1, 1);
 
-	glTexCoord3d(0, 1,-0.1); glVertex3f(-31.5, -8,-0.1);
-	glTexCoord3d(1, 1,-0.1); glVertex3f(31.5, -8,-0.1);
-	glTexCoord3d(1, 0,-0.1); glVertex3f(31.5, 25,-0.1);
-	glTexCoord3d(0, 0,-0.1); glVertex3f(-31.5, 25,-0.1);
+	glTexCoord3d(0, 1, -0.1); glVertex3f(-31.5, -8, -0.1);
+	glTexCoord3d(1, 1, -0.1); glVertex3f(31.5, -8, -0.1);
+	glTexCoord3d(1, 0, -0.1); glVertex3f(31.5, 25, -0.1);
+	glTexCoord3d(0, 0, -0.1); glVertex3f(-31.5, 25, -0.1);
 	glEnd();
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 
-	ETSIDI::setFont("bin/fuentes/arial.ttf", 30);
-	ETSIDI::setTextColor(0, 255, 0);
-	ETSIDI::printxy("hola mundo", 1, 1, 1);
+	escrituraGlut();
+
 }
 
 
 void CoordinadorAjedrez::tecla(unsigned char key) 
 {
-	
+
 }
 
 void CoordinadorAjedrez::teclaEspecial(int key)
 {
-	
+
 }
 
 void CoordinadorAjedrez::click(int button, int state, int x, int y)
@@ -157,7 +157,24 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y)
 		if (pantallaInicio.mostrarRankings.enCaja(xg, yg))
 			estado = RANKING;
 	}
-
+	if (estado == MODO)
+	{
+		if (pantallaModoJuego.local.enCaja(xg, yg))
+			estado = MODO_LOCAL;
+	}
+	if (estado == MODO_LOCAL)
+	{
+		if (pantallaJugadorLocal.IAIA.enCaja(xg,yg))
+			estado == JUEGO;
+		if (pantallaJugadorLocal.jugadorIA.enCaja(xg, yg))
+			estado == COLOR;
+		if (pantallaJugadorLocal.dosJugadores.enCaja(xg, yg))
+			estado == JUEGO;
+	}
+	if (estado == RANKING)
+	{
+		//if(.)
+	}
 }
 
 float aCoordenadasGlutX(float p)
@@ -170,6 +187,11 @@ float aCoordenadasGlutY(float p)
 	return H_MAX - p * ((-H_MIN + H_MAX) / (float)glutGet(GLUT_WINDOW_HEIGHT));
 }
 
-
+void escrituraGlut()
+{
+	ETSIDI::setFont("bin/fuentes/ALGER.ttf", 12);
+	ETSIDI::setTextColor(0, 255, 0);
+	//ETSIDI::printxy(pantallaInicio.texto.c_str(), 1, 1, 1);
+}
 
 
