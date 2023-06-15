@@ -1,6 +1,6 @@
 #include "CoordinadorAjedrez.h"
 #include <ETSIDI.h>
-
+#include "Pantalla.h"
 #include <thread>
 
 ConfiguracionDeJuego configuracion;
@@ -33,9 +33,12 @@ void CoordinadorAjedrez::onTimer()
 void CoordinadorAjedrez::dibuja() 
 {
 	if (estado == INICIO) {
+		static Caja c(-10.0, 15.0, 10.0, 0.0);
+		
 		gluLookAt(0, 7.5, 30, // posicion del ojo
 			0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
-			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y) 
+			0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
+		c.dibuja();
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/pantallas/guardar.png").id);
 
@@ -43,10 +46,10 @@ void CoordinadorAjedrez::dibuja()
 		glBegin(GL_POLYGON);
 		glColor3f(1, 1, 1);
 
-		glTexCoord2d(0, 1); glVertex2f(-10, 0);
-		glTexCoord2d(1, 1); glVertex2f(10, 0);
-		glTexCoord2d(1, 0); glVertex2f(10, 15);
-		glTexCoord2d(0, 0); glVertex2f(-10, 15);
+		glTexCoord2d(0, 1); glVertex2f(-31.5, -10);
+		glTexCoord2d(1, 1); glVertex2f(31.5, -10);
+		glTexCoord2d(1, 0); glVertex2f(31.5, 25);
+		glTexCoord2d(0, 0); glVertex2f(-31.5, 25);
 		glEnd();
 		glEnable(GL_LIGHTING);
 		glDisable(GL_TEXTURE_2D);

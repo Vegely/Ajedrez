@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="src\Alfil.h" />
     <ClInclude Include="src\Caballo.h" />
+    <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\Callbacks.h" />
     <ClInclude Include="src\Camara.h" />
     <ClInclude Include="src\Casilla.h" />
@@ -160,10 +161,12 @@
     <ClInclude Include="src\MotorDeJuego.h" />
     <ClInclude Include="src\Movimiento.h" />
     <ClInclude Include="src\Mundo.h" />
+    <ClInclude Include="src\Pantalla.h" />
     <ClInclude Include="src\Peon.h" />
     <ClInclude Include="src\Pieza.h" />
     <ClInclude Include="src\Plane.h" />
     <ClInclude Include="src\Posicion.h" />
+    <ClInclude Include="src\Punto.h" />
     <ClInclude Include="src\Rey.h" />
     <ClInclude Include="src\SalidasConsola.h" />
     <ClInclude Include="src\Sonidos.h" />
@@ -173,6 +176,7 @@
   <ItemGroup>
     <ClCompile Include="src\Alfil.cpp" />
     <ClCompile Include="src\Caballo.cpp" />
+    <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\Callbacks.cpp" />
     <ClCompile Include="src\Camara.cpp" />
     <ClCompile Include="src\CoordinadorAjedrez.cpp" />
@@ -185,6 +189,7 @@
     <ClCompile Include="src\Modelo.cpp" />
     <ClCompile Include="src\MotorDeJuego.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
+    <ClCompile Include="src\Pantalla.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
     <ClCompile Include="src\Plane.cpp" />
