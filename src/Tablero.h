@@ -14,7 +14,6 @@ class Tablero
 	Pieza* tablero[ANCHO_TABLERO * ANCHO_TABLERO];
 	bool colorDelTurno;
 
-	bool haMovido[6] = {1, 1, 1, 1, 1, 1};
 
 	Posicion reyPos[2];
 
@@ -46,7 +45,6 @@ public:
 	inline Posicion posicion(int i) const { return Posicion(i % ANCHO_TABLERO, i / ANCHO_TABLERO); }
 	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO];}		//Devuelve el puntero a pieza de una posición leóda
 																			//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
-	bool hacerJugada(const Movimiento& movimiento);
 
 	Movimiento getUltimaJugada() { return ultimaJugada; }
 

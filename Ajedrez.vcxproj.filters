@@ -153,6 +153,9 @@
     <ClInclude Include="src\Sonidos.h">
       <Filter>5_Sonido\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ConfiguracionDeJuego.h">
+      <Filter>1_Lógica\0_Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Caballo.cpp">

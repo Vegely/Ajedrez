@@ -148,6 +148,7 @@
     <ClInclude Include="src\Callbacks.h" />
     <ClInclude Include="src\Camara.h" />
     <ClInclude Include="src\Casilla.h" />
+    <ClInclude Include="src\ConfiguracionDeJuego.h" />
     <ClInclude Include="src\CoordinadorAjedrez.h" />
     <ClInclude Include="src\Dama.h" />
     <ClInclude Include="src\DatosBloqueoJaque.h" />

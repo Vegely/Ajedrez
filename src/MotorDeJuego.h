@@ -4,15 +4,6 @@
 #include "Mundo.h"
 #include "IA.h";
 
-struct ConfiguracionDeJuego
-{
-	enum class FormasDeInteraccion { LOCAL, IA };
-	FormasDeInteraccion config[2];
-
-	FormasDeInteraccion operator[] (int i) const { return config[i]; }
-	FormasDeInteraccion& operator[] (int i) { return config[i]; }
-};
-
 enum class CodigoFinal { JAQUE_MATE, REY_AHOGADO, TABLAS_POR_MATERIAL_INSUFICIENTE, TABLAS_POR_REPETICION, TABLAS_POR_PASIVIDAD };	
 
 struct DatosFinal
@@ -23,7 +14,6 @@ struct DatosFinal
 
 class MotorDeJuego
 {
-	static ConfiguracionDeJuego config;
 	
 	Tablero tablero;
 
@@ -33,9 +23,7 @@ class MotorDeJuego
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec) const;
 	
 public:
-	MotorDeJuego(const ConfiguracionDeJuego& config) : tablero(Tablero(true)) { pintar(); this->config = config; }
 
-	static Pieza::tipo_t seleccionarEntradaCoronar(const Posicion& posicion, const Tablero& tablero);
 	//static bool hacerJugada(Movimiento movimiento, Tablero& tablero, const ConfiguracionDeJuego& config);
 
 	void liberar() { tablero.liberar(); }

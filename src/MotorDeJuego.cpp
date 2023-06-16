@@ -34,19 +34,11 @@ Posicion getInput()
 
 Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
 {
-	Movimiento movimiento;
-
 	switch (config[tablero.colorDelTurno])
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
-		movimiento = ensamblarMovimiento(getInput(), pos1Selec);
-		break;
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
-		movimiento = IA::mover(tablero);
-		break;
 	}
-
-	return movimiento;
 }
 
 DatosFinal MotorDeJuego::motor()
@@ -61,15 +53,12 @@ DatosFinal MotorDeJuego::motor()
 
 		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1))) // Se hace la jugada
 		{
-			jugadaHecha = tablero.hacerJugada(movimiento);
 
 			if (jugadaHecha) // Se hace la jugada
 			{
 				pintar();
 
 				if (tablero.jaqueMate())
-				{
-					datosFinal = { CodigoFinal::JAQUE_MATE,!tablero.colorDelTurno };
 					exit = true;
 				}
 				else if (tablero.reyAhogado())
@@ -297,22 +286,11 @@ Pieza::tipo_t getSelection()
 }
 
 /////////////////
-ConfiguracionDeJuego MotorDeJuego::config;
-Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Posicion& posicion, const Tablero& tablero)
 {
-	Pieza::tipo_t tipo;
-
-	switch (config[tablero.colorDelTurno])
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
-		tipo = getSelection();
-		break;
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
-		tipo = IA::coronar(tablero, posicion);
-		break;
 	}
-
-	return tipo;
 }
 
 Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, bool pos1Selec) const
