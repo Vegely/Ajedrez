@@ -25,33 +25,8 @@ CoordinadorAjedrez::CoordinadorAjedrez() :
 
 void CoordinadorAjedrez::Draw(void)
 {
-	static bool flag_coronacion = true;
-
-	//if (motorLogico.getTablero()->getTurno() && mundoGrafico.getGirado())
-	//{
-	//	mundoGrafico.setCamaraPos(Camara::white_pov);
-	//	mundoGrafico.cambiarGirado();
-	//}
-	//else if (!motorLogico.getTablero()->getTurno() && !mundoGrafico.getGirado())
-	//{
-	//	mundoGrafico.setCamaraPos(Camara::black_pov);
-	//	mundoGrafico.cambiarGirado();
-	//}
-
 	mundoGrafico.updateCamara();
-
-	if (mundoGrafico.getCoronando() && flag_coronacion)
-	{
-		mundoGrafico.generarModelosCoronacion(motorLogico.getTablero()->getTurno());
-		flag_coronacion = false;
-	}
-	if (!mundoGrafico.getCoronando())
-	{
-		mundoGrafico.renderizarModelos();
-		flag_coronacion = true;
-	}
-	else
-		mundoGrafico.renderModelosCoronacion(motorLogico.getTablero()->getTurno());
+	mundoGrafico.renderizarModelos();
 }
 
 // CAMBIAR INICIO POR JUEGO

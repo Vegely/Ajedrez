@@ -1,4 +1,6 @@
 #include "Mundo.h"
+#include "Tablero.h"
+
 #include <ETSIDI.h>
 #include <string>
 
@@ -110,6 +112,8 @@ void Mundo::leerTablero(const Tablero& tablero)
 		else
 			tablero_actual[i].valido = false;
 
+		bool flag_coronacion = false;
+
 		// DEBUG
 		//std::cout << "i: " << i << std::endl
 		//	<< "Coords: " << casillas_tablero_array[i].x << casillas_tablero_array[i].y << std::endl
@@ -138,20 +142,44 @@ void Mundo::leerTablero(const Tablero& tablero)
 			{
 				moverModelo(tablero.getUltimaJugada(), tablero_actual[i].color, tablero_actual[i].tipo);
 			}
-			// Si los tipos son valido y valido, una ha comido a la otra o ha ocurrido una coronación
+			// Si los tipos son valido y valido, una ha comido a la otra
 			else if (tablero_anterior[i].valido && tablero_actual[i].valido)
 			{
 				// Una ha comido a la otra. Se sustituye la nueva por la antigua.
-				if (tablero_anterior[i].color != tablero_actual[i].color) 
+				if (tablero_anterior[i].color != tablero_actual[i].color)
 				{
 					seleccionarLista(tablero_anterior[i].color, tablero_anterior[i].tipo)->
 						deleteFromCoord(tablero_anterior[i].posicion);
 
 					moverModelo(tablero.getUltimaJugada(), tablero_actual[i].color, tablero_actual[i].tipo);
 				}
-				else if (tablero_anterior[i].tipo == Pieza::tipo_t::PEON && tablero_actual[i].tipo != Pieza::tipo_t::PEON) // Ha ocurrido una coronación
+			}
+			else if (tablero_anterior[i].tipo == Pieza::tipo_t::PEON && !tablero_actual[i].valido &&
+				(tablero_anterior[i].posicion.y == 6 && tablero_anterior[i].color || tablero_anterior[i].posicion.y == 1 && !tablero_anterior[i].color))
+			{
+				seleccionarLista(tablero_anterior[i].color, Pieza::tipo_t::PEON)->deleteFromCoord(tablero_anterior[i].posicion); // Borrar el peón
+				// Volver a leer el tablero porque han pasado dos cosas a la vez: destrucción del peón y promoción a la nueva pieza.
+				for (int j = 0; j < 64; j++)
 				{
-					this->coronando = true;
+					if (!tablero_anterior[j].valido && tablero_actual[j].valido &&
+						(tablero_actual[j].posicion.y == 7 && tablero_actual[j].color || tablero_actual[j].posicion.y == 1 && !tablero_actual[j].color)) // condicion de seguridad
+					{
+						seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->
+							addElem(new Modelo(Modelo::castTipo(tablero_actual[j].tipo), tablero_actual[j].posicion, tablero_actual[j].color));
+						seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->
+							getElem(seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->getNumElem())->cargarTextura();
+					}
+					else if
+						(tablero_anterior[j].valido && tablero_actual[j].valido &&
+						(tablero_anterior[j].color  != tablero_actual[j].color))
+					{
+						seleccionarLista(tablero_anterior[j].color, tablero_anterior[j].tipo)->
+							deleteFromCoord(tablero_anterior[j].posicion);
+						seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->
+							addElem(new Modelo(Modelo::castTipo(tablero_actual[j].tipo), tablero_actual[j].posicion, tablero_actual[j].color));
+						seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->
+							getElem(seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->getNumElem())->cargarTextura();
+					}
 				}
 			}
 		}
@@ -384,4 +412,36 @@ void Mundo::renderModelosCoronacion(bool color)
 	lista_dama   ->getElem(lista_dama   ->getNumElem())->render();
 	lista_torre  ->getElem(lista_torre  ->getNumElem())->render();
 	lista_alfil  ->getElem(lista_alfil  ->getNumElem())->render();
+}
+
+Pieza::tipo_t Mundo::seleccionPiezaCoronacion(void)
+{
+	//this->coronando = true;
+	while(true)
+	{
+		Pieza::tipo_t tipo_coronacion = this->getTipoCoronacion();
+
+		switch (static_cast<int>(tipo_coronacion))
+		{
+		case 1:
+			//this->coronando = false;
+			return Pieza::tipo_t::CABALLO;
+			break;
+		case 2:
+			//this->coronando = false;
+			return Pieza::tipo_t::ALFIL;
+			break;
+		case 3:
+			//this->coronando = false;
+			return Pieza::tipo_t::TORRE;
+			break;
+		case 4:
+			//this->coronando = false;
+			return Pieza::tipo_t::DAMA;
+			break;
+		default:
+			std::cout << "No es una pieza valida para coronar." << std::endl;
+			break;
+		}
+	}
 }

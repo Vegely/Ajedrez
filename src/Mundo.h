@@ -6,7 +6,8 @@
 #include "Camara.h"
 #include "Movimiento.h"
 #include "Plane.h"
-#include "Tablero.h"
+
+
 
 class Casilla
 {
@@ -208,7 +209,8 @@ public:
 	void moverModelos(const Movimiento& mov);
 	Posicion getCasilla(void) const { return this->posicion_leida; }
 	bool getCoronando(void) const { return this->coronando; }
-	Pieza* getPiezaCoronacion(void) const { return this->pieza_coronacion; }
+	Pieza::tipo_t getTipoCoronacion(void) const { return Pieza::tipo_t::DAMA;/*this->pieza_coronacion->getTipo()*/; } // COMPROBACION NULLPTR
+	Pieza::tipo_t seleccionPiezaCoronacion(void);
 
 	/* GESTIÓN DE MODELOS */
 	ListaModelo* seleccionarLista(bool color, Pieza::tipo_t tipo_pieza);

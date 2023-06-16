@@ -25,13 +25,10 @@ Posicion getInput(Mundo* p_motorGrafico)
 
 Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool pos1Selec)
 {
-	Movimiento movimiento = Movimiento{ Posicion{0, 0}, Posicion{0, 0} };
-
 	switch (config[tablero.colorDelTurno])
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
-		movimiento = ensamblarMovimiento(getInput(p_motorGrafico), pos1Selec);
-		break;
+		return ensamblarMovimiento(getInput(p_motorGrafico), pos1Selec);
 
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
 		return IA::mover(tablero);
@@ -41,16 +38,16 @@ Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool pos1Sele
 DatosFinal MotorDeJuego::motor(Mundo* mundoGrafico)
 {
 	DatosFinal datosFinal;
+	static Movimiento movimiento = Movimiento(Posicion(-1, -1), Posicion(-1, -1));
 	bool exit = false;
 	bool jugadaHecha = true;
 
 	while (!exit)
 	{
-		PONER EL BUENO
-		Movimiento movimiento = seleccionarEntrada(!jugadaHecha);
-		Movimiento movimiento = seleccionarEntrada(mundoGrafico, pos1Selec);
+		movimiento = seleccionarEntrada(mundoGrafico, !jugadaHecha);
+		//Movimiento movimiento = seleccionarEntrada(mundoGrafico, pos1Selec);
 
-		if (movimiento != Movimiento(Posicion{ -1, -1 }, Posicion{ -1, -1 }))
+		if (movimiento != Movimiento(Posicion{ 0, 0 }, Posicion{ -1, -1 }))
 		{
 			jugadaHecha = tablero.hacerJugada(movimiento, config[tablero.colorDelTurno], mundoGrafico);
 
@@ -91,132 +88,15 @@ DatosFinal MotorDeJuego::motor(Mundo* mundoGrafico)
 	return datosFinal;
 }
 
-// SUSTITUIR EN TABLERO
-// bool MotorDeJuego::hacerJugada(Movimiento movimiento, Mundo* motorGrafico)
-// {
-// 	bool JugadaHecha = false;
-
-// 	for (const Pieza* puedeComer : tablero.leer(movimiento.inicio)->getPuedeComer())
-// 	{
-// 		if (puedeComer->getPosicion() == movimiento.fin)
-// 		{
-// 			if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && puedeComer->getPosicion().y == movimiento.inicio.y);
-// 			else
-// 			{
-// 				tablero.actualizarHaMovido(movimiento);
-
-// 				delete tablero.leer(movimiento.fin);
-
-// 				tablero.infoTablas.clear();
-// 				tablero.numeroPiezas--;
-
-// 				JugadaHecha = true;
-// 				break;
-// 			}
-
-// 		}
-
-// 		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON)
-// 		{
-// 			Posicion aux = puedeComer->getPosicion() + (1 - 2 * !tablero.leer(movimiento.inicio)->getColor()) * Posicion(0, 1);
-// 			if (aux == movimiento.fin)
-// 			{
-// 				tablero.actualizarHaMovido(movimiento);
-
-// 				tablero.tablero[puedeComer->getPosicion().indice()] = nullptr;
-// 				delete tablero.leer(aux);
-
-// 				tablero.infoTablas.clear();
-// 				tablero.numeroPiezas--;
-
-// 				JugadaHecha = true;
-// 				break;
-// 			}
-// 		}
-// 	}
-		
-// 	if (!JugadaHecha) for (const Posicion puedeMover : tablero.leer(movimiento.inicio)->getPuedeMover())
-// 	{
-// 		if (puedeMover == movimiento.fin)
-// 		{ 
-// 			if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::REY)
-// 			{
-// 				Posicion aux = movimiento.fin - movimiento.inicio;
-// 				if (abs(aux.x) == 2)
-// 				{
-// 					if (aux.x < 0) tablero.mover(Movimiento(Posicion(0, movimiento.inicio.y), Posicion(3, movimiento.inicio.y)));
-// 					else tablero.mover(Movimiento(Posicion(7, movimiento.inicio.y), Posicion(5, movimiento.inicio.y)));
-
-// 					tablero.infoTablas.clear();
-// 				}	
-// 			}
-
-// 			tablero.actualizarHaMovido(movimiento);
-
-// 			JugadaHecha = true; 
-// 			break; 
-// 		}
-// 	}
-		
-
-// 	if (JugadaHecha)
-// 	{
-// 		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
-// 		{
-// 			Pieza* p_pieza = tablero.leer(movimiento.inicio);
-// 			tablero.coronar(movimiento.inicio, seleccionarEntradaCoronar(movimiento.inicio, motorGrafico));
-// 			delete p_pieza;
-// 		}
-
-// 		tablero.cambiarTurno();
-// 		tablero.ultimaJugada = movimiento;
-// 		tablero.mover(movimiento);
-		
-// 		//pintar();
-
-// 		return true;
-// 	}
-
-// 	return false;
-// }
-
-Pieza::tipo_t getSelection(Mundo* motorGrafico)
-{
-	Pieza* pieza_coronacion = motorGrafico->getPiezaCoronacion();
-	if (pieza_coronacion != nullptr)
-	{
-		switch (static_cast<int>(pieza_coronacion->getTipo()))
-		{
-		case 1:
-			return Pieza::tipo_t::CABALLO;
-			break;
-		case 2:
-			return Pieza::tipo_t::ALFIL;
-			break;
-		case 3:
-			return Pieza::tipo_t::TORRE;
-			break;
-		case 4:
-			return Pieza::tipo_t::DAMA;
-			break;
-		default:
-			std::cout << "No es una pieza valida para coronar." << std::endl;
-			return pieza_coronacion->getTipo();
-			break;
-		}
-	}
-}
-
 Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico)
 {
 	switch (interaccion)
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
-		return getSelection(motorGrafico);
-		break;
+		return motorGrafico->seleccionPiezaCoronacion();
+
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
 		return IA::coronar(tablero, movimiento);
-		break;
 	}
 }
 

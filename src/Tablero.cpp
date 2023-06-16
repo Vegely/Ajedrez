@@ -47,7 +47,6 @@ void Tablero::actualizarTablero()
 				datosClavada.push_back(aux);
 			}
 		}
-
 	}
 
 	leer(reyPos[0])->actualizarVariables(false, Posicion{ 0,0 }, tableroIlegalesRey);
@@ -266,7 +265,7 @@ void Tablero::mover(const Movimiento& movimiento) {
 	actualizarTablero();
 }
 
-bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion)
+bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico)
 {
 	bool jugadaHecha = false;
 
@@ -338,7 +337,7 @@ bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJue
 		if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
 		{
 			Pieza* p_peon = leer(movimiento.inicio);
-			coronar(movimiento.inicio, MotorDeJuego::seleccionarEntradaCoronar(movimiento, *this, interaccion));
+			coronar(movimiento.inicio, MotorDeJuego::seleccionarEntradaCoronar(movimiento, *this, interaccion, motorGrafico));
 			delete p_peon;
 
 			infoTablas.clear();

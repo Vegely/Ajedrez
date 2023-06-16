@@ -55,7 +55,9 @@ public:
 	friend class Rey;
 
 	//Operadores basicos
-	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char valor, const tipo_t tipo) : tablero(p_tablero), color(color), valor(valor), tipo(tipo){}
+	explicit Pieza(const Tablero& p_tablero, const bool color, const unsigned char valor, const tipo_t tipo) :
+		tipo(tipo), tablero(p_tablero), color(color), valor(valor), posicion(Posicion(-1, -1)),
+		puede_mover(0), puede_comer(0), esta_protegida(0), amenazas(0) {}
 	explicit Pieza(const Pieza& p) : tipo(p.tipo), valor(p.valor), tablero(p.tablero), color(p.color) { posicion = p.posicion; puede_mover = p.puede_mover; puede_comer = p.puede_comer; esta_protegida = p.esta_protegida; amenazas = p.amenazas; }
 	virtual ~Pieza() {}
 

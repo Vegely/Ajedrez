@@ -20,14 +20,13 @@ class MotorDeJuego
 
 	Movimiento seleccionarEntrada(Mundo* p_motorGrafico, bool pos1Selec);
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec) const;
-	bool hacerJugada(Movimiento movimiento, Mundo* motorGrafico);
-
-	static Pieza::tipo_t seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico);
 
 public:
 	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { /*pintar()*/; }
 	Tablero* getTablero(void) { return &this->tablero; }
 	void liberar() { tablero.liberar(); }
+
+	static Pieza::tipo_t seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico);
 
 	DatosFinal motor(Mundo* mundoGrafico);
 };

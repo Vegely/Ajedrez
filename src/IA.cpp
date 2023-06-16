@@ -80,7 +80,7 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			 for (Posicion posicion : p_pieza->getPuedeMover())
 			{
 				Tablero aux = Tablero::copiar(tablero);
-				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), posicion), ConfiguracionDeJuego::FormasDeInteraccion::IA);
+				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), posicion), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
 
 				MovimientoEvaluado eval(0); eval = minimax(aux, profundidad - 1, false, alfa, beta);
 				aux.liberar();
@@ -105,7 +105,7 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			if (!exit) for (Pieza* p_piezaComida : p_pieza->getPuedeComer())
 			{
 				Tablero aux = Tablero::copiar(tablero);
-				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()), ConfiguracionDeJuego::FormasDeInteraccion::IA);
+				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
 
 				MovimientoEvaluado eval = minimax(aux, profundidad - 1, false, alfa, beta);
 				aux.liberar();
@@ -140,7 +140,7 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			for (Posicion posicion : p_pieza->getPuedeMover())
 			{
 				Tablero aux = Tablero::copiar(tablero);
-				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), posicion), ConfiguracionDeJuego::FormasDeInteraccion::IA);
+				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), posicion), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
 
 				MovimientoEvaluado eval = minimax(aux, profundidad - 1, true, alfa, beta);
 				aux.liberar();
@@ -163,7 +163,7 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			if (!exit) for (Pieza* p_piezaComida : p_pieza->getPuedeComer())
 			{
 				Tablero aux = Tablero::copiar(tablero);
-				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()), ConfiguracionDeJuego::FormasDeInteraccion::IA);
+				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
 
 				MovimientoEvaluado eval = minimax(aux, profundidad - 1, true, alfa, beta);
 				aux.liberar();

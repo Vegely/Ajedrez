@@ -8,6 +8,8 @@
 
 #include "ConfiguracionDeJuego.h"
 
+#include "Mundo.h"
+
 constexpr auto ANCHO_TABLERO = 8;
 
 class Tablero
@@ -46,9 +48,17 @@ public:
 	void liberar() { for (Pieza* p_pieza : tablero)  p_pieza; }
 
 	inline Posicion posicion(int i) const { return Posicion(i % ANCHO_TABLERO, i / ANCHO_TABLERO); }
-	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO];}		//Devuelve el puntero a pieza de una posición leóda
-																			//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
-	bool hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion);
+
+	// Devuelve el puntero a pieza de una posición leída
+	inline Pieza* leer(const Posicion& posicion) const
+	{
+		if (posicion.x < 8 && posicion.x >= 0 && posicion.y < 8 && posicion.y >= 0)
+			return tablero[posicion.x + posicion.y * ANCHO_TABLERO];
+		else return nullptr;
+	}		
+
+	//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
+	bool hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico);
 
 	Movimiento getUltimaJugada() const { return ultimaJugada; }
 	bool getTurno(void) const { return colorDelTurno; }
