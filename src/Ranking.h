@@ -6,7 +6,9 @@
 #include <vector>
 #include "DatosRanking.h"
 
-#define JUGADORES_POR_HOJA 10
+#define JUGADORES_POR_HOJA 5
+#define ALTO_GL 35.0 //25 hasta -10
+#define ANCHO_GL 63.2 //-31.6 hasta 31.6
 
 class Ranking
 {
@@ -41,6 +43,5 @@ public:
 	void print() const;
 	void paginaSiguiente() { if (pagina_actual >= npaginas)return; pagina_actual++; }
 	void paginaAnterior() { if (pagina_actual <= 0)return; pagina_actual--; }
+	void iniPag() { pagina_actual = 0; }
 };
-
-

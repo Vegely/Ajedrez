@@ -12,6 +12,8 @@
 #define W_MAX 31.5f
 #define W_MIN -31.5f
 
+constexpr const char* RUTA_FUENTES = "bin/fuentes/consola.ttf";
+
 enum Estado { INICIO, JUEGO, FIN, RANKING, CARGAR, MODO_LOCAL, MODO_RED, MODO, COLOR, SERVIDOR, CLIENTE, FALLO_CONEXION, PAUSA, COLOR_SERVIDOR, GUARDAR};
 
 class CoordinadorAjedrez
@@ -51,8 +53,4 @@ float aCoordenadasGlutX(float p);
 
 float aCoordenadasGlutY(float p);
 
-void escrituraGlut(PantallaBase pb,float x,float y);
-
-void aniadirTeclaSuprimir(PantallaBase &pb, unsigned char key);
-
-void borrar(PantallaBase &pb, unsigned char key);
+void parametrosTexturasMEstados();
