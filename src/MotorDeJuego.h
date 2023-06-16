@@ -3,6 +3,7 @@
 #include "Tablero.h"
 #include "Mundo.h"
 #include "IA.h";
+#include "ConfiguracionDeJuego.h"
 
 enum class CodigoFinal { JAQUE_MATE, REY_AHOGADO, TABLAS_POR_MATERIAL_INSUFICIENTE, TABLAS_POR_REPETICION, TABLAS_POR_PASIVIDAD };	
 
@@ -14,6 +15,7 @@ struct DatosFinal
 
 class MotorDeJuego
 {
+	const ConfiguracionDeJuego config;
 	
 	Tablero tablero;
 
@@ -23,7 +25,9 @@ class MotorDeJuego
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec) const;
 	
 public:
+	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { pintar(); }
 
+	static Pieza::tipo_t seleccionarEntradaCoronar(const Posicion& posicion, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion);
 	//static bool hacerJugada(Movimiento movimiento, Tablero& tablero, const ConfiguracionDeJuego& config);
 
 	void liberar() { tablero.liberar(); }

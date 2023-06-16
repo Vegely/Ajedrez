@@ -37,7 +37,9 @@ Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec) const
 	switch (config[tablero.colorDelTurno])
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
+		return ensamblarMovimiento(getInput(), pos1Selec);
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
+		return IA::mover(tablero);
 	}
 }
 
@@ -47,18 +49,28 @@ DatosFinal MotorDeJuego::motor()
 	bool exit = false;
 	bool jugadaHecha = true;
 
+	//seleccionarEntradaCoronar(Posicion(6, 6), tablero, config[0]);
+
 	while (!exit)
 	{
 		Movimiento movimiento = seleccionarEntrada(!jugadaHecha);
 
 		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1))) // Se hace la jugada
 		{
+			jugadaHecha = tablero.hacerJugada(movimiento, config[tablero.colorDelTurno]);
 
 			if (jugadaHecha) // Se hace la jugada
 			{
 				pintar();
 
+				///
+				if (tablero.numeroPiezas < 13)
+					std::cout << "vrnoewbn" << std::endl;
+				///
+
 				if (tablero.jaqueMate())
+				{ 
+					datosFinal = { CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno };
 					exit = true;
 				}
 				else if (tablero.reyAhogado())
@@ -262,6 +274,8 @@ Pieza::tipo_t getSelection()
 	{
 		exit = true;
 			
+		std::cin >> input;
+
 		int numero = input[0] - 48;
 		switch (numero)
 		{
@@ -286,10 +300,14 @@ Pieza::tipo_t getSelection()
 }
 
 /////////////////
+Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Posicion& posicion, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion)
 {
+	switch (interaccion)
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
+		return getSelection();
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
+		return IA::coronar(tablero, posicion);
 	}
 }
 
