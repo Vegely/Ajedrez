@@ -41,4 +41,8 @@ float aCoordenadasGlutX(float p);
 
 float aCoordenadasGlutY(float p);
 
-void escrituraGlut();
+void escrituraGlut(PantallaBase pb,float x,float y);
+
+void aniadirTeclaSuprimir(PantallaBase &pb, unsigned char key);
+
+void borrar(PantallaBase &pb, unsigned char key);

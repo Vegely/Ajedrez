@@ -2,6 +2,8 @@
 #include <ETSIDI.h>
 #include <thread>
 
+#define TAM_FRASE 10
+
 ConfiguracionDeJuego configuracion;
 
 PantallaElegirRol pantallaElegirRol;
@@ -52,10 +54,14 @@ void CoordinadorAjedrez::dibuja()
 
 
 	if (estado == INICIO) {
-		
 		pantallaInicio.dibuja();
+		escrituraGlut(pantallaInicio, 0.0, 0.0);
+		ETSIDI::setFont("fuentes/ALGER.ttf", 30);
+		ETSIDI::setTextColor(0, 0, 1);
+		ETSIDI::printxy(pantallaInicio.texto.c_str(), 0.0, 0.0, 0.1);
 	}
-	else if (estado == JUEGO) {
+	else if (estado == JUEGO)
+	{
 	
 	}
 	else if (estado == COLOR_SERVIDOR)
@@ -111,30 +117,14 @@ void CoordinadorAjedrez::dibuja()
 	{
 		pantallaRanking.dibuja();
 	}
-
-
-	glEnable(GL_TEXTURE_2D);
-
-	glDisable(GL_LIGHTING);
-	glBegin(GL_POLYGON);
-	glColor3f(1, 1, 1);
-
-	glTexCoord3d(0, 1, -0.1); glVertex3f(-31.5, -8, -0.1);
-	glTexCoord3d(1, 1, -0.1); glVertex3f(31.5, -8, -0.1);
-	glTexCoord3d(1, 0, -0.1); glVertex3f(31.5, 25, -0.1);
-	glTexCoord3d(0, 0, -0.1); glVertex3f(-31.5, 25, -0.1);
-	glEnd();
-	glEnable(GL_LIGHTING);
-	glDisable(GL_TEXTURE_2D);
-
-	escrituraGlut();
-
 }
 
 
 void CoordinadorAjedrez::tecla(unsigned char key) 
 {
-
+	if (estado == JUEGO)
+		if (key == 'p')
+			estado = PAUSA;
 }
 
 void CoordinadorAjedrez::teclaEspecial(int key)
@@ -144,36 +134,75 @@ void CoordinadorAjedrez::teclaEspecial(int key)
 
 void CoordinadorAjedrez::click(int button, int state, int x, int y)
 {
-	float yg=aCoordenadasGlutY(y);
-	float xg=aCoordenadasGlutX(x);
-	if (estado == INICIO)
+	float yg = aCoordenadasGlutY(y);
+	float xg = aCoordenadasGlutX(x);
+	//std::cout << state << std::endl;
+	if (!state)
 	{
-		if(pantallaInicio.salir.enCaja(xg,yg))
-			exit(0);
-		if (pantallaInicio.nuevaPartida.enCaja(xg, yg))
-		estado = MODO;
-		if (pantallaInicio.cargarPartida.enCaja(xg, yg))
-			estado = CARGAR;
-		if (pantallaInicio.mostrarRankings.enCaja(xg, yg))
-			estado = RANKING;
-	}
-	if (estado == MODO)
-	{
-		if (pantallaModoJuego.local.enCaja(xg, yg))
-			estado = MODO_LOCAL;
-	}
-	if (estado == MODO_LOCAL)
-	{
-		if (pantallaJugadorLocal.IAIA.enCaja(xg,yg))
-			estado == JUEGO;
-		if (pantallaJugadorLocal.jugadorIA.enCaja(xg, yg))
-			estado == COLOR;
-		if (pantallaJugadorLocal.dosJugadores.enCaja(xg, yg))
-			estado == JUEGO;
-	}
-	if (estado == RANKING)
-	{
-		//if(.)
+		if (estado == INICIO)
+		{
+			if (pantallaInicio.salir.enCaja(xg, yg))
+				exit(0);
+			if (pantallaInicio.nuevaPartida.enCaja(xg, yg))
+				estado = MODO;
+			if (pantallaInicio.cargarPartida.enCaja(xg, yg))
+				estado = CARGAR;
+			if (pantallaInicio.mostrarRankings.enCaja(xg, yg))
+				estado = RANKING;
+		}
+		else if (estado == MODO)
+		{
+			if (pantallaModoJuego.local.enCaja(xg, yg))
+				estado = MODO_LOCAL;
+			if (pantallaModoJuego.red.enCaja(xg, yg))
+				estado = MODO_RED;
+			if (pantallaModoJuego.salir.enCaja(xg, yg))
+				estado = INICIO;
+		}
+		else if (estado == MODO_LOCAL)
+		{
+			if (pantallaJugadorLocal.IAIA.enCaja(xg, yg))
+				estado = JUEGO;
+			if (pantallaJugadorLocal.jugadorIA.enCaja(xg, yg))
+				estado = COLOR;
+			if (pantallaJugadorLocal.dosJugadores.enCaja(xg, yg))
+				estado = JUEGO;
+			if (pantallaJugadorLocal.atras.enCaja(xg, yg))
+				estado = MODO;
+		}
+
+		else if (estado == MODO_RED)
+		{
+			if (pantallaElegirRol.cliente.enCaja(xg, yg))
+				estado = CLIENTE;
+			if (pantallaElegirRol.servidor.enCaja(xg, yg))
+				estado = SERVIDOR;
+			if (pantallaElegirRol.atras.enCaja(xg, yg))
+				estado = MODO;
+		}
+
+		else if (estado == COLOR)
+		{
+			//std::cout << "funciona_mi_negro" << std::endl;
+			if (pantallaColorJugador.negro.enCaja(xg, yg))
+				estado = JUEGO;
+			if (pantallaColorJugador.blanco.enCaja(xg, yg))
+				estado = JUEGO;
+			if (pantallaColorJugador.atras.enCaja(xg, yg))
+				estado = MODO_LOCAL;
+		}
+
+		else if (estado == CARGAR)
+		{
+			
+		}
+
+		else if (estado == PAUSA)
+		{
+			if (pantallaPausa.guardar_y_salir.enCaja(xg, yg));
+			if (pantallaPausa.salir_sin_guardar.enCaja(xg, yg))
+				estado = INICIO;
+		}
 	}
 }
 
@@ -187,11 +216,29 @@ float aCoordenadasGlutY(float p)
 	return H_MAX - p * ((-H_MIN + H_MAX) / (float)glutGet(GLUT_WINDOW_HEIGHT));
 }
 
-void escrituraGlut()
+void escrituraGlut(PantallaBase pb, float x,float y)
 {
 	ETSIDI::setFont("bin/fuentes/ALGER.ttf", 12);
 	ETSIDI::setTextColor(0, 255, 0);
-	//ETSIDI::printxy(pantallaInicio.texto.c_str(), 1, 1, 1);
+	ETSIDI::printxy(pb.texto.c_str(), x, y, 1);
 }
+
+
+void aniadirTeclaSuprimir(PantallaBase& pb, unsigned char key)
+{
+	if ((int)key == 127)
+		pb.texto = "";
+	else if (pb.texto.length() < TAM_FRASE)
+		pb.texto += key;
+}
+
+void borrar(PantallaBase& pb, unsigned char key)
+{
+		if (key == GLUT_KEY_LEFT) {
+			if (pb.texto.length() > 0)
+				pb.texto = pb.texto.substr(0, pb.texto.length() - 1);
+		}
+}
+
 
 
