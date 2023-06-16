@@ -16,21 +16,19 @@ struct DatosFinal
 class MotorDeJuego
 {
 	const ConfiguracionDeJuego config;
-	
 	Tablero tablero;
 
-	void pintar(Posicion piezaSelec = Posicion(-1, -1)) const;
-
-	Movimiento seleccionarEntrada(bool pos1Selec) const;
+	Movimiento seleccionarEntrada(Mundo* p_motorGrafico, bool pos1Selec);
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec) const;
-	
+	bool hacerJugada(Movimiento movimiento, Mundo* motorGrafico);
+
+	static Pieza::tipo_t seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico);
+
 public:
-	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { pintar(); }
-
-	static Pieza::tipo_t seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion);
-
+	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { /*pintar()*/; }
+	Tablero* getTablero(void) { return &this->tablero; }
 	void liberar() { tablero.liberar(); }
 
-	DatosFinal motor();
+	DatosFinal motor(Mundo* mundoGrafico);
 };
 

@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include "Casilla.h"
 #include "Posicion.h"
 
 constexpr double PI = 3.141592654f;
@@ -50,6 +49,24 @@ struct Rotation
 	float x, y, angle;
 };
 
+class CasillasTablero
+{
+private:
+	Posicion casillas_tablero[64];
+
+public:
+	CasillasTablero(void)
+	{
+		for (int i = 0; i < 64; i++)
+		{
+			casillas_tablero[i].x = i / 8;
+			casillas_tablero[i].y = i % 8;
+		}
+	}
+
+	Posicion operator[](int i) const { return casillas_tablero[i]; }
+};
+
 /* OVERLOADED OPERATORS */
 std::ostream& operator << (std::ostream& out, const Point& obj);
 std::ostream& operator << (std::ostream& out, const CRGB& obj);
@@ -60,23 +77,11 @@ Point operator / (const Point& lhs, const float rhs);
 bool operator == (const Point& lhs, const Point& rhs);
 bool operator != (const Point& lhs, const Point& rhs);
 
-class Delay
-{
-public:
-	Delay(void) = delete;
-
-	static bool delay(const float milliseconds);
-};
-
-Point getPointFromCoords(char letter, unsigned int number);
+Point getPointFromCoords(unsigned int letter, unsigned int number);
 Point getPointFromCoords(const Posicion& pos);
 
 void drawLine(const Point& p1, const Point& p2);
 
 float distanciaPuntos(const Point& p1, const Point& p2);
-
-Casilla getCoordFromPosition(const Point& pt);
-
-
 
 #endif

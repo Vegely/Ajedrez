@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ListaModelo.h" />
     <ClInclude Include="src\Alfil.h" />
     <ClInclude Include="src\Caballo.h" />
     <ClInclude Include="src\Callbacks.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="src\Torre.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ListaModelo.cpp" />
     <ClCompile Include="src\Alfil.cpp" />
     <ClCompile Include="src\Caballo.cpp" />
     <ClCompile Include="src\Callbacks.cpp" />

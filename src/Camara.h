@@ -33,6 +33,9 @@ private:
 	bool girado;
 
 public:
+	static Point white_pov;
+	static Point black_pov;
+
 	/* CONSTRUCTOR */
 	Camara(void) = delete;
 	Camara(const Point& position);
@@ -51,7 +54,7 @@ public:
 	float* getLightAmb(void) const;
 	float* getLightDif(void) const;
 	float* getLightSpe(void) const;
-	bool getGirado(void) const { return this->girado; }
+	bool   getGirado(void) const { return this->girado; }
 
 	/* SETTERS */
 	void setPosition(const Point& pos);

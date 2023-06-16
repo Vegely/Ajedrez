@@ -1,28 +1,29 @@
 #ifndef MODELO_H
 #define MODELO_H
 
-// Librer�a gr�fica
+// Libreria grafica
 #include <freeglut.h>
-// Librer�a de modelos 3D
+// Libreria de modelos 3D
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-// Librer�a de texturas
+// Libreria de texturas
 #include <stb_image.h>
-// Librer�as de la STL
+// Librerias de la STL
 #include <string>
 #include <iostream>
 #include <vector>
-// Librer�as propias 
-#include "Globals.h" // Clases �tiles gen�ricas
+// Librerias propias 
 #include "Entity.h"
 #include "Movimiento.h"
+#include "Pieza.h"
 
 enum TipoPieza { NONE, REY, DAMA, ALFIL, CABALLO, TORRE, PEON };
 
 class Modelo : public Entity
 {
 private:
+	Posicion	pos_coords;
 	GLuint	    texture_ID;
 	std::string model_path;
 	std::string texture_path;
@@ -33,13 +34,18 @@ public:
 	Assimp::Importer importer;
 
 public: 
-	/* FORMA CAN�NICA */
-	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path);
-    virtual ~Modelo(void) { /*delete scene;*/ }
+	/* FORMA CANÓNICA */
+	Modelo(void);
+	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, const std::string& model_path, const std::string& texture_path);
+	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color);
+	virtual ~Modelo(void) { /*delete scene;*/ }
 	Modelo(const Modelo& m);
 	Modelo& operator = (const Modelo& rhs);
+	/* INICIALIZACIÓN */
+	void init(void);
 
 	/* GETTERS */
+	Posicion	getCoords	    (void) const { return  this->pos_coords; }
 	std::string getModelPath    (void) const { return  this->model_path; }
 	std::string getTexturePath  (void) const { return  this->texture_path; }
 	aiScene     getSceneValue   (void) const { return *this->scene; }
@@ -47,15 +53,39 @@ public:
 	aiNode&     getRootNode     (void) const { return *this->scene->mRootNode; }
 
 	/* SETTERS */
+	void setCoords(const Posicion& pos)   { this->pos_coords   = pos; }
 	void setModelPath  (std::string path) { this->model_path   = path; }
 	void setTexturePath(std::string path) { this->texture_path = path; }
 	void setTextureID  (GLuint ID)		  { this->texture_ID   = ID; }
-	void moverModelo(const Movimiento& movimiento);
-
+	
 	/* FUNCIONES */
 	void render(void);
 	void renderNodo(const aiNode* nodo);
 	bool cargarTextura(void);
+	void moverModelo(const Movimiento& movimiento);
+
+	static TipoPieza castTipo(Pieza::tipo_t t);
+
+	/* VARIABLES ESTÁTICAS */
+	static std::string ruta_modelo_rey;
+	static std::string ruta_modelo_dama;
+	static std::string ruta_modelo_alfil;
+	static std::string ruta_modelo_caballo;
+	static std::string ruta_modelo_torre;
+	static std::string ruta_modelo_peon;
+
+	static std::string ruta_modelo_casillas_negras;
+	static std::string ruta_modelo_casillas_blancas;
+	static std::string ruta_modelo_marcos;
+	static std::string ruta_modelo_letras;
+
+	static std::string ruta_textura_blanco;
+	static std::string ruta_textura_negro;
+	static std::string ruta_textura_blanco_oscuro;
+	static std::string ruta_textura_negro_claro;
+	static std::string ruta_textura_marco;
+
+	static std::string ruta_fondo;
 };
 
 #endif

@@ -25,7 +25,7 @@ public:
 	enum class tipo_t {PEON, CABALLO, ALFIL, TORRE, DAMA, REY};
 
 protected:
-	const tipo_t tipo;				//Nombre para identificar a la pieza
+	const tipo_t tipo;						//Nombre para identificar a la pieza
 	const Tablero& tablero;					//Referencia al tablero para que las piezas sepan en que tablero estan
 	const bool color;						//True == Blancas <-> False == Negras
 	const unsigned char valor;				//Valor de la pieza

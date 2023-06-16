@@ -39,7 +39,7 @@ public:
 	friend class MotorDeJuego;
 	friend class IA;
 	
-	explicit Tablero(bool alocar = false);																									//Constructor
+	explicit Tablero(bool alocar = false); //Constructor
 
 	static Tablero copiar(const Tablero& tablero);
 
@@ -50,7 +50,8 @@ public:
 																			//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
 	bool hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion);
 
-	Movimiento getUltimaJugada() { return ultimaJugada; }
+	Movimiento getUltimaJugada() const { return ultimaJugada; }
+	bool getTurno(void) const { return colorDelTurno; }
 
 	void coronar(Posicion posicion, Pieza::tipo_t tipo);
 

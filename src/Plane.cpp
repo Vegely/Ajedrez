@@ -3,7 +3,7 @@
 
 Plane::Plane(void) :
 	x_dim(0), y_dim(0),
-	position_corners({ 0, 0, 0, 0 }),
+	position_corners(),
 	Entity()
 {
 	updateCorners();
@@ -11,7 +11,7 @@ Plane::Plane(void) :
 
 Plane::Plane(const std::string& name) :
 	x_dim(0), y_dim(0),
-	position_corners({ 0, 0, 0, 0 }),
+	position_corners(),
 	Entity(name)
 {
 	updateCorners();
