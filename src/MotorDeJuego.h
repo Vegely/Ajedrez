@@ -25,18 +25,18 @@ class MotorDeJuego
 	const ConfiguracionDeJuego config;
 	Tablero tablero;
 
-	//void pintar(Posicion piezaSelec = Posicion(-1, -1)) const;	
-	Movimiento seleccionarEntrada(bool pos1Selec, const Mundo& p_motorGrafico) const;
+	//void pintar(Posicion piezaSelec = Posicion(-1, -1)) const;
+	Movimiento seleccionarEntrada(Mundo* p_motorGrafico, bool pos1Selec);
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec) const;
-	bool hacerJugada(Movimiento movimiento);
+	bool hacerJugada(Movimiento movimiento, Mundo* motorGrafico);
 
-	Pieza::tipo_t seleccionarEntradaCoronar(Posicion posicion) const;
+	Pieza::tipo_t seleccionarEntradaCoronar(Posicion posicion, Mundo* motorGrafico) const;
 
 public:
-	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { /*pintar();*/ }
+	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { /*pintar()*/; }
 	Tablero* getTablero(void) { return &this->tablero; }
 	void liberar() { tablero.liberar(); }
 
-	DatosFinal motor(const Mundo& mundoGrafico);
+	DatosFinal motor(Mundo* mundoGrafico);
 };
 

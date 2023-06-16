@@ -68,14 +68,14 @@ Point operator / (const Point& lhs, const float rhs)
 
 Point getPointFromCoords(unsigned int letter, unsigned int number)
 {
-	return Point{ -17.5f + (letter - 1) * 5.0f, 0, -17.5f + (number - 1) * 5.0f };
+	return Point{ -17.5f + (letter) * 5.0f, 0, -17.5f + (number) * 5.0f };
 }
 
 Point getPointFromCoords(const Posicion& pos)
 {
 	Point result;
-	result.x = -(-17.5f + (pos.x - 1) * 5.0f);
-	result.z = -17.5f + (pos.y - 1) * 5.0f;
+	result.x = -(-17.5f + (pos.x) * 5.0f);
+	result.z = -17.5f + (pos.y) * 5.0f;
 	return result;
 }
 

@@ -37,9 +37,24 @@ void ListaModelo::deleteElem(int k)
 
 void ListaModelo::deleteFromCoord(const Posicion& pos)
 {
-	for (int i = 0; i < this->size(); i++)
+	if (this != nullptr)
 	{
-		if (this->getPosicion(i) == pos)
-			this->deleteElem(i);
+		for (int i = 0; i < this->size(); i++)
+		{
+			if (this->getPosicion(i) == pos)
+				this->deleteElem(i);
+		}
 	}
+	else
+		std::cout << "This list is a nullptr." << std::endl;
+}
+
+int ListaModelo::getIndex(const Posicion& pos) const
+{
+	for (int i = 0; i < this->_numElem; i++)
+	{
+		if (_modelo[i]->getCoords() == pos)
+			return i;
+	}
+	return -1;
 }

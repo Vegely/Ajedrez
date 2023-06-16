@@ -14,36 +14,23 @@
 
 constexpr auto NUM_LINEAS = 40;
 
-////////////////////
+using namespace std;
 
-//#include <string>
-//#include <cctype>
-//using namespace std;
-//
-//Posicion getInput()
-//{
-//	string input;
-//
-//	cin >> input;
-// 
-//
-//	int letra = toupper(input[0]) - 65;
-//	int numero = input[1] - 49;
-//	if (letra >= 0 && letra < 8 && numero >= 0 && numero < 8) return Posicion(letra, numero);
-//
-//	return Posicion(-1, -1);
-//}
-////////////////////
-
-Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec, const Mundo& p_motorGrafico) const
+Posicion getInput(Mundo* p_motorGrafico) 
 {
-	Movimiento movimiento;
+	Posicion pos = p_motorGrafico->getCasilla();
+	if (pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8) return pos;
+	else return Posicion(-1, -1);
+}
+
+Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool pos1Selec)
+{
+	Movimiento movimiento = Movimiento{ Posicion{0, 0}, Posicion{0, 0} };
 
 	switch (config[tablero.colorDelTurno])
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
-		//movimiento = ensamblarMovimiento(p_motorGrafico.getCasilla(), pos1Selec);
-		movimiento = p_motorGrafico.getCasilla();
+		movimiento = ensamblarMovimiento(getInput(p_motorGrafico), pos1Selec);
 		break;
 
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
@@ -54,7 +41,7 @@ Movimiento MotorDeJuego::seleccionarEntrada(bool pos1Selec, const Mundo& p_motor
 	return movimiento;
 }
 
-DatosFinal MotorDeJuego::motor(const Mundo& mundoGrafico)
+DatosFinal MotorDeJuego::motor(Mundo* mundoGrafico)
 {
 	DatosFinal datosFinal;
 	bool exit = false;
@@ -62,119 +49,51 @@ DatosFinal MotorDeJuego::motor(const Mundo& mundoGrafico)
 
 	while (!exit)
 	{
-		Movimiento movimiento = seleccionarEntrada(pos1Selec, mundoGrafico);
+		Movimiento movimiento = seleccionarEntrada(mundoGrafico, pos1Selec);
 
-		if (movimiento != Movimiento(Posicion(), Posicion(-1, -1))) // Se hace la jugada
+		if (movimiento != Movimiento(Posicion{ -1, -1 }, Posicion{ -1, -1 }))
 		{
-			pos1Selec = !hacerJugada(movimiento);
-
-			if (!pos1Selec) // Se hace la jugada
+			if (movimiento != Movimiento(Posicion(), Posicion(-1, -1))) // Se hace la jugada
 			{
-				if (tablero.jaqueMate())
+				pos1Selec = !hacerJugada(movimiento, mundoGrafico);
+
+				if (!pos1Selec) // Se hace la jugada
 				{
-					datosFinal = { CodigoFinal::JAQUE_MATE,!tablero.colorDelTurno };
-					exit = true;
-				}
-				else if (tablero.reyAhogado())
-				{
-					datosFinal.codigoFinal = CodigoFinal::REY_AHOGADO;
-					exit = true;
-				}
-				else if (tablero.tablasMaterialInsuficiente())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE;
-					exit = true;
-				}
-				else if (tablero.infoTablas.tablasPorRepeticion())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_REPETICION;
-					exit = true;
-				}
-				else if (tablero.infoTablas.tablasPorPasividad())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_PASIVIDAD;
-					exit = true;
+					if (tablero.jaqueMate())
+					{
+						datosFinal = { CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno };
+						exit = true;
+					}
+					else if (tablero.reyAhogado())
+					{
+						datosFinal.codigoFinal = CodigoFinal::REY_AHOGADO;
+						exit = true;
+					}
+					else if (tablero.tablasMaterialInsuficiente())
+					{
+						datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE;
+						exit = true;
+					}
+					else if (tablero.infoTablas.tablasPorRepeticion())
+					{
+						datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_REPETICION;
+						exit = true;
+					}
+					else if (tablero.infoTablas.tablasPorPasividad())
+					{
+						datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_PASIVIDAD;
+						exit = true;
+					}
 				}
 			}
+			mundoGrafico->leerTablero(tablero);
 		}
 	}
 
 	return datosFinal;
 }
 
-//////////////////////////
-//
-//#include <iostream>
-//#include <windows.h>
-//
-//void MotorDeJuego::pintar(Posicion posSelec) const
-//{
-//	//Insertar lineas vacias para limpiar consola
-//	for (int i = 0; i < NUM_LINEAS; i++) {
-//		std::cout<< std::endl;
-//	}
-//
-//	// Pintar el tablero
-//	int i = 0, j = 1;
-//	for (int x = 0; x < ANCHO_TABLERO * ANCHO_TABLERO; x++)
-//	{
-//		HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-//
-//		if (i % 8 == 0) std::cout << "  " << j++ << "\t"; // Pintar los numeros
-//
-//		bool skip = false;
-//		if (posSelec != Posicion(-1, -1)) // Seleccionar el color de fondo
-//		{
-//			if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == posSelec)
-//				SetConsoleTextAttribute(hStdout, 160); // Seleccion de la pieza
-//			else
-//			{
-//				for (Posicion puedeMover : tablero.leer(posSelec)->getPuedeMover()) if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeMover)
-//					if (tablero.leer(posSelec)->getTipo() != Pieza::tipo_t::PEON || (puedeMover - tablero.leer(posSelec)->getPosicion()).x == 0)
-//					{
-//						SetConsoleTextAttribute(hStdout, 176); // Seleccion de movimento 
-//						skip = true;
-//						break;
-//					}
-//
-//				if (!skip && tablero.leer(Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO)) != nullptr)
-//				{
-//					for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
-//						if (Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() )
-//						{
-//							if (!(tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON && puedeComer->getPosicion().y == posSelec.y)) 
-//								SetConsoleTextAttribute(hStdout, 64); // Seleccion de la comida
-//							skip = true;
-//							break;
-//						}
-//				}
-//				
-//				if (!skip && tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON) for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
-//					if (puedeComer->getPosicion().y == posSelec.y && Posicion(x % ANCHO_TABLERO, x / ANCHO_TABLERO) == puedeComer->getPosicion() + (1 - 2 * !tablero.leer(posSelec)->getColor()) * Posicion(0, 1))
-//					{
-//						SetConsoleTextAttribute(hStdout, 64); // Seleccion de la comida en pasada
-//						break;
-//					}
-//			}
-//		}
-//		
-//		if (tablero.tablero[x] == nullptr) std::cout << "---\t"; // Pintar vacio
-//		else std::cout << tablero.tablero[x]->getNombre() << " " << tablero.tablero[x]->getColor() << "\t"; // Pintar pieza
-//
-//		SetConsoleTextAttribute(hStdout, 7); // Color de fondo
-//
-//		if (i++ % 8 == 7) std::cout << "\n\n\n"; // L�neas de division de fila
-//	}
-//
-//	std::cout << "\t";
-//	for (char i = 'A'; i <= 'H'; i++) std::cout << " " << i << " \t"; // Pintar las letras
-//	std::cout << std::endl;
-//	std::cout <<"Evaluacion del tablero: "<< IA::evaluacion(tablero) << std::endl;
-//}
-//
-//////////////////////////
-
-bool MotorDeJuego::hacerJugada(Movimiento movimiento)
+bool MotorDeJuego::hacerJugada(Movimiento movimiento, Mundo* motorGrafico)
 {
 	bool JugadaHecha = false;
 
@@ -246,7 +165,7 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 		if (tablero.leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
 		{
 			Pieza* p_pieza = tablero.leer(movimiento.inicio);
-			tablero.coronar(movimiento.inicio, seleccionarEntradaCoronar(movimiento.inicio));
+			tablero.coronar(movimiento.inicio, seleccionarEntradaCoronar(movimiento.inicio, motorGrafico));
 			delete p_pieza;
 		}
 
@@ -262,55 +181,41 @@ bool MotorDeJuego::hacerJugada(Movimiento movimiento)
 	return false;
 }
 
-/////////////////
-
-#include <string>
-
-Pieza::tipo_t getSelection()
+Pieza::tipo_t getSelection(Mundo* motorGrafico)
 {
-	std::cout <<"Seleccione la pieza a la que se corona:\n\t1. Caballo\n\t2. Alfil\n\t3. Torre\n\t4. Dama\n";
-	
-	std::string input;
-	Pieza::tipo_t tipo;
-
-	bool exit = false;
-	while (!exit)
+	Pieza* pieza_coronacion = motorGrafico->getPiezaCoronacion();
+	if (pieza_coronacion != nullptr)
 	{
-		exit = true;
-			
-		int numero = input[0] - 48;
-		switch (numero)
+		switch (static_cast<int>(pieza_coronacion->getTipo()))
 		{
 		case 1:
-			tipo = Pieza::tipo_t::CABALLO;
+			return Pieza::tipo_t::CABALLO;
 			break;
 		case 2:
-			tipo = Pieza::tipo_t::ALFIL;
+			return Pieza::tipo_t::ALFIL;
 			break;
 		case 3:
-			tipo = Pieza::tipo_t::TORRE;
+			return Pieza::tipo_t::TORRE;
 			break;
 		case 4:
-			tipo = Pieza::tipo_t::DAMA;
+			return Pieza::tipo_t::DAMA;
 			break;
 		default:
-			exit = false;
+			std::cout << "No es una pieza valida para coronar." << std::endl;
+			return pieza_coronacion->getTipo();
+			break;
 		}
 	}
-
-	return tipo;
 }
 
-/////////////////
-
-Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(Posicion posicion) const
+Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(Posicion posicion, Mundo* motorGrafico) const
 {
 	Pieza::tipo_t tipo;
 
 	switch (config[tablero.colorDelTurno])
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
-		tipo = getSelection();
+		tipo = getSelection(motorGrafico);
 		break;
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
 		tipo = IA::coronar(tablero, posicion);
@@ -336,8 +241,57 @@ Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, bool pos1Selec) 
 		else if (aux || pos1Selec)
 		{
 			aux = false;
+			std::cout << "Movimiento: ";
+			std::cout << inicio.x << inicio.y << " a ";
+			std::cout << posicion.x << posicion.y << std::endl;
 			return Movimiento(inicio, posicion);
 		}
+
+		// DEBUG
+		static Posicion auxPos = posicion;
+		if (auxPos != posicion)
+		{
+			std::string color_turno = "";
+			if (tablero.colorDelTurno) color_turno = "Blanco"; else color_turno = "Negro";
+			std::cout << std::endl << "DEBUG ENSAMBLAR MOVIMIENTO:" << std::endl;
+			std::cout << "Color del turno: " << color_turno << std::endl;
+			std::cout << "Existe pieza: " << (tablero.leer(posicion) != nullptr) << std::endl;
+			if (tablero.leer(posicion) != nullptr)
+			{
+				std::string tipo = "";
+				std::string color = "";
+				switch (static_cast<int>(tablero.leer(posicion)->getTipo()))
+				{
+				case 0:
+					tipo = "PEON";
+					break;
+				case 1:
+					tipo = "CABALLO";
+					break;
+				case 2:
+					tipo = "ALFIL";
+					break;
+				case 3:
+					tipo = "TORRE";
+					break;
+				case 4:
+					tipo = "DAMA";
+					break;
+				case 5:
+					tipo = "REY";
+					break;
+				default:
+					break;
+				}
+				if (tablero.leer(posicion)->getColor()) color = "Blanco"; else color = "Negro";
+				std::cout << "Pieza: " << tipo << std::endl;
+				std::cout << "Color de la pieza: " << color << std::endl;
+			}
+			std::cout << "Posicion inicio: " << inicio.x << inicio.y << std::endl;
+			std::cout << "Posicion actual: " << posicion.x << posicion.y << std::endl << std::endl;
+		}
+		auxPos = posicion;
+		// DEBUG
 	}
 
 	return Movimiento(Posicion(), Posicion(-1, -1));

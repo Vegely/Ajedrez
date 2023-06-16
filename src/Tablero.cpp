@@ -33,14 +33,13 @@ void Tablero::actualizarTablero()
 
 	datosClavada.clear();
 
-	
 	DatosClavada aux;
 	int i = 0;
 	for (Pieza* p_pieza : tablero) {
 
 
 		if (p_pieza != nullptr) {
-			aux=p_pieza->actualizarVariables(false,Posicion{0,0}, tableroIlegalesRey);
+			aux = p_pieza->actualizarVariables(false, Posicion{ 0,0 }, tableroIlegalesRey);
 
 			if (aux.ExisteClavada == true)
 			{

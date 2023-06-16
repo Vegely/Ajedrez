@@ -137,11 +137,31 @@ public:
 	Corners<Point> getSlotCoords(int i, int j) const { return this->casillas[i][j]; }
 };
 
+struct DatosPieza
+{
+	bool color;
+	Pieza::tipo_t tipo;
+	Posicion posicion;
+	bool valido;
+
+	bool operator == (const DatosPieza& dp)
+	{
+		return
+		(
+			this->color    == dp.color    &&
+			this->tipo     == dp.tipo     &&
+			this->posicion == dp.posicion &&
+			this->valido   == dp.valido
+		);
+	}
+	bool operator != (const DatosPieza& dp) { return !(operator==(dp)); }
+};
+
 class Mundo
 {
 private:
-	Tablero tablero_anterior;
-	Tablero tablero_actual;
+	DatosPieza tablero_anterior[64];
+	DatosPieza tablero_actual[64];
 
 	ListaModelo rey_blanco;
 	ListaModelo rey_negro;
@@ -161,8 +181,11 @@ private:
 	Modelo* letras;
 
 	Camara camara;
-	Movimiento casillas_leidas;
+	Posicion posicion_leida;
 	Casilla casillas_px;
+
+	bool coronando = false;
+	Pieza* pieza_coronacion = nullptr;
 
 public:
 	Mundo(void);
@@ -170,22 +193,30 @@ public:
 	void asignarModelos(void);
 	void cargarTexturas(void);
 
-	void dibujarTablero(const Tablero& tablero);
+	void leerTablero(const Tablero& tablero);
 
 	void renderizarModelos(void);
 	void updateCamara(void) { camara.update(); }
+	void setCamaraPos(const Point& pt) { camara.setPosition(pt); }
 	void movimiento(const float time);
 	void keypress(unsigned char tecla);
 	void seleccionCasilla(int button, int state, int x_mouse, int y_mouse);
 	bool getGirado(void) { return camara.getGirado(); }
+	void cambiarGirado(void) { camara.cambiarGirado(); }
 	void dibujarFondo(void);
-	void coronarPeon(const Posicion& pos);
 	void borrarPieza(const Posicion& pos);
-	void moverModelos(void);
-	Movimiento getCasilla(void) const { return this->casillas_leidas; }
+	void moverModelos(const Movimiento& mov);
+	Posicion getCasilla(void) const { return this->posicion_leida; }
+	bool getCoronando(void) const { return this->coronando; }
+	Pieza* getPiezaCoronacion(void) const { return this->pieza_coronacion; }
 
-	/* SELECCION LISTA DE MODELO */
+	/* GESTIÓN DE MODELOS */
 	ListaModelo* seleccionarLista(bool color, Pieza::tipo_t tipo_pieza);
+	void moverModelo(const Movimiento& mov, bool color, const Pieza::tipo_t tipo);
+	void generarModelosCoronacion(bool color);
+	void renderModelosCoronacion(bool color);
+
+	void seleccionCoronacion(int button, int state, int x_mouse, int y_mouse, bool color); // OnClick
 };
 
 

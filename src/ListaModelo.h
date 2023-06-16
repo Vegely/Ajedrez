@@ -21,10 +21,12 @@ public:
 
 	/* GETTERS */
 	Modelo*  operator[] (int i) const { return _modelo[i]; }
+	Modelo*  getElem    (int i) const { return _modelo[i]; }
 	Posicion getPosicion(int i) const { return _modelo[i]->getCoords(); }
 	int		 getMaxElem (void)  const { return _maxElem; }
 	int		 size		(void)	const { return _numElem; }
 	int		 getNumElem (void)	const { return _numElem; }
+	int getIndex(const Posicion& pos) const;
 	
 	/* SETTERS */
 	void setPosicion(int i, const Posicion& posicion) { _modelo[i]->setCoords(posicion); }

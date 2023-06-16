@@ -36,17 +36,18 @@ public:
 	friend class MotorDeJuego;
 	friend class IA;
 	
-	explicit Tablero(bool alocar = false);																									//Constructor
+	explicit Tablero(bool alocar = false); //Constructor
 
 	static Tablero copiar(const Tablero& tablero);
 
 	void liberar() { for (Pieza* p_pieza : tablero) delete p_pieza; }
 
 	inline Posicion posicion(int i) const { return Posicion(i % ANCHO_TABLERO, i / ANCHO_TABLERO); }
-	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO];}		//Devuelve el puntero a pieza de una posición leóda
+	inline Pieza* leer(const Posicion& posicion) const { return tablero[posicion.x + posicion.y * ANCHO_TABLERO]; }		//Devuelve el puntero a pieza de una posición leóda
 	void mover(const Movimiento& movimiento);																		//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
 
-	Movimiento getUltimaJugada() { return ultimaJugada; }
+	Movimiento getUltimaJugada() const { return ultimaJugada; }
+	bool getTurno(void) const { return colorDelTurno; }
 
 	void coronar(Posicion posicion, Pieza::tipo_t tipo);
 

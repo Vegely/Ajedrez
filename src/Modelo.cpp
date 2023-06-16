@@ -98,7 +98,7 @@ Modelo::Modelo(const Modelo& m)
 	this->texture_path = m.texture_path;
 	this->tipo_pieza   = m.tipo_pieza;
 	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
-	if (!scene || scene->mRootNode == nullptr) // Comprobaci�n de lectura correcta del archivo.
+	if (!scene || scene->mRootNode == nullptr) // Comprobacion de lectura correcta del archivo.
 		std::cerr << "Failed to load 3D model file: " << importer.GetErrorString();
 }
 

@@ -143,3 +143,6 @@ void Camara::update(void)
 	glRotatef(rotation.y, 0.0, 1.0, 0.0);				 // rotate our camera on the y-axis (up and down)
 	glTranslated(-position.x, -position.y, -position.z); // translate the screen to the position of our camera
 }
+
+Point Camara::white_pov = Point{ 0.0f, 20.5f, -15.6f };
+Point Camara::black_pov = Point{ 0.0f, 20.5f,  15.6f };
