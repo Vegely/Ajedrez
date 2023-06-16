@@ -71,65 +71,6 @@ Tablero::Tablero(bool alocar)
 	
 	if (alocar)
 	{
-		////True == Blancas <-> False == Negras En color
-		////Blancas 
-		////Se añaden los peones
-		//
-		//for (int i = 0; i < ANCHO_TABLERO; i++)
-		//{
-		//	escribir(Posicion(i, 1), new Peon(*this, true));
-		//}
-		//
-		////Se añaden las torres
-		//escribir(Posicion(0, 0), new Torre(*this, true));
-		//escribir(Posicion(7, 0), new Torre(*this, true));
-
-		////Se escriben los caballos
-		//escribir(Posicion(1, 0), new Caballo(*this, true));
-		//escribir(Posicion(6, 0), new Caballo(*this, true));
-
-		////Se escriben los alfiles
-		//escribir(Posicion(2, 0), new Alfil(*this, true));
-		//escribir(Posicion(5, 0), new Alfil(*this, true));
-		//
-		////Se escribe la dama y el rey
-		//reyPos[1] = Posicion{ 4,0 };
-
-		//escribir(Posicion(3, 0), new Dama(*this, true));
-		//escribir(reyPos[1], new Rey(*this, true));
-
-		////Negras
-		////Se añaden los peones
-		//for (int i = 0; i < ANCHO_TABLERO; i++)
-		//{
-		//	escribir(Posicion(i, 6), new Peon(*this, false));
-		//}
-		//
-		////Se añaden las torres
-		//escribir(Posicion(0, 7), new Torre(*this, false));
-		//escribir(Posicion(7, 7), new Torre(*this, false));
-
-		////Se escriben los caballos
-		//escribir(Posicion(1, 7), new Caballo(*this, false));
-		//escribir(Posicion(6, 7), new Caballo(*this, false));
-
-		////Se escriben los alfiles
-		//escribir(Posicion(2, 7), new Alfil(*this, false));
-		//escribir(Posicion(5, 7), new Alfil(*this, false));
-		//
-		////Se escribe la dama y el rey4
-		//reyPos[0] = Posicion{ 4, 7 };
-
-		//escribir(Posicion(3, 7), new Dama(*this, false));
-		//escribir(reyPos[0], new Rey(*this, false));
-		
-		//colorDelTurno = true;
-
-		//actualizarTablero(); //Se inicializan los movimientos posibles
-		//numeroPiezas = 32;
-
-		//infoTablas.add(*this);
-
 		//True == Blancas <-> False == Negras En color
 		//Blancas 
 		//Se añaden los peones
@@ -181,7 +122,6 @@ Tablero::Tablero(bool alocar)
 
 		escribir(Posicion(3, 7), new Dama(*this, false));
 		escribir(reyPos[0], new Rey(*this, false));
-
 		colorDelTurno = true;
 
 		actualizarTablero(); //Se inicializan los movimientos posibles
@@ -337,7 +277,6 @@ bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJue
 		if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
 		{
 			Pieza* p_peon = leer(movimiento.inicio);
-			coronar(movimiento.inicio, MotorDeJuego::seleccionarEntradaCoronar(movimiento.inicio, *this, interaccion));
 			delete p_peon;
 
 			infoTablas.clear();

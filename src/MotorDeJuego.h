@@ -27,8 +27,6 @@ class MotorDeJuego
 public:
 	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { pintar(); }
 
-	static Pieza::tipo_t seleccionarEntradaCoronar(const Posicion& posicion, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion);
-	//static bool hacerJugada(Movimiento movimiento, Tablero& tablero, const ConfiguracionDeJuego& config);
 
 	void liberar() { tablero.liberar(); }
 

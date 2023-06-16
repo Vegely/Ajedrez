@@ -49,8 +49,6 @@ DatosFinal MotorDeJuego::motor()
 	bool exit = false;
 	bool jugadaHecha = true;
 
-	//seleccionarEntradaCoronar(Posicion(6, 6), tablero, config[0]);
-
 	while (!exit)
 	{
 		Movimiento movimiento = seleccionarEntrada(!jugadaHecha);
@@ -300,14 +298,12 @@ Pieza::tipo_t getSelection()
 }
 
 /////////////////
-Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Posicion& posicion, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion)
 {
 	switch (interaccion)
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
 		return getSelection();
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
-		return IA::coronar(tablero, posicion);
 	}
 }
 

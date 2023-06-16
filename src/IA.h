@@ -11,6 +11,5 @@ class IA
 public:
 	static Movimiento mover(const Tablero& tablero);
 	static double evaluacion(const Tablero& tablero);
-	static Pieza::tipo_t coronar(const Tablero& tablero, Posicion posicion);
 };
 
