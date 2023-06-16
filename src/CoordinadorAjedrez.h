@@ -3,6 +3,8 @@
 #include "Mundo.h"
 #include <thread>
 #include "UI.h"
+#include "Cliente.h"
+#include "Servidor.h"
 
 #define H_MAX 25.0f
 #define H_MIN -10.0f
@@ -18,10 +20,14 @@ protected:
 
 public:
 	Mundo motorGrafico;
+	Cliente* cliente = nullptr;
+	Servidor* servidor = nullptr;
 
 	bool inicializarPartida;
 
 	std::thread* motor = new std::thread;
+	std::thread* hilo_servidor = nullptr;
+	std::thread* hilo_cliente = nullptr;
 
 	DatosFinal datosFinal;
 
@@ -36,6 +42,8 @@ public:
 };
 
 void threadMotor(const ConfiguracionDeJuego* p_configuracion, Mundo* p_motorGrafico, DatosFinal* p_datosFinal);
+void hiloServidor(CoordinadorAjedrez* ajedrez);
+void hiloCliente(CoordinadorAjedrez* ajedrez);
 
 float aCoordenadasGlutX(float p);
 

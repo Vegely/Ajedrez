@@ -31,6 +31,13 @@ void threadMotor(const ConfiguracionDeJuego* p_configuracion, Mundo* p_motorGraf
 	motor.liberar();
 }
 
+void hiloServidor(CoordinadorAjedrez* ajedrez) {
+	ajedrez->servidor->conectarServidor();
+}
+void hiloCliente(CoordinadorAjedrez* ajedrez) {
+	ajedrez->cliente->conectarCliente();
+}
+
 CoordinadorAjedrez::CoordinadorAjedrez() {
 	estado=INICIO;
 }
@@ -56,9 +63,6 @@ void CoordinadorAjedrez::dibuja()
 	if (estado == INICIO) {
 		pantallaInicio.dibuja();
 		escrituraGlut(pantallaInicio, 0.0, 0.0);
-		ETSIDI::setFont("fuentes/ALGER.ttf", 30);
-		ETSIDI::setTextColor(0, 0, 1);
-		ETSIDI::printxy(pantallaInicio.texto.c_str(), 0.0, 0.0, 0.1);
 	}
 	else if (estado == JUEGO)
 	{
@@ -76,36 +80,47 @@ void CoordinadorAjedrez::dibuja()
 	else if (estado == MODO)
 	{
 		pantallaModoJuego.dibuja();
+
 	}
 	
 	else if (estado == COLOR)
 	{
 		pantallaColorJugador.dibuja();
+
 	}
 
 	else if (estado == FALLO_CONEXION)
 	{
 		pantallaFalloConexion.dibuja();
+
 	}
 
 	else if (estado == FIN)
 	{
 		pantallaFinPartida.dibuja();
+
 	}
 
 	else if (estado ==CLIENTE)
 	{
 		pantallaCliente.dibuja();
+
 	}
 
 	else if (estado ==PAUSA)
 	{
 		pantallaPausa.dibuja();
+
 	}
 
 	else if (estado ==SERVIDOR)
 	{
 		pantallaServidor.dibuja();
+
+
+		ETSIDI::setFont("fuentes/arial.ttf", 30);
+		ETSIDI::setTextColor(0, 255, 255);
+		ETSIDI::printxy(servidor->getip().c_str(), 0, 0, 1);
 	}
 
 	else if (estado ==CARGAR)
@@ -116,6 +131,9 @@ void CoordinadorAjedrez::dibuja()
 	else if (estado ==RANKING)
 	{
 		pantallaRanking.dibuja();
+	}
+	else if (estado == MODO_RED) {
+		pantallaElegirRol.dibuja();
 	}
 }
 
@@ -183,7 +201,6 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y)
 
 		else if (estado == COLOR)
 		{
-			//std::cout << "funciona_mi_negro" << std::endl;
 			if (pantallaColorJugador.negro.enCaja(xg, yg))
 				estado = JUEGO;
 			if (pantallaColorJugador.blanco.enCaja(xg, yg))
@@ -194,7 +211,7 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y)
 
 		else if (estado == CARGAR)
 		{
-			
+
 		}
 
 		else if (estado == PAUSA)
@@ -202,6 +219,44 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y)
 			if (pantallaPausa.guardar_y_salir.enCaja(xg, yg));
 			if (pantallaPausa.salir_sin_guardar.enCaja(xg, yg))
 				estado = INICIO;
+		}
+		else if (estado == MODO)
+		{
+			if (pantallaModoJuego.local.enCaja(xg, yg))
+				estado = MODO_LOCAL;
+		}
+		else if (estado == MODO_LOCAL)
+		{
+			if (pantallaJugadorLocal.IAIA.enCaja(xg, yg))
+				estado == JUEGO;
+			if (pantallaJugadorLocal.jugadorIA.enCaja(xg, yg))
+				estado == COLOR;
+			if (pantallaJugadorLocal.dosJugadores.enCaja(xg, yg))
+				estado == JUEGO;
+		}
+		else if (estado == MODO_RED) {
+			if (pantallaElegirRol.atras.enCaja(xg, yg))
+				estado = MODO;
+			if (pantallaElegirRol.cliente.enCaja(xg, yg)) {
+				estado = CLIENTE;
+				inicializaWinSock();
+				cliente = new Cliente;
+				cliente->inicializa();
+				hilo_cliente = new std::thread(hiloCliente, this);
+
+			}
+			if (pantallaElegirRol.servidor.enCaja(xg, yg)) {
+				estado = SERVIDOR;
+				inicializaWinSock();
+				servidor = new Servidor;
+				servidor->inicializa();
+				hilo_servidor = new std::thread(hiloServidor, this);
+			}
+		}
+		else if (estado == CLIENTE)
+		{
+			if(pantallaCliente.atras.enCaja(xg,yg))
+				estado=MODO_RED;
 		}
 	}
 }
@@ -216,11 +271,27 @@ float aCoordenadasGlutY(float p)
 	return H_MAX - p * ((-H_MIN + H_MAX) / (float)glutGet(GLUT_WINDOW_HEIGHT));
 }
 
-void escrituraGlut(PantallaBase pb, float x,float y)
+void escrituraGlut(PantallaBase pb, float x, float y)
 {
-	ETSIDI::setFont("bin/fuentes/ALGER.ttf", 12);
+	ETSIDI::setFont("bin/fuentes/arial.ttf", 12);
 	ETSIDI::setTextColor(0, 255, 0);
 	ETSIDI::printxy(pb.texto.c_str(), x, y, 1);
+}
+void parametrosTexturasMEstados()
+{
+	glEnable(GL_TEXTURE_2D);
+
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+
+	glTexCoord3d(0, 1, -0.1); glVertex3f(-31.5, -8, -0.1);
+	glTexCoord3d(1, 1, -0.1); glVertex3f(31.5, -8, -0.1);
+	glTexCoord3d(1, 0, -0.1); glVertex3f(31.5, 25, -0.1);
+	glTexCoord3d(0, 0, -0.1); glVertex3f(-31.5, 25, -0.1);
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
 }
 
 

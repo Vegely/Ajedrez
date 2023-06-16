@@ -48,9 +48,9 @@ struct PantallaColorJugador :public PantallaBase
 		glEnd();
 		glEnable(GL_LIGHTING);
 		glDisable(GL_TEXTURE_2D);
-		negro.dibuja();
+		/*negro.dibuja();
 		blanco.dibuja();
-		atras.dibuja();
+		atras.dibuja();*/
 	}
 };
 
