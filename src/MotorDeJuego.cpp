@@ -298,12 +298,14 @@ Pieza::tipo_t getSelection()
 }
 
 /////////////////
+Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion)
 {
 	switch (interaccion)
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
 		return getSelection();
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
+		return IA::coronar(tablero, movimiento);
 	}
 }
 

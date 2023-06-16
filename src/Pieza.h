@@ -13,6 +13,7 @@ constexpr auto VALOR_CABALLO = 3;
 constexpr auto VALOR_ALFIL = 3;
 constexpr auto VALOR_TORRE = 5;
 constexpr auto VALOR_DAMA = 9; 
+constexpr auto VALOR_REY = 10;
 
 //Clase tablero vacia para tener una referencia al tablero dentro de las piezas
 class Tablero;
