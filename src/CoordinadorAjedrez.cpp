@@ -107,7 +107,7 @@ void CoordinadorAjedrez::dibuja()
 
 	}
 
-	else if (estado ==PAUSA)
+	else if (estado == PAUSA)
 	{
 		pantallaPausa.dibuja();
 
@@ -118,7 +118,7 @@ void CoordinadorAjedrez::dibuja()
 		pantallaServidor.dibuja();
 
 
-		ETSIDI::setFont("fuentes/arial.ttf", 30);
+		ETSIDI::setFont("fuentes/consola.ttf", 30);
 		ETSIDI::setTextColor(0, 255, 255);
 		ETSIDI::printxy(servidor->getip().c_str(), 0, 0, 1);
 	}
@@ -128,13 +128,23 @@ void CoordinadorAjedrez::dibuja()
 		pantallaCargarPartida.dibuja();
 	}
 
-	else if (estado ==RANKING)
+	else if (estado == RANKING)
 	{
 		pantallaRanking.dibuja();
+<<<<<<< Updated upstream
+=======
+		parametrosTexturasMEstados();
+		ETSIDI::setFont("fuentes/consola.ttf", 30);
+		ETSIDI::setTextColor(0, 0, 0);
+		ranking.print();
+>>>>>>> Stashed changes
 	}
 	else if (estado == MODO_RED) {
 		pantallaElegirRol.dibuja();
 	}
+	/*else if (estado == GUARDAR) {
+		pantallaGuardar
+	}*/
 }
 
 
@@ -152,10 +162,17 @@ void CoordinadorAjedrez::teclaEspecial(int key)
 
 void CoordinadorAjedrez::click(int button, int state, int x, int y)
 {
+<<<<<<< Updated upstream
 	float yg = aCoordenadasGlutY(y);
 	float xg = aCoordenadasGlutX(x);
 	//std::cout << state << std::endl;
 	if (!state)
+=======
+	float yg=aCoordenadasGlutY(y);
+	float xg=aCoordenadasGlutX(x);
+
+	if (estado == INICIO)
+>>>>>>> Stashed changes
 	{
 		if (estado == INICIO)
 		{
@@ -257,6 +274,18 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y)
 		{
 			if(pantallaCliente.atras.enCaja(xg,yg))
 				estado=MODO_RED;
+		}
+	}
+	else if (estado == RANKING) {
+		if (pantallaRanking.siguiente.enCaja(xg, yg)) {
+			ranking.paginaSiguiente();
+		}
+		if (pantallaRanking.anterior.enCaja(xg, yg)) {
+			ranking.paginaAnterior();
+		}
+		if (pantallaRanking.atras.enCaja(xg, yg)) {
+			estado = INICIO;
+			ranking.iniPag();
 		}
 	}
 }

@@ -1,6 +1,10 @@
 #include "Ranking.h"
 #include "ETSIDI.h"
+<<<<<<< Updated upstream
 #include "Caja.h"
+=======
+//#include "CajaTexto.h"
+>>>>>>> Stashed changes
 
 //Estado de flujos de forma mas compacta?
 
@@ -88,7 +92,11 @@ void Ranking::print() const {
 	if (npaginas == 0) {
 		for (int i = 0; i < ultima_posicion; i++) {
 			std::getline(ifs, str);
+<<<<<<< Updated upstream
 			ETSIDI::printxy(str.c_str(), -5, (ALTO_GL - ALTO_GL / 2) - 2 * i);
+=======
+			ETSIDI::printxy(str.c_str(), -5, floor(ALTO_GL - ALTO_GL / 2) - 3 * i-10);
+>>>>>>> Stashed changes
 		}
 	}
 	else {
@@ -97,7 +105,11 @@ void Ranking::print() const {
 		}
 		for (int i = 0; i < JUGADORES_POR_HOJA; i++) {
 			std::getline(ifs, str);
+<<<<<<< Updated upstream
 			ETSIDI::printxy(str.c_str(), -5, (ALTO_GL - ALTO_GL / 2) - 2 * i);
+=======
+			ETSIDI::printxy(str.c_str(), -5, floor(ALTO_GL - ALTO_GL / 2) - 3 * i-10);
+>>>>>>> Stashed changes
 		}
 	}
 

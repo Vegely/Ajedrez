@@ -162,6 +162,7 @@
     <ClInclude Include="src\MotorDeJuego.h" />
     <ClInclude Include="src\Movimiento.h" />
     <ClInclude Include="src\Mundo.h" />
+    <ClInclude Include="src\Partida.h" />
     <ClInclude Include="src\Peon.h" />
     <ClInclude Include="src\Pieza.h" />
     <ClInclude Include="src\Plane.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="src\Modelo.cpp" />
     <ClCompile Include="src\MotorDeJuego.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
+    <ClCompile Include="src\Partida.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
     <ClCompile Include="src\Plane.cpp" />
