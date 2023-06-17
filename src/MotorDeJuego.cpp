@@ -93,6 +93,7 @@ Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Movimiento& movimien
 	switch (interaccion)
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
+		motorGrafico->resetLectura();
 		return motorGrafico->seleccionPiezaCoronacion();
 
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:

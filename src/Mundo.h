@@ -185,9 +185,6 @@ private:
 	Posicion posicion_leida;
 	Casilla casillas_px;
 
-	bool coronando = false;
-	Pieza* pieza_coronacion = nullptr;
-
 public:
 	Mundo(void);
 	void init(void);
@@ -208,17 +205,15 @@ public:
 	void borrarPieza(const Posicion& pos);
 	void moverModelos(const Movimiento& mov);
 	Posicion getCasilla(void) const { return this->posicion_leida; }
-	bool getCoronando(void) const { return this->coronando; }
-	Pieza::tipo_t getTipoCoronacion(void) const { return Pieza::tipo_t::DAMA;/*this->pieza_coronacion->getTipo()*/; } // COMPROBACION NULLPTR
+	Pieza::tipo_t getTipoCoronacion(void) const;
 	Pieza::tipo_t seleccionPiezaCoronacion(void);
+	void resetLectura(void) { this->posicion_leida = Posicion(-1, -1); }
 
 	/* GESTIÓN DE MODELOS */
 	ListaModelo* seleccionarLista(bool color, Pieza::tipo_t tipo_pieza);
 	void moverModelo(const Movimiento& mov, bool color, const Pieza::tipo_t tipo);
 	void generarModelosCoronacion(bool color);
 	void renderModelosCoronacion(bool color);
-
-	void seleccionCoronacion(int button, int state, int x_mouse, int y_mouse, bool color); // OnClick
 };
 
 

@@ -68,10 +68,10 @@ void Mundo::asignarModelos(void)
 			damas_negras .addElem(new Modelo(DAMA, Point{ 100, 0, 0 }, false));
 		}
 		// Resto
-		if (i == 0 || i == 1)
+		if (i < 2)
 		{
-			torres_blancas.addElem(new Modelo(TORRE, Posicion(i * 7, 0), true));
-			torres_negras .addElem(new Modelo(TORRE, Posicion(i * 7, 7), false));
+			torres_blancas.addElem(new Modelo(TORRE, Posicion(0 + i * 7, 0), true));
+			torres_negras .addElem(new Modelo(TORRE, Posicion(0 + i * 7, 7), false));
 
 			caballos_blancos.addElem(new Modelo(CABALLO, Posicion(1 + i * 5, 0), true));
 			caballos_negros .addElem(new Modelo(CABALLO, Posicion(1 + i * 5, 7), false));
@@ -162,7 +162,7 @@ void Mundo::leerTablero(const Tablero& tablero)
 				moverModelo(tablero.getUltimaJugada(), tablero_actual[i].color, tablero_actual[i].tipo);
 			}
 			// Captura al paso.
-			if (tablero_anterior[i].valido && !tablero_actual[i].valido) // Si una casilla pasa de estar ocupada a no estarlo
+			if (tablero_anterior[i].valido && !tablero_actual[i].valido && tablero_anterior[i].tipo == Pieza::tipo_t::PEON) // Si una casilla pasa de estar ocupada a no estarlo
 			{
 				if (tablero.getUltimaJugada().inicio != tablero_anterior[i].posicion && tablero.getUltimaJugada().fin != tablero_anterior[i].posicion)
 					seleccionarLista(tablero_anterior[i].color, tablero_anterior[i].tipo)->deleteFromCoord(tablero_anterior[i].posicion);
@@ -192,6 +192,34 @@ void Mundo::leerTablero(const Tablero& tablero)
 						(tablero_anterior[j].color  != tablero_actual[j].color)))
 					{
 						moverModelo(Movimiento(Posicion(-1, -1), tablero_actual[j].posicion), tablero_actual[j].color, tablero_actual[j].tipo);
+					}
+				}
+			}
+			// Enroque
+			else if (!tablero_anterior[i].valido && tablero_actual[i].tipo == Pieza::tipo_t::REY &&
+				(tablero.getUltimaJugada().fin == Posicion(2, 0) || tablero.getUltimaJugada().fin == Posicion(6, 0) || 
+				 tablero.getUltimaJugada().fin == Posicion(2, 7) || tablero.getUltimaJugada().fin == Posicion(6, 7)))
+			{
+				if (tablero_actual[i].color)
+				{
+					if (tablero_actual[i].posicion == Posicion(2, 0))
+					{
+						moverModelo(Movimiento(Posicion(0, 0), Posicion(3, 0)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
+					}
+					else if (tablero_actual[i].posicion == Posicion(6, 0))
+					{
+						moverModelo(Movimiento(Posicion(7, 0), Posicion(5, 0)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
+					}
+				}
+				else
+				{
+					if (tablero_actual[i].posicion == Posicion(2, 7))
+					{
+						moverModelo(Movimiento(Posicion(0, 7), Posicion(3, 7)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
+					}
+					else if (tablero_actual[i].posicion == Posicion(6, 7))
+					{
+						moverModelo(Movimiento(Posicion(7, 7), Posicion(5, 7)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
 					}
 				}
 			}
@@ -372,67 +400,30 @@ ListaModelo* Mundo::seleccionarLista(bool color, Pieza::tipo_t tipo_pieza)
 	}
 }
 
-void Mundo::seleccionCoronacion(int button, int state, int x_mouse, int y_mouse, bool color)
-{
-	if (state == 1 || button != 0)
-		return;
-
-	//this->posicion_leida = Posicion{ -1, -1 };
-	//while (this->posicion_leida.y != 4 || this->posicion_leida.x < 3 || this->posicion_leida.x > 6)
-	//{
-	//	seleccionCasilla(button, state, x_mouse, y_mouse); // Actualiza this->posicion_leida.
-	//}
-	//ListaModelo* lista = nullptr;
-	//if (this->posicion_leida != Posicion(3, 4))
-	//{
-	//	lista = seleccionarLista(color, Pieza::tipo_t::ALFIL);
-	//	lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
-	//}
-	//else if (this->posicion_leida != Posicion(4, 4))
-	//{
-	//	lista = seleccionarLista(color, Pieza::tipo_t::TORRE);
-	//	lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
-	//}
-	//else if (this->posicion_leida != Posicion(5, 4))
-	//{
-	//	lista = seleccionarLista(color, Pieza::tipo_t::DAMA);
-	//	lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
-	//}
-	//else if (this->posicion_leida != Posicion(6, 4))
-	//{
-	//	lista = seleccionarLista(color, Pieza::tipo_t::CABALLO);
-	//	lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
-	//}
-}
-
 Pieza::tipo_t Mundo::seleccionPiezaCoronacion(void)
 {
-	//this->coronando = true;
-	while(true)
+	do
 	{
-		Pieza::tipo_t tipo_coronacion = this->getTipoCoronacion();
-
-		switch (static_cast<int>(tipo_coronacion))
+		if (posicion_leida.y == 4)
 		{
-		case 1:
-			//this->coronando = false;
-			return Pieza::tipo_t::CABALLO;
-			break;
-		case 2:
-			//this->coronando = false;
-			return Pieza::tipo_t::ALFIL;
-			break;
-		case 3:
-			//this->coronando = false;
-			return Pieza::tipo_t::TORRE;
-			break;
-		case 4:
-			//this->coronando = false;
-			return Pieza::tipo_t::DAMA;
-			break;
-		default:
-			std::cout << "No es una pieza valida para coronar." << std::endl;
-			break;
+			switch (posicion_leida.x)
+			{
+			case 3:
+				return Pieza::tipo_t::ALFIL;
+				break;
+			case 4:
+				return Pieza::tipo_t::TORRE;
+				break;
+			case 5:
+				return Pieza::tipo_t::DAMA;
+				break;
+			case 6:
+				return Pieza::tipo_t::CABALLO;
+				break;
+			default:
+				std::cout << "No es una pieza valida para coronar." << std::endl;
+				break;
+			}
 		}
-	}
+	} while (posicion_leida.x != 3, 4, 5, 6 || posicion_leida.y != 4);
 }

@@ -61,6 +61,4 @@ void CoordinadorAjedrez::SpecialKeypress(int key)
 void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 {
 	this->mundoGrafico.seleccionCasilla(button, state, x, y);
-	if (this->mundoGrafico.getCoronando())
-		this->mundoGrafico.seleccionCoronacion(button, state, x, y, this->motorLogico.getTablero()->getTurno());
 }
