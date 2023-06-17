@@ -21,6 +21,7 @@ constexpr const char* RUTA_FUENTES = "fuentes/SourceSerifPro-Bold.ttf";
 constexpr int TAM_FRASE = 10;
 constexpr int TABULADOR = 9;
 constexpr int SUPRIMIR = 127;
+constexpr const char* JIA = "IA";
 
 enum class Guardar { BLANCAS, NEGRAS, PARTIDA, NONE };
 
@@ -159,6 +160,8 @@ struct PantallaGuardar : public PantallaBase {
 	std::string snombre_partida = "";
 	std::string sblancas = "";
 	std::string snegras = "";
+	std::string smodo = "";
+	bool existe = 0;
 
 	Caja nombre_partida{ -25.8f, 10.2f, 25.8f, 6.3f };
 	Caja blancas{ -25.8,1.3f,-0.3,-2.7f };

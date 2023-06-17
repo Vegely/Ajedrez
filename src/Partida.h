@@ -38,7 +38,7 @@ public:
 	bool partidaFinalizada() { return finalizada; };
 
 	void setNombre(std::string nombre) { nombre_partida = nombre; };
-	void setModo(int modo) { this->modo = modo; };
+	void setModo(std::string modo) { this->modo = modo; };
 	void setBlancas(std::string blancas) { this->blancas = blancas; };
 	void setNegras(std::string negras) { this->negras = negras; };
 	

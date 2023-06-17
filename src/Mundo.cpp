@@ -287,6 +287,7 @@ void Mundo::seleccionCasilla(int button, int state, int x_mouse, int y_mouse)
 
 	this->posicion_leida = result;
 	std::cout << "Casilla seleccionada: " << posicion_leida.x << posicion_leida.y << std::endl;
+	std::cout << x_mouse << " " << y_mouse << std::endl;
 	//moverModelos();
 }
 

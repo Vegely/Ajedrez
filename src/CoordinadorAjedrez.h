@@ -15,6 +15,10 @@
 #define W_MAX 31.5f
 #define W_MIN -31.5f
 
+constexpr const char* IA_IA = "iaia";
+constexpr const char* LOCAL_IA = "localia";
+constexpr const char* LOCAL_LOCAL = "locallocal";
+
 enum Estado { INICIO, JUEGO, FIN, RANKING, CARGAR, MODO_LOCAL, MODO_RED, MODO, COLOR, SERVIDOR, CLIENTE, FALLO_CONEXION, PAUSA, COLOR_SERVIDOR, GUARDAR};
 
 void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal);
@@ -28,7 +32,7 @@ public:
 	Ranking ranking;
 	Cliente* cliente = nullptr;
 	Servidor* servidor = nullptr;
-	Partida* partida = nullptr;
+	Partida partida;
 
 	bool inicializarPartida;
 
