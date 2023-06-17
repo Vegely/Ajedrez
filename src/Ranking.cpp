@@ -1,6 +1,5 @@
 #include "Ranking.h"
 #include "ETSIDI.h"
-//#include "CajaTexto.h"
 
 //Estado de flujos de forma mas compacta?
 
