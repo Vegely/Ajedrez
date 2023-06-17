@@ -15,8 +15,6 @@ struct Movimiento
 	Movimiento() {}
 	Movimiento(Posicion inicio, Posicion fin) : inicio(inicio), fin(fin) {}
 
-	inline std::string toString() { std::string str; str += inicio.x + ' ' + inicio.y + ' ' + fin.x + ' ' + fin.y; return str; }
-
 	Movimiento operator- () { return Movimiento(this->fin, this->inicio); }
 
 	bool operator== (const Movimiento& rhs) const { return (this->inicio == rhs.inicio && this->fin == rhs.fin); }

@@ -18,7 +18,7 @@ bool Caja::enCaja(float x, float y)
 
 void Caja::dibuja()
 {
-	glColor3ub(255, 255, 255);
+	glColor3ub(255, 0, 0);
 	glBegin(GL_POLYGON);
 	glVertex3f(ul.x, ul.y, 0);
 	glVertex3f(dr.x, ul.y, 0);

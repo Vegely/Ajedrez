@@ -16,6 +16,7 @@ PantallaPausa pantallaPausa;
 PantallaServidor pantallaServidor;
 PantallaCargarPartida pantallaCargarPartida;
 PantallaRankings pantallaRanking;
+PantallaGuardar pantallaGuardar;
 
 void threadMotor(const ConfiguracionDeJuego* p_configuracion, Mundo* p_motorGrafico, DatosFinal* p_datosFinal)
 {
@@ -141,20 +142,26 @@ void CoordinadorAjedrez::dibuja()
 		pantallaElegirRol.dibuja();
 		parametrosTexturasMEstados();
 	}
-	/*else if (estado == GUARDAR) {
-		pantallaGuardar
-	}*/
+	else if (estado == GUARDAR) {
+		pantallaGuardar.dibuja();
+		parametrosTexturasMEstados();
+		pantallaGuardar.escrituraGlut();
+	}
 }
 
 
 void CoordinadorAjedrez::tecla(unsigned char key) 
 {
-
+	if (estado == GUARDAR) {
+		pantallaGuardar.tecla(key);
+	}
 }
 
 void CoordinadorAjedrez::teclaEspecial(int key)
 {
-
+	if (estado == GUARDAR) {
+		pantallaGuardar.teclaEspecial(key);
+	}
 }
 
 void CoordinadorAjedrez::click(int button, int state, int x, int y)
@@ -162,60 +169,117 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y)
 	float yg=aCoordenadasGlutY(y);
 	float xg=aCoordenadasGlutX(x);
 
-	if (estado == INICIO)
-	{
-		if(pantallaInicio.salir.enCaja(xg,yg))
-			exit(0);
-		if (pantallaInicio.nuevaPartida.enCaja(xg, yg))
-		estado = MODO;
-		if (pantallaInicio.cargarPartida.enCaja(xg, yg))
-			estado = CARGAR;
-		if (pantallaInicio.mostrarRankings.enCaja(xg, yg))
-			estado = RANKING;
-	}
-	else if (estado == MODO)
-	{
-		if (pantallaModoJuego.local.enCaja(xg, yg))
-			estado = MODO_LOCAL;
-	}
-	else if (estado == MODO_LOCAL)
-	{
-		if (pantallaJugadorLocal.IAIA.enCaja(xg,yg))
-			estado == JUEGO;
-		if (pantallaJugadorLocal.jugadorIA.enCaja(xg, yg))
-			estado == COLOR;
-		if (pantallaJugadorLocal.dosJugadores.enCaja(xg, yg))
-			estado == JUEGO;
-	}
-	else if (estado == MODO_RED) {
-		if (pantallaElegirRol.atras.enCaja(xg, yg))
-			estado = MODO;
-		if (pantallaElegirRol.cliente.enCaja(xg, yg)) {
-			estado = CLIENTE;
-			inicializaWinSock();
-			cliente = new Cliente;
-			cliente->inicializa();
-			hilo_cliente = new std::thread(hiloCliente, this);
-
+	if (!state) {
+		if (estado == INICIO)
+		{
+			if (pantallaInicio.salir.enCaja(xg, yg))
+				exit(0);
+			if (pantallaInicio.nuevaPartida.enCaja(xg, yg))
+				estado = MODO;
+			if (pantallaInicio.cargarPartida.enCaja(xg, yg))
+				estado = CARGAR;
+			if (pantallaInicio.mostrarRankings.enCaja(xg, yg))
+				estado = RANKING;
 		}
-		if (pantallaElegirRol.servidor.enCaja(xg, yg)) {
-			estado = SERVIDOR;
-			inicializaWinSock();
-			servidor = new Servidor;
-			servidor->inicializa();
-			hilo_servidor = new std::thread(hiloServidor, this);
-		}
-	}
-	else if (estado == RANKING) {
-		if (pantallaRanking.siguiente.enCaja(xg, yg)) {
-			ranking.paginaSiguiente();
-		}
-		if (pantallaRanking.anterior.enCaja(xg, yg)) {
-			ranking.paginaAnterior();
-		}
-		if (pantallaRanking.atras.enCaja(xg, yg)) {
+		else if (estado == JUEGO) {
 			estado = INICIO;
-			ranking.iniPag();
+		}
+		else if (estado == MODO)
+		{
+			if (pantallaModoJuego.local.enCaja(xg, yg))
+				estado = MODO_LOCAL;
+			if (pantallaModoJuego.red.enCaja(xg, yg))
+				estado = MODO_RED;
+			if (pantallaModoJuego.salir.enCaja(xg, yg))
+				estado = INICIO;
+		}
+		else if (estado == MODO_LOCAL)
+		{
+			if (pantallaJugadorLocal.IAIA.enCaja(xg, yg))
+				estado = JUEGO;
+			if (pantallaJugadorLocal.jugadorIA.enCaja(xg, yg))
+				estado = COLOR;
+			if (pantallaJugadorLocal.dosJugadores.enCaja(xg, yg))
+				estado = JUEGO;
+			if (pantallaJugadorLocal.atras.enCaja(xg, yg))
+				estado = MODO;
+		}
+		else if (estado == MODO_RED) {
+			if (pantallaElegirRol.atras.enCaja(xg, yg))
+				estado = MODO;
+			if (pantallaElegirRol.cliente.enCaja(xg, yg)) {
+				estado = CLIENTE;
+				inicializaWinSock();
+				cliente = new Cliente;
+				cliente->inicializa();
+				hilo_cliente = new std::thread(hiloCliente, this);
+
+			}
+			if (pantallaElegirRol.servidor.enCaja(xg, yg)) {
+				estado = SERVIDOR;
+				inicializaWinSock();
+				servidor = new Servidor;
+				servidor->inicializa();
+				hilo_servidor = new std::thread(hiloServidor, this);
+			}
+		}
+		else if (estado == RANKING) {
+			if (pantallaRanking.siguiente.enCaja(xg, yg)) {
+				ranking.paginaSiguiente();
+			}
+			if (pantallaRanking.anterior.enCaja(xg, yg)) {
+				ranking.paginaAnterior();
+			}
+			if (pantallaRanking.atras.enCaja(xg, yg)) {
+				estado = INICIO;
+				ranking.iniPag();
+			}
+		}
+		else if (estado == COLOR)
+		{
+			if (pantallaColorJugador.negro.enCaja(xg, yg))
+				estado = JUEGO;
+			if (pantallaColorJugador.blanco.enCaja(xg, yg))
+				estado = JUEGO;
+			if (pantallaColorJugador.atras.enCaja(xg, yg))
+				estado = MODO_LOCAL;
+		}
+		else if (estado == PAUSA)
+		{
+			if (pantallaPausa.guardar_y_salir.enCaja(xg, yg))
+				estado = INICIO;
+			if (pantallaPausa.salir_sin_guardar.enCaja(xg, yg))
+				estado = INICIO;
+		}
+		else if (estado == CLIENTE)
+		{
+			if (pantallaCliente.atras.enCaja(xg, yg))
+			{
+				estado = MODO_RED;
+				cliente->desconectarCliente();
+				hilo_cliente->join();
+			}
+		}
+		else if (estado == SERVIDOR) {
+			if (pantallaServidor.atras.enCaja(xg, yg))
+			{
+				estado = MODO_RED;
+				servidor->desconectarServidor();
+				hilo_servidor->join();
+			}
+		}
+		else if (estado == CARGAR) {
+			if (pantallaCargarPartida.atras.enCaja(xg, yg))
+				estado = INICIO;
+		}
+		else if (estado == GUARDAR) {
+			if (pantallaGuardar.nombre_partida.enCaja(xg, yg))
+				pantallaGuardar.estado = Guardar::PARTIDA;
+			else if (pantallaGuardar.blancas.enCaja(xg, yg))
+				pantallaGuardar.estado = Guardar::BLANCAS;
+			else if (pantallaGuardar.negras.enCaja(xg, yg))
+				pantallaGuardar.estado = Guardar::NEGRAS;
+			else pantallaGuardar.estado = Guardar::NONE;
 		}
 	}
 }
@@ -246,5 +310,7 @@ void parametrosTexturasMEstados()
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 }
+
+
 
 

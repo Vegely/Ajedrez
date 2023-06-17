@@ -6,7 +6,7 @@ constexpr const char* RUTA_COLOR_JUGADOR = "bin/pantallas/seleccion color.png";
 constexpr const char* RUTA_SERVIDOR = "bin/pantallas/servidor.png";
 constexpr const char* RUTA_CLIENTE = "bin/pantallas/cliente.png";
 constexpr const char* RUTA_GUARDAR = "bin/pantallas/guardar.png";
-constexpr const char* RUTA_ROL_RED = "bin/pantallas /rol red.png";
+constexpr const char* RUTA_ROL_RED = "bin/pantallas/rol red.png";
 constexpr const char* RUTA_PAUSA = "bin/pantallas/pausa.png";
 constexpr const char* RUTA_MODO_DE_JUEGO = "bin/pantallas/modo de juego.png";
 constexpr const char* RUTA_JUEGO_LOCAL = "bin/pantallas/juego local.png";
@@ -15,6 +15,12 @@ constexpr const char* RUTA_FIN_DE_PARTIDA = "bin/pantallas/fin de la partida.png
 constexpr const char* RUTA_FALLO_CONEXION = "bin/pantallas/fallo de conexion.png";
 constexpr const char* RUTA_CARGAR_PARTIDA = "bin/pantallas/cargar partida pag intermedia.png";
 constexpr const char* RUTA_RANKINGS = "bin/pantallas/rankings pag intermedia.png";
+
+constexpr const char* RUTA_FUENTES = "bin/fuentes/consola.ttf";
+
+constexpr int TAM_FRASE = 10;
+
+enum class Guardar { BLANCAS, NEGRAS, PARTIDA, NONE };
 
 struct PantallaBase {
 	std::string ruta;
@@ -29,15 +35,7 @@ struct PantallaColorJugador :public PantallaBase
 
 	PantallaColorJugador():PantallaBase(RUTA_COLOR_JUGADOR){}
 
-	void dibuja() 
-	{
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id);
-		/*negro.dibuja();
-		blanco.dibuja();
-		atras.dibuja();*/
-	}
-
-
+	void dibuja() { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
 };
 
 struct PantallaFalloConexion :public PantallaBase {
@@ -150,6 +148,69 @@ struct PantallaModoDeJuego :public PantallaBase
 		/*local.dibuja();
 		red.dibuja();
 		salir.dibuja();*/
+	}
+};
+
+struct PantallaGuardar : public PantallaBase {
+
+	Guardar estado = Guardar::NONE;
+	std::string snombre_partida = "";
+	std::string sblancas = "";
+	std::string snegras = "";
+
+	Caja nombre_partida{ -25.8f, 10.2f, 25.8f, 6.3f };
+	Caja blancas{ -25.8,1.3f,-0.3,-2.7f };
+	Caja negras{ 0.7,1.3,25.4,-2.7 };
+
+	PantallaGuardar(): PantallaBase(RUTA_GUARDAR){}
+
+	void dibuja() { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
+
+	void escrituraGlut()
+	{
+		ETSIDI::setFont(RUTA_FUENTES, 30);
+		ETSIDI::setTextColor(0, 0, 0);
+
+		ETSIDI::printxy(snombre_partida.c_str(), -5,8 , 1);
+		ETSIDI::printxy(sblancas.c_str(), -20, -1, 1);
+		ETSIDI::printxy(snegras.c_str(), 7, -1, 1);
+		
+	
+	}
+
+	void teclaEspecial(unsigned char key)
+	{
+		if (key == GLUT_KEY_LEFT) {
+			if (estado == Guardar::PARTIDA && snombre_partida.length()>0) 
+				snombre_partida = snombre_partida.substr(0, snombre_partida.length() - 1);
+
+			else if (estado == Guardar::BLANCAS && sblancas.length() > 0) 
+				sblancas = sblancas.substr(0, sblancas.length() - 1);
+
+			else if (estado == Guardar::NEGRAS && snegras.length() > 0) 
+				snegras = snegras.substr(0, snegras.length() - 1);
+		}
+	}
+
+	void tecla(unsigned char key) {
+		if (estado == Guardar::PARTIDA) {
+			if ((int)key == 127)
+				snombre_partida = "";
+			else if (snombre_partida.length() < TAM_FRASE)
+				snombre_partida += key;
+		}
+		else if (estado == Guardar::BLANCAS) {
+			if ((int)key == 127)
+				sblancas = "";
+			else if (sblancas.length() < TAM_FRASE)
+				sblancas += key;
+		}
+		else if (estado == Guardar::NEGRAS) {
+			if ((int)key == 127)
+				snegras = "";
+			else if (snegras.length() < TAM_FRASE)
+				snegras += key;
+		}
 	}
 };
 
