@@ -153,14 +153,49 @@ void CoordinadorAjedrez::dibuja()
 void CoordinadorAjedrez::tecla(unsigned char key) 
 {
 	if (estado == GUARDAR) {
-		pantallaGuardar.tecla(key);
+		if ((int)key == SUPRIMIR) {
+			if (pantallaGuardar.estado == Guardar::PARTIDA)
+				pantallaGuardar.snombre_partida = "";
+			else if (pantallaGuardar.estado == Guardar::BLANCAS)
+				pantallaGuardar.sblancas = "";
+			else if (pantallaGuardar.estado == Guardar::NEGRAS)
+				pantallaGuardar.snegras = "";
+		}
+		else if ((int)key == TABULADOR) {
+			estado = INICIO;
+			partida->setNombre(pantallaGuardar.snombre_partida);
+			partida->setBlancas(pantallaGuardar.sblancas);
+			partida->setNegras(pantallaGuardar.snegras);
+			partida->crearPartida();
+
+			pantallaGuardar.snombre_partida = "";
+			pantallaGuardar.sblancas = "";
+			pantallaGuardar.snegras = "";
+		}
+		else {
+			if (pantallaGuardar.estado == Guardar::PARTIDA && pantallaGuardar.snombre_partida.length() < TAM_FRASE)
+				pantallaGuardar.snombre_partida += key;
+			else if (pantallaGuardar.estado == Guardar::BLANCAS && pantallaGuardar.sblancas.length() < TAM_FRASE)
+				pantallaGuardar.sblancas += key;
+			else if (pantallaGuardar.estado == Guardar::NEGRAS && pantallaGuardar.snegras.length() < TAM_FRASE)
+				pantallaGuardar.snegras += key;
+		}
 	}
 }
 
 void CoordinadorAjedrez::teclaEspecial(int key)
 {
 	if (estado == GUARDAR) {
-		pantallaGuardar.teclaEspecial(key);
+		if (key == GLUT_KEY_LEFT) {
+			if (pantallaGuardar.estado == Guardar::PARTIDA && pantallaGuardar.snombre_partida.length() > 0)
+				pantallaGuardar.snombre_partida = pantallaGuardar.snombre_partida.substr(0, pantallaGuardar.snombre_partida.length() - 1);
+
+			else if (pantallaGuardar.estado == Guardar::BLANCAS && pantallaGuardar.sblancas.length() > 0)
+				pantallaGuardar.sblancas = pantallaGuardar.sblancas.substr(0, pantallaGuardar.sblancas.length() - 1);
+
+			else if (pantallaGuardar.estado == Guardar::NEGRAS && pantallaGuardar.snegras.length() > 0)
+				pantallaGuardar.snegras = pantallaGuardar.snegras.substr(0, pantallaGuardar.snegras.length() - 1);
+		}
 	}
 }
 
@@ -182,7 +217,8 @@ void CoordinadorAjedrez::click(int button, int state, int x, int y)
 				estado = RANKING;
 		}
 		else if (estado == JUEGO) {
-			estado = INICIO;
+			partida = new Partida;
+			estado = GUARDAR;
 		}
 		else if (estado == MODO)
 		{

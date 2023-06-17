@@ -37,11 +37,11 @@ public:
 	bool cargarPartida();
 	bool partidaFinalizada() { return finalizada; };
 
-	std::string& getNombre() { return nombre_partida; };
-	std::string& getModo() { return modo; };
-	std::string& getBlancas() { return blancas; };
-	std::string& getNegras() { return negras; };
-
+	void setNombre(std::string nombre) { nombre_partida = nombre; };
+	void setModo(int modo) { this->modo = modo; };
+	void setBlancas(std::string blancas) { this->blancas = blancas; };
+	void setNegras(std::string negras) { this->negras = negras; };
+	
 	friend void operator<<(std::ostream& o, const Partida& p);
 	friend void operator>>(std::istream& is, Partida& p);
 };

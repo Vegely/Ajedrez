@@ -6,6 +6,7 @@
 #include "Cliente.h"
 #include "Servidor.h"
 #include "Ranking.h"
+#include "Partida.h"
 
 #define H_MAX 25.0f
 #define H_MIN -10.0f
@@ -24,6 +25,7 @@ public:
 	Ranking ranking;
 	Cliente* cliente = nullptr;
 	Servidor* servidor = nullptr;
+	Partida* partida = nullptr;
 
 	bool inicializarPartida;
 
