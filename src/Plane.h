@@ -4,12 +4,35 @@
 #include "Globals.h"
 #include "Entity.h"
 
+struct Factor
+{
+	float x, y;
+	Factor(float x, float y) : x(x), y(y) {}
+};
+
 template<typename Type>
 struct Corners
 {
 	Type ll, lr, ul, ur;
 
 	Corners(void) : ll(), lr(), ul(), ur() { }
+
+	Corners<Point> operator *= (const Factor& rhs)
+	{
+		this->ll.x *= rhs.x;
+		this->ll.y *= rhs.y;
+
+		this->lr.x *= rhs.x;
+		this->lr.y *= rhs.y;
+
+		this->ul.x *= rhs.x;
+		this->ul.y *= rhs.y;
+
+		this->ur.x *= rhs.x;
+		this->ur.y *= rhs.y;
+
+		return *this;
+	}
 };
 
 class Plane : public Entity
