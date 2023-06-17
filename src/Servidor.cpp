@@ -24,9 +24,9 @@ void Servidor::ipDir() {
 	char buffer[MAX_LONG_BUFF];
 
 	//Ejecuta ipconfig y saca el resultado a un fichero temp.txt
-	system("ipconfig > temp.txt");
+	system(COMANDO_IPCONFIG);
 	//Abre el fichero con el contenido de ipconfig en modo lectura
-	std::ifstream ifs{ "temp.txt" };
+	std::ifstream ifs{ RUTA_IPCONFIG };
 
 	//Lee línea a línea el contenido de temp.txt y lo almacena en buffer
 	while (ifs.getline(buffer, sizeof(buffer))) {

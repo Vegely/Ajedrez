@@ -6,7 +6,8 @@
 #include <vector>
 #include "Movimiento.h"
 
-const std::string PARTIDA_TEMPORAL = "partida_temp.txt";
+const std::string CARPETA_PARTIDAS = "partidas/";
+const std::string PARTIDA_TEMPORAL = "partidas/partida_temp.txt";
 
 const std::string partida_nombre_partida = "Nombre de la partida";
 const std::string partida_modo = "Modo";

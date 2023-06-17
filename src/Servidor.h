@@ -4,6 +4,9 @@
 #include <fstream>
 #include <sstream>
 
+constexpr const char* RUTA_IPCONFIG = "../temp/ipconfig.txt";
+constexpr const char* COMANDO_IPCONFIG = "ipconfig > ../temp/ipconfig.txt";
+
 /*
 * Compartir 5 números de 0 a 7 y el último de 0 a 1
 */

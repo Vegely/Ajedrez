@@ -15,7 +15,7 @@ class Ranking
 private:
 	int pagina_actual = 0;
 	int npaginas = 0;
-	const char* nombre_fichero = "ranking.txt";
+	const char* nombre_fichero = "partidas/ranking.txt";
 	const std::string titulo = "RANKING";
 	const std::string campos = "Pos  Punt \t Jug \t\t Id";
 	int ultima_posicion;

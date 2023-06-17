@@ -171,7 +171,7 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 				pantallaGuardar.snegras = "";
 		}
 		else if ((int)key == TABULADOR) {
-			partida.setNombre(pantallaGuardar.snombre_partida + ".txt");
+			partida.setNombre(CARPETA_PARTIDAS + pantallaGuardar.snombre_partida + ".txt");
 			if (partida.existe())
 				pantallaGuardar.existe = 1;
 			else

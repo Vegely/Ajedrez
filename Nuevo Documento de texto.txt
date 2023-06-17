@@ -1,6 +1,0 @@
-Nombre partida
-Modo 
-finalizada
-blancas
-negras
-mov
