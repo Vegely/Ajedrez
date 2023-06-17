@@ -7,7 +7,7 @@
 #include <fstream>
 #include <sstream>
 
-#include <ETSIDI.h>
+#include "ETSIDI.h"
 
 // Coordinador
 CoordinadorAjedrez coordinador;
@@ -23,6 +23,8 @@ void motorGrafico(int* argc, char** argv)
 	inicializarIluminacion();
 	inicializarEstadoOpenGL();
 
+	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
+	
 	registrarCallbacks();
 
 	coordinador.initGraficos();

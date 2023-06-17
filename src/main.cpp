@@ -4,7 +4,9 @@
 
 int main(int argc, char** argv)
 {
-	srand(2); // Inicializar la semilla aleatoria con el tiempo del sistema
+	motorGrafico(&argc, argv);
+
+	/*srand(2); // Inicializar la semilla aleatoria con el tiempo del sistema
 
 	bool exit = false;
 	while (!exit)
@@ -17,7 +19,7 @@ int main(int argc, char** argv)
 
 		// TEST GRAFICOS //
 		motorGrafico(&argc, argv);
-	}
+	}*/
 
 	return 0;
 }

@@ -73,6 +73,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="6_Gestion_Ficheros">
+      <UniqueIdentifier>{41ced555-af56-4109-8736-439f19e342b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="6_Gestion_Ficheros\Header">
+      <UniqueIdentifier>{89697b77-33a6-4d01-8b4e-f39577f72f52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="6_Gestion_Ficheros\Source">
+      <UniqueIdentifier>{13066925-cace-4074-9404-9e7756bb13d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Caballo.h">
@@ -159,6 +168,33 @@
     <ClInclude Include="src\ConfiguracionDeJuego.h">
       <Filter>1_Lógica\0_Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Punto.h">
+      <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Caja.h">
+      <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI.h">
+      <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Socket.h">
+      <Filter>4_Redes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Servidor.h">
+      <Filter>4_Redes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Cliente.h">
+      <Filter>4_Redes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Partida.h">
+      <Filter>6_Gestion_Ficheros\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ranking.h">
+      <Filter>6_Gestion_Ficheros\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DatosRanking.h">
+      <Filter>6_Gestion_Ficheros\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Caballo.cpp">
@@ -229,6 +265,29 @@
     </ClCompile>
     <ClCompile Include="src\ListaModelo.cpp">
       <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
+    <ClCompile Include="src\Caja.cpp">
+      <Filter>3_Menus_Máquina_Estados\Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI.cpp">
+      <Filter>3_Menus_Máquina_Estados\Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Socket.cpp">
+      <Filter>4_Redes\Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Servidor.cpp">
+      <Filter>4_Redes\Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cliente.cpp">
+      <Filter>4_Redes\Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Partida.cpp">
+      <Filter>6_Gestion_Ficheros\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ranking.cpp">
+      <Filter>6_Gestion_Ficheros\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DatosRanking.cpp">
+      <Filter>6_Gestion_Ficheros\Source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

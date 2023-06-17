@@ -154,7 +154,7 @@ void Mundo::leerTablero(const Tablero& tablero)
 		// END_DEBUG
 
 		if (tablero_anterior[i].valido || tablero_actual[i].valido &&
-			tablero_anterior[i] != tablero_actual[i]) // Si alguna casilla no sigue vacía y son distintas
+			tablero_anterior[i] != tablero_actual[i]) // Si alguna casilla no sigue vacï¿½a y son distintas
 		{ 
 			// Movimiento normal
 			if (!tablero_anterior[i].valido && tablero_actual[i].valido)
@@ -183,8 +183,8 @@ void Mundo::leerTablero(const Tablero& tablero)
 			else if (tablero_anterior[i].tipo == Pieza::tipo_t::PEON && !tablero_actual[i].valido &&
 				(tablero_anterior[i].posicion.y == 6 && tablero_anterior[i].color || tablero_anterior[i].posicion.y == 1 && !tablero_anterior[i].color))
 			{
-				seleccionarLista(tablero_anterior[i].color, Pieza::tipo_t::PEON)->deleteFromCoord(tablero_anterior[i].posicion); // Borrar el peón
-				// Volver a leer el tablero porque han pasado dos cosas a la vez: destrucción del peón y promoción a la nueva pieza.
+				seleccionarLista(tablero_anterior[i].color, Pieza::tipo_t::PEON)->deleteFromCoord(tablero_anterior[i].posicion); // Borrar el peï¿½n
+				// Volver a leer el tablero porque han pasado dos cosas a la vez: destrucciï¿½n del peï¿½n y promociï¿½n a la nueva pieza.
 				for (int j = 0; j < 64; j++)
 				{
 					if (!tablero_anterior[j].valido && tablero_actual[j].valido ||
