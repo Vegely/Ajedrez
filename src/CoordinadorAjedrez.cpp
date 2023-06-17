@@ -51,7 +51,6 @@ void CoordinadorAjedrez::Draw(void)
 		0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
 		0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
 
-
 	if (estado == INICIO) {
 		
 		pantallaInicio.dibuja();
@@ -144,10 +143,9 @@ void CoordinadorAjedrez::Draw(void)
 	}
 }
 
-// CAMBIAR INICIO POR JUEGO
 void CoordinadorAjedrez::Timer(int value)
 {
-	if (estado == INICIO && inicializarPartida && !flagDeSeguridadInit) // Escribir a continuacion de la configuracion
+	if (estado == JUEGO && inicializarPartida && !flagDeSeguridadInit) // Escribir a continuacion de la configuracion
 	{
 		motor = new std::thread(threadMotor, &motorLogico, &mundoGrafico, &configuracion, &datosFinal);
 		inicializarPartida = false;

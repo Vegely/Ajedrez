@@ -2,21 +2,21 @@
 #include "freeglut.h"
 #include "ETSIDI.h"
 
-constexpr const char* RUTA_COLOR_JUGADOR = "bin/pantallas/seleccion color.png";
-constexpr const char* RUTA_SERVIDOR = "bin/pantallas/servidor.png";
-constexpr const char* RUTA_CLIENTE = "bin/pantallas/cliente.png";
-constexpr const char* RUTA_GUARDAR = "bin/pantallas/guardar.png";
-constexpr const char* RUTA_ROL_RED = "bin/pantallas/rol red.png";
-constexpr const char* RUTA_PAUSA = "bin/pantallas/pausa.png";
-constexpr const char* RUTA_MODO_DE_JUEGO = "bin/pantallas/modo de juego.png";
-constexpr const char* RUTA_JUEGO_LOCAL = "bin/pantallas/juego local.png";
-constexpr const char* RUTA_INICIO = "bin/pantallas/inicio.png";
-constexpr const char* RUTA_FIN_DE_PARTIDA = "bin/pantallas/fin de la partida.png";
-constexpr const char* RUTA_FALLO_CONEXION = "bin/pantallas/fallo de conexion.png";
-constexpr const char* RUTA_CARGAR_PARTIDA = "bin/pantallas/cargar partida pag intermedia.png";
-constexpr const char* RUTA_RANKINGS = "bin/pantallas/rankings pag intermedia.png";
+constexpr const char* RUTA_COLOR_JUGADOR = "pantallas/seleccion color.png";
+constexpr const char* RUTA_SERVIDOR = "pantallas/servidor.png";
+constexpr const char* RUTA_CLIENTE = "pantallas/cliente.png";
+constexpr const char* RUTA_GUARDAR = "pantallas/guardar.png";
+constexpr const char* RUTA_ROL_RED = "pantallas/rol red.png";
+constexpr const char* RUTA_PAUSA = "pantallas/pausa.png";
+constexpr const char* RUTA_MODO_DE_JUEGO = "pantallas/modo de juego.png";
+constexpr const char* RUTA_JUEGO_LOCAL = "pantallas/juego local.png";
+constexpr const char* RUTA_INICIO = "pantallas/inicio.png";
+constexpr const char* RUTA_FIN_DE_PARTIDA = "pantallas/fin de la partida.png";
+constexpr const char* RUTA_FALLO_CONEXION = "pantallas/fallo de conexion.png";
+constexpr const char* RUTA_CARGAR_PARTIDA = "pantallas/cargar partida pag intermedia.png";
+constexpr const char* RUTA_RANKINGS = "pantallas/rankings pag intermedia.png";
 
-constexpr const char* RUTA_FUENTES = "bin/fuentes/consola.ttf";
+constexpr const char* RUTA_FUENTES = "fuentes/SourceSerifPro-Bold.ttf";
 
 constexpr int TAM_FRASE = 10;
 constexpr int TABULADOR = 9;

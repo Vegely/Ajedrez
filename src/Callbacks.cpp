@@ -58,6 +58,10 @@ void OnReshape(int w, int h)
 // Continuously draws what it is specified to it.
 void OnDraw(void)
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	coordinador.Draw();
 
 	glutSwapBuffers();

@@ -189,6 +189,12 @@
     <ClInclude Include="src\DatosRanking.h">
       <Filter>6_Gestion_Ficheros\Header</Filter>
     </ClInclude>
+    <ClInclude Include="src\ListaModelo.h">
+      <Filter>1_Lógica\Piezas\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ConfiguracionDeJuego.h">
+      <Filter>1_Lógica\Piezas\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Caballo.cpp">
@@ -280,6 +286,9 @@
     </ClCompile>
     <ClCompile Include="src\DatosRanking.cpp">
       <Filter>6_Gestion_Ficheros\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ListaModelo.cpp">
+      <Filter>0_Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
