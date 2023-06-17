@@ -153,15 +153,21 @@ void Mundo::leerTablero(const Tablero& tablero)
 		//	std::cout << "Pieza no valida." << std::endl;
 		// END_DEBUG
 
-		if (tablero_anterior[i].valido || tablero_actual[i].valido && 
-			tablero_anterior[i] != tablero_actual[i]) // Si la casilla no sigue vacía y son distintas
+		if (tablero_anterior[i].valido || tablero_actual[i].valido &&
+			tablero_anterior[i] != tablero_actual[i]) // Si alguna casilla no sigue vacía y son distintas
 		{ 
-			// Si los tipos son invalido y valido, una pieza se ha movido.
+			// Movimiento normal
 			if (!tablero_anterior[i].valido && tablero_actual[i].valido)
 			{
 				moverModelo(tablero.getUltimaJugada(), tablero_actual[i].color, tablero_actual[i].tipo);
 			}
-			// Si los tipos son valido y valido, una ha comido a la otra
+			// Captura al paso.
+			if (tablero_anterior[i].valido && !tablero_actual[i].valido) // Si una casilla pasa de estar ocupada a no estarlo
+			{
+				if (tablero.getUltimaJugada().inicio != tablero_anterior[i].posicion && tablero.getUltimaJugada().fin != tablero_anterior[i].posicion)
+					seleccionarLista(tablero_anterior[i].color, tablero_anterior[i].tipo)->deleteFromCoord(tablero_anterior[i].posicion);
+			}
+			// Comidas
 			else if (tablero_anterior[i].valido && tablero_actual[i].valido)
 			{
 				// Una ha comido a la otra. Se sustituye la nueva por la antigua.
@@ -173,6 +179,7 @@ void Mundo::leerTablero(const Tablero& tablero)
 					moverModelo(tablero.getUltimaJugada(), tablero_actual[i].color, tablero_actual[i].tipo);
 				}
 			}
+			// Coronacion
 			else if (tablero_anterior[i].tipo == Pieza::tipo_t::PEON && !tablero_actual[i].valido &&
 				(tablero_anterior[i].posicion.y == 6 && tablero_anterior[i].color || tablero_anterior[i].posicion.y == 1 && !tablero_anterior[i].color))
 			{
