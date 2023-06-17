@@ -135,7 +135,16 @@ public:
 		}
 	}
 
-	Corners<Point> getSlotCoords(int i, int j) const { return this->casillas[i][j]; }
+	Corners<Point> getSlotCoords(int i, int j) const
+	{
+		float factor_escala_y = static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT)) / 1080.0f;
+		float factor_escala_x = static_cast<float>(glutGet(GLUT_WINDOW_WIDTH)) / 1920.0f;
+		Corners<Point> result = this->casillas[i][j];
+		result *= Factor(factor_escala_x, factor_escala_y);
+		std::cout << "Window height: " << glutGet(GLUT_WINDOW_HEIGHT) << std::endl;
+		std::cout << "Ratio: " << factor_escala_x << " " << factor_escala_y << std::endl;
+		return result;
+	}
 };
 
 struct DatosPieza
