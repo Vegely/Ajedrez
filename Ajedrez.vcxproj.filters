@@ -156,17 +156,11 @@
     <ClInclude Include="src\Globals.h">
       <Filter>2_Graficos\0_Glut\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Sonidos.h">
-      <Filter>5_Sonido\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Casilla.h">
       <Filter>2_Graficos\0_Glut\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ListaModelo.h">
-      <Filter>2_Graficos\0_Glut\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ConfiguracionDeJuego.h">
-      <Filter>1_Lógica\0_Header Files</Filter>
+    <ClInclude Include="src\Sonidos.h">
+      <Filter>5_Sonido\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Punto.h">
       <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
@@ -263,8 +257,6 @@
     <ClCompile Include="src\Sonidos.cpp">
       <Filter>5_Sonido\Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ListaModelo.cpp">
-      <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
     <ClCompile Include="src\Caja.cpp">
       <Filter>3_Menus_Máquina_Estados\Resource Files</Filter>
     </ClCompile>

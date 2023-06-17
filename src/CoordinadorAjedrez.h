@@ -21,8 +21,7 @@ void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const Configura
 
 class CoordinadorAjedrez
 {
-protected:
-	Estado estado;
+	friend class menuInicial;
 
 public:
 	Mundo motorGrafico;
@@ -33,20 +32,9 @@ public:
 
 	bool inicializarPartida;
 
-	std::thread* motor = new std::thread;
 	std::thread* hilo_servidor = nullptr;
 	std::thread* hilo_cliente = nullptr;
 
-	DatosFinal datosFinal;
-
-	CoordinadorAjedrez();
-	void onTimer();
-	void dibuja();
-	void tecla(unsigned char key);
-	void teclaEspecial(int key);
-	void click(int button, int state, int x, int y);
-
-	friend class menuInicial;
 private:
 	/* ESTADO DEL JUEGO */
 	Estado estado;
@@ -54,8 +42,7 @@ private:
 	Mundo mundoGrafico;
 	MotorDeJuego motorLogico;
 	std::thread* motor = nullptr;
-	/* VARIABLES DE GESTI�N DE INICIALIZACI�N Y FINALIZACI�N */
-	bool inicializarPartida;
+	/* VARIABLES DE GESTIÓN DE INICIALIZACIÓN Y FINALIZACIÓN */
 	bool flagDeSeguridadInit = true;
 	DatosFinal datosFinal;
 	
@@ -73,7 +60,7 @@ public:
 	void Click(int button, int state, int x, int y);
 };
 
-void threadMotor(const ConfiguracionDeJuego* p_configuracion, Mundo* p_motorGrafico, DatosFinal* p_datosFinal);
+void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal);
 void hiloServidor(CoordinadorAjedrez* ajedrez);
 void hiloCliente(CoordinadorAjedrez* ajedrez);
 
