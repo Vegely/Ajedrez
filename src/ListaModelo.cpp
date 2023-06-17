@@ -11,6 +11,8 @@ void ListaModelo::addElem(Modelo* modelo)
 	{
 		_modelo[_numElem++] = modelo;
 		std::cout << "Element added. Number of elemets is now " << this->_numElem << std::endl;
+		if (_numElem == _maxElem)
+			std::cout << "You've reached the maximum number of elements." << std::endl;
 	}
 }
 
@@ -42,7 +44,10 @@ void ListaModelo::deleteFromCoord(const Posicion& pos)
 		for (int i = 0; i < this->size(); i++)
 		{
 			if (this->getPosicion(i) == pos)
+			{
 				this->deleteElem(i);
+				return;
+			}
 		}
 	}
 	else

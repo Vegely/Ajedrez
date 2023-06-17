@@ -38,7 +38,8 @@ public:
 	Modelo(void);
 	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, const std::string& model_path, const std::string& texture_path);
 	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color);
-	virtual ~Modelo(void) { /*delete scene;*/ }
+	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, bool color);
+	virtual ~Modelo(void) { }
 	Modelo(const Modelo& m);
 	Modelo& operator = (const Modelo& rhs);
 	/* INICIALIZACIÓN */

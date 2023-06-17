@@ -48,29 +48,48 @@ void Mundo::asignarModelos(void)
 	rey_blanco.addElem(new Modelo(REY, Posicion(4, 0), true ));
 	rey_negro .addElem(new Modelo(REY, Posicion(4, 7), false));
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 9; i++)
 	{
+		if (i < 8)
+		{
+			// Peones
+			peones_blancos.addElem(new Modelo(PEON, Posicion(i, 1), true));
+			peones_negros .addElem(new Modelo(PEON, Posicion(i, 6), false));
+		}
 		// Damas
 		if (i == 0)
 		{
-			damas_blancas.addElem(new Modelo(DAMA, Posicion(3, 0), true ));
+			damas_blancas.addElem(new Modelo(DAMA, Posicion(3, 0), true));
 			damas_negras .addElem(new Modelo(DAMA, Posicion(3, 7), false));
 		}
-		// Resto de piezas excepto peones
+		else
+		{
+			damas_blancas.addElem(new Modelo(DAMA, Point{ 100, 0, 0 }, true));
+			damas_negras .addElem(new Modelo(DAMA, Point{ 100, 0, 0 }, false));
+		}
+		// Resto
 		if (i == 0 || i == 1)
 		{
-			torres_blancas  .addElem(new Modelo(TORRE,   Posicion(i * 7, 0), true ));
-			torres_negras   .addElem(new Modelo(TORRE,   Posicion(i * 7, 7), false));
+			torres_blancas.addElem(new Modelo(TORRE, Posicion(i * 7, 0), true));
+			torres_negras .addElem(new Modelo(TORRE, Posicion(i * 7, 7), false));
 
-			caballos_blancos.addElem(new Modelo(CABALLO, Posicion(1 + i * 5, 0), true ));
+			caballos_blancos.addElem(new Modelo(CABALLO, Posicion(1 + i * 5, 0), true));
 			caballos_negros .addElem(new Modelo(CABALLO, Posicion(1 + i * 5, 7), false));
 
-			alfiles_blancos .addElem(new Modelo(ALFIL,   Posicion(2 + i * 3, 0), true ));
-			alfiles_negros  .addElem(new Modelo(ALFIL,   Posicion(2 + i * 3, 7), false));
+			alfiles_blancos.addElem(new Modelo(ALFIL, Posicion(2 + i * 3, 0), true));
+			alfiles_negros .addElem(new Modelo(ALFIL, Posicion(2 + i * 3, 7), false));
 		}
-		// Peones
-		peones_blancos  .addElem(new Modelo(PEON, Posicion(i, 1), true ));
-		peones_negros   .addElem(new Modelo(PEON, Posicion(i, 6), false));
+		else
+		{
+			torres_blancas.addElem(new Modelo(TORRE, Point{ 100, 0, 0 }, true));
+			torres_negras.addElem(new Modelo(TORRE, Point{ 100, 0, 0 }, false));
+
+			caballos_blancos.addElem(new Modelo(CABALLO, Point{ 100, 0, 0 }, true));
+			caballos_negros.addElem(new Modelo(CABALLO, Point{ 100, 0, 0 }, false));
+
+			alfiles_blancos.addElem(new Modelo(ALFIL, Point{ 100, 0, 0 }, true));
+			alfiles_negros.addElem(new Modelo(ALFIL, Point{ 100, 0, 0 }, false));
+		}
 	}
 
 	posicion_leida = Posicion{ -1, -1 };
@@ -161,24 +180,11 @@ void Mundo::leerTablero(const Tablero& tablero)
 				// Volver a leer el tablero porque han pasado dos cosas a la vez: destrucción del peón y promoción a la nueva pieza.
 				for (int j = 0; j < 64; j++)
 				{
-					if (!tablero_anterior[j].valido && tablero_actual[j].valido &&
-						(tablero_actual[j].posicion.y == 7 && tablero_actual[j].color || tablero_actual[j].posicion.y == 1 && !tablero_actual[j].color)) // condicion de seguridad
-					{
-						seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->
-							addElem(new Modelo(Modelo::castTipo(tablero_actual[j].tipo), tablero_actual[j].posicion, tablero_actual[j].color));
-						seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->
-							getElem(seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->getNumElem())->cargarTextura();
-					}
-					else if
+					if (!tablero_anterior[j].valido && tablero_actual[j].valido ||
 						(tablero_anterior[j].valido && tablero_actual[j].valido &&
-						(tablero_anterior[j].color  != tablero_actual[j].color))
+						(tablero_anterior[j].color  != tablero_actual[j].color)))
 					{
-						seleccionarLista(tablero_anterior[j].color, tablero_anterior[j].tipo)->
-							deleteFromCoord(tablero_anterior[j].posicion);
-						seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->
-							addElem(new Modelo(Modelo::castTipo(tablero_actual[j].tipo), tablero_actual[j].posicion, tablero_actual[j].color));
-						seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->
-							getElem(seleccionarLista(tablero_actual[j].color, tablero_actual[j].tipo)->getNumElem())->cargarTextura();
+						moverModelo(Movimiento(Posicion(-1, -1), tablero_actual[j].posicion), tablero_actual[j].color, tablero_actual[j].tipo);
 					}
 				}
 			}
@@ -364,54 +370,32 @@ void Mundo::seleccionCoronacion(int button, int state, int x_mouse, int y_mouse,
 	if (state == 1 || button != 0)
 		return;
 
-	this->posicion_leida = Posicion{ -1, -1 };
-	while (this->posicion_leida.y != 4 || this->posicion_leida.x < 3 || this->posicion_leida.x > 6)
-	{
-		seleccionCasilla(button, state, x_mouse, y_mouse); // Actualiza this->posicion_leida.
-	}
-	if (this->posicion_leida != Posicion(3, 4))
-	{
-		ListaModelo* lista = seleccionarLista(color, Pieza::tipo_t::ALFIL);
-		lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
-	}
-	else if (this->posicion_leida != Posicion(4, 4))
-	{
-		ListaModelo* lista = seleccionarLista(color, Pieza::tipo_t::TORRE);
-		lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
-	}
-	else if (this->posicion_leida != Posicion(5, 4))
-	{
-		ListaModelo* lista = seleccionarLista(color, Pieza::tipo_t::DAMA);
-		lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
-	}
-	else if (this->posicion_leida != Posicion(6, 4))
-	{
-		ListaModelo* lista = seleccionarLista(color, Pieza::tipo_t::CABALLO);
-		lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
-	}
-}
-
-void Mundo::generarModelosCoronacion(bool color)
-{
-	seleccionarLista(color, Pieza::tipo_t::ALFIL)  ->addElem(new Modelo(ALFIL,   Posicion{ 3, 4 }, color));
-	seleccionarLista(color, Pieza::tipo_t::TORRE)  ->addElem(new Modelo(TORRE,   Posicion{ 4, 4 }, color));
-	seleccionarLista(color, Pieza::tipo_t::DAMA)   ->addElem(new Modelo(DAMA,    Posicion{ 5, 4 }, color));
-	seleccionarLista(color, Pieza::tipo_t::CABALLO)->addElem(new Modelo(CABALLO, Posicion{ 6, 4 }, color));
-}
-
-void Mundo::renderModelosCoronacion(bool color)
-{
-	//camara.setPosition(Camara::white_pov);
-
-	ListaModelo* lista_alfil   = seleccionarLista(color, Pieza::tipo_t::ALFIL);
-	ListaModelo* lista_torre   = seleccionarLista(color, Pieza::tipo_t::TORRE);
-	ListaModelo* lista_dama    = seleccionarLista(color, Pieza::tipo_t::DAMA);
-	ListaModelo* lista_caballo = seleccionarLista(color, Pieza::tipo_t::CABALLO);
-
-	lista_caballo->getElem(lista_caballo->getNumElem())->render();
-	lista_dama   ->getElem(lista_dama   ->getNumElem())->render();
-	lista_torre  ->getElem(lista_torre  ->getNumElem())->render();
-	lista_alfil  ->getElem(lista_alfil  ->getNumElem())->render();
+	//this->posicion_leida = Posicion{ -1, -1 };
+	//while (this->posicion_leida.y != 4 || this->posicion_leida.x < 3 || this->posicion_leida.x > 6)
+	//{
+	//	seleccionCasilla(button, state, x_mouse, y_mouse); // Actualiza this->posicion_leida.
+	//}
+	//ListaModelo* lista = nullptr;
+	//if (this->posicion_leida != Posicion(3, 4))
+	//{
+	//	lista = seleccionarLista(color, Pieza::tipo_t::ALFIL);
+	//	lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
+	//}
+	//else if (this->posicion_leida != Posicion(4, 4))
+	//{
+	//	lista = seleccionarLista(color, Pieza::tipo_t::TORRE);
+	//	lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
+	//}
+	//else if (this->posicion_leida != Posicion(5, 4))
+	//{
+	//	lista = seleccionarLista(color, Pieza::tipo_t::DAMA);
+	//	lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
+	//}
+	//else if (this->posicion_leida != Posicion(6, 4))
+	//{
+	//	lista = seleccionarLista(color, Pieza::tipo_t::CABALLO);
+	//	lista->deleteElem(lista->getNumElem()); // Borra el ultimo modelo añadido
+	//}
 }
 
 Pieza::tipo_t Mundo::seleccionPiezaCoronacion(void)

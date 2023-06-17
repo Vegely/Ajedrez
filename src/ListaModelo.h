@@ -12,7 +12,7 @@ private:
 
 public:
 	ListaModelo(int maxElem) : _modelo(new Modelo*[maxElem]), _numElem(0), _maxElem(maxElem) { for (int i = 0; i < _maxElem; i++) _modelo[i] = new Modelo(); }
-	virtual ~ListaModelo(void) { for (int i = 0; i < _maxElem; i++) delete[] _modelo[i]; delete _modelo; }
+	virtual ~ListaModelo(void) { for (int i = 0; i < _maxElem; i++) delete _modelo[i]; delete[] _modelo; }
 
 	/* GESTIÓN DE ELEMENTOS */
 	void addElem   (Modelo* modelo);
@@ -24,9 +24,9 @@ public:
 	Modelo*  getElem    (int i) const { return _modelo[i]; }
 	Posicion getPosicion(int i) const { return _modelo[i]->getCoords(); }
 	int		 getMaxElem (void)  const { return _maxElem; }
-	int		 size		(void)	const { return _numElem; }
+	int      size       (void)  const { return _maxElem; }
 	int		 getNumElem (void)	const { return _numElem; }
-	int getIndex(const Posicion& pos) const;
+	int      getIndex   (const Posicion& pos) const;
 	
 	/* SETTERS */
 	void setPosicion(int i, const Posicion& posicion) { _modelo[i]->setCoords(posicion); }
