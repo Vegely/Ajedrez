@@ -163,7 +163,7 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 		}
 		else if ((int)key == TABULADOR) {
 			estado = INICIO;
-			partida->setNombre(pantallaGuardar.snombre_partida);
+			partida->setNombre(pantallaGuardar.snombre_partida + ".txt");
 			partida->setBlancas(pantallaGuardar.sblancas);
 			partida->setNegras(pantallaGuardar.snegras);
 			partida->crearPartida();
