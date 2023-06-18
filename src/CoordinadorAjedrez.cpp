@@ -40,9 +40,11 @@ CoordinadorAjedrez::CoordinadorAjedrez() :
 
 void hiloServidor(CoordinadorAjedrez* ajedrez) {
 	ajedrez->servidor->conectarServidor();
+	ajedrez->estado = JUEGO;
 }
 void hiloCliente(CoordinadorAjedrez* ajedrez) {
 	ajedrez->cliente->conectarCliente();
+	ajedrez->estado = JUEGO;
 }
 
 void CoordinadorAjedrez::Draw(void)

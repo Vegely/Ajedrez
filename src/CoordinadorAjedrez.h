@@ -62,6 +62,9 @@ public:
 	void Keylift (unsigned char key);
 	void SpecialKeypress(int key);
 	void Click(int button, int state, int x, int y);
+
+	friend void hiloServidor(CoordinadorAjedrez* ajedrez);
+	friend void hiloCliente(CoordinadorAjedrez* ajedrez);
 };
 
 void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal);
