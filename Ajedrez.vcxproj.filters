@@ -195,6 +195,9 @@
     <ClInclude Include="src\ConfiguracionDeJuego.h">
       <Filter>1_Lógica\Piezas\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ElementoRed.h">
+      <Filter>4_Redes\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Caballo.cpp">
@@ -289,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="src\ListaModelo.cpp">
       <Filter>0_Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Movimiento.cpp">
+      <Filter>1_Lógica\0_Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

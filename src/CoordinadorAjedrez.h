@@ -19,13 +19,17 @@ constexpr const char* IA_IA = "iaia";
 constexpr const char* LOCAL_IA = "localia";
 constexpr const char* LOCAL_LOCAL = "locallocal";
 
-enum Estado { INICIO, JUEGO, FIN, RANKING, CARGAR, MODO_LOCAL, MODO_RED, MODO, COLOR, SERVIDOR, CLIENTE, FALLO_CONEXION, PAUSA, COLOR_SERVIDOR, GUARDAR};
+enum Estado { INICIO, JUEGO, FIN, RANKING, CARGAR, MODO_LOCAL, MODO_RED, MODO, COLOR, SERVIDOR, CLIENTE, FALLO_CONEXION, PAUSA, COLOR_SERVIDOR, GUARDAR, INICIALIZACION_PARTIDA};
 
 void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal);
 
 class CoordinadorAjedrez
 {
 	friend class menuInicial;
+	///
+	friend void hiloServidor(CoordinadorAjedrez* ajedrez);
+	friend void hiloCliente(CoordinadorAjedrez* ajedrez);
+	///
 
 public:
 	Mundo motorGrafico;
@@ -34,7 +38,7 @@ public:
 	Servidor* servidor = nullptr;
 	Partida partida;
 
-	bool inicializarPartida;
+	ConfiguracionDeJuego config;
 
 	std::thread* hilo_servidor = nullptr;
 	std::thread* hilo_cliente = nullptr;
@@ -44,8 +48,8 @@ private:
 	Estado estado;
 	/* MOTORES L�GICO Y GR�FICO */
 	Mundo mundoGrafico;
-	MotorDeJuego motorLogico;
-	std::thread* motor = nullptr;
+	MotorDeJuego* p_motorLogico = nullptr;
+	std::thread* p_motor = nullptr;
 	/* VARIABLES DE GESTIÓN DE INICIALIZACIÓN Y FINALIZACIÓN */
 	bool flagDeSeguridadInit = true;
 	DatosFinal datosFinal;

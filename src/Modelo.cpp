@@ -182,7 +182,7 @@ void Modelo::renderNodo(const aiNode* nodo)
 
 		// Aplica las propiedades del material.
 		aiColor4D difusion_color;
-		if (AI_SUCCESS == aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &difusion_color))
+ 		if (AI_SUCCESS == aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &difusion_color))
 			glColor4f(difusion_color.r, difusion_color.g, difusion_color.b, difusion_color.a);
 
 		// Enlaza la textura si est� disponible

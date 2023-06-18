@@ -1,6 +1,8 @@
 #ifndef _POSICION__H_
 #define _POSICION__H_
 
+#include <cmath>
+
 //Clase para hacer las comparaciones y modificaciones de casillas mas sencillas
 struct Posicion
 {
@@ -23,7 +25,7 @@ inline Posicion operator* (const int& lhs, Posicion rhs) { return rhs *= lhs; }
 
 inline bool operator== (const Posicion& lhs, const Posicion& rhs) { return lhs.x == rhs.x && lhs.y == rhs.y; }
 inline bool operator!= (const Posicion& lhs, const Posicion& rhs) { return !(lhs == rhs); }
-inline bool operator< (const Posicion& lhs, const Posicion& rhs) { return lhs.x < rhs.x&& lhs.y < rhs.y; }
+inline bool operator< (const Posicion& lhs, const Posicion& rhs) { return lhs.x < rhs.x && lhs.y < rhs.y; }
 inline bool operator> (const Posicion& lhs, const Posicion& rhs) { return rhs < lhs; }
 inline bool operator<= (const Posicion& lhs, const Posicion& rhs) { return lhs.x <= rhs.x && lhs.y <= rhs.y; }
 inline bool operator>= (const Posicion& lhs, const Posicion& rhs) { return rhs <= lhs; }

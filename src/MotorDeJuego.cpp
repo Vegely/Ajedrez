@@ -32,6 +32,26 @@ Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool pos1Sele
 
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
 		return IA::mover(tablero);
+	case ConfiguracionDeJuego::FormasDeInteraccion::EMISOR: 
+		if (1) {
+			Movimiento movimiento = ensamblarMovimiento(getInput(p_motorGrafico), pos1Selec);
+			config.elementoRed->enviar(movimiento.toString());
+			return movimiento;
+		}
+	case ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR:
+		if (1){
+			std::string str;
+			while (str.size() == 0) 
+			{
+				config.elementoRed->recibir(str);
+				///
+				std::cout << str << std::endl;
+				///
+			}
+			Movimiento movimiento(str);
+			std::cout << movimiento.toString() << std::endl;
+			return movimiento;
+		}
 	}
 }
 
@@ -54,6 +74,8 @@ DatosFinal MotorDeJuego::motor(Mundo* mundoGrafico)
 			if (jugadaHecha) // Se hace la jugada
 			{
 				//pintar();
+
+				//strGuardado += tablero.ultimaJugada.toString() + "\n";
 
 				if (tablero.jaqueMate())
 				{ 

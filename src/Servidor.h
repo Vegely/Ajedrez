@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Socket.h"
+#include "ElementoRed.h"
+
 #include <fstream>
 #include <sstream>
 
@@ -11,7 +13,7 @@ constexpr const char* COMANDO_IPCONFIG = "ipconfig > ../temp/ipconfig.txt";
 * Compartir 5 números de 0 a 7 y el último de 0 a 1
 */
 
-class Servidor
+class Servidor : public ElementoRed
 {
 private:
 	//Atiende peticiones de conexión
@@ -52,11 +54,11 @@ public:
 	//Recibe una cadena de caracteres del cliente
 	//@param std::string s: cadena recibida
 	//@return Número de bytes recibidos
-	int recibirDeCliente(std::string& s);
+	int recibir(std::string& s) const;
 	//Manda una cadena de caracteres al cliente
 	//@param std::string s: cadena a enviar
 	//@return Número de bytes enviados
-	int enviarACliente(std::string s);
+	int enviar(std::string s) const;
 
 	std::string getip() { return ipv4; };
 

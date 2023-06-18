@@ -21,9 +21,6 @@ PantallaGuardar pantallaGuardar;
 void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal)
 {
 	std::cout << "Thread inicializado" << std::endl;
-	
-	for (ConfiguracionDeJuego::FormasDeInteraccion config : p_configuracion->config) 
-		if (config == ConfiguracionDeJuego::FormasDeInteraccion::IA) { srand(time(NULL)); break; }
 
 	*p_datosFinal = motorLogico->motor(motorGrafico);
 
@@ -33,18 +30,18 @@ void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const Configura
 CoordinadorAjedrez::CoordinadorAjedrez() :
 	estado(INICIO),
 	mundoGrafico(),
-	motorLogico(configuracion),
-	inicializarPartida(true),
 	datosFinal()
-{ }
+{}
 
 void hiloServidor(CoordinadorAjedrez* ajedrez) {
 	ajedrez->servidor->conectarServidor();
-	ajedrez->estado = JUEGO;
+	ajedrez->config = { ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR, ConfiguracionDeJuego::FormasDeInteraccion::EMISOR, ajedrez->servidor };
+	ajedrez->estado = INICIALIZACION_PARTIDA;
 }
 void hiloCliente(CoordinadorAjedrez* ajedrez) {
 	ajedrez->cliente->conectarCliente();
-	ajedrez->estado = JUEGO;
+	ajedrez->config = { ConfiguracionDeJuego::FormasDeInteraccion::EMISOR, ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR, ajedrez->cliente };
+	ajedrez->estado = INICIALIZACION_PARTIDA;
 }
 
 void CoordinadorAjedrez::Draw(void)
@@ -110,7 +107,7 @@ void CoordinadorAjedrez::Draw(void)
 		parametrosTexturasMEstados();
 	}
 
-	else if (estado ==SERVIDOR)
+	else if (estado == SERVIDOR)
 	{
 		pantallaServidor.dibuja();
 		parametrosTexturasMEstados();
@@ -120,7 +117,7 @@ void CoordinadorAjedrez::Draw(void)
 		ETSIDI::printxy(servidor->getip().c_str(), 0, 0, 1);
 	}
 
-	else if (estado ==CARGAR)
+	else if (estado == CARGAR)
 	{
 		pantallaCargarPartida.dibuja();
 		parametrosTexturasMEstados();
@@ -147,15 +144,17 @@ void CoordinadorAjedrez::Draw(void)
 
 void CoordinadorAjedrez::Timer(int value)
 {
-	if (estado == JUEGO && inicializarPartida && !flagDeSeguridadInit) // Escribir a continuacion de la configuracion
+	if (estado == INICIALIZACION_PARTIDA && !flagDeSeguridadInit)
 	{
-		motor = new std::thread(threadMotor, &motorLogico, &mundoGrafico, &configuracion, &datosFinal);
-		inicializarPartida = false;
+		p_motorLogico = new MotorDeJuego(config);
+		p_motor = new std::thread(threadMotor, p_motorLogico, &mundoGrafico, &configuracion, &datosFinal);
+		estado = JUEGO;
 	}
-
-	this->mundoGrafico.leerTablero(*this->motorLogico.getTablero());
-
-	mundoGrafico.movimiento(value);
+	else if (estado == JUEGO) // Escribir a continuacion de la configuracion
+	{		
+		this->mundoGrafico.leerTablero(*this->p_motorLogico->getTablero());
+		mundoGrafico.movimiento(value);
+	}
 }
 
 void CoordinadorAjedrez::Keypress(unsigned char key) 
@@ -226,6 +225,10 @@ void CoordinadorAjedrez::SpecialKeypress(int key)
 				pantallaGuardar.snegras = pantallaGuardar.snegras.substr(0, pantallaGuardar.snegras.length() - 1);
 		}
 	}
+	else if (estado == JUEGO) {
+		if (key == 27)
+			estado = PAUSA;
+	}
 }
 
 void CoordinadorAjedrez::Click(int button, int state, int x, int y)
@@ -264,7 +267,8 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 				pantallaGuardar.smodo = IA_IA;
 				pantallaGuardar.sblancas = JIA;
 				pantallaGuardar.snegras = JIA;
-				estado = JUEGO;
+				config = {ConfiguracionDeJuego::FormasDeInteraccion::IA, ConfiguracionDeJuego::FormasDeInteraccion::IA };
+				estado = INICIALIZACION_PARTIDA;
 			}
 			if (pantallaJugadorLocal.jugadorIA.enCaja(xg, yg))
 			{
@@ -274,7 +278,8 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 			if (pantallaJugadorLocal.dosJugadores.enCaja(xg, yg))
 			{
 				pantallaGuardar.smodo = LOCAL_LOCAL;
-				estado = JUEGO;
+				config = { ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::LOCAL };
+				estado = INICIALIZACION_PARTIDA;
 			}
 			if (pantallaJugadorLocal.atras.enCaja(xg, yg))
 				estado = MODO;
@@ -315,12 +320,14 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 			if (pantallaColorJugador.negro.enCaja(xg, yg))
 			{
 				pantallaGuardar.sblancas = JIA;
-				estado = JUEGO;
+				config = { ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::IA };
+				estado = INICIALIZACION_PARTIDA;
 			}
 			if (pantallaColorJugador.blanco.enCaja(xg, yg))
 			{
 				pantallaGuardar.snegras = JIA;
-				estado = JUEGO;
+				config = { ConfiguracionDeJuego::FormasDeInteraccion::IA, ConfiguracionDeJuego::FormasDeInteraccion::LOCAL };
+				estado = INICIALIZACION_PARTIDA;
 			}
 			if (pantallaColorJugador.atras.enCaja(xg, yg))
 				estado = MODO_LOCAL;
@@ -373,6 +380,7 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 		}
 	}
 }
+
 float aCoordenadasGlutX(float p)
 {
 	return W_MIN + p * ((W_MAX - W_MIN) / (float)glutGet(GLUT_WINDOW_WIDTH));

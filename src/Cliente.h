@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Socket.h"
+#include "ElementoRed.h"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -14,7 +16,7 @@
 
 
 
-class Cliente
+class Cliente : public ElementoRed
 {
 private:
     //Se encarga de la comunicación
@@ -43,11 +45,11 @@ public:
     //Envía una cadena de caracteres al servidor
     //@param std::string s: cadena a enviar
     //@return Número de bytes enviados
-    int enviarAServidor(std::string s);
+    int enviar(std::string s) const;
     //Recibe una cadena de caracteres del servidor
     //@param std::string& s: cadena recibida
     //@return Número de bytes recibidos
-    int recibirDeServidor(std::string& s);
+    int recibir(std::string& s) const;
 
     std::string& getIp() { return ipv4; };
 };
