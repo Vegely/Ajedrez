@@ -1,10 +1,12 @@
 #include "servidor.h"
 
-int Servidor::recibirDeCliente(std::string& s) {
+int Servidor::recibir(std::string& s) const 
+{
 	return comunicacion_sck->recibe(s);
 }
 
-int Servidor::enviarACliente(std::string s) {
+int Servidor::enviar(std::string s) const 
+{
 	return comunicacion_sck->envia(s);
 }
 

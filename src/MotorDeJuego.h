@@ -5,6 +5,8 @@
 #include "IA.h";
 #include "ConfiguracionDeJuego.h"
 
+#include "ElementoRed.h"
+
 enum class CodigoFinal { JAQUE_MATE, REY_AHOGADO, TABLAS_POR_MATERIAL_INSUFICIENTE, TABLAS_POR_REPETICION, TABLAS_POR_PASIVIDAD };	
 
 struct DatosFinal
@@ -18,11 +20,12 @@ class MotorDeJuego
 	const ConfiguracionDeJuego config;
 	Tablero tablero;
 
-	Movimiento seleccionarEntrada(Mundo* p_motorGrafico, bool pos1Selec);
+	Movimiento seleccionarEntrada(Mundo* p_motorGrafico);
 	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec, Mundo* p_motorGrafico) const;
 
 public:
-	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { /*pintar()*/; }
+	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { /*pintar();*/ }
+
 	Tablero* getTablero(void) { return &this->tablero; }
 	void liberar() { tablero.liberar(); }
 	void pintar(const Posicion& posSelec, Mundo* p_motorGrafico) const;

@@ -1,10 +1,12 @@
 #include "Cliente.h"
 
-int Cliente::enviarAServidor(std::string s) {
+int Cliente::enviar(std::string s) const
+{
 	return sck->envia(s);
 }
 
-int Cliente::recibirDeServidor(std::string& s) {
+int Cliente::recibir(std::string& s) const
+{
 	return sck->recibe(s);
 }
 

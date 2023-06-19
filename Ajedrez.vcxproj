@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ElementoRed.h" />
     <ClInclude Include="src\ListaModelo.h" />
     <ClInclude Include="src\Alfil.h" />
     <ClInclude Include="src\Caballo.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Modelo.cpp" />
     <ClCompile Include="src\MotorDeJuego.cpp" />
+    <ClCompile Include="src\Movimiento.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
     <ClCompile Include="src\Partida.cpp" />
     <ClCompile Include="src\Peon.cpp" />
