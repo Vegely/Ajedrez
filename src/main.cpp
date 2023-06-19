@@ -1,5 +1,5 @@
 #include "MotorDeJuego.h"
-#include "SalidasConsola.h"
+//#include "SalidasConsola.h"
 #include "Callbacks.h"
 
 int main(int argc, char** argv)

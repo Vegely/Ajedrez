@@ -15,7 +15,13 @@ struct Movimiento
 
 	Movimiento() {}
 	Movimiento(Posicion inicio, Posicion fin) : inicio(inicio), fin(fin) {}
-	Movimiento(std::string str) { if (str.size() == 7 && str[1] == ' ' && str[3] == ' ' && str[5] == ' ') *this = Movimiento(Posicion(str[0] - '0', str[2] - '0'), Posicion(str[4] - '0', str[6] - '0')); }
+	Movimiento(std::string str) 
+	{ 
+		if (str.length() == 8 && str[1] == ' ' && str[3] == ' ' && str[5] == ' ') 
+			*this = Movimiento(Posicion(str[0] - '0', str[2] - '0'), Posicion(str[4] - '0', str[6] - '0'));
+		else 
+			*this = Movimiento(Posicion(-1, -1), Posicion(-1, -1)); 
+	}
 
 	std::string toString() const { return std::to_string(inicio.x) + " " + std::to_string(inicio.y) + " " + std::to_string(fin.x) + " " + std::to_string(fin.y); }
 

@@ -10,11 +10,11 @@
 #include "IA.h"
 #include "Mundo.h"
 
+///
 #include <iostream>
+///
 
 constexpr auto NUM_LINEAS = 40;
-
-using namespace std;
 
 Posicion getInput(Mundo* p_motorGrafico) 
 {
@@ -23,9 +23,35 @@ Posicion getInput(Mundo* p_motorGrafico)
 	else return Posicion(-1, -1);
 }
 
-Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool pos1Selec)
+Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico)
 {
-	switch (config[tablero.colorDelTurno])
+	Movimiento movimiento = Movimiento(Posicion(-1, -1), Posicion(-1, -1));
+
+	if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::IA)
+		movimiento = IA::mover(tablero);
+	else
+	{
+		if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR)
+		{
+			std::string str;
+			config.elementoRed->recibir(str);
+			movimiento = Movimiento(str);
+			if (movimiento != Movimiento(Posicion(-1, -1), Posicion(-1, -1)))
+				std::cout << movimiento.toString() << std::endl;
+		}
+		else
+		{
+			movimiento = ensamblarMovimiento(getInput(p_motorGrafico));
+			if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::EMISOR && movimiento != Movimiento(Posicion(-1, -1), Posicion(-1, -1)))
+			{
+				config.elementoRed->enviar(movimiento.toString());
+				std::cout << movimiento.toString() << std::endl;
+			}
+		}		
+	}
+	
+	return movimiento;
+	/*switch (config[tablero.colorDelTurno])
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
 		return ensamblarMovimiento(getInput(p_motorGrafico), pos1Selec);
@@ -52,7 +78,7 @@ Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool pos1Sele
 			std::cout << movimiento.toString() << std::endl;
 			return movimiento;
 		}
-	}
+	}*/
 }
 
 DatosFinal MotorDeJuego::motor(Mundo* mundoGrafico)
@@ -60,51 +86,45 @@ DatosFinal MotorDeJuego::motor(Mundo* mundoGrafico)
 	DatosFinal datosFinal;
 	static Movimiento movimiento = Movimiento(Posicion(-1, -1), Posicion(-1, -1));
 	bool exit = false;
-	bool jugadaHecha = true;
 
 	while (!exit)
 	{
-		movimiento = seleccionarEntrada(mundoGrafico, !jugadaHecha);
+		movimiento = seleccionarEntrada(mundoGrafico);
 		//Movimiento movimiento = seleccionarEntrada(mundoGrafico, pos1Selec);
 
-		if (movimiento != Movimiento(Posicion{ 0, 0 }, Posicion{ -1, -1 }))
+		if (movimiento != Movimiento(Posicion{ -1, -1 }, Posicion{ -1, -1 }) && tablero.hacerJugada(movimiento, config[tablero.colorDelTurno], mundoGrafico)) // Se hace la jugada
 		{
-			jugadaHecha = tablero.hacerJugada(movimiento, config[tablero.colorDelTurno], mundoGrafico);
+			//pintar();
 
-			if (jugadaHecha) // Se hace la jugada
-			{
-				//pintar();
+			//strGuardado += tablero.ultimaJugada.toString() + "\n";
 
-				//strGuardado += tablero.ultimaJugada.toString() + "\n";
-
-				if (tablero.jaqueMate())
-				{ 
-					datosFinal = { CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno };
-					exit = true;
-				}
-				else if (tablero.reyAhogado())
-				{
-					datosFinal.codigoFinal = CodigoFinal::REY_AHOGADO;
-					exit = true;
-				}
-				else if (tablero.tablasMaterialInsuficiente())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE;
-					exit = true;
-				}
-				else if (tablero.infoTablas.tablasPorRepeticion())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_REPETICION;
-					exit = true;
-				}
-				else if (tablero.infoTablas.tablasPorPasividad())
-				{
-					datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_PASIVIDAD;
-					exit = true;
-				}
+			if (tablero.jaqueMate())
+			{ 
+				datosFinal = { CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno };
+				exit = true;
 			}
-			mundoGrafico->leerTablero(tablero);
+			else if (tablero.reyAhogado())
+			{
+				datosFinal.codigoFinal = CodigoFinal::REY_AHOGADO;
+				exit = true;
+			}
+			else if (tablero.tablasMaterialInsuficiente())
+			{
+				datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE;
+				exit = true;
+			}
+			else if (tablero.infoTablas.tablasPorRepeticion())
+			{
+				datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_REPETICION;
+				exit = true;
+			}
+			else if (tablero.infoTablas.tablasPorPasividad())
+			{
+				datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_PASIVIDAD;
+				exit = true;
+			}
 		}
+		mundoGrafico->leerTablero(tablero);
 	}
 
 	return datosFinal;
@@ -123,7 +143,7 @@ Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Movimiento& movimien
 	}
 }
 
-Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, bool pos1Selec) const
+Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion) const
 {
 	static bool aux;
 	static Posicion inicio;
@@ -136,17 +156,19 @@ Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, bool pos1Selec) 
 			//pintar(posicion);
 			aux = true;
 		}
-		else if (aux || pos1Selec)
+		else if (aux)
 		{
 			aux = false;
-			std::cout << "Movimiento: ";
+			///
+			/*std::cout << "Movimiento: ";
 			std::cout << inicio.x << inicio.y << " a ";
-			std::cout << posicion.x << posicion.y << std::endl;
+			std::cout << posicion.x << posicion.y << std::endl;*/
+			///
 			return Movimiento(inicio, posicion);
 		}
 
 		// DEBUG
-		static Posicion auxPos = posicion;
+		/*static Posicion auxPos = posicion;
 		if (auxPos != posicion)
 		{
 			std::string color_turno = "";
@@ -188,9 +210,9 @@ Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, bool pos1Selec) 
 			std::cout << "Posicion inicio: " << inicio.x << inicio.y << std::endl;
 			std::cout << "Posicion actual: " << posicion.x << posicion.y << std::endl << std::endl;
 		}
-		auxPos = posicion;
+		auxPos = posicion;*/
 		// DEBUG
 	}
 
-	return Movimiento(Posicion(), Posicion(-1, -1));
+	return Movimiento(Posicion(-1, -1), Posicion(-1, -1));
 }

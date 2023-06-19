@@ -20,8 +20,8 @@ class MotorDeJuego
 	const ConfiguracionDeJuego config;
 	Tablero tablero;
 
-	Movimiento seleccionarEntrada(Mundo* p_motorGrafico, bool pos1Selec);
-	Movimiento ensamblarMovimiento(Posicion posicion, bool pos1Selec) const;
+	Movimiento seleccionarEntrada(Mundo* p_motorGrafico);
+	Movimiento ensamblarMovimiento(Posicion posicion) const;
 
 public:
 	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { /*pintar();*/ }
