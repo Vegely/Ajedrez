@@ -78,7 +78,7 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, bool color) :
 	model_path(""),
 	texture_path(""),
 	tipo_pieza(tipo_pieza),
-	pos_coords(Posicion(-1, -1)),
+	pos_coords(Posicion()),
 	scene(nullptr),
 	color(color),
 	Entity(initial_pos, "Modelo " + tipo_pieza)
@@ -178,9 +178,7 @@ Modelo::Modelo(const Posicion& initial_pos, const aiScene* scene, std::string te
 	scene(scene),
 	color(false),
 	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
-{
-
-}
+{ }
 
 void Modelo::init(void)
 {
@@ -192,8 +190,8 @@ void Modelo::init(void)
 		| aiProcess_FlipUVs);
 	if (this->scene == nullptr || this->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !this->scene->mRootNode)
 		std::cerr << "Failed to load model: " + model_path;
-	else
-		std::cout << "Created meshes for model type " << tipo_pieza << "." << std::endl;
+	/*else
+		std::cout << "Created meshes for model type " << tipo_pieza << "." << std::endl;*/
 
 	if (this->tipo_pieza == NONE)
 		this->position = Point{ 0, 0, 0 };
@@ -287,7 +285,7 @@ void Modelo::render(void)
 
 	if (this->tipo_pieza != NONE)
 	{
-		if (this->pos_coords != Posicion(-1, -1))
+		if (this->pos_coords != Posicion())
 			this->position = getPointFromCoords(this->pos_coords);
 		else
 			this->position = getPointFromCoords(this->pos_coords) * 2;
@@ -333,7 +331,7 @@ bool Modelo::cargarTextura(void)
 	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, ancho, alto, GL_RGB, GL_UNSIGNED_BYTE, datos_imagen);
 
 	stbi_image_free(datos_imagen);
-	std::cout << "Texture binded." << std::endl;
+	//std::cout << "Texture binded." << std::endl;
 	return true;
 }
 
@@ -348,9 +346,9 @@ bool Modelo::moverModelo(const Movimiento& movimiento)
 	}
 	else
 	{
-		std::cout << "El modelo que se ha intentado mover es nulo o no coincide con las coordenadas de inicio." << std::endl;
+		/*std::cout << "El modelo que se ha intentado mover es nulo o no coincide con las coordenadas de inicio." << std::endl;
 		std::cout << "Tipo: " << this->tipo_pieza << std::endl;
-		std::cout << "Posicion modelo a mover: " << this->pos_coords.x << this->pos_coords.y << std::endl;
+		std::cout << "Posicion modelo a mover: " << this->pos_coords.x << this->pos_coords.y << std::endl;*/
 		return false;
 	}
 }

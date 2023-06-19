@@ -58,8 +58,8 @@ void CoordinadorAjedrez::Draw(void)
 	else if (estado == JUEGO)
 	{
 		mundoGrafico.resetCasillas(mundoGrafico.getCasillaUltimoMov());
-		mundoGrafico.getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(-1, -1), p_motorLogico->getTablero()->getUltimaJugada().inicio));
-		mundoGrafico.getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(-1, -1), p_motorLogico->getTablero()->getUltimaJugada().fin));
+		mundoGrafico.getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), p_motorLogico->getTablero()->getUltimaJugada().inicio));
+		mundoGrafico.getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), p_motorLogico->getTablero()->getUltimaJugada().fin));
 
 		mundoGrafico.updateCamara();
 		mundoGrafico.renderizarModelos();

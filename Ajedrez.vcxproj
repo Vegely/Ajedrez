@@ -165,6 +165,7 @@
     <ClInclude Include="src\Modelo.h" />
     <ClInclude Include="src\MotorDeJuego.h" />
     <ClInclude Include="src\Movimiento.h" />
+    <ClInclude Include="src\MovimientoEvaluado.h" />
     <ClInclude Include="src\Mundo.h" />
     <ClInclude Include="src\Partida.h" />
     <ClInclude Include="src\Peon.h" />

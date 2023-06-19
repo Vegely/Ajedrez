@@ -198,6 +198,9 @@
     <ClInclude Include="src\ElementoRed.h">
       <Filter>4_Redes\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\MovimientoEvaluado.h">
+      <Filter>1_Lógica\0_Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Caballo.cpp">

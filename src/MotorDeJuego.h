@@ -31,7 +31,7 @@ public:
 
 	Tablero* getTablero(void) { return &this->tablero; }
 	void liberar() { tablero.liberar(); }
-	void pintar(const Posicion& posSelec, Mundo* p_motorGrafico) const;
+	void pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_motorGrafico) const;
 
 	static Pieza::tipo_t seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico);
 
