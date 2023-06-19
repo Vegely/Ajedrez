@@ -63,10 +63,10 @@ void Mundo::asignarModelos(void)
 	rey_blanco.addElem(new Modelo(REY, Posicion(4, 0), true,  rey.scene));
 	rey_negro .addElem(new Modelo(REY, Posicion(4, 7), false, rey.scene));
 
-	coronacion_blancos.addElem(new Modelo(ALFIL,   Posicion(2, 3), true, alfil.scene));
-	coronacion_blancos.addElem(new Modelo(TORRE,   Posicion(3, 3), true, torre.scene));
-	coronacion_blancos.addElem(new Modelo(DAMA,    Posicion(4, 3), true, dama.scene));
-	coronacion_blancos.addElem(new Modelo(CABALLO, Posicion(5, 3), true, caballo.scene));
+	coronacion_blancos.addElem(new Modelo(ALFIL,   Posicion(2, 3), true,  alfil.scene));
+	coronacion_blancos.addElem(new Modelo(TORRE,   Posicion(3, 3), true,  torre.scene));
+	coronacion_blancos.addElem(new Modelo(DAMA,    Posicion(4, 3), true,  dama.scene));
+	coronacion_blancos.addElem(new Modelo(CABALLO, Posicion(5, 3), true,  caballo.scene));
 	coronacion_negros .addElem(new Modelo(ALFIL,   Posicion(2, 4), false, alfil.scene));
 	coronacion_negros .addElem(new Modelo(TORRE,   Posicion(3, 4), false, torre.scene));
 	coronacion_negros .addElem(new Modelo(DAMA,    Posicion(4, 4), false, dama.scene));
@@ -366,10 +366,10 @@ void Mundo::seleccionCasilla(int button, int state, int x_mouse, int y_mouse)
 		}
 	}
 
-	if (camara.getGirado())
+	if (!camara.getGirado())
 	{
-		result.x = 9 - result.x;
-		result.y = 9 - result.y;
+		result.x = 7 - result.x;
+		result.y = 7 - result.y;
 	}
 
 	this->posicion_leida = result;
@@ -419,7 +419,7 @@ void Mundo::moverModelos(const Movimiento& mov)
 
 void Mundo::movimiento(const float time)
 { 
-	camara.movement(time);
+	camara.movement(time, Point{ 0.0f, 20.5f, -15.6f }, Point{ 0.0f, 20.5f, 15.6f });
 }
 
 ListaModelo* Mundo::seleccionarLista(bool color, Pieza::tipo_t tipo_pieza)
@@ -543,4 +543,16 @@ bool Mundo::getColorFromCoords(const Posicion& pos)
 	else if (peones_blancos  .getTipo(pos) != Pieza::tipo_t::NULA) return peones_blancos  .getColor(pos);
 	else if (peones_negros   .getTipo(pos) != Pieza::tipo_t::NULA) return peones_negros   .getColor(pos);
 	else return false;
+}
+
+void Mundo::actualizarCamara(bool turno)
+{
+	if (turno && !this->getGirado())
+	{
+		this->cambiarGirado();
+	}
+	else if (!turno && this->getGirado())
+	{
+		this->cambiarGirado();
+	}
 }

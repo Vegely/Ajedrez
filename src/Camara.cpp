@@ -103,9 +103,13 @@ void Camara::setLookAt(const Point& pt)
 }
 
 /* MOVEMENT (OnTimer) */
-void Camara::movement(const float time)
+void Camara::movement(const float time, const Point& p1, const Point& p2)
 {
-	this->position = this->position + this->speed * time;
+	/*this->position = this->position + this->speed * time;*/
+	if (this->girado)
+		this->setPosition(p1);
+	else
+		this->setPosition(p2);
 }
 
 /* PRINTERS */

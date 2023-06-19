@@ -7,8 +7,6 @@
 #include "Movimiento.h"
 #include "Plane.h"
 
-
-
 class Casilla
 {
 private:
@@ -157,12 +155,12 @@ struct DatosPieza
 	bool operator == (const DatosPieza& dp)
 	{
 		return
-		(
-			this->color    == dp.color    &&
-			this->tipo     == dp.tipo     &&
-			this->posicion == dp.posicion &&
-			this->valido   == dp.valido
-		);
+			(
+				this->color == dp.color &&
+				this->tipo == dp.tipo &&
+				this->posicion == dp.posicion &&
+				this->valido == dp.valido
+				);
 	}
 	bool operator != (const DatosPieza& dp) { return !(operator==(dp)); }
 };
@@ -209,32 +207,35 @@ private:
 	ModeloBase caballo;
 
 public:
+	/* INICIALIZACION */
 	Mundo(void);
-	void init(void);
+	void init		   (void);
 	void asignarModelos(void);
 	void cargarTexturas(void);
 
-	void leerTablero(const Tablero& tablero);
-
-	void renderizarModelos(void);
-	void updateCamara(void) { camara.update(); }
-	void setCamaraPos(const Point& pt) { camara.setPosition(pt); }
-	void movimiento(const float time);
-	void seleccionCasilla(int button, int state, int x_mouse, int y_mouse);
-	bool getGirado(void) { return camara.getGirado(); }
-	void cambiarGirado(void) { camara.cambiarGirado(); }
-	void dibujarFondo(void);
-	void moverModelos(const Movimiento& mov);
-	Posicion getCasilla(void) const { return this->posicion_leida; }
+	/* VARIABLES INTERNAS */
+	void updateCamara  (void)			 { camara.update(); }
+	void setCamaraPos  (const Point& pt) { camara.setPosition(pt); }
+	bool getGirado     (void) const		 { return camara.getGirado(); }
+	void cambiarGirado (void)			 { camara.cambiarGirado(); }
+	void resetLectura  (void)			 { this->posicion_leida = Posicion(-1, -1); }
+	Posicion getCasilla(void) const		 { return this->posicion_leida; }
 	Pieza::tipo_t seleccionPiezaCoronacion(bool color);
-	void resetLectura(void) { this->posicion_leida = Posicion(-1, -1); }
+
+	/* CALLBACKS */
+	void movimiento	     (const float time);
+	void seleccionCasilla(int button, int state, int x_mouse, int y_mouse);
+	void actualizarCamara(bool turno);
 
 	/* GESTIÓN DE MODELOS */
-	ListaModelo* seleccionarLista(bool color, Pieza::tipo_t tipo_pieza);
 	void moverModelo(const Movimiento& mov, bool color, const Pieza::tipo_t tipo);
-	Pieza::tipo_t getTipoFromCoords(const Posicion& pos);
+	void leerTablero(const Tablero& tablero);
+	void dibujarFondo(void);
+	void moverModelos(const Movimiento& mov);
+	void renderizarModelos(void);
 	bool getColorFromCoords(const Posicion& pos);
+	ListaModelo* seleccionarLista(bool color, Pieza::tipo_t tipo_pieza);
+	Pieza::tipo_t getTipoFromCoords(const Posicion& pos);
 };
-
 
 #endif // !MUNDO_H

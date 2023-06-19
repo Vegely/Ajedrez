@@ -153,7 +153,8 @@ void CoordinadorAjedrez::Timer(int value)
 			inicializarPartida = false;
 		}
 		this->mundoGrafico.leerTablero(*this->motorLogico.getTablero());
-		mundoGrafico.movimiento(value);
+		this->mundoGrafico.actualizarCamara(this->motorLogico.getTablero()->getTurno());
+		this->mundoGrafico.movimiento(value);
 	}
 }
 

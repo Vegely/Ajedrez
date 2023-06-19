@@ -64,7 +64,7 @@ public:
 	void cambiarGirado(void) { this->girado = !this->girado; }
 
 	/* MOVEMENT (OnTimer) */
-	void movement(const float time);
+	void movement(const float time, const Point& p1, const Point& p2);
 
 	/* PRINTERS */
 	std::ostream& printPosition(std::ostream& str) const;
