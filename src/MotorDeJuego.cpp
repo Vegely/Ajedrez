@@ -94,7 +94,7 @@ Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Movimiento& movimien
 	{
 	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
 		motorGrafico->resetLectura();
-		return motorGrafico->seleccionPiezaCoronacion();
+		return motorGrafico->seleccionPiezaCoronacion(tablero.getTurno());
 
 	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
 		return IA::coronar(tablero, movimiento);

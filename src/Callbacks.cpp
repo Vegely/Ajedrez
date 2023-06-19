@@ -102,8 +102,6 @@ void OnMouseClick(int button, int state, int x, int y)
 {
 	coordinador.Click(button, state, x, y);
 
-	std::cout << "X: " << x << " Y: " << y << std::endl;
-
 	glutPostRedisplay();
 }
 

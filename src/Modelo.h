@@ -28,6 +28,7 @@ private:
 	std::string model_path;
 	std::string texture_path;
 	TipoPieza   tipo_pieza;
+	bool color;
 
 public:
 	const aiScene*   scene;
@@ -52,6 +53,8 @@ public:
 	aiScene     getSceneValue   (void) const { return *this->scene; }
 	GLuint*     getTextureIDptr (void)		 { return &this->texture_ID; }
 	aiNode&     getRootNode     (void) const { return *this->scene->mRootNode; }
+	TipoPieza   getTipo			(void) const { return  this->tipo_pieza; }
+	bool		getColor		(void) const { return  this->color; }
 
 	/* SETTERS */
 	void setCoords(const Posicion& pos)   { this->pos_coords   = pos; }
@@ -66,6 +69,7 @@ public:
 	void moverModelo(const Movimiento& movimiento);
 
 	static TipoPieza castTipo(Pieza::tipo_t t);
+	static Pieza::tipo_t castTipo(TipoPieza t);
 
 	/* VARIABLES ESTÁTICAS */
 	static std::string ruta_modelo_rey;

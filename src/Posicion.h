@@ -21,7 +21,7 @@ inline Posicion operator- (Posicion lhs, const Posicion& rhs) { return lhs -= rh
 inline Posicion operator* (Posicion lhs, const int& rhs) { return lhs *= rhs; }
 inline Posicion operator* (const int& lhs, Posicion rhs) { return rhs *= lhs; }
 
-inline bool operator== (const Posicion& lhs, const Posicion& rhs) { return lhs.x == rhs.x && lhs.y == rhs.y; }
+inline bool operator== (const Posicion& lhs, const Posicion& rhs) { return (lhs.x == rhs.x && lhs.y == rhs.y); }
 inline bool operator!= (const Posicion& lhs, const Posicion& rhs) { return !(lhs == rhs); }
 inline bool operator< (const Posicion& lhs, const Posicion& rhs) { return lhs.x < rhs.x&& lhs.y < rhs.y; }
 inline bool operator> (const Posicion& lhs, const Posicion& rhs) { return rhs < lhs; }

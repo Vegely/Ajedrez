@@ -141,8 +141,8 @@ public:
 		float factor_escala_x = static_cast<float>(glutGet(GLUT_WINDOW_WIDTH)) / 1920.0f;
 		Corners<Point> result = this->casillas[i][j];
 		result *= Factor(factor_escala_x, factor_escala_y);
-		std::cout << "Window height: " << glutGet(GLUT_WINDOW_HEIGHT) << std::endl;
-		std::cout << "Ratio: " << factor_escala_x << " " << factor_escala_y << std::endl;
+		//std::cout << "Window height: " << glutGet(GLUT_WINDOW_HEIGHT) << std::endl;
+		//std::cout << "Ratio: " << factor_escala_x << " " << factor_escala_y << std::endl;
 		return result;
 	}
 };
@@ -170,9 +170,6 @@ struct DatosPieza
 class Mundo
 {
 private:
-	DatosPieza tablero_anterior[64];
-	DatosPieza tablero_actual[64];
-
 	ListaModelo rey_blanco;
 	ListaModelo rey_negro;
 	ListaModelo damas_blancas;
@@ -185,14 +182,24 @@ private:
 	ListaModelo torres_negras;
 	ListaModelo peones_blancos;
 	ListaModelo peones_negros;
+	ListaModelo coronacion_blancos;
+	ListaModelo coronacion_negros;
+
+	DatosPieza tablero_anterior[64];
+	DatosPieza tablero_actual[64];
+
+	Posicion posicion_leida;
+	Casilla casillas_px;
+
 	Modelo* casillas_blancas;
 	Modelo* casillas_negras;
 	Modelo* marcos;
 	Modelo* letras;
 
 	Camara camara;
-	Posicion posicion_leida;
-	Casilla casillas_px;
+	
+	bool coronando_blancas = false;
+	bool coronando_negras  = false;
 
 public:
 	Mundo(void);
@@ -206,16 +213,13 @@ public:
 	void updateCamara(void) { camara.update(); }
 	void setCamaraPos(const Point& pt) { camara.setPosition(pt); }
 	void movimiento(const float time);
-	void keypress(unsigned char tecla);
 	void seleccionCasilla(int button, int state, int x_mouse, int y_mouse);
 	bool getGirado(void) { return camara.getGirado(); }
 	void cambiarGirado(void) { camara.cambiarGirado(); }
 	void dibujarFondo(void);
-	void borrarPieza(const Posicion& pos);
 	void moverModelos(const Movimiento& mov);
 	Posicion getCasilla(void) const { return this->posicion_leida; }
-	Pieza::tipo_t getTipoCoronacion(void) const;
-	Pieza::tipo_t seleccionPiezaCoronacion(void);
+	Pieza::tipo_t seleccionPiezaCoronacion(bool color);
 	void resetLectura(void) { this->posicion_leida = Posicion(-1, -1); }
 
 	/* GESTIÓN DE MODELOS */
@@ -223,6 +227,8 @@ public:
 	void moverModelo(const Movimiento& mov, bool color, const Pieza::tipo_t tipo);
 	void generarModelosCoronacion(bool color);
 	void renderModelosCoronacion(bool color);
+	Pieza::tipo_t getTipoFromCoords(const Posicion& pos);
+	bool getColorFromCoords(const Posicion& pos);
 };
 
 

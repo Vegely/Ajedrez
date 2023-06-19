@@ -145,21 +145,20 @@ void CoordinadorAjedrez::Draw(void)
 
 void CoordinadorAjedrez::Timer(int value)
 {
-	if (estado == JUEGO && inicializarPartida && !flagDeSeguridadInit) // Escribir a continuacion de la configuracion
+	if (estado == JUEGO) // Escribir a continuacion de la configuracion
 	{
-		motor = new std::thread(threadMotor, &motorLogico, &mundoGrafico, &configuracion, &datosFinal);
-		inicializarPartida = false;
+		if (inicializarPartida && !flagDeSeguridadInit)
+		{
+			motor = new std::thread(threadMotor, &motorLogico, &mundoGrafico, &configuracion, &datosFinal);
+			inicializarPartida = false;
+		}
+		this->mundoGrafico.leerTablero(*this->motorLogico.getTablero());
+		mundoGrafico.movimiento(value);
 	}
-
-	this->mundoGrafico.leerTablero(*this->motorLogico.getTablero());
-
-	mundoGrafico.movimiento(value);
 }
 
 void CoordinadorAjedrez::Keypress(unsigned char key) 
 {
-	mundoGrafico.keypress(key);
-
 	if (estado == GUARDAR)
 	{
 		if ((int)key == SUPRIMIR) {

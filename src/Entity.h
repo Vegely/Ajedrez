@@ -11,14 +11,13 @@ protected:
 	Point		position;
 	Point		velocity;
 	Point		acceleration;
-	CRGB		color;
 	std::string name;
 
 public:
 	/* CONSTRUCTOR */
 	Entity(void);
 	Entity(const std::string& name);
-	Entity(const Point& position, const CRGB& color, const std::string& name);
+	Entity(const Point& position, const std::string& name);
 	Entity(const Entity& e);
 
 	/* DESTRUCTOR */
@@ -26,14 +25,11 @@ public:
 
 	/* GETTERS */
 	Point getPosition(void) const;
-	void getPosition(Point* pos);
+	void  getPosition(Point* pos);
 	Point getVelocity(void) const;
-	void getVelocity(Point* pos);
+	void  getVelocity(Point* pos);
 	Point getAcceleration(void) const;
-	void getAcceleration(Point* pos);
-
-	CRGB getColor(void) const;
-	void getColor(CRGB* color);
+	void  getAcceleration(Point* pos);
 
 	std::string getName(void) const;
 
@@ -47,8 +43,6 @@ public:
 	void setVelocity(const float x, const float y, const float z);
 	void setAcceleration(const Point& pt);
 	void setAcceleration(const float x, const float y, const float z);
-	void setColor(const CRGB& color);
-	void setColor(const byte r, const byte g, const byte b);
 	void setName(const std::string& new_name);
 
 	/* MOVEMENT */
@@ -59,8 +53,6 @@ public:
 	std::ostream& printParameters(const Entity& e, std::ostream& str = std::cout);
 	std::ostream& printPosition(std::ostream& str = std::cout) const;
 	std::ostream& printPosition(const Entity& e, std::ostream& str = std::cout);
-	std::ostream& printColor(std::ostream& str = std::cout) const;
-	std::ostream& printColor(const Entity& e, std::ostream& str = std::cout);
 	std::ostream& printVelocity(std::ostream& str = std::cout) const;
 	std::ostream& printVelocity(const Entity& e, std::ostream& str = std::cout);
 	std::ostream& printAcceleration(std::ostream& str = std::cout) const;

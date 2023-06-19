@@ -25,7 +25,7 @@ Plane::Plane(const float x_dim, const float y_dim) :
 }
 
 Plane::Plane(const float x_dim, const float y_dim, const Point& position, const std::string& name) :
-	Entity(position, Colors::White, name),
+	Entity(position, name),
 	x_dim(x_dim), y_dim(y_dim)
 {
 	updateCorners();

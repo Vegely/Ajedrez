@@ -6,6 +6,7 @@ Modelo::Modelo(void) :
 	texture_path(""),
 	tipo_pieza(NONE),
 	scene(nullptr),
+	color(false),
 	Entity()
 { }
 
@@ -16,7 +17,8 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, const std::str
 	tipo_pieza(tipo_pieza),
 	pos_coords(initial_pos),
 	scene(nullptr),
-	Entity(getPointFromCoords(initial_pos), Colors::White, "Modelo " + tipo_pieza)
+	color(false),
+	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
 {
 	init();
 }
@@ -28,7 +30,8 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color) :
 	tipo_pieza(tipo_pieza),
 	pos_coords(initial_pos),
 	scene(nullptr),
-	Entity(getPointFromCoords(initial_pos), Colors::White, "Modelo " + tipo_pieza)
+	color(color),
+	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
 {
 	switch (tipo_pieza)
 	{
@@ -76,7 +79,8 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, bool color) :
 	tipo_pieza(tipo_pieza),
 	pos_coords(Posicion(-1, -1)),
 	scene(nullptr),
-	Entity(initial_pos, Colors::White, "Modelo " + tipo_pieza)
+	color(color),
+	Entity(initial_pos, "Modelo " + tipo_pieza)
 {
 	switch (tipo_pieza)
 	{
@@ -126,9 +130,7 @@ void Modelo::init(void)
 		| aiProcess_CalcTangentSpace
 		| aiProcess_FlipUVs);
 	if (this->scene == nullptr || this->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !this->scene->mRootNode)
-	{
 		std::cerr << "Failed to load model: " + model_path;
-	}
 	else
 		std::cout << "Created meshes for model type " << tipo_pieza << "." << std::endl;
 
@@ -222,19 +224,21 @@ void Modelo::render(void)
 	if (this->scene == nullptr)
 		return;
 
-	//glDisable(GL_LIGHTING);
-
-	if (this->tipo_pieza != NONE && this->pos_coords != Posicion(-1, -1))
+	if (this->tipo_pieza != NONE)
+	{
+		//if (this->pos_coords != Posicion(-1, -1))
+		//	this->position = getPointFromCoords(this->pos_coords);
+		//else
+		//	this->position = Point{ 40, 40, 0 };
 		this->position = getPointFromCoords(this->pos_coords);
+	}
+
 
 	glTranslatef(this->position.x,  this->position.y,  this->position.z);
 		glRotatef(-90, 1, 0, 0);
 		renderNodo(this->scene->mRootNode);
 		glRotatef(90, 1, 0, 0);
 	glTranslatef(-this->position.x, -this->position.y, -this->position.z);
-	
-	
-	//glEnable(GL_LIGHTING);
 }
 
 bool Modelo::cargarTextura(void)
@@ -307,6 +311,47 @@ TipoPieza Modelo::castTipo(Pieza::tipo_t t)
 
 	case Pieza::tipo_t::PEON:
 		return PEON;
+		break;
+
+	case Pieza::tipo_t::NULA:
+		return NONE;
+		break;
+
+	default:
+		break;
+	}
+}
+
+Pieza::tipo_t Modelo::castTipo(TipoPieza t)
+{
+	switch (t)
+	{
+	case REY:
+		return Pieza::tipo_t::REY;
+		break;
+
+	case DAMA:
+		return Pieza::tipo_t::DAMA;
+		break;
+
+	case ALFIL:
+		return Pieza::tipo_t::ALFIL;
+		break;
+
+	case CABALLO:
+		return Pieza::tipo_t::CABALLO;
+		break;
+
+	case TORRE:
+		return Pieza::tipo_t::TORRE;
+		break;
+
+	case PEON:
+		return Pieza::tipo_t::PEON;
+		break;
+		
+	case NONE:
+		return Pieza::tipo_t::NULA;
 		break;
 
 	default:

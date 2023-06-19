@@ -22,7 +22,7 @@ class Tablero;
 class Pieza
 {
 public:
-	enum class tipo_t {PEON, CABALLO, ALFIL, TORRE, DAMA, REY};
+	enum class tipo_t {PEON, CABALLO, ALFIL, TORRE, DAMA, REY, NULA};
 
 protected:
 	const tipo_t tipo;						//Nombre para identificar a la pieza

@@ -5,7 +5,6 @@ Entity::Entity(void) :
 	position({ 0 }),
 	velocity({ 0 }),
 	acceleration({ 0 }),
-	color({ 0 }),
 	name("")
 {
 
@@ -15,17 +14,15 @@ Entity::Entity(const std::string& name) :
 	position({0, 0, 0}), 
 	velocity({ 0, 0, 0 }),
 	acceleration({ 0, 0, 0 }),
-	color({255, 255, 255}),
 	name(name)
 {
 	//std::cout << "Entity " << getName() << " created." << std::endl;
 }
 
-Entity::Entity(const Point& position, const CRGB& color, const std::string& name) :
+Entity::Entity(const Point& position, const std::string& name) :
 	position(position),
 	velocity({ 0, 0, 0 }),
 	acceleration({ 0, 0, 0 }),
-	color(color),
 	name(name)
 {
 	//std::cout << "Entity " << getName() << " created." << std::endl;
@@ -35,7 +32,6 @@ Entity::Entity(const Entity& e) :
 	position(e.position),
 	velocity(e.velocity),
 	acceleration(e.acceleration),
-	color(e.color),
 	name(e.name)
 {
 	//std::cout << "Entity " << getName() << " created from copy." << std::endl;
@@ -84,18 +80,6 @@ void Entity::getAcceleration(Point* pos)
 	*pos = this->acceleration;
 }
 
-CRGB Entity::getColor(void) const
-{
-	std::cout << "Got color " << this->color << "." << std::endl;
-	return this->color;
-}
-
-void Entity::getColor(CRGB* color)
-{
-	std::cout << "Got color " << this->color << "." << std::endl;
-	*color = this->color;
-}
-
 std::string Entity::getName(void) const
 {
 	return this->name;
@@ -141,19 +125,6 @@ void Entity::setAcceleration(const float x, const float y, const float z)
 	this->acceleration = pt;
 }
 
-void Entity::setColor(const CRGB& color)
-{
-	std::cout << "Color of entity " << this->name << " set to " << color << "." << std::endl;
-	this->color = color;
-}
-
-void Entity::setColor(const byte r, const byte g, const byte b)
-{
-	CRGB color = { r, g, b };
-	std::cout << "Color of entity " << this->name << " set to " << color << "." << std::endl;
-	this->color = color;
-}
-
 void Entity::setName(const std::string& new_name)
 {
 	this->name = new_name;
@@ -193,7 +164,6 @@ std::ostream& Entity::printParameters(std::ostream& str) const
 	str << "Position: " << this->position << std::endl;
 	str << "Velocity: " << this->velocity << std::endl;
 	str << "Acceleration: " << this->acceleration << std::endl;
-	str << "Color: " << this->color << std::endl << std::endl;
 
 	return str;
 }
@@ -213,18 +183,6 @@ std::ostream& Entity::printPosition(std::ostream& str) const
 std::ostream& Entity::printPosition(const Entity& e, std::ostream& str)
 {
 	return e.printPosition(str);
-}
-
-std::ostream& Entity::printColor(std::ostream& str) const
-{
-	str << "Color for entity: " << getName() << std::endl;
-	str << this->color << std::endl << std::endl;
-	return str;
-}
-
-std::ostream& Entity::printColor(const Entity& e, std::ostream& str)
-{
-	return e.printColor(str);
 }
 
 std::ostream& Entity::printVelocity(std::ostream& str) const

@@ -20,13 +20,35 @@ public:
 	void deleteFromCoord(const Posicion& pos);
 
 	/* GETTERS */
-	Modelo*  operator[] (int i) const { return _modelo[i]; }
-	Modelo*  getElem    (int i) const { return _modelo[i]; }
-	Posicion getPosicion(int i) const { return _modelo[i]->getCoords(); }
-	int		 getMaxElem (void)  const { return _maxElem; }
-	int      size       (void)  const { return _maxElem; }
-	int		 getNumElem (void)	const { return _numElem; }
-	int      getIndex   (const Posicion& pos) const;
+	Modelo*  operator[]  (int i) const { return _modelo[i]; }
+	Modelo*  getElem     (int i) const { return _modelo[i]; }
+	Posicion getPosicion (int i) const { return _modelo[i]->getCoords(); }
+	int		 getMaxElem  (void)  const { return _maxElem; }
+	int      size        (void)  const { return _maxElem; }
+	int		 getNumElem  (void)	 const { return _numElem; }
+	int      getIndex    (const Posicion& pos) const;
+	Pieza::tipo_t getTipo(int i) { return Modelo::castTipo(_modelo[i]->getTipo()); }
+	bool     getColor	 (int i) { return _modelo[i]->getColor(); }
+	Pieza::tipo_t getTipo(const Posicion& pos)
+	{
+		for (int i = 0; i < this->size(); i++)
+		{
+			if (this->_modelo[i]->getCoords() == pos)
+				return this->getTipo(i);
+			if (i == this->size() - 1)
+				return Pieza::tipo_t::NULA;
+		}
+	}
+	bool getColor(const Posicion& pos)
+	{
+		for (int i = 0; i < this->size(); i++)
+		{
+			if (this->_modelo[i]->getCoords() == pos)
+				return this->getColor(i);
+			if (i == this->size() - 1)
+				return false;
+		}
+	}
 	
 	/* SETTERS */
 	void setPosicion(int i, const Posicion& posicion) { _modelo[i]->setCoords(posicion); }
