@@ -10,10 +10,16 @@ void ListaModelo::addElem(Modelo* modelo)
 	else
 	{
 		_modelo[_numElem++] = modelo;
-		std::cout << "Element added. Number of elemets is now " << this->_numElem << std::endl;
-		if (_numElem == _maxElem)
-			std::cout << "You've reached the maximum number of elements." << std::endl;
+		//std::cout << "Element added. Number of elemets is now " << this->_numElem << std::endl;
+		//if (_numElem == _maxElem)
+			//std::cout << "You've reached the maximum number of elements." << std::endl;
 	}
+}
+
+void ListaModelo::addElem(Modelo* modelo, const Posicion& initial_pos)
+{
+	addElem(modelo);
+	modelo->setCoords(initial_pos);
 }
 
 void ListaModelo::deleteElem(int k)

@@ -40,6 +40,7 @@ public:
 	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, const std::string& model_path, const std::string& texture_path);
 	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color);
 	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, bool color);
+	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color, const aiScene* scene);
 	virtual ~Modelo(void) { }
 	Modelo(const Modelo& m);
 	Modelo& operator = (const Modelo& rhs);
@@ -91,6 +92,25 @@ public:
 	static std::string ruta_textura_marco;
 
 	static std::string ruta_fondo;
+};
+
+struct ModeloBase
+{
+	const aiScene* scene;
+	Assimp::Importer importer;
+	void init(std::string path)
+	{
+		this->scene = importer.ReadFile(path, aiProcess_Triangulate
+			| aiProcess_OptimizeMeshes
+			| aiProcess_JoinIdenticalVertices
+			| aiProcess_Triangulate
+			| aiProcess_CalcTangentSpace
+			| aiProcess_FlipUVs);
+		if (this->scene == nullptr || this->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !this->scene->mRootNode)
+			std::cerr << "Failed to load model at " + path;
+		else
+			std::cout << "Created meshes." << std::endl;
+	}
 };
 
 #endif

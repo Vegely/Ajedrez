@@ -16,6 +16,7 @@ public:
 
 	/* GESTIÓN DE ELEMENTOS */
 	void addElem   (Modelo* modelo);
+	void addElem   (Modelo* modelo, const Posicion& initial_pos);
 	void deleteElem(int k);
 	void deleteFromCoord(const Posicion& pos);
 

@@ -201,6 +201,13 @@ private:
 	bool coronando_blancas = false;
 	bool coronando_negras  = false;
 
+	ModeloBase peon;
+	ModeloBase alfil;
+	ModeloBase dama;
+	ModeloBase rey;
+	ModeloBase torre;
+	ModeloBase caballo;
+
 public:
 	Mundo(void);
 	void init(void);
@@ -225,8 +232,6 @@ public:
 	/* GESTIÓN DE MODELOS */
 	ListaModelo* seleccionarLista(bool color, Pieza::tipo_t tipo_pieza);
 	void moverModelo(const Movimiento& mov, bool color, const Pieza::tipo_t tipo);
-	void generarModelosCoronacion(bool color);
-	void renderModelosCoronacion(bool color);
 	Pieza::tipo_t getTipoFromCoords(const Posicion& pos);
 	bool getColorFromCoords(const Posicion& pos);
 };

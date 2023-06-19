@@ -121,6 +121,53 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, bool color) :
 	init();
 }
 
+Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color, const aiScene* scene) :
+	texture_ID(0),
+	model_path(""),
+	texture_path(""),
+	tipo_pieza(tipo_pieza),
+	pos_coords(initial_pos),
+	scene(scene),
+	color(color),
+	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
+{
+	switch (tipo_pieza)
+	{
+	case REY:
+		model_path = Modelo::ruta_modelo_rey;
+		break;
+
+	case DAMA:
+		model_path = Modelo::ruta_modelo_dama;
+		break;
+
+	case ALFIL:
+		model_path = Modelo::ruta_modelo_alfil;
+		break;
+
+	case CABALLO:
+		model_path = Modelo::ruta_modelo_caballo;
+		break;
+
+	case TORRE:
+		model_path = Modelo::ruta_modelo_torre;
+		break;
+
+	case PEON:
+		model_path = Modelo::ruta_modelo_peon;
+		break;
+
+	default:
+		std::cerr << "No default model path for the specified type." << std::endl;
+		exit(0);
+		break;
+	}
+	if (color)
+		texture_path = Modelo::ruta_textura_blanco;
+	else
+		texture_path = Modelo::ruta_textura_negro;
+}
+
 void Modelo::init(void)
 {
 	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate

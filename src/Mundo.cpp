@@ -29,13 +29,26 @@ Mundo::Mundo(void) :
 	casillas_negras(),
 	marcos(),
 	letras(),
-	camara({ 0.0f, 20.5f, -15.6f })
+	camara({ 0.0f, 20.5f, -15.6f }),
+	peon(),
+	alfil(),
+	dama(),
+	rey(),
+	torre(),
+	caballo()
 {
 
 }
 
 void Mundo::init(void)
 {
+	alfil.init(Modelo::ruta_modelo_alfil);
+	caballo.init(Modelo::ruta_modelo_caballo);
+	dama.init(Modelo::ruta_modelo_dama);
+	rey.init(Modelo::ruta_modelo_rey);
+	torre.init(Modelo::ruta_modelo_torre);
+	peon.init(Modelo::ruta_modelo_peon);
+
 	asignarModelos();
 	cargarTexturas();
 }
@@ -47,56 +60,56 @@ void Mundo::asignarModelos(void)
 	marcos			 = new Modelo(NONE, Posicion(0, 0), Modelo::ruta_modelo_marcos,			  Modelo::ruta_textura_marco);
 	letras			 = new Modelo(NONE, Posicion(0, 0), Modelo::ruta_modelo_letras,			  Modelo::ruta_textura_blanco);
 
-	rey_blanco.addElem(new Modelo(REY, Posicion(4, 0), true ));
-	rey_negro .addElem(new Modelo(REY, Posicion(4, 7), false));
+	rey_blanco.addElem(new Modelo(REY, Posicion(4, 0), true,  rey.scene));
+	rey_negro .addElem(new Modelo(REY, Posicion(4, 7), false, rey.scene));
 
-	coronacion_blancos.addElem(new Modelo(ALFIL,   Posicion(2, 3), true));
-	coronacion_blancos.addElem(new Modelo(TORRE,   Posicion(3, 3), true));
-	coronacion_blancos.addElem(new Modelo(DAMA,    Posicion(4, 3), true));
-	coronacion_blancos.addElem(new Modelo(CABALLO, Posicion(5, 3), true));
-	coronacion_negros .addElem(new Modelo(ALFIL,   Posicion(2, 4), false));
-	coronacion_negros .addElem(new Modelo(TORRE,   Posicion(3, 4), false));
-	coronacion_negros .addElem(new Modelo(DAMA,    Posicion(4, 4), false));
-	coronacion_negros .addElem(new Modelo(CABALLO, Posicion(5, 4), false));
+	coronacion_blancos.addElem(new Modelo(ALFIL,   Posicion(2, 3), true, alfil.scene));
+	coronacion_blancos.addElem(new Modelo(TORRE,   Posicion(3, 3), true, torre.scene));
+	coronacion_blancos.addElem(new Modelo(DAMA,    Posicion(4, 3), true, dama.scene));
+	coronacion_blancos.addElem(new Modelo(CABALLO, Posicion(5, 3), true, caballo.scene));
+	coronacion_negros .addElem(new Modelo(ALFIL,   Posicion(2, 4), false, alfil.scene));
+	coronacion_negros .addElem(new Modelo(TORRE,   Posicion(3, 4), false, torre.scene));
+	coronacion_negros .addElem(new Modelo(DAMA,    Posicion(4, 4), false, dama.scene));
+	coronacion_negros .addElem(new Modelo(CABALLO, Posicion(5, 4), false, caballo.scene));
 
 	for (int i = 0; i < 10; i++)
 	{
 		// Peones
-		peones_blancos.addElem(new Modelo(PEON, Posicion(i, 1), true));
-		peones_negros .addElem(new Modelo(PEON, Posicion(i, 6), false));
+		peones_blancos.addElem(new Modelo(PEON, Posicion(i, 1), true,  peon.scene));
+		peones_negros .addElem(new Modelo(PEON, Posicion(i, 6), false, peon.scene));
 		// Damas
 		if (i == 0)
 		{
-			damas_blancas.addElem(new Modelo(DAMA, Posicion(3, 0), true));
-			damas_negras .addElem(new Modelo(DAMA, Posicion(3, 7), false));
+			damas_blancas.addElem(new Modelo(DAMA, Posicion(3, 0), true,  dama.scene));
+			damas_negras .addElem(new Modelo(DAMA, Posicion(3, 7), false, dama.scene));
 		}
 		else
 		{
-			damas_blancas.addElem(new Modelo(DAMA, Posicion(-1, -1), true));
-			damas_negras .addElem(new Modelo(DAMA, Posicion(-1, -1), false));
+			damas_blancas.addElem(new Modelo(DAMA, Posicion(-1, -1), true,  dama.scene));
+			damas_negras .addElem(new Modelo(DAMA, Posicion(-1, -1), false, dama.scene));
 		}
 		// Resto
 		if (i < 2)
 		{
-			torres_blancas.addElem(new Modelo(TORRE, Posicion(0 + i * 7, 0), true));
-			torres_negras .addElem(new Modelo(TORRE, Posicion(0 + i * 7, 7), false));
+			torres_blancas.addElem(new Modelo(TORRE, Posicion(0 + i * 7, 0), true,  torre.scene));
+			torres_negras .addElem(new Modelo(TORRE, Posicion(0 + i * 7, 7), false, torre.scene));
 
-			caballos_blancos.addElem(new Modelo(CABALLO, Posicion(1 + i * 5, 0), true));
-			caballos_negros .addElem(new Modelo(CABALLO, Posicion(1 + i * 5, 7), false));
+			caballos_blancos.addElem(new Modelo(CABALLO, Posicion(1 + i * 5, 0), true,  caballo.scene));
+			caballos_negros .addElem(new Modelo(CABALLO, Posicion(1 + i * 5, 7), false, caballo.scene));
 
-			alfiles_blancos.addElem(new Modelo(ALFIL, Posicion(2 + i * 3, 0), true));
-			alfiles_negros .addElem(new Modelo(ALFIL, Posicion(2 + i * 3, 7), false));
+			alfiles_blancos.addElem(new Modelo(ALFIL, Posicion(2 + i * 3, 0), true,  alfil.scene));
+			alfiles_negros .addElem(new Modelo(ALFIL, Posicion(2 + i * 3, 7), false, alfil.scene));
 		}
 		else
 		{
-			torres_blancas.addElem(new Modelo(TORRE, Posicion(-1, -1), true));
-			torres_negras .addElem(new Modelo(TORRE, Posicion(-1, -1), false));
+			torres_blancas.addElem(new Modelo(TORRE, Posicion(-1, -1), true,  torre.scene));
+			torres_negras .addElem(new Modelo(TORRE, Posicion(-1, -1), false, torre.scene));
 
-			caballos_blancos.addElem(new Modelo(CABALLO, Posicion(-1, -1), true));
-			caballos_negros .addElem(new Modelo(CABALLO, Posicion(-1, -1), false));
+			caballos_blancos.addElem(new Modelo(CABALLO, Posicion(-1, -1), true,  caballo.scene));
+			caballos_negros .addElem(new Modelo(CABALLO, Posicion(-1, -1), false, caballo.scene));
 
-			alfiles_blancos.addElem(new Modelo(ALFIL, Posicion(-1, -1), true));
-			alfiles_negros .addElem(new Modelo(ALFIL, Posicion(-1, -1), false));
+			alfiles_blancos.addElem(new Modelo(ALFIL, Posicion(-1, -1), true,  alfil.scene));
+			alfiles_negros .addElem(new Modelo(ALFIL, Posicion(-1, -1), false, alfil.scene));
 		}
 	}
 
