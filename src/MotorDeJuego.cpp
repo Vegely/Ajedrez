@@ -41,7 +41,7 @@ Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico)
 		}
 		else
 		{
-			movimiento = ensamblarMovimiento(getInput(p_motorGrafico));
+			movimiento = ensamblarMovimiento(getInput(p_motorGrafico), p_motorGrafico);
 			if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::EMISOR && movimiento != Movimiento(Posicion(-1, -1), Posicion(-1, -1)))
 			{
 				config.elementoRed->enviar(movimiento.toString());
@@ -233,7 +233,7 @@ Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Movimiento& movimien
 	}
 }
 
-Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, bool pos1Selec, Mundo* p_motorGrafico) const
+Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, Mundo* p_motorGrafico) const
 {
 	static bool aux;
 	static Posicion inicio;

@@ -58,8 +58,8 @@ void CoordinadorAjedrez::Draw(void)
 	else if (estado == JUEGO)
 	{
 		mundoGrafico.resetCasillas(mundoGrafico.getCasillaUltimoMov());
-		mundoGrafico.getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(-1, -1), motorLogico.getTablero()->getUltimaJugada().inicio));
-		mundoGrafico.getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(-1, -1), motorLogico.getTablero()->getUltimaJugada().fin));
+		mundoGrafico.getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(-1, -1), p_motorLogico->getTablero()->getUltimaJugada().inicio));
+		mundoGrafico.getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(-1, -1), p_motorLogico->getTablero()->getUltimaJugada().fin));
 
 		mundoGrafico.updateCamara();
 		mundoGrafico.renderizarModelos();
@@ -156,8 +156,8 @@ void CoordinadorAjedrez::Timer(int value)
 	}
 	else if (estado == JUEGO) // Escribir a continuacion de la configuracion
 	{		
-		this->mundoGrafico.leerTablero(*this->motorLogico.getTablero());
-		this->mundoGrafico.actualizarCamara(this->motorLogico.getTablero()->getTurno());
+		this->mundoGrafico.leerTablero(*this->p_motorLogico->getTablero());
+		this->mundoGrafico.actualizarCamara(this->p_motorLogico->getTablero()->getTurno());
 		this->mundoGrafico.movimiento(value);
 	}
 }
