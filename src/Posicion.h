@@ -11,6 +11,7 @@ struct Posicion
 	inline int indice() const { return x + 8 * y; }
 
 	inline Posicion& operator- ()  {x = -x; y = -y; return *this; }
+	inline Posicion& operator=  (const Posicion& rhs) { x  = rhs.x; y  = rhs.y; return *this; }
 	inline Posicion& operator+= (const Posicion& rhs) { x += rhs.x; y += rhs.y; return *this; }
 	inline Posicion& operator-= (Posicion rhs) { *this += ( - rhs); return *this; }
 	inline Posicion& operator*= (const int& rhs) { x *= rhs; y *= rhs; return *this; }

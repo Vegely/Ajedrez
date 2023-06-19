@@ -18,7 +18,7 @@
 #include "Movimiento.h"
 #include "Pieza.h"
 
-enum TipoPieza { NONE, REY, DAMA, ALFIL, CABALLO, TORRE, PEON };
+enum TipoPieza { NONE, REY, DAMA, ALFIL, CABALLO, TORRE, PEON, OBJETO };
 
 class Modelo : public Entity
 {
@@ -41,6 +41,7 @@ public:
 	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color);
 	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, bool color);
 	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color, const aiScene* scene);
+	Modelo(const Posicion& initial_pos, const aiScene* scene, std::string texture_path);
 	virtual ~Modelo(void) { }
 	Modelo(const Modelo& m);
 	Modelo& operator = (const Modelo& rhs);
@@ -58,40 +59,16 @@ public:
 	bool		getColor		(void) const { return  this->color; }
 
 	/* SETTERS */
-	void setCoords(const Posicion& pos)   { this->pos_coords   = pos; }
-	void setModelPath  (std::string path) { this->model_path   = path; }
-	void setTexturePath(std::string path) { this->texture_path = path; }
-	void setTextureID  (GLuint ID)		  { this->texture_ID   = ID; }
+	void setCoords(const Posicion& pos) { this->pos_coords   = pos; }
 	
 	/* FUNCIONES */
 	void render(void);
 	void renderNodo(const aiNode* nodo);
 	bool cargarTextura(void);
-	void moverModelo(const Movimiento& movimiento);
+	bool moverModelo(const Movimiento& movimiento);
 
 	static TipoPieza castTipo(Pieza::tipo_t t);
 	static Pieza::tipo_t castTipo(TipoPieza t);
-
-	/* VARIABLES ESTÁTICAS */
-	static std::string ruta_modelo_rey;
-	static std::string ruta_modelo_dama;
-	static std::string ruta_modelo_alfil;
-	static std::string ruta_modelo_caballo;
-	static std::string ruta_modelo_torre;
-	static std::string ruta_modelo_peon;
-
-	static std::string ruta_modelo_casillas_negras;
-	static std::string ruta_modelo_casillas_blancas;
-	static std::string ruta_modelo_marcos;
-	static std::string ruta_modelo_letras;
-
-	static std::string ruta_textura_blanco;
-	static std::string ruta_textura_negro;
-	static std::string ruta_textura_blanco_oscuro;
-	static std::string ruta_textura_negro_claro;
-	static std::string ruta_textura_marco;
-
-	static std::string ruta_fondo;
 };
 
 struct ModeloBase

@@ -1,4 +1,5 @@
 #include "Modelo.h"
+#include "Mundo.h"
 
 Modelo::Modelo(void) :
 	texture_ID(0),
@@ -36,27 +37,27 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color) :
 	switch (tipo_pieza)
 	{
 	case REY:
-		model_path = Modelo::ruta_modelo_rey;
+		model_path = Mundo::ruta_modelo_rey;
 		break;
 
 	case DAMA:
-		model_path = Modelo::ruta_modelo_dama;
+		model_path = Mundo::ruta_modelo_dama;
 		break;
 
 	case ALFIL:
-		model_path = Modelo::ruta_modelo_alfil;
+		model_path = Mundo::ruta_modelo_alfil;
 		break;
 
 	case CABALLO:
-		model_path = Modelo::ruta_modelo_caballo;
+		model_path = Mundo::ruta_modelo_caballo;
 		break;
 
 	case TORRE:
-		model_path = Modelo::ruta_modelo_torre;
+		model_path = Mundo::ruta_modelo_torre;
 		break;
 
 	case PEON:
-		model_path = Modelo::ruta_modelo_peon;
+		model_path = Mundo::ruta_modelo_peon;
 		break;
 
 	default:
@@ -65,9 +66,9 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color) :
 		break;
 	}
 	if (color)
-		texture_path = Modelo::ruta_textura_blanco;
+		texture_path = Mundo::ruta_textura_blanco;
 	else
-		texture_path = Modelo::ruta_textura_negro;
+		texture_path = Mundo::ruta_textura_negro;
 
 	init();
 }
@@ -85,27 +86,27 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, bool color) :
 	switch (tipo_pieza)
 	{
 	case REY:
-		model_path = Modelo::ruta_modelo_rey;
+		model_path = Mundo::ruta_modelo_rey;
 		break;
 
 	case DAMA:
-		model_path = Modelo::ruta_modelo_dama;
+		model_path = Mundo::ruta_modelo_dama;
 		break;
 
 	case ALFIL:
-		model_path = Modelo::ruta_modelo_alfil;
+		model_path = Mundo::ruta_modelo_alfil;
 		break;
 
 	case CABALLO:
-		model_path = Modelo::ruta_modelo_caballo;
+		model_path = Mundo::ruta_modelo_caballo;
 		break;
 
 	case TORRE:
-		model_path = Modelo::ruta_modelo_torre;
+		model_path = Mundo::ruta_modelo_torre;
 		break;
 
 	case PEON:
-		model_path = Modelo::ruta_modelo_peon;
+		model_path = Mundo::ruta_modelo_peon;
 		break;
 
 	default:
@@ -114,9 +115,9 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, bool color) :
 		break;
 	}
 	if (color)
-		texture_path = Modelo::ruta_textura_blanco;
+		texture_path = Mundo::ruta_textura_blanco;
 	else
-		texture_path = Modelo::ruta_textura_negro;
+		texture_path = Mundo::ruta_textura_negro;
 
 	init();
 }
@@ -134,27 +135,27 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color, co
 	switch (tipo_pieza)
 	{
 	case REY:
-		model_path = Modelo::ruta_modelo_rey;
+		model_path = Mundo::ruta_modelo_rey;
 		break;
 
 	case DAMA:
-		model_path = Modelo::ruta_modelo_dama;
+		model_path = Mundo::ruta_modelo_dama;
 		break;
 
 	case ALFIL:
-		model_path = Modelo::ruta_modelo_alfil;
+		model_path = Mundo::ruta_modelo_alfil;
 		break;
 
 	case CABALLO:
-		model_path = Modelo::ruta_modelo_caballo;
+		model_path = Mundo::ruta_modelo_caballo;
 		break;
 
 	case TORRE:
-		model_path = Modelo::ruta_modelo_torre;
+		model_path = Mundo::ruta_modelo_torre;
 		break;
 
 	case PEON:
-		model_path = Modelo::ruta_modelo_peon;
+		model_path = Mundo::ruta_modelo_peon;
 		break;
 
 	default:
@@ -163,9 +164,22 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color, co
 		break;
 	}
 	if (color)
-		texture_path = Modelo::ruta_textura_blanco;
+		texture_path = Mundo::ruta_textura_blanco;
 	else
-		texture_path = Modelo::ruta_textura_negro;
+		texture_path = Mundo::ruta_textura_negro;
+}
+
+Modelo::Modelo(const Posicion& initial_pos, const aiScene* scene, std::string texture_path) :
+	texture_ID(0),
+	model_path(""),
+	texture_path(texture_path),
+	tipo_pieza(OBJETO),
+	pos_coords(initial_pos),
+	scene(scene),
+	color(false),
+	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
+{
+
 }
 
 void Modelo::init(void)
@@ -273,18 +287,19 @@ void Modelo::render(void)
 
 	if (this->tipo_pieza != NONE)
 	{
-		//if (this->pos_coords != Posicion(-1, -1))
-		//	this->position = getPointFromCoords(this->pos_coords);
-		//else
-		//	this->position = Point{ 40, 40, 0 };
-		this->position = getPointFromCoords(this->pos_coords);
+		if (this->pos_coords != Posicion(-1, -1))
+			this->position = getPointFromCoords(this->pos_coords);
+		else
+			this->position = getPointFromCoords(this->pos_coords) * 2;
 	}
 
 
 	glTranslatef(this->position.x,  this->position.y,  this->position.z);
-		glRotatef(-90, 1, 0, 0);
-		renderNodo(this->scene->mRootNode);
-		glRotatef(90, 1, 0, 0);
+	glRotatef(-90, 1, 0, 0);
+	if (this->tipo_pieza != NONE) glRotatef(-90, 0, 0, 1);
+	renderNodo(this->scene->mRootNode);
+	if (this->tipo_pieza != NONE) glRotatef(90, 0, 0, 1);
+	glRotatef(90, 1, 0, 0);
 	glTranslatef(-this->position.x, -this->position.y, -this->position.z);
 }
 
@@ -322,13 +337,21 @@ bool Modelo::cargarTextura(void)
 	return true;
 }
 
-void Modelo::moverModelo(const Movimiento& movimiento)
+bool Modelo::moverModelo(const Movimiento& movimiento)
 {
 	if (movimiento.inicio == this->pos_coords && this->tipo_pieza != NONE)
 	{
 		//std::cout << "Modelo tipo " << this->tipo_pieza << " movido de la posicion " << pos_coords.x << pos_coords.y;
 		this->pos_coords = movimiento.fin;
 		//std::cout << " a la posicion " << pos_coords.x << pos_coords.y << ". " << std::endl;
+		return true;
+	}
+	else
+	{
+		std::cout << "El modelo que se ha intentado mover es nulo o no coincide con las coordenadas de inicio." << std::endl;
+		std::cout << "Tipo: " << this->tipo_pieza << std::endl;
+		std::cout << "Posicion modelo a mover: " << this->pos_coords.x << this->pos_coords.y << std::endl;
+		return false;
 	}
 }
 
@@ -405,23 +428,3 @@ Pieza::tipo_t Modelo::castTipo(TipoPieza t)
 		break;
 	}
 }
-
-std::string Modelo::ruta_modelo_rey = "modelos/rey.obj";
-std::string Modelo::ruta_modelo_dama = "modelos/dama.obj";
-std::string Modelo::ruta_modelo_alfil = "modelos/alfil.obj";
-std::string Modelo::ruta_modelo_caballo = "modelos/caballo.obj";
-std::string Modelo::ruta_modelo_torre = "modelos/torre.obj";
-std::string Modelo::ruta_modelo_peon = "modelos/peon.obj";
-
-std::string Modelo::ruta_modelo_casillas_negras = "modelos/casillas_negras.obj";
-std::string Modelo::ruta_modelo_casillas_blancas = "modelos/casillas_blancas.obj";
-std::string Modelo::ruta_modelo_marcos = "modelos/marcos.obj";
-std::string Modelo::ruta_modelo_letras = "modelos/letras.obj";
-
-std::string Modelo::ruta_textura_blanco = "texturas/marmol_blanco.jpg";
-std::string Modelo::ruta_textura_negro = "texturas/marmol_negro.jpg";
-std::string Modelo::ruta_textura_blanco_oscuro = "texturas/marmol_blanco_oscuro.jpg";
-std::string Modelo::ruta_textura_negro_claro = "texturas/marmol_negro_claro.jpg";
-std::string Modelo::ruta_textura_marco = "texturas/marmol_negro_marco.jpg";
-
-std::string Modelo::ruta_fondo = "texturas/espacio.png";

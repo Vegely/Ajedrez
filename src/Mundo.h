@@ -193,6 +193,11 @@ private:
 	Modelo* casillas_negras;
 	Modelo* marcos;
 	Modelo* letras;
+	ListaModelo casilla_seleccionada;
+	ListaModelo casilla_comible;
+	ListaModelo casilla_puede_mover;
+	ListaModelo casilla_coronacion;
+	ListaModelo casilla_ultimo_mov;
 
 	Camara camara;
 	
@@ -205,6 +210,7 @@ private:
 	ModeloBase rey;
 	ModeloBase torre;
 	ModeloBase caballo;
+	ModeloBase casilla;
 
 public:
 	/* INICIALIZACION */
@@ -221,6 +227,11 @@ public:
 	void resetLectura  (void)			 { this->posicion_leida = Posicion(-1, -1); }
 	Posicion getCasilla(void) const		 { return this->posicion_leida; }
 	Pieza::tipo_t seleccionPiezaCoronacion(bool color);
+	ListaModelo* getCasillaSeleccionada(void) { return &this->casilla_seleccionada; }
+	ListaModelo* getCasillaComible	   (void) { return &this->casilla_comible; }
+	ListaModelo* getCasillaCoronacion  (void) { return &this->casilla_coronacion; }
+	ListaModelo* getCasillaPuedeMover  (void) { return &this->casilla_puede_mover; }
+	ListaModelo* getCasillaUltimoMov   (void) { return &this->casilla_ultimo_mov; }
 
 	/* CALLBACKS */
 	void movimiento	     (const float time);
@@ -236,6 +247,35 @@ public:
 	bool getColorFromCoords(const Posicion& pos);
 	ListaModelo* seleccionarLista(bool color, Pieza::tipo_t tipo_pieza);
 	Pieza::tipo_t getTipoFromCoords(const Posicion& pos);
+	void resetCasillas(void);
+	void resetCasillas(ListaModelo* lista);
+
+	/* VARIABLES ESTÁTICAS */
+	static std::string ruta_modelo_rey;
+	static std::string ruta_modelo_dama;
+	static std::string ruta_modelo_alfil;
+	static std::string ruta_modelo_caballo;
+	static std::string ruta_modelo_torre;
+	static std::string ruta_modelo_peon;
+
+	static std::string ruta_casilla;
+	static std::string ruta_modelo_casillas_negras;
+	static std::string ruta_modelo_casillas_blancas;
+	static std::string ruta_modelo_marcos;
+	static std::string ruta_modelo_letras;
+
+	static std::string ruta_textura_blanco;
+	static std::string ruta_textura_negro;
+	static std::string ruta_textura_blanco_oscuro;
+	static std::string ruta_textura_negro_claro;
+	static std::string ruta_textura_marco;
+	static std::string ruta_textura_casilla_seleccionada;
+	static std::string ruta_textura_casilla_comible;
+	static std::string ruta_textura_casilla_puede_comer;
+	static std::string ruta_textura_casilla_coronacion;
+	static std::string ruta_textura_casilla_ultimo_mov;
+
+	static std::string ruta_fondo;
 };
 
 #endif // !MUNDO_H

@@ -58,6 +58,14 @@ public:
 	void cargarTexturas(void)				   { for (int i = 0; i < _numElem; i++) _modelo[i]->cargarTextura(); }
 	void renderModelos (void)				   { for (int i = 0; i < _numElem; i++) _modelo[i]->render(); }
 	void moverModelos  (const Movimiento& mov) { for (int i = 0; i < _numElem; i++) _modelo[i]->moverModelo(mov); }
+	void moverElemento (const Movimiento& mov)
+	{
+		for (int i = 0; i < _numElem; i++)
+		{
+			if (_modelo[i]->moverModelo(mov))
+				return;
+		}
+	}
 };
 
 #endif

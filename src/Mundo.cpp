@@ -28,6 +28,11 @@ Mundo::Mundo(void) :
 	casillas_blancas(),
 	casillas_negras(),
 	marcos(),
+	casilla_seleccionada(20),
+	casilla_comible(20),
+	casilla_puede_mover(20),
+	casilla_coronacion(20),
+	casilla_ultimo_mov(2),
 	letras(),
 	camara({ 0.0f, 20.5f, -15.6f }),
 	peon(),
@@ -35,19 +40,21 @@ Mundo::Mundo(void) :
 	dama(),
 	rey(),
 	torre(),
-	caballo()
+	caballo(),
+	casilla()
 {
 
 }
 
 void Mundo::init(void)
 {
-	alfil.init(Modelo::ruta_modelo_alfil);
-	caballo.init(Modelo::ruta_modelo_caballo);
-	dama.init(Modelo::ruta_modelo_dama);
-	rey.init(Modelo::ruta_modelo_rey);
-	torre.init(Modelo::ruta_modelo_torre);
-	peon.init(Modelo::ruta_modelo_peon);
+	alfil.init(Mundo::ruta_modelo_alfil);
+	caballo.init(Mundo::ruta_modelo_caballo);
+	dama.init(Mundo::ruta_modelo_dama);
+	rey.init(Mundo::ruta_modelo_rey);
+	torre.init(Mundo::ruta_modelo_torre);
+	peon.init(Mundo::ruta_modelo_peon);
+	casilla.init(Mundo::ruta_casilla);
 
 	asignarModelos();
 	cargarTexturas();
@@ -55,10 +62,19 @@ void Mundo::init(void)
 
 void Mundo::asignarModelos(void)
 {
-	casillas_blancas = new Modelo(NONE, Posicion(0, 0), Modelo::ruta_modelo_casillas_blancas, Modelo::ruta_textura_blanco_oscuro);
-	casillas_negras  = new Modelo(NONE, Posicion(0, 0), Modelo::ruta_modelo_casillas_negras,  Modelo::ruta_textura_negro_claro);
-	marcos			 = new Modelo(NONE, Posicion(0, 0), Modelo::ruta_modelo_marcos,			  Modelo::ruta_textura_marco);
-	letras			 = new Modelo(NONE, Posicion(0, 0), Modelo::ruta_modelo_letras,			  Modelo::ruta_textura_blanco);
+	for (int i = 0; i < 20; i++)
+	{
+		casilla_seleccionada.addElem(new Modelo(Posicion(-1, -1), casilla.scene, Mundo::ruta_textura_casilla_seleccionada));
+		casilla_comible     .addElem(new Modelo(Posicion(-1, -1), casilla.scene, Mundo::ruta_textura_casilla_comible));
+		casilla_puede_mover .addElem(new Modelo(Posicion(-1, -1), casilla.scene, Mundo::ruta_textura_casilla_puede_comer));
+		casilla_coronacion  .addElem(new Modelo(Posicion(-1, -1), casilla.scene, Mundo::ruta_textura_casilla_coronacion));
+		casilla_ultimo_mov  .addElem(new Modelo(Posicion(-1, -1), casilla.scene, Mundo::ruta_textura_casilla_ultimo_mov));
+	}
+
+	casillas_blancas = new Modelo(NONE, Posicion(0, 0), Mundo::ruta_modelo_casillas_blancas, Mundo::ruta_textura_blanco_oscuro);
+	casillas_negras  = new Modelo(NONE, Posicion(0, 0), Mundo::ruta_modelo_casillas_negras,  Mundo::ruta_textura_negro_claro);
+	marcos			 = new Modelo(NONE, Posicion(0, 0), Mundo::ruta_modelo_marcos,			 Mundo::ruta_textura_marco);
+	letras			 = new Modelo(NONE, Posicion(0, 0), Mundo::ruta_modelo_letras,			 Mundo::ruta_textura_blanco);
 
 	rey_blanco.addElem(new Modelo(REY, Posicion(4, 0), true,  rey.scene));
 	rey_negro .addElem(new Modelo(REY, Posicion(4, 7), false, rey.scene));
@@ -120,24 +136,29 @@ void Mundo::asignarModelos(void)
 
 void Mundo::cargarTexturas(void)
 {
-	rey_blanco        .cargarTexturas();
-	rey_negro         .cargarTexturas();
-	damas_blancas     .cargarTexturas();
-	damas_negras      .cargarTexturas();
-	alfiles_blancos   .cargarTexturas();
-	alfiles_negros    .cargarTexturas();
-	caballos_blancos  .cargarTexturas();
-	caballos_negros   .cargarTexturas();
-	torres_blancas    .cargarTexturas();
-	torres_negras     .cargarTexturas();
-	peones_blancos    .cargarTexturas();
-	peones_negros     .cargarTexturas();
-	coronacion_blancos.cargarTexturas();
-	coronacion_negros .cargarTexturas();
-	casillas_blancas ->cargarTextura();
-	casillas_negras  ->cargarTextura();
-	marcos           ->cargarTextura();
-	letras           ->cargarTextura();
+	rey_blanco           .cargarTexturas();
+	rey_negro            .cargarTexturas();
+	damas_blancas        .cargarTexturas();
+	damas_negras         .cargarTexturas();
+	alfiles_blancos      .cargarTexturas();
+	alfiles_negros       .cargarTexturas();
+	caballos_blancos     .cargarTexturas();
+	caballos_negros      .cargarTexturas();
+	torres_blancas       .cargarTexturas();
+	torres_negras        .cargarTexturas();
+	peones_blancos       .cargarTexturas();
+	peones_negros        .cargarTexturas();
+	coronacion_blancos   .cargarTexturas();
+	coronacion_negros    .cargarTexturas();
+	casillas_blancas    ->cargarTextura();
+	casillas_negras     ->cargarTextura();
+	marcos              ->cargarTextura();
+	letras              ->cargarTextura();
+	casilla_seleccionada .cargarTexturas();
+	casilla_puede_mover  .cargarTexturas();
+	casilla_coronacion   .cargarTexturas();
+	casilla_comible      .cargarTexturas();
+	casilla_ultimo_mov   .cargarTexturas();
 }
 
 void Mundo::leerTablero(const Tablero& tablero)
@@ -190,6 +211,7 @@ void Mundo::leerTablero(const Tablero& tablero)
 					// Volver a leer el tablero porque han pasado dos cosas a la vez: destruccion del peon y promocion a la nueva pieza.
 					for (int j = 0; j < 64; j++)
 					{
+						// DEBUG
 						std::string tipo = "";
 						Pieza* pieza = tablero.leer(casillas_tablero_array[j]);
 						if (pieza != nullptr)
@@ -231,6 +253,7 @@ void Mundo::leerTablero(const Tablero& tablero)
 						}
 						else
 							std::cout << "Tipo pieza posicion " << casillas_tablero_array[j].x << casillas_tablero_array[j].y << ": " << "NONE" << std::endl;
+						// END_DEBUG
 
 							tablero_anterior[j] = tablero_actual[j];
 						if (tablero.leer(casillas_tablero_array[j]) != nullptr)
@@ -336,6 +359,11 @@ void Mundo::renderizarModelos(void)
 		torres_negras   .renderModelos();
 		peones_blancos  .renderModelos();
 		peones_negros   .renderModelos();
+		casilla_comible.renderModelos();
+		casilla_coronacion.renderModelos();
+		casilla_seleccionada.renderModelos();
+		casilla_puede_mover.renderModelos();
+		casilla_ultimo_mov.renderModelos();
 	}
 	else if (coronando_blancas && !coronando_negras)
 		coronacion_blancos.renderModelos();
@@ -373,8 +401,7 @@ void Mundo::seleccionCasilla(int button, int state, int x_mouse, int y_mouse)
 	}
 
 	this->posicion_leida = result;
-	std::cout << "Casilla seleccionada: " << posicion_leida.x << posicion_leida.y << std::endl;
-	//moverModelos();
+	//std::cout << "Casilla seleccionada: " << posicion_leida.x << posicion_leida.y << std::endl;
 }
 
 /* REVISAR */
@@ -383,7 +410,7 @@ void Mundo::dibujarFondo(void)
 	glTranslatef(100, -10, 0);
 	glRotatef(90.0f, 1, 0, 0);
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(Modelo::ruta_fondo.c_str()).id);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(Mundo::ruta_fondo.c_str()).id);
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
 	glColor3f(1, 1, 1);
@@ -556,3 +583,50 @@ void Mundo::actualizarCamara(bool turno)
 		this->cambiarGirado();
 	}
 }
+
+void Mundo::resetCasillas(void)
+{
+	for (int i = 0; i < this->casilla_comible.getNumElem(); i++)
+		this->casilla_comible.setPosicion(i, Posicion(-1, -1));
+
+	for (int i = 0; i < this->casilla_seleccionada.getNumElem(); i++)
+		this->casilla_seleccionada.setPosicion(i, Posicion(-1, -1));
+
+	for (int i = 0; i < this->casilla_puede_mover.getNumElem(); i++)
+		this->casilla_puede_mover.setPosicion(i, Posicion(-1, -1));
+
+	for (int i = 0; i < this->casilla_coronacion.getNumElem(); i++)
+		this->casilla_coronacion.setPosicion(i, Posicion(-1, -1));
+}
+
+void Mundo::resetCasillas(ListaModelo* lista)
+{
+	for (int i = 0; i < lista->getNumElem(); i++)
+		lista->setPosicion(i, Posicion(-1, -1));
+}
+
+std::string Mundo::ruta_modelo_rey = "modelos/rey.obj";
+std::string Mundo::ruta_modelo_dama = "modelos/dama.obj";
+std::string Mundo::ruta_modelo_alfil = "modelos/alfil.obj";
+std::string Mundo::ruta_modelo_caballo = "modelos/caballo.obj";
+std::string Mundo::ruta_modelo_torre = "modelos/torre.obj";
+std::string Mundo::ruta_modelo_peon = "modelos/peon.obj";
+
+std::string Mundo::ruta_casilla = "modelos/casilla.obj";
+std::string Mundo::ruta_modelo_casillas_negras = "modelos/casillas_negras.obj";
+std::string Mundo::ruta_modelo_casillas_blancas = "modelos/casillas_blancas.obj";
+std::string Mundo::ruta_modelo_marcos = "modelos/marcos.obj";
+std::string Mundo::ruta_modelo_letras = "modelos/letras.obj";
+
+std::string Mundo::ruta_textura_blanco = "texturas/marmol_blanco.jpg";
+std::string Mundo::ruta_textura_negro = "texturas/marmol_negro.jpg";
+std::string Mundo::ruta_textura_blanco_oscuro = "texturas/marmol_blanco_oscuro.jpg";
+std::string Mundo::ruta_textura_negro_claro = "texturas/marmol_negro_claro.jpg";
+std::string Mundo::ruta_textura_marco = "texturas/marmol_negro_marco.jpg";
+std::string Mundo::ruta_textura_casilla_seleccionada = "texturas/casilla_seleccionada.png";
+std::string Mundo::ruta_textura_casilla_comible = "texturas/casilla_comer.png";
+std::string Mundo::ruta_textura_casilla_puede_comer = "texturas/casilla_puede_mover.png";
+std::string Mundo::ruta_textura_casilla_coronacion = "texturas/casilla_coronacion.png";
+std::string Mundo::ruta_textura_casilla_ultimo_mov = "texturas/casilla_ultimo_mov.png";
+
+std::string Mundo::ruta_fondo = "texturas/espacio.png";
