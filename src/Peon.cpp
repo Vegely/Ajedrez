@@ -32,7 +32,7 @@ DatosClavada Peon::actualizarVariables(bool clavada, Posicion direccionClavada, 
 				clavar = false;
 			}
 		}
-		if (!clavar)
+		if (clavar)
 			return piezaClavada;
 	}
 		

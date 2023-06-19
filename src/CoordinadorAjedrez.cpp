@@ -63,6 +63,32 @@ void CoordinadorAjedrez::Draw(void)
 
 		mundoGrafico.updateCamara();
 		mundoGrafico.renderizarModelos();
+
+		if (datosFinal.finalizada)
+		{
+			ETSIDI::setFont(RUTA_FUENTES, 30);
+			ETSIDI::setTextColor(255, 255, 255);
+			ETSIDI::printxy("Pulsa k para continuar", X_FIN, Y_FIN - 5);
+			switch (datosFinal.codigoFinal) {
+			case CodigoFinal::JAQUE_MATE:
+				if(datosFinal.ganaBlanco)
+					ETSIDI::printxy("JAQUE MATE BLANCO", X_FIN, Y_FIN);
+				else ETSIDI::printxy("JAQUE MATE NEGRAS", X_FIN, Y_FIN);
+				break;
+			case CodigoFinal::REY_AHOGADO:
+				ETSIDI::printxy("REY AHOGADO", X_FIN, Y_FIN);
+				break;
+			case CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE:
+				ETSIDI::printxy("TABLAS POR MATERIAL INSUFICIENTE", X_FIN, Y_FIN);
+				break;
+			case CodigoFinal::TABLAS_POR_REPETICION:
+				ETSIDI::printxy("TABLAS POR REPETICION", X_FIN, Y_FIN);
+				break;
+			case CodigoFinal::TABLAS_POR_PASIVIDAD:
+				ETSIDI::printxy("TABLAS POR PASIVIDAD", X_FIN, Y_FIN);
+				break;
+			}
+		}
 	}
 	else if (estado == COLOR_SERVIDOR)
 	{
@@ -144,13 +170,17 @@ void CoordinadorAjedrez::Draw(void)
 		parametrosTexturasMEstados();
 		pantallaGuardar.escrituraGlut();
 	}
+	else if (estado == FIN) {
+		pantallaFinPartida.dibuja();
+		parametrosTexturasMEstados();
+	}
 }
 
 void CoordinadorAjedrez::Timer(int value)
 {
 	if (estado == INICIALIZACION_PARTIDA && !flagDeSeguridadInit)
 	{
-		p_motorLogico = new MotorDeJuego(config);
+		p_motorLogico = new MotorDeJuego(config, &partida);
 		p_motor = new std::thread(threadMotor, p_motorLogico, &mundoGrafico, &configuracion, &datosFinal);
 		estado = JUEGO;
 	}
@@ -175,23 +205,24 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 				pantallaGuardar.snegras = "";
 		}
 		else if ((int)key == TABULADOR) {
-			partida.setNombre(CARPETA_PARTIDAS + pantallaGuardar.snombre_partida + ".txt");
+			std::string fin = CARPETA_NOFINALIZADAS;
+			if (datosFinal.finalizada)fin = CARPETA_FINALIZADAS;
+			partida.setNombre(fin + pantallaGuardar.snombre_partida + ".txt");
 			if (partida.existe())
 				pantallaGuardar.existe = 1;
 			else
 			{
 				estado = INICIO;
+				partida.setFin(datosFinal.finalizada);
 				partida.setBlancas(pantallaGuardar.sblancas);
 				partida.setNegras(pantallaGuardar.snegras);
 				partida.setModo(pantallaGuardar.smodo);
 				partida.crearPartida();
+				partida.guardarPartida();
 
-				pantallaGuardar.snombre_partida = "";
-				pantallaGuardar.sblancas = "";
-				pantallaGuardar.snegras = "";
-				pantallaGuardar.smodo = "";
-				pantallaGuardar.existe = 0;
-				pantallaGuardar.estado = Guardar::NONE;
+				//Reset a valores iniciales para guardar futuras partidas
+				partida.reset();
+				pantallaGuardar.reset();
 			}
 		}
 		else {
@@ -206,6 +237,18 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 	else if (estado == JUEGO) {
 		if (key == 'p')
 			estado = PAUSA;
+		///////////////////////////////////////////
+		//Falta resetear valores
+		else if (datosFinal.finalizada == true && key == 'k')
+		{
+			estado = FIN;
+			p_motor->join();
+		}
+		/////////////////////////////////////////
+	}
+	else if (estado == PAUSA) {
+		if (key == 'c')
+			estado = JUEGO;
 	}
 }
 
@@ -380,6 +423,10 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 			else if (pantallaGuardar.negras.enCaja(xg, yg))
 				pantallaGuardar.estado = Guardar::NEGRAS;
 			else pantallaGuardar.estado = Guardar::NONE;
+		}
+		else if (estado == FIN) {
+			if (pantallaFinPartida.guardar_y_salir.enCaja(xg, yg)) estado = GUARDAR;
+			else if (pantallaFinPartida.salir_sin_guardar.enCaja(xg, yg)) estado = INICIO;
 		}
 	}
 }

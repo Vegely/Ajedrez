@@ -186,31 +186,35 @@ DatosFinal MotorDeJuego::motor(Mundo* mundoGrafico)
 		{
 			//pintar();
 
-			//strGuardado += tablero.ultimaJugada.toString() + "\n";
+			fichero_partida->movimientos.push_back(tablero.ultimaJugada);
 
 			if (tablero.jaqueMate())
 			{ 
-				datosFinal = { CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno };
+				datosFinal = { CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno, true};
 				exit = true;
 			}
 			else if (tablero.reyAhogado())
 			{
 				datosFinal.codigoFinal = CodigoFinal::REY_AHOGADO;
+				datosFinal.finalizada = true;
 				exit = true;
 			}
 			else if (tablero.tablasMaterialInsuficiente())
 			{
 				datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE;
+				datosFinal.finalizada = true;
 				exit = true;
 			}
 			else if (tablero.infoTablas.tablasPorRepeticion())
 			{
 				datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_REPETICION;
+				datosFinal.finalizada = true;
 				exit = true;
 			}
 			else if (tablero.infoTablas.tablasPorPasividad())
 			{
 				datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_PASIVIDAD;
+				datosFinal.finalizada = true;
 				exit = true;
 			}
 		}
