@@ -3,9 +3,6 @@
 #ifndef CALLBACKS_H
 #define CALLBAKCS_H
 
-#include "Camara.h"
-#include "Modelo.h"
-
 /* INITIALIZATION */
 void motorGrafico(int* argc, char** argv);
 void registrarCallbacks(void);

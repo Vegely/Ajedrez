@@ -1,6 +1,5 @@
 #include "CoordinadorAjedrez.h"
 #include <ETSIDI.h>
-#include <thread>
 
 ConfiguracionDeJuego configuracion;
 
@@ -62,6 +61,12 @@ void CoordinadorAjedrez::Draw(void)
 		mundoGrafico.getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(-1, -1), p_motorLogico->getTablero()->getUltimaJugada().fin));
 
 		mundoGrafico.updateCamara();
+
+		glEnable(GL_COLOR_MATERIAL);
+		glColor3ub(0, 128, 255);
+		glutSolidSphere(1000, 100, 100);
+		glColor3ub(255, 255, 255);
+		glDisable(GL_COLOR_MATERIAL);
 		mundoGrafico.renderizarModelos();
 	}
 	else if (estado == COLOR_SERVIDOR)
@@ -146,7 +151,7 @@ void CoordinadorAjedrez::Draw(void)
 	}
 }
 
-void CoordinadorAjedrez::Timer(int value)
+void CoordinadorAjedrez::Timer(float value)
 {
 	if (estado == INICIALIZACION_PARTIDA && !flagDeSeguridadInit)
 	{
@@ -155,9 +160,10 @@ void CoordinadorAjedrez::Timer(int value)
 		estado = JUEGO;
 	}
 	else if (estado == JUEGO) // Escribir a continuacion de la configuracion
-	{		
+	{	
+		this->p_motorLogico->comprobarCasillasJaque(&this->motorGrafico);
 		this->mundoGrafico.leerTablero(*this->p_motorLogico->getTablero());
-		this->mundoGrafico.actualizarCamara(this->p_motorLogico->getTablero()->getTurno());
+		this->mundoGrafico.actualizarCamara(this->p_motorLogico->getTablero()->getTurno(), value);
 		this->mundoGrafico.movimiento(value);
 	}
 }

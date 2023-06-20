@@ -65,15 +65,15 @@ void OnDraw(void)
 	coordinador.Draw();
 
 	glutSwapBuffers();
-	glutPostRedisplay();
+	//glutPostRedisplay();
 }
 
 // Each set time, performs the set functions.
 void OnTimer(int value)
 {
-	coordinador.Timer(0.03);
+	coordinador.Timer(0.001);
 
-	glutTimerFunc(30, OnTimer, 0);
+	glutTimerFunc(1, OnTimer, 0);
 }
 
 void OnKeyboardDown(const unsigned char key, int x_t, int y_t)
@@ -130,17 +130,16 @@ void inicializarIluminacion(void)
 	//glEnable(GL_LIGHT6);
 	//glEnable(GL_LIGHT7);
 
-	// Light 0 properties (from above)
 	GLfloat light0_position[] = { 1.0,  1.0,   1.0, 0.0 };
-	GLfloat light1_position[] = { -1.0,  1.0,   1.0, 0.0 };
-	GLfloat light2_position[] = { 1.0,  1.0,  -1.0, 0.0 };
-	GLfloat light3_position[] = { -1.0,  1.0,  -1.0, 0.0 };
-	GLfloat light4_position[] = { 1.0,  1.0,   1.0, 0.0 };
-	GLfloat light5_position[] = { -1.0, -1.0,   1.0, 0.0 };
-	GLfloat light6_position[] = { 1.0, -1.0,  -1.0, 0.0 };
-	GLfloat light7_position[] = { -1.0, -1.0,  -1.0, 0.0 };
+	//GLfloat light1_position[] = { -1.0,  1.0,   1.0, 0.0 };
+	//GLfloat light2_position[] = { 1.0,  1.0,  -1.0, 0.0 };
+	//GLfloat light3_position[] = { -1.0,  1.0,  -1.0, 0.0 };
+	//GLfloat light4_position[] = { 1.0,  1.0,   1.0, 0.0 };
+	//GLfloat light5_position[] = { -1.0, -1.0,   1.0, 0.0 };
+	//GLfloat light6_position[] = { 1.0, -1.0,  -1.0, 0.0 };
+	//GLfloat light7_position[] = { -1.0, -1.0,  -1.0, 0.0 };
 
-	GLfloat light_ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light_ambient[] = { 10.0, 10.0, 10.0, 1.0 };
 	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
 	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
 

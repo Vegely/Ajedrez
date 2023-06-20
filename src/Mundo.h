@@ -198,6 +198,7 @@ private:
 	ListaModelo casilla_puede_mover;
 	ListaModelo casilla_coronacion;
 	ListaModelo casilla_ultimo_mov;
+	ListaModelo casilla_jaque;
 
 	Camara camara;
 	
@@ -232,11 +233,12 @@ public:
 	ListaModelo* getCasillaCoronacion  (void) { return &this->casilla_coronacion; }
 	ListaModelo* getCasillaPuedeMover  (void) { return &this->casilla_puede_mover; }
 	ListaModelo* getCasillaUltimoMov   (void) { return &this->casilla_ultimo_mov; }
+	ListaModelo* getCasillaJaque       (void) { return &this->casilla_jaque; }
 
 	/* CALLBACKS */
 	void movimiento	     (const float time);
 	void seleccionCasilla(int button, int state, int x_mouse, int y_mouse);
-	void actualizarCamara(bool turno);
+	void actualizarCamara(bool turno, float time);
 
 	/* GESTIÓN DE MODELOS */
 	void moverModelo(const Movimiento& mov, bool color, const Pieza::tipo_t tipo);
@@ -276,6 +278,8 @@ public:
 	static std::string ruta_textura_casilla_ultimo_mov;
 
 	static std::string ruta_fondo;
+
+	static CasillasTablero casillas_tablero_array;
 };
 
 #endif // !MUNDO_H

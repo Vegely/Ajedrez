@@ -53,6 +53,7 @@ public:
 	
 	/* SETTERS */
 	void setPosicion(int i, const Posicion& posicion) { _modelo[i]->setCoords(posicion); }
+	void setPosicion(const Posicion& posicion) { for (int i = 0; i < _numElem; i++) _modelo[i]->setCoords(posicion); }
 
 	/* OTROS */
 	void cargarTexturas(void)				   { for (int i = 0; i < _numElem; i++) _modelo[i]->cargarTextura(); }

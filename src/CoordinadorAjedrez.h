@@ -61,7 +61,7 @@ public:
 	/* FUNCIONES PARA CALLBACKS */
 	void initGraficos(void) { mundoGrafico.init(); flagDeSeguridadInit = false; }
 	void Draw(void);
-	void Timer(int value);
+	void Timer(float value);
 	void Keypress(unsigned char key);
 	void Keylift (unsigned char key);
 	void SpecialKeypress(int key);

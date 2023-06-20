@@ -348,9 +348,9 @@ bool Modelo::moverModelo(const Movimiento& movimiento)
 	}
 	else
 	{
-		std::cout << "El modelo que se ha intentado mover es nulo o no coincide con las coordenadas de inicio." << std::endl;
-		std::cout << "Tipo: " << this->tipo_pieza << std::endl;
-		std::cout << "Posicion modelo a mover: " << this->pos_coords.x << this->pos_coords.y << std::endl;
+		//std::cout << "El modelo que se ha intentado mover es nulo o no coincide con las coordenadas de inicio." << std::endl;
+		//std::cout << "Tipo: " << this->tipo_pieza << std::endl;
+		//std::cout << "Posicion modelo a mover: " << this->pos_coords.x << this->pos_coords.y << std::endl;
 		return false;
 	}
 }

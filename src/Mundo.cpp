@@ -4,8 +4,6 @@
 #include <ETSIDI.h>
 #include <string>
 
-CasillasTablero casillas_tablero_array;
-
 Mundo::Mundo(void) :
 	rey_blanco(1),
 	rey_negro(1),
@@ -33,6 +31,7 @@ Mundo::Mundo(void) :
 	casilla_puede_mover(20),
 	casilla_coronacion(20),
 	casilla_ultimo_mov(2),
+	casilla_jaque(10),
 	letras(),
 	camara({ 0.0f, 20.5f, -15.6f }),
 	peon(),
@@ -69,6 +68,7 @@ void Mundo::asignarModelos(void)
 		casilla_puede_mover .addElem(new Modelo(Posicion(-1, -1), casilla.scene, Mundo::ruta_textura_casilla_puede_comer));
 		casilla_coronacion  .addElem(new Modelo(Posicion(-1, -1), casilla.scene, Mundo::ruta_textura_casilla_coronacion));
 		casilla_ultimo_mov  .addElem(new Modelo(Posicion(-1, -1), casilla.scene, Mundo::ruta_textura_casilla_ultimo_mov));
+		casilla_jaque		.addElem(new Modelo(Posicion(-1, -1), casilla.scene, Mundo::ruta_textura_casilla_puede_comer));
 	}
 
 	casillas_blancas = new Modelo(NONE, Posicion(0, 0), Mundo::ruta_modelo_casillas_blancas, Mundo::ruta_textura_blanco_oscuro);
@@ -159,6 +159,7 @@ void Mundo::cargarTexturas(void)
 	casilla_coronacion   .cargarTexturas();
 	casilla_comible      .cargarTexturas();
 	casilla_ultimo_mov   .cargarTexturas();
+	casilla_jaque		 .cargarTexturas();
 }
 
 void Mundo::leerTablero(const Tablero& tablero)
@@ -169,12 +170,12 @@ void Mundo::leerTablero(const Tablero& tablero)
 		{
 			tablero_anterior[i] = tablero_actual[i];
 		}
-		if (tablero.leer(casillas_tablero_array[i]) != nullptr)
+		if (tablero.leer(Mundo::casillas_tablero_array[i]) != nullptr)
 		{
 			tablero_actual[i] = DatosPieza{
-			tablero.leer(casillas_tablero_array[i])->getColor(),
-			tablero.leer(casillas_tablero_array[i])->getTipo(),
-			tablero.leer(casillas_tablero_array[i])->getPosicion(),
+			tablero.leer(Mundo::casillas_tablero_array[i])->getColor(),
+			tablero.leer(Mundo::casillas_tablero_array[i])->getTipo(),
+			tablero.leer(Mundo::casillas_tablero_array[i])->getPosicion(),
 			true };
 		}
 		else
@@ -213,7 +214,7 @@ void Mundo::leerTablero(const Tablero& tablero)
 					{
 						// DEBUG
 						std::string tipo = "";
-						Pieza* pieza = tablero.leer(casillas_tablero_array[j]);
+						Pieza* pieza = tablero.leer(Mundo::casillas_tablero_array[j]);
 						if (pieza != nullptr)
 						{
 							switch (pieza->getTipo())
@@ -249,19 +250,19 @@ void Mundo::leerTablero(const Tablero& tablero)
 							default:
 								break;
 							}
-							std::cout << "Tipo pieza posicion " << casillas_tablero_array[j].x << casillas_tablero_array[j].y << ": " << tipo << std::endl;
+							std::cout << "Tipo pieza posicion " << Mundo::casillas_tablero_array[j].x << Mundo::casillas_tablero_array[j].y << ": " << tipo << std::endl;
 						}
 						else
-							std::cout << "Tipo pieza posicion " << casillas_tablero_array[j].x << casillas_tablero_array[j].y << ": " << "NONE" << std::endl;
+							std::cout << "Tipo pieza posicion " << Mundo::casillas_tablero_array[j].x << Mundo::casillas_tablero_array[j].y << ": " << "NONE" << std::endl;
 						// END_DEBUG
 
 							tablero_anterior[j] = tablero_actual[j];
-						if (tablero.leer(casillas_tablero_array[j]) != nullptr)
+						if (tablero.leer(Mundo::casillas_tablero_array[j]) != nullptr)
 						{
 							tablero_actual[j] = DatosPieza{
-							tablero.leer(casillas_tablero_array[j])->getColor(),
-							tablero.leer(casillas_tablero_array[j])->getTipo(),
-							tablero.leer(casillas_tablero_array[j])->getPosicion(),
+							tablero.leer(Mundo::casillas_tablero_array[j])->getColor(),
+							tablero.leer(Mundo::casillas_tablero_array[j])->getTipo(),
+							tablero.leer(Mundo::casillas_tablero_array[j])->getPosicion(),
 							true };
 						}
 						else
@@ -446,7 +447,7 @@ void Mundo::moverModelos(const Movimiento& mov)
 
 void Mundo::movimiento(const float time)
 { 
-	camara.movement(time, Point{ 0.0f, 20.5f, -15.6f }, Point{ 0.0f, 20.5f, 15.6f });
+	camara.motion(time);
 }
 
 ListaModelo* Mundo::seleccionarLista(bool color, Pieza::tipo_t tipo_pieza)
@@ -572,16 +573,13 @@ bool Mundo::getColorFromCoords(const Posicion& pos)
 	else return false;
 }
 
-void Mundo::actualizarCamara(bool turno)
+void Mundo::actualizarCamara(bool turno, float time)
 {
 	if (turno && !this->getGirado())
-	{
 		this->cambiarGirado();
-	}
 	else if (!turno && this->getGirado())
-	{
 		this->cambiarGirado();
-	}
+	camara.movement(Camara::white_pov, Camara::black_pov, time);
 }
 
 void Mundo::resetCasillas(void)
@@ -630,3 +628,5 @@ std::string Mundo::ruta_textura_casilla_coronacion = "texturas/casilla_coronacio
 std::string Mundo::ruta_textura_casilla_ultimo_mov = "texturas/casilla_ultimo_mov.png";
 
 std::string Mundo::ruta_fondo = "texturas/espacio.png";
+
+CasillasTablero Mundo::casillas_tablero_array;

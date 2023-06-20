@@ -189,14 +189,14 @@
     <ClInclude Include="src\DatosRanking.h">
       <Filter>6_Gestion_Ficheros\Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\ListaModelo.h">
-      <Filter>1_Lógica\Piezas\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ConfiguracionDeJuego.h">
       <Filter>1_Lógica\Piezas\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ElementoRed.h">
       <Filter>4_Redes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ListaModelo.h">
+      <Filter>2_Graficos\0_Glut\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -290,11 +290,11 @@
     <ClCompile Include="src\DatosRanking.cpp">
       <Filter>6_Gestion_Ficheros\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\ListaModelo.cpp">
-      <Filter>0_Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Movimiento.cpp">
       <Filter>1_Lógica\0_Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ListaModelo.cpp">
+      <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
