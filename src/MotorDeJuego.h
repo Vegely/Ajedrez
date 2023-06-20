@@ -22,6 +22,7 @@ class MotorDeJuego
 	Partida* fichero_partida = nullptr;
 	const ConfiguracionDeJuego config;
 	Tablero tablero;
+	bool exit = false;
 
 	Movimiento seleccionarEntrada(Mundo* p_motorGrafico);
 	Movimiento ensamblarMovimiento(Posicion posicion, Mundo* p_motorGrafico) const;
@@ -37,5 +38,7 @@ public:
 	static Pieza::tipo_t seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico);
 
 	DatosFinal motor(Mundo* mundoGrafico);
+
+	void setExit(bool exit) { this->exit = exit; }
 };
 

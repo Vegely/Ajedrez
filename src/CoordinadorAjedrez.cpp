@@ -24,6 +24,9 @@ void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const Configura
 	*p_datosFinal = motorLogico->motor(motorGrafico);
 
 	motorLogico->liberar();
+
+	delete motorLogico;
+	motorLogico = nullptr;
 }
 
 CoordinadorAjedrez::CoordinadorAjedrez() :
@@ -413,9 +416,13 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 			if (pantallaPausa.guardar_y_salir.enCaja(xg, yg))
 			{
 				estado = GUARDAR;
+				p_motorLogico->setExit(true);
 			}
 			if (pantallaPausa.salir_sin_guardar.enCaja(xg, yg))
+			{
 				estado = INICIO;
+				p_motorLogico->setExit(true);
+			}
 		}
 		else if (estado == CLIENTE)
 		{

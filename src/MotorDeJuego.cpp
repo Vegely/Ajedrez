@@ -324,7 +324,6 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico)
 {
 	DatosFinal datosFinal;
 	static Movimiento movimiento = Movimiento(Posicion(), Posicion());
-	bool exit = false;
 
 	while (!exit)
 	{
