@@ -22,9 +22,6 @@ void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const Configura
 	*p_datosFinal = motorLogico->motor(motorGrafico);
 
 	motorLogico->liberar();
-
-	delete motorLogico;
-	motorLogico = nullptr;
 }
 
 CoordinadorAjedrez::CoordinadorAjedrez() :
@@ -178,6 +175,7 @@ void CoordinadorAjedrez::Timer(float value)
 	{
 		p_motorLogico = new MotorDeJuego(config, &partida);
 		p_motor = new std::thread(threadMotor, p_motorLogico, &mundoGrafico, &configuracion, &datosFinal);
+		datosFinal.finalizada = false;
 		estado = JUEGO;
 	}
 	else if (estado == JUEGO) // Escribir a continuacion de la configuracion
@@ -261,7 +259,8 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 		else if (datosFinal.finalizada == true && key == 'k')
 		{
 			estado = FIN;
-			p_motor->join();
+			delete p_motorLogico;
+			p_motorLogico = nullptr;
 		}
 		/////////////////////////////////////////
 	}
@@ -403,11 +402,15 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 			{
 				estado = GUARDAR;
 				p_motorLogico->setExit(true);
+				delete p_motorLogico;
+				p_motorLogico = nullptr;
 			}
 			if (pantallaPausa.salir_sin_guardar.enCaja(xg, yg))
 			{
 				estado = INICIO;
 				p_motorLogico->setExit(true);
+				delete p_motorLogico;
+				p_motorLogico = nullptr;
 			}
 		}
 		else if (estado == CLIENTE)
