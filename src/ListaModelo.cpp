@@ -69,3 +69,11 @@ int ListaModelo::getIndex(const Posicion& pos) const
 	}
 	return -1;
 }
+
+void ListaModelo::setPosicion(int i, const Posicion& posicion)
+{
+	if (i <= _numElem)
+		_modelo[i]->setCoords(posicion);
+	else
+		std::cout << "Not an element in the list." << std::endl;
+}

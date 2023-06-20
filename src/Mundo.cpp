@@ -603,6 +603,42 @@ void Mundo::resetCasillas(ListaModelo* lista)
 		lista->setPosicion(i, Posicion());
 }
 
+void Mundo::inicializarDesdeTablero(Tablero* tablero)
+{
+	reiniciarTablero();
+	for (int i = 0; i < 64; i++)
+	{
+		Pieza* pieza_leida = tablero->leer(Mundo::casillas_tablero_array[i]);
+		if (pieza_leida != nullptr)
+		{
+			seleccionarLista(pieza_leida->getColor(), pieza_leida->getTipo())->
+				moverElemento(Movimiento(Posicion(), Mundo::casillas_tablero_array[i]));
+		}
+	}
+}
+
+void Mundo::reiniciarTablero(void)
+{
+	resetCasillas();
+	rey_blanco.setPosicion(Posicion());
+	rey_negro.setPosicion(Posicion());
+
+	peones_blancos.setPosicion(Posicion());
+	peones_negros.setPosicion(Posicion());
+
+	damas_blancas.setPosicion(Posicion());
+	damas_negras.setPosicion(Posicion());
+
+	torres_blancas.setPosicion(Posicion());
+	torres_negras.setPosicion(Posicion());
+
+	caballos_blancos.setPosicion(Posicion());
+	caballos_negros.setPosicion(Posicion());
+
+	alfiles_blancos.setPosicion(Posicion());
+	alfiles_negros.setPosicion(Posicion());
+}
+
 std::string Mundo::ruta_modelo_rey = "modelos/rey.obj";
 std::string Mundo::ruta_modelo_dama = "modelos/dama.obj";
 std::string Mundo::ruta_modelo_alfil = "modelos/alfil.obj";

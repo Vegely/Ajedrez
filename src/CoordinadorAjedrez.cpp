@@ -187,6 +187,7 @@ void CoordinadorAjedrez::Timer(float value)
 	{
 		p_motorLogico = new MotorDeJuego(config, &partida);
 		p_motor = new std::thread(threadMotor, p_motorLogico, &mundoGrafico, &configuracion, &datosFinal);
+		mundoGrafico.inicializarDesdeTablero(p_motorLogico->getTablero());
 		estado = JUEGO;
 	}
 	else if (estado == JUEGO) // Escribir a continuacion de la configuracion

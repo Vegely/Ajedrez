@@ -241,6 +241,8 @@ public:
 	void actualizarCamara(bool turno, float time);
 
 	/* GESTIÓN DE MODELOS */
+	void inicializarDesdeTablero(Tablero* tablero);
+	void reiniciarTablero(void);
 	void moverModelo(const Movimiento& mov, bool color, const Pieza::tipo_t tipo);
 	void leerTablero(const Tablero& tablero);
 	void dibujarFondo(void);

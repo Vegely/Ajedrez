@@ -221,9 +221,6 @@ Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico)
 void MotorDeJuego::pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_motorGrafico) const
 {
 	Pieza*		  pieza_leida       = tablero.leer(posSelec);
-	Pieza::tipo_t tipo				= tablero.leer(posSelec)->getTipo();
-	Posicion	  posicion			= tablero.leer(posSelec)->getPosicion();
-	bool	      color				= tablero.leer(posSelec)->getColor();
 	Movimiento    ultima_jugada		= tablero.getUltimaJugada();
 	ListaModelo*  lista_comer       = p_motorGrafico->getCasillaComible();
 	ListaModelo*  lista_coronacion	= p_motorGrafico->getCasillaCoronacion();
@@ -231,8 +228,11 @@ void MotorDeJuego::pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_mot
 	ListaModelo*  lista_mover		= p_motorGrafico->getCasillaPuedeMover();
 	ListaModelo*  lista_seleccion	= p_motorGrafico->getCasillaSeleccionada();
 
-	if (posSelec != Posicion() && pieza_leida != nullptr && color == tablero.colorDelTurno)
+	if (posSelec != Posicion() && pieza_leida != nullptr && tablero.leer(posSelec)->getColor() == tablero.colorDelTurno)
 	{
+		Pieza::tipo_t tipo = tablero.leer(posSelec)->getTipo();
+		Posicion posicion = tablero.leer(posSelec)->getPosicion();
+		bool color = tablero.leer(posSelec)->getColor();
 		for (int i = 0; i < 64; i++)
 		{
 			bool skip = false;

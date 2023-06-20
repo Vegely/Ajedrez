@@ -59,7 +59,7 @@ public:
 	bool		getColor		(void) const { return  this->color; }
 
 	/* SETTERS */
-	void setCoords(const Posicion& pos) { this->pos_coords   = pos; }
+	void setCoords(const Posicion& pos) { this->pos_coords = pos; }
 	
 	/* FUNCIONES */
 	void render(void);
