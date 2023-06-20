@@ -343,6 +343,7 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico)
 			if (tablero.jaqueMate())
 			{
 				datosFinal = { CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno };
+				datosFinal.finalizada = true;
 				exit = true;
 			}
 			else if (tablero.reyAhogado())

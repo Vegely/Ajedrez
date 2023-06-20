@@ -56,8 +56,8 @@ void rellenaRanking(DatosRanking* ptdranking, std::string nombre_fichero) {
 	std::getline(ifs, str);
 	std::getline(ifs, str);
 
+	int i = 0;
 	while (!ifs.eof() && str != "") {
-		static int i = 0;
 		std::stringstream ss;
 		std::getline(ifs, str);
 		ss << str;

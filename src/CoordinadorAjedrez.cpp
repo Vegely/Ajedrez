@@ -220,12 +220,35 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 			else
 			{
 				estado = INICIO;
+
+				//Actualización de la partida
 				partida.setFin(datosFinal.finalizada);
 				partida.setBlancas(pantallaGuardar.sblancas);
 				partida.setNegras(pantallaGuardar.snegras);
 				partida.setModo(pantallaGuardar.smodo);
 				partida.crearPartida();
 				partida.guardarPartida();
+
+				//Actualización del ranking
+				ranking.aniadirJugador(pantallaGuardar.sblancas);
+				ranking.aniadirJugador(pantallaGuardar.snegras);
+
+				if (datosFinal.finalizada) {
+					if (datosFinal.codigoFinal == CodigoFinal::JAQUE_MATE) {
+						if (datosFinal.ganaBlanco) {
+							ranking.actualizar(pantallaGuardar.sblancas, 3.0);
+							ranking.actualizar(pantallaGuardar.snegras, -3.0);
+						}
+						else {
+							ranking.actualizar(pantallaGuardar.sblancas, -3.0);
+							ranking.actualizar(pantallaGuardar.snegras, 3.0);
+						}
+					}
+					else {
+						ranking.actualizar(pantallaGuardar.sblancas, 1.0);
+						ranking.actualizar(pantallaGuardar.snegras, 1.0);
+					}
+				}
 
 				//Reset a valores iniciales para guardar futuras partidas
 				partida.reset();

@@ -24,7 +24,7 @@ private:
 
 	bool inicializa();
 	void aEstructura() { ptdranking = asignaEspacio(ultima_posicion); };
-	void liberaEstructura() { liberaEspacio(ptdranking); };
+	void liberaEstructura() { liberaEspacio(ptdranking); ptdranking = nullptr; };
 	void encabezado() const;
 	bool jugadorExiste(std::string nombre_jugador) const;
 
@@ -37,7 +37,7 @@ public:
 	Ranking(const Ranking&) = delete;
 	Ranking& operator=(const Ranking&) = delete;
 
-	bool aniadirJugador(const std::string& nombre, int id);
+	bool aniadirJugador(const std::string& nombre, int id=0);
 	void actualizar(const std::string& nombre, float puntos);
 	std::string nombre() const;
 	void print() const;
