@@ -64,12 +64,6 @@ void CoordinadorAjedrez::Draw(void)
 		mundoGrafico.getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), p_motorLogico->getTablero()->getUltimaJugada().fin));
 
 		mundoGrafico.updateCamara();
-
-		glEnable(GL_COLOR_MATERIAL);
-		glColor3ub(0, 128, 255);
-		glutSolidSphere(1000, 100, 100);
-		glColor3ub(255, 255, 255);
-		glDisable(GL_COLOR_MATERIAL);
 		mundoGrafico.renderizarModelos();
 
 		if (datosFinal.finalizada)

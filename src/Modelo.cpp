@@ -11,15 +11,15 @@ Modelo::Modelo(void) :
 	Entity()
 { }
 
-Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, const std::string& model_path, const std::string& texture_path) :
+Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path) :
 	texture_ID(0),
 	model_path(model_path),
 	texture_path(texture_path),
 	tipo_pieza(tipo_pieza),
-	pos_coords(initial_pos),
+	pos_coords(Posicion()),
 	scene(nullptr),
 	color(false),
-	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
+	Entity((initial_pos), "Modelo " + tipo_pieza)
 {
 	init();
 }
@@ -33,55 +33,6 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color) :
 	scene(nullptr),
 	color(color),
 	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
-{
-	switch (tipo_pieza)
-	{
-	case REY:
-		model_path = Mundo::ruta_modelo_rey;
-		break;
-
-	case DAMA:
-		model_path = Mundo::ruta_modelo_dama;
-		break;
-
-	case ALFIL:
-		model_path = Mundo::ruta_modelo_alfil;
-		break;
-
-	case CABALLO:
-		model_path = Mundo::ruta_modelo_caballo;
-		break;
-
-	case TORRE:
-		model_path = Mundo::ruta_modelo_torre;
-		break;
-
-	case PEON:
-		model_path = Mundo::ruta_modelo_peon;
-		break;
-
-	default:
-		std::cerr << "No default model path for the specified type." << std::endl;
-		exit(0);
-		break;
-	}
-	if (color)
-		texture_path = Mundo::ruta_textura_blanco;
-	else
-		texture_path = Mundo::ruta_textura_negro;
-
-	init();
-}
-
-Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, bool color) :
-	texture_ID(0),
-	model_path(""),
-	texture_path(""),
-	tipo_pieza(tipo_pieza),
-	pos_coords(Posicion()),
-	scene(nullptr),
-	color(color),
-	Entity(initial_pos, "Modelo " + tipo_pieza)
 {
 	switch (tipo_pieza)
 	{

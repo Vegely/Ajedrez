@@ -71,10 +71,10 @@ void Mundo::asignarModelos(void)
 		casilla_jaque		.addElem(new Modelo(Posicion(-1, -1), casilla.scene, Mundo::ruta_textura_casilla_puede_comer));
 	}
 
-	casillas_blancas = new Modelo(NONE, Posicion(0, 0), Mundo::ruta_modelo_casillas_blancas, Mundo::ruta_textura_blanco_oscuro);
-	casillas_negras  = new Modelo(NONE, Posicion(0, 0), Mundo::ruta_modelo_casillas_negras,  Mundo::ruta_textura_negro_claro);
-	marcos			 = new Modelo(NONE, Posicion(0, 0), Mundo::ruta_modelo_marcos,			 Mundo::ruta_textura_marco);
-	letras			 = new Modelo(NONE, Posicion(0, 0), Mundo::ruta_modelo_letras,			 Mundo::ruta_textura_blanco);
+	casillas_blancas = new Modelo(NONE, Point::zero, Mundo::ruta_modelo_casillas_blancas, Mundo::ruta_textura_blanco_oscuro);
+	casillas_negras  = new Modelo(NONE, Point::zero, Mundo::ruta_modelo_casillas_negras,  Mundo::ruta_textura_negro_claro);
+	marcos			 = new Modelo(NONE, Point::zero, Mundo::ruta_modelo_marcos,			  Mundo::ruta_textura_marco);
+	letras			 = new Modelo(NONE, Point::zero, Mundo::ruta_modelo_letras,			  Mundo::ruta_textura_blanco);
 
 	rey_blanco.addElem(new Modelo(REY, Posicion(4, 0), true,  rey.scene));
 	rey_negro .addElem(new Modelo(REY, Posicion(4, 7), false, rey.scene));

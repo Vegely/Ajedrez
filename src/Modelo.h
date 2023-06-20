@@ -37,9 +37,8 @@ public:
 public: 
 	/* FORMA CANÓNICA */
 	Modelo(void);
-	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, const std::string& model_path, const std::string& texture_path);
+	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path);
 	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color);
-	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, bool color);
 	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color, const aiScene* scene);
 	Modelo(const Posicion& initial_pos, const aiScene* scene, std::string texture_path);
 	virtual ~Modelo(void) { }

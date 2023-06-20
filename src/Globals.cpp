@@ -75,6 +75,7 @@ Point getPointFromCoords(const Posicion& pos)
 {
 	Point result;
 	result.x = -(-17.5f + (pos.x) * 5.0f);
+	result.y = 0.0f;
 	result.z = -17.5f + (pos.y) * 5.0f;
 	return result;
 }
