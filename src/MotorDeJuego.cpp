@@ -10,10 +10,6 @@
 #include "IA.h"
 #include "Mundo.h"
 
-///
-#include <iostream>
-///
-
 constexpr auto NUM_LINEAS = 40;
 
 Posicion getInput(Mundo* p_motorGrafico) 
@@ -54,184 +50,21 @@ Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico)
 	return movimiento;
 }
 
-//void MotorDeJuego::pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_motorGrafico) const
-//{// CHANGE
-//	Pieza*		  pieza_leida       = tablero.leer(posSelec);
-//	Pieza::tipo_t tipo				= tipo;
-//	Posicion	  posicion			= tablero.leer(posSelec)->getPosicion();
-//	bool	      color				= tablero.leer(posSelec)->getColor();
-//	Movimiento    ultima_jugada		= tablero.getUltimaJugada();
-//	ListaModelo*  lista_comer       = lista_comer;
-//	ListaModelo*  lista_coronacion	= lista_coronacion;
-//	ListaModelo*  lista_jugada		= p_motorGrafico->getCasillaUltimoMov();
-//	ListaModelo*  lista_mover		= lista_mover;
-//	ListaModelo*  lista_seleccion	= p_motorGrafico->getCasillaSeleccionada();
-//
-//	// for (int i = 0; i < 64; i++) if (posSelec != Posicion(-1, -1))
-//	// {
-//	// 	bool skip = false;
-//
-//	// 	if (Posicion(i % 8, i / 8) == posSelec)
-//	// 	{
-//
-//	// 	}
-//	// 	else
-//	// 	{
-//	// 		for (Posicion puedeMover : tablero.leer(posSelec)->getPuedeMover()) if (Posicion(i % 8, i / 8) == puedeMover)
-//	// 		{
-//	// 			if (tipo != Pieza::tipo_t::PEON || (puedeMover.x - posicion.x == 0))
-//	// 			{
-//	// 				if (tipo == Pieza::tipo_t::PEON &&
-//	// 					((posSelec.y == 6 &&  color) || (posSelec.y == 1 && !color)))
-//	// 				{
-//	// 					lista_coronacion->moverElemento(Movimiento(Posicion(-1, -1), puedeMover)); // Seleccion de movimento 
-//	// 					if (ultima_jugada.inicio == puedeMover || ultima_jugada.fin == puedeMover)
-//	// 						lista_jugada->moverElemento(Movimiento(puedeMover, Posicion(-1, -1)));
-//	// 					skip = true;
-//	// 					break;
-//	// 				}
-//	// 				else if (tipo == Pieza::tipo_t::REY && abs(posSelec.x - puedeMover.x) == 2)
-//	// 				{
-//	// 					lista_coronacion->moverElemento(Movimiento(Posicion(-1, -1), puedeMover)); // Seleccion de movimento 
-//	// 					if (ultima_jugada.inicio == puedeMover || ultima_jugada.fin == puedeMover)
-//	// 						lista_jugada->moverElemento(Movimiento(puedeMover, Posicion(-1, -1)));
-//	// 					skip = true;
-//	// 					break;
-//	// 				}
-//	// 				lista_mover->moverElemento(Movimiento(Posicion(-1, -1), puedeMover)); // Seleccion de movimento 
-//	// 				if (ultima_jugada.inicio == puedeMover || ultima_jugada.fin == puedeMover)
-//	// 					lista_jugada->moverElemento(Movimiento(puedeMover, Posicion(-1, -1)));
-//	// 				skip = true;
-//	// 				break;
-//	// 			}
-//	if (posSelec != Posicion() && tablero.leer(posSelec) != nullptr && tablero.leer(posSelec)->getColor() == tablero.colorDelTurno)
-//	{
-//		for (int i = 0; i < 64; i++)
-//		{
-//		bool skip = false;
-//		
-//			if (Posicion(i % 8, i / 8) == posSelec)
-//			{
-//				p_motorGrafico->getCasillaSeleccionada()->moverElemento(Movimiento(Posicion(), posSelec)); // Seleccion de la pieza
-//				if (tablero.getUltimaJugada().inicio == posSelec || tablero.getUltimaJugada().fin == posSelec)
-//					p_motorGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(posSelec, Posicion()));
-//			}
-//
-//			if (!skip && tablero.leer(Posicion(i % 8, i / 8)) != nullptr)
-//			{
-//				for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
-//				{
-//					if (Posicion(i % 8, i / 8) == puedeComer->getPosicion())
-//					{
-//						if (tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON && ((posSelec.y == 6 && tablero.leer(posSelec)->getColor()) || (posSelec.y == 1 && !tablero.leer(posSelec)->getColor())))
-//						{// CHANGE
-//							// lista_coronacion->moverElemento(Movimiento(Posicion(-1, -1), puedeComer->getPosicion())); // Seleccion de movimento 
-//							// if (ultima_jugada.inicio == puedeComer->getPosicion() || ultima_jugada.fin == puedeComer->getPosicion())
-//							// 	lista_jugada->moverElemento(Movimiento(puedeComer->getPosicion(), Posicion(-1, -1)));
-//							if (tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON && ((posSelec.y == 6 && tablero.leer(posSelec)->getColor()) || (posSelec.y == 1 && !tablero.leer(posSelec)->getColor())))
-//							{
-//								lista_coronacion->moverElemento(Movimiento(Posicion(), puedeComer->getPosicion())); // Seleccion de movimento 
-//								if (tablero.getUltimaJugada().inicio == puedeComer->getPosicion() || tablero.getUltimaJugada().fin == puedeComer->getPosicion())
-//									p_motorGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(puedeComer->getPosicion(), Posicion()));
-//								skip = true;
-//								break;
-//							}
-//							p_motorGrafico->getCasillaPuedeMover()->moverElemento(Movimiento(Posicion(), puedeComer->getPosicion())); // Seleccion de movimento 
-//							if (tablero.getUltimaJugada().inicio == puedeComer->getPosicion() || tablero.getUltimaJugada().fin == puedeComer->getPosicion())
-//								p_motorGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(puedeComer->getPosicion(), Posicion()));
-//							skip = true;
-//							break;
-//						}
-//						if (!(tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON && puedeComer->getPosicion().y == posSelec.y))
-//						{
-//							lista_comer->moverElemento(Movimiento(Posicion(-1, -1), puedeComer->getPosicion())); // Seleccion de la comida
-//							if (ultima_jugada.inicio == puedeComer->getPosicion() || ultima_jugada.fin == puedeComer->getPosicion())
-//								lista_jugada->moverElemento(Movimiento(puedeComer->getPosicion(), Posicion(-1, -1)));
-//						}
-//						skip = true;
-//						break;
-//					}
-//				}
-//			}
-//
-//			if (!skip && tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON)
-//			{
-//				for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
-//				{ // CHANGE
-//					// if (puedeComer->getPosicion().y == posSelec.y && Posicion(i % 8, i / 8) == puedeComer->getPosicion() + (1 - 2 * !tablero.leer(posSelec)->getColor()) * Posicion(0, 1))
-//					for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
-//						if (Posicion(i % 8, i / 8) == puedeComer->getPosicion())
-//						{
-//							if (tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON && ((posSelec.y == 6 && tablero.leer(posSelec)->getColor()) || (posSelec.y == 1 && !tablero.leer(posSelec)->getColor())))
-//							{
-//								p_motorGrafico->getCasillaCoronacion()->moverElemento(Movimiento(Posicion(), puedeComer->getPosicion())); // Seleccion de movimento 
-//								if (tablero.getUltimaJugada().inicio == puedeComer->getPosicion() || tablero.getUltimaJugada().fin == puedeComer->getPosicion())
-//									p_motorGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(puedeComer->getPosicion(), Posicion()));
-//								skip = true;
-//								break;
-//							}
-//							if (!(tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON && puedeComer->getPosicion().y == posSelec.y))
-//							{
-//								lista_comer->moverElemento(Movimiento(Posicion(), puedeComer->getPosicion())); // Seleccion de la comida
-//								if (tablero.getUltimaJugada().inicio == puedeComer->getPosicion() || tablero.getUltimaJugada().fin == puedeComer->getPosicion())
-//									p_motorGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(puedeComer->getPosicion(), Posicion()));
-//							}
-//							skip = true;
-//							break;
-//						}
-//				}
-//
-//				if (!skip && tablero.leer(posSelec)->getTipo() == Pieza::tipo_t::PEON)
-//				{
-//					for (Pieza* puedeComer : tablero.leer(posSelec)->getPuedeComer())
-//					{
-//						if (puedeComer->getPosicion().y == 4 && tablero.leer(posSelec)->getColor())
-//						{// CHANGE
-//							// lista_comer->moverElemento(Movimiento(Posicion(-1, -1), puedeComer->getPosicion() + Posicion(0, 1))); // Seleccion de la comida en pasada
-//							// if (ultima_jugada.inicio == puedeComer->getPosicion() + Posicion(0, 1) || ultima_jugada.fin == puedeComer->getPosicion() + Posicion(0, 1))
-//							// 	lista_jugada->moverElemento(Movimiento(puedeComer->getPosicion() + Posicion(0, 1), Posicion(-1, -1)));
-//							if (puedeComer->getPosicion().y == 4 && tablero.leer(posSelec)->getColor())
-//							{
-//								lista_comer->moverElemento(Movimiento(Posicion(), puedeComer->getPosicion() + Posicion(0, 1))); // Seleccion de la comida en pasada
-//								if (tablero.getUltimaJugada().inicio == puedeComer->getPosicion() + Posicion(0, 1) || tablero.getUltimaJugada().fin == puedeComer->getPosicion() + Posicion(0, 1))
-//									p_motorGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(puedeComer->getPosicion() + Posicion(0, 1), Posicion()));
-//							}
-//							else if (puedeComer->getPosicion().y == 3 && !tablero.leer(posSelec)->getColor())
-//							{
-//								lista_comer->moverElemento(Movimiento(Posicion(), puedeComer->getPosicion() + Posicion(0, -1))); // Seleccion de la comida en pasada
-//								if (tablero.getUltimaJugada().inicio == puedeComer->getPosicion() + Posicion(0, -1) || tablero.getUltimaJugada().fin == puedeComer->getPosicion() + Posicion(0, -1))
-//									p_motorGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(puedeComer->getPosicion() + Posicion(0, -1), Posicion()));
-//							}
-//							break;
-//						}
-//						else if (puedeComer->getPosicion().y == 3 && !tablero.leer(posSelec)->getColor())
-//						{
-//							lista_comer->moverElemento(Movimiento(Posicion(-1, -1), puedeComer->getPosicion() + Posicion(0, -1))); // Seleccion de la comida en pasada
-//							if (ultima_jugada.inicio == puedeComer->getPosicion() + Posicion(0, -1) || ultima_jugada.fin == puedeComer->getPosicion() + Posicion(0, -1))
-//								lista_jugada->moverElemento(Movimiento(puedeComer->getPosicion() + Posicion(0, -1), Posicion(-1, -1)));
-//						}
-//						break;
-//					}
-//				}
-//			}
-//		}
-//	}
-//}
-
 void MotorDeJuego::pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_motorGrafico) const
 {
-	Pieza*		  pieza_leida       = tablero.leer(posSelec);
-	Movimiento    ultima_jugada		= tablero.getUltimaJugada();
-	ListaModelo*  lista_comer       = p_motorGrafico->getCasillaComible();
-	ListaModelo*  lista_coronacion	= p_motorGrafico->getCasillaCoronacion();
-	ListaModelo*  lista_jugada		= p_motorGrafico->getCasillaUltimoMov();
-	ListaModelo*  lista_mover		= p_motorGrafico->getCasillaPuedeMover();
-	ListaModelo*  lista_seleccion	= p_motorGrafico->getCasillaSeleccionada();
+	Pieza*		 pieza_leida      = tablero.leer(posSelec);
+	Movimiento   ultima_jugada	  = tablero.getUltimaJugada();
+	ListaModelo* lista_comer      = p_motorGrafico->getCasillaComible();
+	ListaModelo* lista_coronacion = p_motorGrafico->getCasillaCoronacion();
+	ListaModelo* lista_jugada	  = p_motorGrafico->getCasillaUltimoMov();
+	ListaModelo* lista_mover	  = p_motorGrafico->getCasillaPuedeMover();
+	ListaModelo* lista_seleccion  = p_motorGrafico->getCasillaSeleccionada();
+	ListaModelo* lista_jaque	  = p_motorGrafico->getCasillaJaque();
 
 	if (posSelec != Posicion() && pieza_leida != nullptr && tablero.leer(posSelec)->getColor() == tablero.colorDelTurno)
 	{
 		Pieza::tipo_t tipo = tablero.leer(posSelec)->getTipo();
-		Posicion posicion = tablero.leer(posSelec)->getPosicion();
+		Posicion posicion  = tablero.leer(posSelec)->getPosicion();
 		bool color = tablero.leer(posSelec)->getColor();
 		for (int i = 0; i < 64; i++)
 		{
@@ -327,6 +160,9 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico)
 
 	while (!exit)
 	{
+		comprobarCasillasJaque(p_mundoGrafico);
+		p_mundoGrafico->antisolapamientoCasillas(tablero);
+
 		movimiento = seleccionarEntrada(p_mundoGrafico);
 
 		p_mundoGrafico->resetCasillas();
@@ -370,8 +206,6 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico)
 				exit = true;
 			}
 		}
-
-		//p_mundoGrafico->leerTablero(tablero);
 	}
 
 	return datosFinal;
@@ -400,68 +234,41 @@ Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, Mundo* p_motorGr
 		if (tablero.leer(posicion) != nullptr && tablero.leer(posicion)->getColor() == tablero.colorDelTurno)
 		{
 			inicio = posicion;
-			/*p_motorGrafico->resetCasillas();
-			pintarSeleccionCasilla(posicion, p_motorGrafico);*/
 			aux = true;
 			
 		}
 		else if (aux)
 		{
 			aux = false;
-			/*std::cout << "Movimiento: ";
-			std::cout << inicio.x << inicio.y << " a ";
-			std::cout << posicion.x << posicion.y << std::endl;*/
-			///
-			/*p_motorGrafico->resetCasillas();*/
 			return Movimiento(inicio, posicion);
 		}
-
-		// DEBUG
-		/*static Posicion auxPos = posicion;
-		if (auxPos != posicion)
-		{
-			std::string color_turno = "";
-			if (tablero.colorDelTurno) color_turno = "Blanco"; else color_turno = "Negro";
-			std::cout << std::endl << "DEBUG ENSAMBLAR MOVIMIENTO:" << std::endl;
-			std::cout << "Color del turno: " << color_turno << std::endl;
-			std::cout << "Existe pieza: " << (tablero.leer(posicion) != nullptr) << std::endl;
-			if (tablero.leer(posicion) != nullptr)
-			{
-				std::string tipo = "";
-				std::string color = "";
-				switch (static_cast<int>(tablero.leer(posicion)->getTipo()))
-				{
-				case 0:
-					tipo = "PEON";
-					break;
-				case 1:
-					tipo = "CABALLO";
-					break;
-				case 2:
-					tipo = "ALFIL";
-					break;
-				case 3:
-					tipo = "TORRE";
-					break;
-				case 4:
-					tipo = "DAMA";
-					break;
-				case 5:
-					tipo = "REY";
-					break;
-				default:
-					break;
-				}
-				if (tablero.leer(posicion)->getColor()) color = "Blanco"; else color = "Negro";
-				std::cout << "Pieza: " << tipo << std::endl;
-				std::cout << "Color de la pieza: " << color << std::endl;
-			}
-			std::cout << "Posicion inicio: " << inicio.x << inicio.y << std::endl;
-			std::cout << "Posicion actual: " << posicion.x << posicion.y << std::endl << std::endl;
-		}
-		auxPos = posicion;*/
-		// DEBUG
 	}
 
 	return Movimiento(posicion, Posicion()); 
+}
+
+void MotorDeJuego::comprobarCasillasJaque(Mundo* p_motorGrafico)
+{
+	p_motorGrafico->resetCasillas(p_motorGrafico->getCasillaJaque());
+	for (int i = 0; i < 64; i++)
+	{
+		Pieza* pieza_leida = tablero.leer(Posicion(i % 8, i / 8));
+		ListaModelo* lista_jaque = p_motorGrafico->getCasillaJaque();
+
+		if (pieza_leida != nullptr)
+		{
+			Pieza::tipo_t tipo = pieza_leida->getTipo();
+			Posicion posicion  = pieza_leida->getPosicion();
+
+			if (tipo == Pieza::tipo_t::REY && pieza_leida->getAmenazas().size() > 0) // Jaque
+			{
+				lista_jaque->moverElemento(Movimiento(Posicion(), posicion));
+				if (tablero.jaqueMate()) // Jaque Mate
+				{
+					for (int i = 0; i < pieza_leida->getAmenazas().size(); i++)
+						lista_jaque->moverElemento(Movimiento(Posicion(), pieza_leida->getAmenazas()[i]->getPosicion()));
+				}
+			}
+		}
+	}
 }

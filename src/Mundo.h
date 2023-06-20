@@ -242,10 +242,9 @@ public:
 	void actualizarCamara(bool turno, float time, const ConfiguracionDeJuego& config);
 
 	/* GESTIÓN DE MODELOS */
-	void moverDesdeTablero(Tablero* tablero);
+	void leerTablero(Tablero* tablero);
 	void reiniciarTablero(void);
 	void moverModelo(const Movimiento& mov, bool color, const Pieza::tipo_t tipo);
-	//void leerTablero(const Tablero& tablero);
 	void dibujarFondo(void);
 	void moverModelos(const Movimiento& mov);
 	void renderizarModelos(void);
@@ -254,9 +253,7 @@ public:
 	Pieza::tipo_t getTipoFromCoords(const Posicion& pos) const;
 	void resetCasillas(void);
 	void resetCasillas(ListaModelo* lista);
-	void comprobarCasillasJaque(const Tablero& tablero);
 	void antisolapamientoCasillas(const Tablero& tablero);
-	//void comprobacionPiezasTablero(const Tablero& tablero);
 
 	/* VARIABLES ESTÁTICAS */
 	static std::string ruta_modelo_rey;
@@ -279,7 +276,7 @@ public:
 	static std::string ruta_textura_marco;
 	static std::string ruta_textura_casilla_seleccionada;
 	static std::string ruta_textura_casilla_comible;
-	static std::string ruta_textura_casilla_puede_comer;
+	static std::string ruta_textura_casilla_puede_mover;
 	static std::string ruta_textura_casilla_coronacion;
 	static std::string ruta_textura_casilla_ultimo_mov;
 

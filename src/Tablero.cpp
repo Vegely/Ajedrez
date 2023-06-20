@@ -374,6 +374,9 @@ void Tablero::coronar(Posicion posicion, Pieza::tipo_t tipo)
 
 bool Tablero::jaqueMate() const 
 {
+	if (leer(reyPos[colorDelTurno]) == nullptr)
+		return true;
+
 	if (leer(reyPos[colorDelTurno])->getAmenazas().size() == 0)
 	{
 		return false;
