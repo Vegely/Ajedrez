@@ -639,6 +639,26 @@ void Mundo::reiniciarTablero(void)
 	alfiles_negros.setPosicion(Posicion());
 }
 
+void Mundo::antisolapamientoCasillas(const Tablero& tablero)
+{
+	// Comprobación de que la casilla de ultimo movimiento no coincida con otra.
+	this->resetCasillas(this->getCasillaUltimoMov());
+	this->getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), tablero.getUltimaJugada().inicio));
+	this->getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), tablero.getUltimaJugada().fin));
+	for (int i = 0; i < 2; i++)
+	{
+		bool erase = false;
+		Posicion pos = this->getCasillaUltimoMov()->getPosicion(i);
+		for (int i = 0; i < this->getCasillaComible()->size(); i++) if (this->getCasillaComible()->getPosicion(i) == pos) erase = true;
+		for (int i = 0; i < this->getCasillaSeleccionada()->size(); i++) if (this->getCasillaSeleccionada()->getPosicion(i) == pos) erase = true;
+		for (int i = 0; i < this->getCasillaPuedeMover()->size(); i++) if (this->getCasillaPuedeMover()->getPosicion(i) == pos) erase = true;
+		for (int i = 0; i < this->getCasillaCoronacion()->size(); i++) if (this->getCasillaCoronacion()->getPosicion(i) == pos) erase = true;
+		for (int i = 0; i < this->getCasillaJaque()->size(); i++) if (this->getCasillaJaque()->getPosicion(i) == pos) erase = true;
+		if (erase)
+			this->getCasillaUltimoMov()->moverElemento(Movimiento(pos, Posicion()));
+	}
+}
+
 std::string Mundo::ruta_modelo_rey = "modelos/rey.obj";
 std::string Mundo::ruta_modelo_dama = "modelos/dama.obj";
 std::string Mundo::ruta_modelo_alfil = "modelos/alfil.obj";

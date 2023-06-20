@@ -253,6 +253,7 @@ public:
 	Pieza::tipo_t getTipoFromCoords(const Posicion& pos);
 	void resetCasillas(void);
 	void resetCasillas(ListaModelo* lista);
+	void antisolapamientoCasillas(const Tablero& tablero);
 
 	/* VARIABLES ESTÁTICAS */
 	static std::string ruta_modelo_rey;
