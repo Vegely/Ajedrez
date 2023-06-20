@@ -62,7 +62,7 @@ public:
 
 	Movimiento getUltimaJugada() const { return ultimaJugada; }
 	bool getTurno(void) const { return colorDelTurno; }
-	Posicion getReyPos(bool color) { return reyPos[color]; }
+	Posicion getReyPos(bool color) const { return reyPos[color]; }
 
 	void coronar(Posicion posicion, Pieza::tipo_t tipo);
 

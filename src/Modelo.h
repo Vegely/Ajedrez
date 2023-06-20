@@ -84,8 +84,8 @@ struct ModeloBase
 			| aiProcess_FlipUVs);
 		if (this->scene == nullptr || this->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !this->scene->mRootNode)
 			std::cerr << "Failed to load model at " + path;
-		else
-			std::cout << "Created meshes." << std::endl;
+		//else
+		//	std::cout << "Created meshes." << std::endl;
 	}
 };
 

@@ -130,8 +130,6 @@ void Mundo::asignarModelos(void)
 	}
 
 	posicion_leida = Posicion();
-
-	std::cout << "Modelos asignados." << std::endl;
 }
 
 void Mundo::cargarTexturas(void)
@@ -162,173 +160,173 @@ void Mundo::cargarTexturas(void)
 	casilla_jaque		 .cargarTexturas();
 }
 
-void Mundo::leerTablero(const Tablero& tablero)
-{
-	for (int i = 0; i < 64; i++)
-	{
-		if (i != 0)
-		{
-			tablero_anterior[i] = tablero_actual[i];
-		}
-		if (tablero.leer(Mundo::casillas_tablero_array[i]) != nullptr)
-		{
-			tablero_actual[i] = DatosPieza{
-			tablero.leer(Mundo::casillas_tablero_array[i])->getColor(),
-			tablero.leer(Mundo::casillas_tablero_array[i])->getTipo(),
-			tablero.leer(Mundo::casillas_tablero_array[i])->getPosicion(),
-			true };
-		}
-		else
-		{
-			tablero_actual[i].valido = false;
-			tablero_actual[i].tipo = Pieza::tipo_t::NULA;
-		}
-
-		if (tablero_anterior[i].valido || tablero_actual[i].valido && (tablero_anterior[i] != tablero_actual[i])) // Si alguna casilla no sigue vacia y son distintas
-		{ 
-			// Comidas
-			if (tablero_anterior[i].valido && tablero_actual[i].valido)
-			{
-				// Una ha comido a la otra. Se sustituye la nueva por la antigua.
-				if (tablero_anterior[i].color != tablero_actual[i].color)
-				{
-					moverModelo(Movimiento(tablero_anterior[i].posicion, Posicion()), tablero_anterior[i].color, tablero_anterior[i].tipo);
-					moverModelo(tablero.getUltimaJugada(), tablero_actual[i].color, tablero_actual[i].tipo);
-				}
-				//else if (tablero_actual[i].tipo != tipo_actual || tablero_actual[i].color != color_actual)
-				//{
-				//	if (tablero_actual[i].tipo != Pieza::tipo_t::NULA)
-				//		moverModelo(Movimiento(Posicion(), casillas_tablero_array[i]), tablero_actual[i].color, tablero_actual[i].tipo);
-				//	else
-				//		moverModelo(Movimiento(casillas_tablero_array[i], Posicion()), tablero_actual[i].color, tablero_actual[i].tipo);
-				//}
-			}
-			// Coronacion
-			if (tablero_anterior[i].tipo == Pieza::tipo_t::PEON && !tablero_actual[i].valido)
-			{
-				if ((tablero_anterior[i].posicion.y == 6 && tablero_anterior[i].color) || (tablero_anterior[i].posicion.y == 1 && !tablero_anterior[i].color))
-				{
-					moverModelo(Movimiento(tablero_anterior[i].posicion, Posicion()), tablero_anterior[i].color, Pieza::tipo_t::PEON); // "Borrar" el peon
-					// Volver a leer el tablero porque han pasado dos cosas a la vez: destruccion del peon y promocion a la nueva pieza.
-					for (int j = 0; j < 64; j++)
-					{
-						// DEBUG
-						std::string tipo = "";
-						Pieza* pieza = tablero.leer(Mundo::casillas_tablero_array[j]);
-						if (pieza != nullptr)
-						{
-							switch (pieza->getTipo())
-							{
-							case Pieza::tipo_t::REY:
-								tipo = "REY";
-								break;
-
-							case Pieza::tipo_t::DAMA:
-								tipo = "DAMA";
-								break;
-
-							case Pieza::tipo_t::ALFIL:
-								tipo = "ALFIL";
-								break;
-
-							case Pieza::tipo_t::CABALLO:
-								tipo = "CABALLO";
-								break;
-
-							case Pieza::tipo_t::TORRE:
-								tipo = "TORRE";
-								break;
-
-							case Pieza::tipo_t::PEON:
-								tipo = "PEON";
-								break;
-
-							case Pieza::tipo_t::NULA:
-								tipo = "NONE";
-								break;
-
-							default:
-								break;
-							}
-							std::cout << "Tipo pieza posicion " << Mundo::casillas_tablero_array[j].x << Mundo::casillas_tablero_array[j].y << ": " << tipo << std::endl;
-						}
-						else
-							std::cout << "Tipo pieza posicion " << Mundo::casillas_tablero_array[j].x << Mundo::casillas_tablero_array[j].y << ": " << "NONE" << std::endl;
-						// END_DEBUG
-
-							tablero_anterior[j] = tablero_actual[j];
-						if (tablero.leer(Mundo::casillas_tablero_array[j]) != nullptr)
-						{
-							tablero_actual[j] = DatosPieza{
-							tablero.leer(Mundo::casillas_tablero_array[j])->getColor(),
-							tablero.leer(Mundo::casillas_tablero_array[j])->getTipo(),
-							tablero.leer(Mundo::casillas_tablero_array[j])->getPosicion(),
-							true };
-						}
-						else
-						{
-							tablero_actual[j].valido = false;
-							tablero_actual[j].tipo = Pieza::tipo_t::NULA;
-						}
-
-						//if (!tablero_anterior[j].valido && tablero_actual[j].valido && tablero_actual[i].tipo != Pieza::tipo_t::PEON)
-						//{
-						//	moverModelo(Movimiento(Posicion(), tablero.getUltimaJugada().fin), !tablero.getTurno(), tablero_actual[j].tipo);
-						//}
-						//else if (tablero_anterior[j].valido && tablero_actual[j].valido && (tablero_anterior[j].color != tablero_actual[j].color))
-						//{
-						//	moverModelo(Movimiento(tablero_anterior[j].posicion, Posicion()), tablero_anterior[j].color, tablero_anterior[j].tipo); // "Destruir" la pieza anterior
-						//	moverModelo(Movimiento(Posicion(), tablero.getUltimaJugada().fin), !tablero.getTurno(), tablero_actual[j].tipo);
-						//}
-						if(!tablero_anterior[j].valido && tablero_actual[j].valido ||
-							(tablero_anterior[j].valido && tablero_actual[j].valido &&
-								(tablero_anterior[j].color != tablero_actual[j].color)))
-							moverModelo(Movimiento(Posicion(), tablero.getUltimaJugada().fin), !tablero.getTurno(), tablero_actual[j].tipo);
-					}
-				}
-			}
-			// Movimiento normal
-			else if (!tablero_anterior[i].valido && tablero_actual[i].valido)
-			{
-				moverModelo(tablero.getUltimaJugada(), tablero_actual[i].color, tablero_actual[i].tipo);
-			}
-			// Captura al paso.
-			if (tablero_anterior[i].valido && !tablero_actual[i].valido && tablero_anterior[i].tipo == Pieza::tipo_t::PEON) // Si una casilla pasa de estar ocupada a no estarlo
-			{
-				if (tablero.getUltimaJugada().inicio != tablero_anterior[i].posicion && tablero.getUltimaJugada().fin != tablero_anterior[i].posicion)
-					moverModelo(Movimiento(tablero_anterior[i].posicion, Posicion()), tablero_anterior[i].color, tablero_anterior[i].tipo);
-			}
-			// Enroque
-			else if (!tablero_anterior[i].valido && tablero_actual[i].tipo == Pieza::tipo_t::REY &&
-				(tablero.getUltimaJugada().fin == Posicion(2, 0) || tablero.getUltimaJugada().fin == Posicion(6, 0) || 
-				 tablero.getUltimaJugada().fin == Posicion(2, 7) || tablero.getUltimaJugada().fin == Posicion(6, 7)))
-			{
-				if (tablero_actual[i].color)
-				{
-					if (tablero_actual[i].posicion == Posicion(2, 0))
-					{
-						moverModelo(Movimiento(Posicion(0, 0), Posicion(3, 0)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
-					}
-					else if (tablero_actual[i].posicion == Posicion(6, 0))
-					{
-						moverModelo(Movimiento(Posicion(7, 0), Posicion(5, 0)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
-					}
-				}
-				else
-				{
-					if (tablero_actual[i].posicion == Posicion(2, 7))
-					{
-						moverModelo(Movimiento(Posicion(0, 7), Posicion(3, 7)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
-					}
-					else if (tablero_actual[i].posicion == Posicion(6, 7))
-					{
-						moverModelo(Movimiento(Posicion(7, 7), Posicion(5, 7)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
-					}
-				}
-			}
-		}
-	}
-}
+//void Mundo::leerTablero(const Tablero& tablero)
+//{
+//	for (int i = 0; i < 64; i++)
+//	{
+//		if (i != 0)
+//		{
+//			tablero_anterior[i] = tablero_actual[i];
+//		}
+//		if (tablero.leer(Mundo::casillas_tablero_array[i]) != nullptr)
+//		{
+//			tablero_actual[i] = DatosPieza{
+//			tablero.leer(Mundo::casillas_tablero_array[i])->getColor(),
+//			tablero.leer(Mundo::casillas_tablero_array[i])->getTipo(),
+//			tablero.leer(Mundo::casillas_tablero_array[i])->getPosicion(),
+//			true };
+//		}
+//		else
+//		{
+//			tablero_actual[i].valido = false;
+//			tablero_actual[i].tipo = Pieza::tipo_t::NULA;
+//		}
+//
+//		if (tablero_anterior[i].valido || tablero_actual[i].valido && (tablero_anterior[i] != tablero_actual[i])) // Si alguna casilla no sigue vacia y son distintas
+//		{ 
+//			// Comidas
+//			if (tablero_anterior[i].valido && tablero_actual[i].valido)
+//			{
+//				// Una ha comido a la otra. Se sustituye la nueva por la antigua.
+//				if (tablero_anterior[i].color != tablero_actual[i].color)
+//				{
+//					moverModelo(Movimiento(tablero_anterior[i].posicion, Posicion()), tablero_anterior[i].color, tablero_anterior[i].tipo);
+//					moverModelo(tablero.getUltimaJugada(), tablero_actual[i].color, tablero_actual[i].tipo);
+//				}
+//				//else if (tablero_actual[i].tipo != tipo_actual || tablero_actual[i].color != color_actual)
+//				//{
+//				//	if (tablero_actual[i].tipo != Pieza::tipo_t::NULA)
+//				//		moverModelo(Movimiento(Posicion(), casillas_tablero_array[i]), tablero_actual[i].color, tablero_actual[i].tipo);
+//				//	else
+//				//		moverModelo(Movimiento(casillas_tablero_array[i], Posicion()), tablero_actual[i].color, tablero_actual[i].tipo);
+//				//}
+//			}
+//			// Coronacion
+//			if (tablero_anterior[i].tipo == Pieza::tipo_t::PEON && !tablero_actual[i].valido)
+//			{
+//				if ((tablero_anterior[i].posicion.y == 6 && tablero_anterior[i].color) || (tablero_anterior[i].posicion.y == 1 && !tablero_anterior[i].color))
+//				{
+//					moverModelo(Movimiento(tablero_anterior[i].posicion, Posicion()), tablero_anterior[i].color, Pieza::tipo_t::PEON); // "Borrar" el peon
+//					// Volver a leer el tablero porque han pasado dos cosas a la vez: destruccion del peon y promocion a la nueva pieza.
+//					for (int j = 0; j < 64; j++)
+//					{
+//						// DEBUG
+//						std::string tipo = "";
+//						Pieza* pieza = tablero.leer(Mundo::casillas_tablero_array[j]);
+//						if (pieza != nullptr)
+//						{
+//							switch (pieza->getTipo())
+//							{
+//							case Pieza::tipo_t::REY:
+//								tipo = "REY";
+//								break;
+//
+//							case Pieza::tipo_t::DAMA:
+//								tipo = "DAMA";
+//								break;
+//
+//							case Pieza::tipo_t::ALFIL:
+//								tipo = "ALFIL";
+//								break;
+//
+//							case Pieza::tipo_t::CABALLO:
+//								tipo = "CABALLO";
+//								break;
+//
+//							case Pieza::tipo_t::TORRE:
+//								tipo = "TORRE";
+//								break;
+//
+//							case Pieza::tipo_t::PEON:
+//								tipo = "PEON";
+//								break;
+//
+//							case Pieza::tipo_t::NULA:
+//								tipo = "NONE";
+//								break;
+//
+//							default:
+//								break;
+//							}
+//							std::cout << "Tipo pieza posicion " << Mundo::casillas_tablero_array[j].x << Mundo::casillas_tablero_array[j].y << ": " << tipo << std::endl;
+//						}
+//						else
+//							std::cout << "Tipo pieza posicion " << Mundo::casillas_tablero_array[j].x << Mundo::casillas_tablero_array[j].y << ": " << "NONE" << std::endl;
+//						// END_DEBUG
+//
+//							tablero_anterior[j] = tablero_actual[j];
+//						if (tablero.leer(Mundo::casillas_tablero_array[j]) != nullptr)
+//						{
+//							tablero_actual[j] = DatosPieza{
+//							tablero.leer(Mundo::casillas_tablero_array[j])->getColor(),
+//							tablero.leer(Mundo::casillas_tablero_array[j])->getTipo(),
+//							tablero.leer(Mundo::casillas_tablero_array[j])->getPosicion(),
+//							true };
+//						}
+//						else
+//						{
+//							tablero_actual[j].valido = false;
+//							tablero_actual[j].tipo = Pieza::tipo_t::NULA;
+//						}
+//
+//						//if (!tablero_anterior[j].valido && tablero_actual[j].valido && tablero_actual[i].tipo != Pieza::tipo_t::PEON)
+//						//{
+//						//	moverModelo(Movimiento(Posicion(), tablero.getUltimaJugada().fin), !tablero.getTurno(), tablero_actual[j].tipo);
+//						//}
+//						//else if (tablero_anterior[j].valido && tablero_actual[j].valido && (tablero_anterior[j].color != tablero_actual[j].color))
+//						//{
+//						//	moverModelo(Movimiento(tablero_anterior[j].posicion, Posicion()), tablero_anterior[j].color, tablero_anterior[j].tipo); // "Destruir" la pieza anterior
+//						//	moverModelo(Movimiento(Posicion(), tablero.getUltimaJugada().fin), !tablero.getTurno(), tablero_actual[j].tipo);
+//						//}
+//						if(!tablero_anterior[j].valido && tablero_actual[j].valido ||
+//							(tablero_anterior[j].valido && tablero_actual[j].valido &&
+//								(tablero_anterior[j].color != tablero_actual[j].color)))
+//							moverModelo(Movimiento(Posicion(), tablero.getUltimaJugada().fin), !tablero.getTurno(), tablero_actual[j].tipo);
+//					}
+//				}
+//			}
+//			// Movimiento normal
+//			else if (!tablero_anterior[i].valido && tablero_actual[i].valido)
+//			{
+//				moverModelo(tablero.getUltimaJugada(), tablero_actual[i].color, tablero_actual[i].tipo);
+//			}
+//			// Captura al paso.
+//			if (tablero_anterior[i].valido && !tablero_actual[i].valido && tablero_anterior[i].tipo == Pieza::tipo_t::PEON) // Si una casilla pasa de estar ocupada a no estarlo
+//			{
+//				if (tablero.getUltimaJugada().inicio != tablero_anterior[i].posicion && tablero.getUltimaJugada().fin != tablero_anterior[i].posicion)
+//					moverModelo(Movimiento(tablero_anterior[i].posicion, Posicion()), tablero_anterior[i].color, tablero_anterior[i].tipo);
+//			}
+//			// Enroque
+//			else if (!tablero_anterior[i].valido && tablero_actual[i].tipo == Pieza::tipo_t::REY &&
+//				(tablero.getUltimaJugada().fin == Posicion(2, 0) || tablero.getUltimaJugada().fin == Posicion(6, 0) || 
+//				 tablero.getUltimaJugada().fin == Posicion(2, 7) || tablero.getUltimaJugada().fin == Posicion(6, 7)))
+//			{
+//				if (tablero_actual[i].color)
+//				{
+//					if (tablero_actual[i].posicion == Posicion(2, 0))
+//					{
+//						moverModelo(Movimiento(Posicion(0, 0), Posicion(3, 0)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
+//					}
+//					else if (tablero_actual[i].posicion == Posicion(6, 0))
+//					{
+//						moverModelo(Movimiento(Posicion(7, 0), Posicion(5, 0)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
+//					}
+//				}
+//				else
+//				{
+//					if (tablero_actual[i].posicion == Posicion(2, 7))
+//					{
+//						moverModelo(Movimiento(Posicion(0, 7), Posicion(3, 7)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
+//					}
+//					else if (tablero_actual[i].posicion == Posicion(6, 7))
+//					{
+//						moverModelo(Movimiento(Posicion(7, 7), Posicion(5, 7)), tablero_actual[i].color, Pieza::tipo_t::TORRE);
+//					}
+//				}
+//			}
+//		}
+//	}
+//}
 
 void Mundo::moverModelo(const Movimiento& mov, bool color, const Pieza::tipo_t tipo)
 {
@@ -504,42 +502,42 @@ ListaModelo* Mundo::seleccionarLista(bool color, Pieza::tipo_t tipo_pieza)
 
 Pieza::tipo_t Mundo::seleccionPiezaCoronacion(bool color)
 {
-	do
-	{
-		if (color) this->coronando_blancas = true;
-		else	   this->coronando_negras  = true;
+	if (color) this->coronando_blancas = true;
+	else	   this->coronando_negras = true;
 
-		if ((posicion_leida.y == 3 && color) || (posicion_leida.y == 4 && !color))
+	Posicion& posicion = this->posicion_leida;
+	while (posicion.y != 3 || posicion.y != 4 || posicion.x != 2 || posicion.x != 3 || posicion.x != 4 || posicion.x != 5)
+	{
+		if ((posicion.y == 3 && color) || (posicion.y == 4 && !color))
 		{
-			switch (posicion_leida.x)
+			switch (posicion.x)
 			{
 			case 2:
 				this->coronando_blancas = false;
-				this->coronando_negras  = false;
+				this->coronando_negras = false;
 				return Pieza::tipo_t::ALFIL;
 				break;
 			case 3:
 				this->coronando_blancas = false;
-				this->coronando_negras  = false;
+				this->coronando_negras = false;
 				return Pieza::tipo_t::TORRE;
 				break;
 			case 4:
 				this->coronando_blancas = false;
-				this->coronando_negras  = false;
+				this->coronando_negras = false;
 				return Pieza::tipo_t::DAMA;
 				break;
 			case 5:
 				this->coronando_blancas = false;
-				this->coronando_negras  = false;
+				this->coronando_negras = false;
 				return Pieza::tipo_t::CABALLO;
 				break;
 			}
 		}
-	} while (posicion_leida.x != 3 || posicion_leida.x != 4 || posicion_leida.x != 5 ||
-		posicion_leida.x != 6 || (posicion_leida.y != 3 && color) || (posicion_leida.y != 4 && !color));
+	}
 }
 
-Pieza::tipo_t Mundo::getTipoFromCoords(const Posicion& pos)
+Pieza::tipo_t Mundo::getTipoFromCoords(const Posicion& pos) const
 {
 	if      (rey_blanco      .getTipo(pos) != Pieza::tipo_t::NULA) return rey_blanco      .getTipo(pos);
 	else if (rey_negro       .getTipo(pos) != Pieza::tipo_t::NULA) return rey_negro       .getTipo(pos);
@@ -573,12 +571,31 @@ bool Mundo::getColorFromCoords(const Posicion& pos)
 	else return false;
 }
 
-void Mundo::actualizarCamara(bool turno, float time)
+void Mundo::actualizarCamara(bool turno, float time, const ConfiguracionDeJuego& config)
 {
-	if (turno && !this->getGirado())
-		this->cambiarGirado();
-	else if (!turno && this->getGirado())
-		this->cambiarGirado();
+	ConfiguracionDeJuego::FormasDeInteraccion local = ConfiguracionDeJuego::FormasDeInteraccion::LOCAL;
+	ConfiguracionDeJuego::FormasDeInteraccion ia = ConfiguracionDeJuego::FormasDeInteraccion::IA;
+	ConfiguracionDeJuego::FormasDeInteraccion emisor = ConfiguracionDeJuego::FormasDeInteraccion::EMISOR;
+	ConfiguracionDeJuego::FormasDeInteraccion receptor = ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR;
+
+	if (config[0] == local && config[1] == local)
+	{
+		if (turno && !this->getGirado())
+			this->cambiarGirado();
+		else if (!turno && this->getGirado())
+			this->cambiarGirado();
+	}
+	else if (config[0] == local && config[1] == ia)
+	{
+		if (this->getGirado())
+			this->cambiarGirado();
+	}
+	else if (config[0] == ia && config[1] == local)
+	{
+		if (!this->getGirado())
+			this->cambiarGirado();
+	}
+
 	camara.movement(Camara::white_pov, Camara::black_pov, time);
 }
 
@@ -603,7 +620,7 @@ void Mundo::resetCasillas(ListaModelo* lista)
 		lista->setPosicion(i, Posicion());
 }
 
-void Mundo::inicializarDesdeTablero(Tablero* tablero)
+void Mundo::moverDesdeTablero(Tablero* tablero)
 {
 	reiniciarTablero();
 	for (int i = 0; i < 64; i++)
@@ -611,15 +628,14 @@ void Mundo::inicializarDesdeTablero(Tablero* tablero)
 		Pieza* pieza_leida = tablero->leer(Mundo::casillas_tablero_array[i]);
 		if (pieza_leida != nullptr)
 		{
-			seleccionarLista(pieza_leida->getColor(), pieza_leida->getTipo())->
-				moverElemento(Movimiento(Posicion(), Mundo::casillas_tablero_array[i]));
+			ListaModelo* lista = seleccionarLista(pieza_leida->getColor(), pieza_leida->getTipo());
+			if (lista != nullptr) lista->moverElemento(Movimiento(Posicion(), Mundo::casillas_tablero_array[i]));
 		}
 	}
 }
 
 void Mundo::reiniciarTablero(void)
 {
-	resetCasillas();
 	rey_blanco.setPosicion(Posicion());
 	rey_negro.setPosicion(Posicion());
 
@@ -658,6 +674,62 @@ void Mundo::antisolapamientoCasillas(const Tablero& tablero)
 			this->getCasillaUltimoMov()->moverElemento(Movimiento(pos, Posicion()));
 	}
 }
+
+void Mundo::comprobarCasillasJaque(const Tablero& tablero)
+{
+	static bool flag = false;
+	static bool flag_mate = false;
+	static Movimiento ultima_jugada = Movimiento();
+
+	if (ultima_jugada != tablero.getUltimaJugada())
+	{
+		flag = false;
+		flag_mate = false;
+		this->casilla_jaque.setPosicion(Posicion()); // Mueve todas las casillas rojas a su posicion inicial;
+	}
+
+	if (tablero.leer(tablero.getReyPos(tablero.getTurno()))->getAmenazas().size() +
+		tablero.leer(tablero.getReyPos(!tablero.getTurno()))->getAmenazas().size() != 0 && !flag) // Jaque / Jaque Mate
+	{
+		if (tablero.leer(tablero.getReyPos(tablero.getTurno()))->getAmenazas().size() != 0)
+			casilla_jaque.moverElemento(Movimiento(Posicion(), tablero.getReyPos(tablero.getTurno()))); // Mover casilla roja
+		else
+			casilla_jaque.moverElemento(Movimiento(Posicion(), tablero.getReyPos(!tablero.getTurno()))); // Mover casilla roja
+
+		if (tablero.jaqueMate() && !flag_mate)
+		{
+			for (Pieza* i : tablero.leer(tablero.getReyPos(tablero.getTurno()))->getAmenazas())
+				casilla_jaque.moverElemento(Movimiento(Posicion(), i->getPosicion()));
+			flag_mate = true;
+		}
+		std::cout << "Casilla: " << tablero.getReyPos(tablero.getTurno()).x << tablero.getReyPos(tablero.getTurno()).y << std::endl;
+		std::cout << "Casilla valida: " << (tablero.leer(tablero.getReyPos(tablero.getTurno())) != nullptr) << std::endl;
+		std::cout << "Es rey: " << (tablero.leer(tablero.getReyPos(tablero.getTurno()))->getTipo() == Pieza::tipo_t::REY) << std::endl;
+		std::cout << "Amenazas: " << tablero.leer(tablero.getReyPos(tablero.getTurno()))->getAmenazas().size() << std::endl;
+		flag = true;
+	}
+	ultima_jugada = tablero.getUltimaJugada();
+}
+
+//void Mundo::comprobacionPiezasTablero(const Tablero& tablero)
+//{
+//	for (int i = 0; i < 64; i++)
+//	{
+//		if (tablero.leer(Posicion(i % 8, i / 8)) != nullptr)
+//		{
+//			if (tablero.leer(Posicion(i % 8, i / 8))->getTipo() != this->getTipoFromCoords(Posicion(i % 8, i / 8)))
+//			{
+//				seleccionarLista(tablero.leer(Posicion(i % 8, i / 8))->getColor(), tablero.leer(Posicion(i % 8, i / 8))->getTipo())->
+//					moverElemento(Movimiento(Posicion(), Posicion(i % 8, i / 8)));
+//			}
+//		}
+//		else
+//		{
+//			seleccionarLista(tablero.leer(Posicion(i % 8, i / 8))->getColor(), tablero.leer(Posicion(i % 8, i / 8))->getTipo())->
+//				moverElemento(Movimiento(Posicion(i % 8, i / 8), Posicion()));
+//		}
+//	}
+//}
 
 std::string Mundo::ruta_modelo_rey = "modelos/rey.obj";
 std::string Mundo::ruta_modelo_dama = "modelos/dama.obj";

@@ -19,7 +19,7 @@ PantallaGuardar pantallaGuardar;
 
 void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal)
 {
-	std::cout << "Thread inicializado" << std::endl;
+	//std::cout << "Thread inicializado" << std::endl;
 
 	*p_datosFinal = motorLogico->motor(motorGrafico);
 
@@ -59,8 +59,8 @@ void CoordinadorAjedrez::Draw(void)
 	}
 	else if (estado == JUEGO)
 	{
-		mundoGrafico.antisolapamientoCasillas(*p_motorLogico->getTablero());
 		mundoGrafico.updateCamara();
+		mundoGrafico.antisolapamientoCasillas(*p_motorLogico->getTablero());
 		mundoGrafico.renderizarModelos();
 
 		if (datosFinal.finalizada)
@@ -181,14 +181,14 @@ void CoordinadorAjedrez::Timer(float value)
 	{
 		p_motorLogico = new MotorDeJuego(config, &partida);
 		p_motor = new std::thread(threadMotor, p_motorLogico, &mundoGrafico, &configuracion, &datosFinal);
-		mundoGrafico.inicializarDesdeTablero(p_motorLogico->getTablero());
 		estado = JUEGO;
 	}
 	else if (estado == JUEGO) // Escribir a continuacion de la configuracion
 	{	
-		this->p_motorLogico->comprobarCasillasJaque(&this->motorGrafico);
-		this->mundoGrafico.leerTablero(*this->p_motorLogico->getTablero());
-		this->mundoGrafico.actualizarCamara(this->p_motorLogico->getTablero()->getTurno(), value);
+		//this->mundoGrafico.leerTablero(*this->p_motorLogico->getTablero());
+		mundoGrafico.comprobarCasillasJaque(*p_motorLogico->getTablero());
+		mundoGrafico.moverDesdeTablero(p_motorLogico->getTablero());
+		this->mundoGrafico.actualizarCamara(this->p_motorLogico->getTablero()->getTurno(), value, config);
 		this->mundoGrafico.movimiento(value);
 	}
 }

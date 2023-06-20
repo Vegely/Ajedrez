@@ -4,7 +4,7 @@ void ListaModelo::addElem(Modelo* modelo)
 {
 	if (_numElem == _maxElem)
 	{
-		std::cout << "Max number of elements reached." << std::endl;
+		//std::cout << "Max number of elements reached." << std::endl;
 		return;
 	}
 	else

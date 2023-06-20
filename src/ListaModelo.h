@@ -28,9 +28,9 @@ public:
 	int      size        (void)  const { return _maxElem; }
 	int		 getNumElem  (void)	 const { return _numElem; }
 	int      getIndex    (const Posicion& pos) const;
-	Pieza::tipo_t getTipo(int i) { return Modelo::castTipo(_modelo[i]->getTipo()); }
-	bool     getColor	 (int i) { return _modelo[i]->getColor(); }
-	Pieza::tipo_t getTipo(const Posicion& pos)
+	Pieza::tipo_t getTipo(int i) const { return Modelo::castTipo(_modelo[i]->getTipo()); }
+	bool     getColor	 (int i) const { return _modelo[i]->getColor(); }
+	Pieza::tipo_t getTipo(const Posicion& pos) const
 	{
 		for (int i = 0; i < this->size(); i++)
 		{
@@ -61,10 +61,13 @@ public:
 	void moverModelos  (const Movimiento& mov) { for (int i = 0; i < _numElem; i++) _modelo[i]->moverModelo(mov); }
 	void moverElemento (const Movimiento& mov)
 	{
-		for (int i = 0; i < _numElem; i++)
+		if (_numElem <= _maxElem && this != nullptr)
 		{
-			if (_modelo[i]->moverModelo(mov))
-				return;
+			for (int i = 0; i < _numElem; i++)
+			{
+				if (_modelo[i]->moverModelo(mov))
+					return;
+			}
 		}
 	}
 };

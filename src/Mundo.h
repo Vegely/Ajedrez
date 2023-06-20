@@ -6,6 +6,7 @@
 #include "Camara.h"
 #include "Movimiento.h"
 #include "Plane.h"
+#include "ConfiguracionDeJuego.h"
 
 class Casilla
 {
@@ -238,22 +239,24 @@ public:
 	/* CALLBACKS */
 	void movimiento	     (const float time);
 	void seleccionCasilla(int button, int state, int x_mouse, int y_mouse);
-	void actualizarCamara(bool turno, float time);
+	void actualizarCamara(bool turno, float time, const ConfiguracionDeJuego& config);
 
 	/* GESTIÓN DE MODELOS */
-	void inicializarDesdeTablero(Tablero* tablero);
+	void moverDesdeTablero(Tablero* tablero);
 	void reiniciarTablero(void);
 	void moverModelo(const Movimiento& mov, bool color, const Pieza::tipo_t tipo);
-	void leerTablero(const Tablero& tablero);
+	//void leerTablero(const Tablero& tablero);
 	void dibujarFondo(void);
 	void moverModelos(const Movimiento& mov);
 	void renderizarModelos(void);
 	bool getColorFromCoords(const Posicion& pos);
 	ListaModelo* seleccionarLista(bool color, Pieza::tipo_t tipo_pieza);
-	Pieza::tipo_t getTipoFromCoords(const Posicion& pos);
+	Pieza::tipo_t getTipoFromCoords(const Posicion& pos) const;
 	void resetCasillas(void);
 	void resetCasillas(ListaModelo* lista);
+	void comprobarCasillasJaque(const Tablero& tablero);
 	void antisolapamientoCasillas(const Tablero& tablero);
+	//void comprobacionPiezasTablero(const Tablero& tablero);
 
 	/* VARIABLES ESTÁTICAS */
 	static std::string ruta_modelo_rey;

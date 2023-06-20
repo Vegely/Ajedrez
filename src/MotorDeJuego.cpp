@@ -371,7 +371,7 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico)
 			}
 		}
 
-		p_mundoGrafico->leerTablero(tablero);
+		//p_mundoGrafico->leerTablero(tablero);
 	}
 
 	return datosFinal;
@@ -464,41 +464,4 @@ Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, Mundo* p_motorGr
 	}
 
 	return Movimiento(posicion, Posicion()); 
-}
-
-void MotorDeJuego::comprobarCasillasJaque(Mundo* motorGrafico)
-{
-	ListaModelo* lista_jaque = motorGrafico->getCasillaJaque();
-	static bool flag = false;
-	static bool flag_mate = false;
-	static Movimiento ultima_jugada = Movimiento();
-
-	if (ultima_jugada != tablero.getUltimaJugada())
-	{
-		flag = false;
-		flag_mate = false;
-		lista_jaque->setPosicion(Posicion(-1, -1)); // Mueve todas las casillas rojas a su posicion inicial;
-	}
-
-	if (tablero.leer(tablero.getReyPos( tablero.getTurno()))->getAmenazas().size() +
-		tablero.leer(tablero.getReyPos(!tablero.getTurno()))->getAmenazas().size() != 0 && !flag) // Jaque / Jaque Mate
-	{
-		if (tablero.leer(tablero.getReyPos(tablero.getTurno()))->getAmenazas().size() != 0)
-			lista_jaque->moverElemento(Movimiento(Posicion(-1, -1), tablero.getReyPos(tablero.getTurno()))); // Mover casilla roja
-		else
-			lista_jaque->moverElemento(Movimiento(Posicion(-1, -1), tablero.getReyPos(!tablero.getTurno()))); // Mover casilla roja
-
-		if (tablero.jaqueMate() && !flag_mate)
-		{
-			for (Pieza* i : tablero.leer(tablero.getReyPos(tablero.getTurno()))->getAmenazas())
-				lista_jaque->moverElemento(Movimiento(Posicion(-1, -1), i->getPosicion()));
-			flag_mate = true;
-		}
-		std::cout << "Casilla: " << tablero.getReyPos(tablero.getTurno()).x << tablero.getReyPos(tablero.getTurno()).y << std::endl;
-		std::cout << "Casilla valida: " << (tablero.leer(tablero.getReyPos(tablero.getTurno())) != nullptr) << std::endl;
-		std::cout << "Es rey: " << (tablero.leer(tablero.getReyPos(tablero.getTurno()))->getTipo() == Pieza::tipo_t::REY) << std::endl;
-		std::cout << "Amenazas: " << tablero.leer(tablero.getReyPos(tablero.getTurno()))->getAmenazas().size() << std::endl;
-		flag = true;
-	}
-	ultima_jugada = tablero.getUltimaJugada();
 }
