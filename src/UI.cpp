@@ -29,7 +29,12 @@ void PantallaGuardar::escrituraGlut()
 		ETSIDI::setTextColor(255, 0, 0);
 	ETSIDI::printxy(snegras.c_str(), 7, -1, 1);
 	ETSIDI::setTextColor(0, 0, 0);
+}
 
+
+void PantallaFinPartida::dibuja() 
+{ 
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id);
 
 }
 

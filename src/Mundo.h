@@ -225,7 +225,7 @@ public:
 	void setCamaraPos  (const Point& pt) { camara.setPosition(pt); }
 	bool getGirado     (void) const		 { return camara.getGirado(); }
 	void cambiarGirado (void)			 { camara.cambiarGirado(); }
-	void resetLectura  (void)			 { this->posicion_leida = Posicion(-1, -1); }
+	void resetLectura  (void)			 { this->posicion_leida = Posicion(); }
 	Posicion getCasilla(void) const		 { return this->posicion_leida; }
 	Pieza::tipo_t seleccionPiezaCoronacion(bool color);
 	ListaModelo* getCasillaSeleccionada(void) { return &this->casilla_seleccionada; }

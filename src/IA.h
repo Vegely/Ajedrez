@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Tablero.h"
+#include "MovimientoEvaluado.h"
 
 #define PROFUNDIDAD_IA 3
 

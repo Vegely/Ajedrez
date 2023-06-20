@@ -4,6 +4,7 @@
 #include "Mundo.h"
 #include "IA.h";
 #include "ConfiguracionDeJuego.h"
+#include "Partida.h"
 
 #include "ElementoRed.h"
 
@@ -13,10 +14,12 @@ struct DatosFinal
 {
 	CodigoFinal codigoFinal;
 	bool ganaBlanco;
+	bool finalizada = false;
 };
 
 class MotorDeJuego
 {
+	Partida* fichero_partida = nullptr;
 	const ConfiguracionDeJuego config;
 	Tablero tablero;
 
@@ -24,11 +27,11 @@ class MotorDeJuego
 	Movimiento ensamblarMovimiento(Posicion posicion, Mundo* p_motorGrafico) const;
 
 public:
-	MotorDeJuego(const ConfiguracionDeJuego& config) : config(config), tablero(Tablero(true)) { /*pintar();*/ }
+	MotorDeJuego(const ConfiguracionDeJuego& config, Partida* partida = nullptr) : config(config), tablero(Tablero(true)), fichero_partida(partida) { /*pintar();*/ }
 
 	Tablero* getTablero(void) { return &this->tablero; }
 	void liberar() { tablero.liberar(); }
-	void pintar(const Posicion& posSelec, Mundo* p_motorGrafico) const;
+	void pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_motorGrafico) const;
 	void comprobarCasillasJaque(Mundo* motorGrafico);
 
 	static Pieza::tipo_t seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico);

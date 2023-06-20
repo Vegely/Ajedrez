@@ -8,7 +8,7 @@ struct Posicion
 {
 	int x, y;
 
-	explicit Posicion(int x = 0, int y = 0) : x(x), y(y) {}
+	explicit Posicion(int x = -1, int y = -1) : x(x), y(y) {}
 
 	inline int indice() const { return x + 8 * y; }
 

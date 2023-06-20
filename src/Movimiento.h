@@ -12,16 +12,9 @@ typedef double eval_t;
 struct Movimiento
 {
 	Posicion inicio, fin;
-
-	Movimiento() {}
-	Movimiento(Posicion inicio, Posicion fin) : inicio(inicio), fin(fin) {}
-	Movimiento(std::string str) 
-	{ 
-		if (str.length() == 8 && str[1] == ' ' && str[3] == ' ' && str[5] == ' ') 
-			*this = Movimiento(Posicion(str[0] - '0', str[2] - '0'), Posicion(str[4] - '0', str[6] - '0'));
-		else 
-			*this = Movimiento(Posicion(-1, -1), Posicion(-1, -1)); 
-	}
+	
+	Movimiento(Posicion inicio = Posicion(), Posicion fin = Posicion()) : inicio(inicio), fin(fin) {}
+	Movimiento(const std::string& str);
 
 	std::string toString() const { return std::to_string(inicio.x) + " " + std::to_string(inicio.y) + " " + std::to_string(fin.x) + " " + std::to_string(fin.y); }
 
@@ -29,12 +22,4 @@ struct Movimiento
 
 	bool operator== (const Movimiento& rhs) const { return (this->inicio == rhs.inicio && this->fin == rhs.fin); }
 	bool operator!= (const Movimiento& rhs) const { return !(*this == rhs); }
-};
-
-struct MovimientoEvaluado
-{
-	std::vector<Movimiento> movimiento;
-	eval_t eval;
-	
-	explicit MovimientoEvaluado(const eval_t& eval) : eval(eval) { movimiento.clear(); }
 };

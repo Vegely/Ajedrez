@@ -1,6 +1,7 @@
 #include "Caja.h"
 #include "freeglut.h"
 #include "ETSIDI.h"
+#include "MotorDeJuego.h"
 
 constexpr const char* RUTA_COLOR_JUGADOR = "pantallas/seleccion color.png";
 constexpr const char* RUTA_SERVIDOR = "pantallas/servidor.png";
@@ -46,14 +47,14 @@ struct PantallaFalloConexion :public PantallaBase {
 
 	PantallaFalloConexion():PantallaBase(RUTA_FALLO_CONEXION) {}
 
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*aceptar.dibuja();*/ }
+	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
 };
 
 struct PantallaFinPartida :public PantallaBase {
 	Caja guardar_y_salir{ -8.5, 9.9, 8.1, 5.9 };
 	Caja salir_sin_guardar{ -9.7, 4.9, 9.3, 1.0 };
 	PantallaFinPartida(): PantallaBase(RUTA_FIN_DE_PARTIDA){}
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*guardar_y_salir.dibuja(); salir_sin_guardar.dibuja();*/ }
+	void dibuja();
 };
 
 struct PantallaCliente :public PantallaBase {
@@ -61,7 +62,7 @@ struct PantallaCliente :public PantallaBase {
 	Caja atras{ 25.4,-2.3,29.8,-6.3 };
 	PantallaCliente(): PantallaBase(RUTA_CLIENTE){}
 
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*cliente.dibuja(); atras.dibuja();*/ }
+	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
 };
 
 struct PantallaPausa :public PantallaBase {
@@ -101,13 +102,7 @@ struct PantallaElegirRol :public PantallaBase
 	Caja cliente{ -4.45,4.9,4.0,0.9 };
 	Caja atras{ 25.4,-2.3,29.7,-6.3 };
 	PantallaElegirRol(): PantallaBase(RUTA_ROL_RED){}
-	void dibuja() 
-	{
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id);
-		/*servidor.dibuja();
-		cliente.dibuja();
-		atras.dibuja();*/
-	}
+	void dibuja() { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
 };
 struct PantallaInicio :public PantallaBase
 {
@@ -170,6 +165,7 @@ struct PantallaGuardar : public PantallaBase {
 	PantallaGuardar(): PantallaBase(RUTA_GUARDAR){}
 
 	void dibuja() { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
+	void reset() { snombre_partida = ""; sblancas = ""; snegras = ""; smodo = ""; existe = 0; estado = Guardar::NONE; }
 
 	void escrituraGlut();
 };
