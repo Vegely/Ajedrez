@@ -11,7 +11,7 @@ Camara::Camara(const Point& position) :
 	speed({0}),
 	acceleration({0}),
 	look_at{ 0, 0, 0 },
-	angle(0.0f),
+	angle(-M_PI_2),
 	ang_speed(0.0f),
 	ang_acc(0.0f),
 	rotation{0, 0, 1},
@@ -20,7 +20,7 @@ Camara::Camara(const Point& position) :
 
 }
 
-void Camara::movement(const Point& p1, const Point& p2, float time)
+void Camara::movement(float time)
 {
 	if (!girado)
 	{

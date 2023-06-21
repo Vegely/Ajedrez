@@ -1,8 +1,11 @@
+#define _USE_MATH_DEFINES
+
 #include "Mundo.h"
 #include "Tablero.h"
 
 #include <ETSIDI.h>
 #include <string>
+#include <cmath>
 
 Mundo::Mundo(void) :
 	rey_blanco(1),
@@ -419,14 +422,16 @@ void Mundo::actualizarCamara(bool turno, float time, const ConfiguracionDeJuego&
 	{
 		if (this->getGirado())
 			this->cambiarGirado();
+		camara.setAngle(M_PI_2);
 	}
 	else if (config[0] == receptor)
 	{
 		if (!this->getGirado())
 			this->cambiarGirado();
+		camara.setAngle(-M_PI_2);
 	}
 
-	camara.movement(Camara::white_pov, Camara::black_pov, time);
+	camara.movement(time);
 }
 
 void Mundo::resetCasillas(void)

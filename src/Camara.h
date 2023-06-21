@@ -40,7 +40,7 @@ public:
 	void cambiarGirado	(void)			  { this->girado = !this->girado; }
 
 	/* MOVIMIENTO */
-	void movement(const Point& p1, const Point& p2, float time);
+	void movement(float time);
 	void motion  (float time);
 
 	/* PRINTERS */
