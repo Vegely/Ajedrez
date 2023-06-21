@@ -230,10 +230,11 @@ Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, Mundo* p_motorGr
 {
 	static bool aux;
 	static Posicion inicio;
+	Pieza* pieza_leida = tablero.leer(posicion);
 
 	if (posicion != Posicion())
 	{
-		if (tablero.leer(posicion) != nullptr && tablero.leer(posicion)->getColor() == tablero.colorDelTurno)
+		if (pieza_leida != nullptr && pieza_leida->getColor() == tablero.colorDelTurno)
 		{
 			inicio = posicion;
 			aux = true;

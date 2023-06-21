@@ -491,10 +491,15 @@ std::vector<DatosBloqueoJaque> Tablero::bloqueoJaque() const
 {
 	std::vector<DatosBloqueoJaque> piezasBloquean;
 	Posicion direccion,posicionPrueba;
-	int restaX = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).x;
-	int restaY = (leer(reyPos[colorDelTurno])->posicion - leer(reyPos[colorDelTurno])->amenazas[0]->posicion).y;
 
-	int distan =  std::max(abs(restaX),abs(restaY));
+	Pieza* pieza_leida = leer(reyPos[colorDelTurno]);
+	if (pieza_leida->amenazas.size() <= 0) return piezasBloquean;
+
+
+	int restaX = (pieza_leida->posicion - pieza_leida->amenazas[0]->posicion).x;
+	int restaY = (pieza_leida->posicion - pieza_leida->amenazas[0]->posicion).y;
+
+	int distan =  std::max(abs(restaX), abs(restaY));
 
 	direccion.x = round(restaX / (float)distan);
 	direccion.y = round(restaY / (float)distan);
@@ -503,13 +508,13 @@ std::vector<DatosBloqueoJaque> Tablero::bloqueoJaque() const
 
 	for (auto piezasMueven : tablero)
 	{
-		if (piezasMueven != nullptr&&piezasMueven->color==colorDelTurno)
+		if (piezasMueven != nullptr && piezasMueven->color == colorDelTurno)
 		{
 			for (auto testPosiciones : piezasMueven->getPuedeMover())
 			{
 				for (int i = 1; i < distan; i++)
 				{
-					posicionPrueba = leer(reyPos[colorDelTurno])->amenazas[0]->posicion + direccion * i;
+					posicionPrueba = pieza_leida->amenazas[0]->posicion + direccion * i;
 					if (testPosiciones == posicionPrueba)
 					{
 						aux.datosPieza = piezasMueven;

@@ -300,11 +300,11 @@ public:
 	void actualizarCamara(bool turno, float time, const ConfiguracionDeJuego& config);
 
 	/* GESTIÓN DE MODELOS */
-	void resetCasillas(void);
+	void resetCasillas   (void);
 	void reiniciarTablero(void);
 	void resetCasillas(ListaModelo* lista);
-	void leerTablero(Tablero* tablero);
-	void moverModelos(const Movimiento& mov);
+	void leerTablero  (Tablero* tablero);
+	void moverModelos (const Movimiento& mov);
 	void antisolapamientoCasillas(const Tablero& tablero);
 	void renderizarModelos(void);
 	//void dibujarFondo(void);

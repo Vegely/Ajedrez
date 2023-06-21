@@ -14,8 +14,8 @@
 #define H_MIN -10.0f
 #define W_MAX 31.5f
 #define W_MIN -31.5f
-#define X_FIN -15
-#define Y_FIN 15
+#define X_FIN 0
+#define Y_FIN 0
 
 constexpr const char* IA_IA = "iaia";
 constexpr const char* LOCAL_IA = "localia";
