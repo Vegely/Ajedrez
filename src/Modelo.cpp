@@ -2,105 +2,49 @@
 #include "Mundo.h"
 
 Modelo::Modelo(void) :
-	texture_ID(0),
 	model_path(""),
 	texture_path(""),
 	tipo_pieza(NONE),
-	scene(nullptr),
+	modelo_texturizado(nullptr),
 	color(false),
 	Entity()
 { }
 
 Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path) :
-	texture_ID(0),
 	model_path(model_path),
 	texture_path(texture_path),
 	tipo_pieza(tipo_pieza),
 	pos_coords(Posicion()),
-	scene(nullptr),
+	modelo_texturizado(new ModeloTexturizado(texture_path)),
 	color(false),
 	Entity((initial_pos), "Modelo " + tipo_pieza)
 {
 	init();
 }
 
-Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color) :
-	texture_ID(0),
+Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, ModeloTexturizado* modelo_texturizado, bool color) :
 	model_path(""),
 	texture_path(""),
 	tipo_pieza(tipo_pieza),
 	pos_coords(initial_pos),
-	scene(nullptr),
+	modelo_texturizado(modelo_texturizado),
 	color(color),
 	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
 {
-	initRutas();
-	init();
-}
-
-Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color, const aiScene* scene) :
-	texture_ID(0),
-	model_path(""),
-	texture_path(""),
-	tipo_pieza(tipo_pieza),
-	pos_coords(initial_pos),
-	scene(scene),
-	color(color),
-	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
-{
-	initRutas();
-}
-
-Modelo::Modelo(const Posicion& initial_pos, const aiScene* scene, std::string texture_path) :
-	texture_ID(0),
-	model_path(""),
-	texture_path(texture_path),
-	tipo_pieza(OBJETO),
-	pos_coords(initial_pos),
-	scene(scene),
-	color(false),
-	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
-{ }
-
-Modelo::Modelo(const Modelo& m)
-{
-	this->position = m.position;
-	this->velocity = m.velocity;
-	this->acceleration = m.acceleration;
-	this->texture_ID = m.texture_ID;
-	this->model_path = m.model_path;
-	this->texture_path = m.texture_path;
-	this->tipo_pieza = m.tipo_pieza;
-	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
-	if (!scene || scene->mRootNode == nullptr) // Comprobacion de lectura correcta del archivo.
-		std::cerr << "Failed to load 3D model file: " << importer.GetErrorString();
-}
-
-Modelo& Modelo::operator = (const Modelo& rhs)
-{
-	this->position = rhs.position;
-	this->velocity = rhs.velocity;
-	this->acceleration = rhs.acceleration;
-	this->texture_ID = rhs.texture_ID;
-	this->model_path = rhs.model_path;
-	this->texture_path = rhs.texture_path;
-	this->tipo_pieza = rhs.tipo_pieza;
-	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
-	if (!scene || scene->mRootNode == nullptr) // Comprobacion de lectura correcta del archivo.
-		std::cerr << "Failed to load 3D model file: " << importer.GetErrorString();
-
-	return *this;
+	
 }
 
 void Modelo::init(void)
 {
-	this->scene = importer.ReadFile(this->model_path,
+	this->modelo_texturizado->modelo->scene = this->modelo_texturizado->modelo->importer.ReadFile(this->model_path,
 		  aiProcess_OptimizeMeshes
 		| aiProcess_JoinIdenticalVertices
 		| aiProcess_Triangulate
 		| aiProcess_CalcTangentSpace
 		| aiProcess_FlipUVs);
-	if (this->scene == nullptr || this->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !this->scene->mRootNode)
+	if (this->modelo_texturizado->modelo->scene == nullptr
+		|| this->modelo_texturizado->modelo->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE
+		|| !this->modelo_texturizado->modelo->scene->mRootNode)
 		std::cerr << "Failed to load model: " + model_path;
 
 	if (this->tipo_pieza == NONE)
@@ -112,27 +56,27 @@ void Modelo::initRutas(void)
 	switch (this->tipo_pieza)
 	{
 	case REY:
-		this->model_path = Mundo::ruta_modelo_rey;
+		this->model_path = ruta_modelo_rey;
 		break;
 
 	case DAMA:
-		this->model_path = Mundo::ruta_modelo_dama;
+		this->model_path = ruta_modelo_dama;
 		break;
 
 	case ALFIL:
-		this->model_path = Mundo::ruta_modelo_alfil;
+		this->model_path = ruta_modelo_alfil;
 		break;
 
 	case CABALLO:
-		this->model_path = Mundo::ruta_modelo_caballo;
+		this->model_path = ruta_modelo_caballo;
 		break;
 
 	case TORRE:
-		this->model_path = Mundo::ruta_modelo_torre;
+		this->model_path = ruta_modelo_torre;
 		break;
 
 	case PEON:
-		this->model_path = Mundo::ruta_modelo_peon;
+		this->model_path = ruta_modelo_peon;
 		break;
 
 	default:
@@ -141,9 +85,9 @@ void Modelo::initRutas(void)
 		break;
 	}
 	if (color)
-		this->texture_path = Mundo::ruta_textura_blanco;
+		this->texture_path = ruta_textura_blanco;
 	else
-		this->texture_path = Mundo::ruta_textura_negro;
+		this->texture_path = ruta_textura_negro;
 }
 
 void Modelo::renderNodo(const aiNode* nodo)
@@ -156,8 +100,8 @@ void Modelo::renderNodo(const aiNode* nodo)
 
 	for (unsigned int i = 0; i < nodo->mNumMeshes; i++)
 	{
-		const aiMesh*     mesh     = scene->mMeshes[nodo->mMeshes[i]];
-		const aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+		const aiMesh*     mesh     = this->modelo_texturizado->modelo->scene->mMeshes[nodo->mMeshes[i]];
+		const aiMaterial* material = this->modelo_texturizado->modelo->scene->mMaterials[mesh->mMaterialIndex];
 
 		// Aplica las propiedades del material.
 		aiColor4D difusion_color;
@@ -165,10 +109,10 @@ void Modelo::renderNodo(const aiNode* nodo)
 			glColor4f(difusion_color.r, difusion_color.g, difusion_color.b, difusion_color.a);
 
 		// Enlaza la textura si est� disponible
-		if (mesh->HasTextureCoords(0) && texture_ID != 0)
+		if (mesh->HasTextureCoords(0) && this->modelo_texturizado->textura.ID != 0)
 		{
 			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, texture_ID);
+			glBindTexture(GL_TEXTURE_2D, this->modelo_texturizado->textura.ID);
 		}
 		else glDisable(GL_TEXTURE_2D);
 
@@ -198,7 +142,7 @@ void Modelo::renderNodo(const aiNode* nodo)
 
 void Modelo::render(void)
 {
-	if (this->scene == nullptr)
+	if (this->modelo_texturizado->modelo->scene == nullptr)
 		return;
 
 	if (this->tipo_pieza != NONE)
@@ -213,7 +157,7 @@ void Modelo::render(void)
 	glTranslatef(this->position.x,  this->position.y,  this->position.z);
 	glRotatef(-90, 1, 0, 0);
 	if (this->tipo_pieza != NONE) glRotatef(-90, 0, 0, 1);
-	renderNodo(this->scene->mRootNode);
+	renderNodo(this->modelo_texturizado->modelo->scene->mRootNode);
 	if (this->tipo_pieza != NONE) glRotatef(90, 0, 0, 1);
 	glRotatef(90, 1, 0, 0);
 	glTranslatef(-this->position.x, -this->position.y, -this->position.z);
@@ -221,18 +165,18 @@ void Modelo::render(void)
 
 bool Modelo::cargarTextura(void)
 {
-	if (this->scene == nullptr)
+	if (this->modelo_texturizado->modelo->scene == nullptr)
 		return false;
 
 	int ancho, alto, num_componentes;
 
-	glGenTextures(1, &this->texture_ID);
+	glGenTextures(1, &this->modelo_texturizado->textura.ID);
 	if (this == nullptr)
 	{
 		std::cerr << "Error binding texture to object." << std::endl;
 		return false;
 	}
-	glBindTexture(GL_TEXTURE_2D, this->texture_ID);
+	glBindTexture(GL_TEXTURE_2D, this->modelo_texturizado->textura.ID);
 
 	unsigned char* datos_imagen = stbi_load(this->texture_path.c_str(), &ancho, &alto, &num_componentes, STBI_rgb);
 

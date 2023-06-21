@@ -7,6 +7,32 @@
 #include "Movimiento.h"
 #include "ConfiguracionDeJuego.h"
 
+#define ruta_modelo_rey "modelos/rey.obj"
+#define ruta_modelo_dama "modelos/dama.obj"
+#define ruta_modelo_alfil "modelos/alfil.obj"
+#define ruta_modelo_caballo "modelos/caballo.obj"
+#define ruta_modelo_torre "modelos/torre.obj"
+#define ruta_modelo_peon "modelos/peon.obj"
+
+#define ruta_modelo_casilla "modelos/casilla.obj"
+#define ruta_modelo_casillas_negras "modelos/casillas_negras.obj"
+#define ruta_modelo_casillas_blancas "modelos/casillas_blancas.obj"
+#define ruta_modelo_marcos "modelos/marcos.obj"
+#define ruta_modelo_letras "modelos/letras.obj"
+
+#define ruta_textura_blanco "texturas/marmol_blanco.jpg"
+#define ruta_textura_negro "texturas/marmol_negro.jpg"
+#define ruta_textura_blanco_oscuro "texturas/marmol_blanco_oscuro.jpg"
+#define ruta_textura_negro_claro "texturas/marmol_negro_claro.jpg"
+#define ruta_textura_marco "texturas/marmol_negro_marco.jpg"
+#define ruta_textura_casilla_seleccionada "texturas/casilla_seleccionada.png"
+#define ruta_textura_casilla_comible "texturas/casilla_comer.png"
+#define ruta_textura_casilla_puede_mover "texturas/casilla_puede_mover.png"
+#define ruta_textura_casilla_coronacion "texturas/casilla_coronacion.png"
+#define ruta_textura_casilla_ultimo_mov "texturas/casilla_ultimo_mov.png"
+
+#define ruta_fondo "texturas/espacio.png"
+
 struct Factor
 {
 	float x, y;
@@ -199,12 +225,12 @@ private:
 	Modelo* casillas_negras;
 	Modelo* marcos;
 	Modelo* letras;
-	ListaModelo casilla_seleccionada;
-	ListaModelo casilla_comible;
-	ListaModelo casilla_puede_mover;
-	ListaModelo casilla_coronacion;
-	ListaModelo casilla_ultimo_mov;
-	ListaModelo casilla_jaque;
+	ListaModelo casillas_seleccionadas;
+	ListaModelo casillas_comibles;
+	ListaModelo casillas_puede_mover;
+	ListaModelo casillas_coronacion;
+	ListaModelo casillas_ultimo_mov;
+	ListaModelo casillas_jaque;
 
 	Camara camara;
 	
@@ -218,6 +244,27 @@ private:
 	ModeloBase torre;
 	ModeloBase caballo;
 	ModeloBase casilla;
+
+	ModeloTexturizado modelo_peon_blanco;
+	ModeloTexturizado modelo_alfil_blanco;
+	ModeloTexturizado modelo_dama_blanca;
+	ModeloTexturizado modelo_rey_blanco;
+	ModeloTexturizado modelo_torre_blanca;
+	ModeloTexturizado modelo_caballo_blanco;
+
+	ModeloTexturizado modelo_peon_negro;
+	ModeloTexturizado modelo_alfil_negro;
+	ModeloTexturizado modelo_dama_negra;
+	ModeloTexturizado modelo_rey_negro;
+	ModeloTexturizado modelo_torre_negra;
+	ModeloTexturizado modelo_caballo_negro;
+
+	ModeloTexturizado modelo_casilla_seleccionada;
+	ModeloTexturizado modelo_casilla_comible;
+	ModeloTexturizado modelo_casilla_puede_mover;
+	ModeloTexturizado modelo_casilla_coronacion;
+	ModeloTexturizado modelo_casilla_ultimo_mov;
+	ModeloTexturizado modelo_casilla_jaque;
 
 	Tablero* tablero_jaque_mate = nullptr;
 
@@ -235,12 +282,12 @@ public:
 	void cambiarGirado (void)			 { camara.cambiarGirado(); }
 	void resetLectura  (void)			 { this->posicion_leida = Posicion(); }
 	Posicion getCasilla(void) const		 { return this->posicion_leida; }
-	ListaModelo* getCasillaSeleccionada(void) { return &this->casilla_seleccionada; }
-	ListaModelo* getCasillaComible	   (void) { return &this->casilla_comible; }
-	ListaModelo* getCasillaCoronacion  (void) { return &this->casilla_coronacion; }
-	ListaModelo* getCasillaPuedeMover  (void) { return &this->casilla_puede_mover; }
-	ListaModelo* getCasillaUltimoMov   (void) { return &this->casilla_ultimo_mov; }
-	ListaModelo* getCasillaJaque       (void) { return &this->casilla_jaque; }
+	ListaModelo* getCasillaSeleccionada(void) { return &this->casillas_seleccionadas; }
+	ListaModelo* getCasillaComible	   (void) { return &this->casillas_comibles; }
+	ListaModelo* getCasillaCoronacion  (void) { return &this->casillas_coronacion; }
+	ListaModelo* getCasillaPuedeMover  (void) { return &this->casillas_puede_mover; }
+	ListaModelo* getCasillaUltimoMov   (void) { return &this->casillas_ultimo_mov; }
+	ListaModelo* getCasillaJaque       (void) { return &this->casillas_jaque; }
 	bool		  getColorFromCoords	  (const Posicion& pos) const;
 	Pieza::tipo_t getTipoFromCoords		  (const Posicion& pos) const;
 	Pieza::tipo_t seleccionPiezaCoronacion(bool color);
@@ -261,33 +308,6 @@ public:
 	void antisolapamientoCasillas(const Tablero& tablero);
 	void renderizarModelos(void);
 	//void dibujarFondo(void);
-
-	/* VARIABLES ESTÁTICAS */
-	static std::string ruta_modelo_rey;
-	static std::string ruta_modelo_dama;
-	static std::string ruta_modelo_alfil;
-	static std::string ruta_modelo_caballo;
-	static std::string ruta_modelo_torre;
-	static std::string ruta_modelo_peon;
-
-	static std::string ruta_casilla;
-	static std::string ruta_modelo_casillas_negras;
-	static std::string ruta_modelo_casillas_blancas;
-	static std::string ruta_modelo_marcos;
-	static std::string ruta_modelo_letras;
-
-	static std::string ruta_textura_blanco;
-	static std::string ruta_textura_negro;
-	static std::string ruta_textura_blanco_oscuro;
-	static std::string ruta_textura_negro_claro;
-	static std::string ruta_textura_marco;
-	static std::string ruta_textura_casilla_seleccionada;
-	static std::string ruta_textura_casilla_comible;
-	static std::string ruta_textura_casilla_puede_mover;
-	static std::string ruta_textura_casilla_coronacion;
-	static std::string ruta_textura_casilla_ultimo_mov;
-
-	static std::string ruta_fondo;
 };
 
 #endif // !MUNDO_H
