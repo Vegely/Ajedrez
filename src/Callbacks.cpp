@@ -24,7 +24,7 @@ void motorGrafico(int* argc, char** argv)
 	inicializarEstadoOpenGL();
 	registrarCallbacks();
 
-	coordinador.initGraficos();
+	coordinador.init();
 
 	glutMainLoop();
 }
@@ -125,40 +125,4 @@ void OnMouseClick(int button, int state, int x, int y)
 void OnMouseMotion(int x, int y)
 {
 
-}
-
-void debugAxis(void)
-{
-	// Debug: reference axis:
-	glTranslatef(25000, 25000, 25000);
-	glColor3f(255, 255, 255);
-	glutWireCube(50000);
-	glTranslatef(-25000, -25000, -25000);
-
-	glTranslatef(5, 0, 0);
-	glRotatef(90, 0, 1, 0);
-	glRotatef(-90, 0, 0, 1);
-	glColor3f(255, 255, 255);
-	glutSolidCone(.3f, .7f, 10, 10); // X axis.
-	glRotatef(90, 0, 0, 1);
-	glRotatef(-90, 0, 1, 0);
-	glTranslatef(-5, 0, 0);
-
-	for (float i = 0; i < 500; i++)
-	{
-		glTranslatef(i, 0, 0);
-		glColor3f(255, 255, 255);
-		glutSolidCube(.2f);
-		glTranslatef(-i, 0, 0);
-
-		glTranslatef(0, i, 0);
-		glColor3f(255, 255, 255);
-		glutSolidCube(.2f);
-		glTranslatef(0, -i, 0);
-
-		glTranslatef(0, 0, i);
-		glColor3f(255, 255, 255);
-		glutSolidCube(.2f);
-		glTranslatef(0, 0, -i);
-	}
 }

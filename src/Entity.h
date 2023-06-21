@@ -19,6 +19,12 @@ public:
 	Entity(const Point& position, const std::string& name);
 	Entity(const Entity& e);
 
+	/* GETTERS */
+	Point getPosition(void) const { return this->position; }
+
+	/* SETTERS */
+	void setPosition(const Point& pos) { this->position = pos; }
+
 	/* DESTRUCTOR */
 	virtual ~Entity(void) { }
 

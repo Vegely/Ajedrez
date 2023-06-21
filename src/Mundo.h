@@ -6,6 +6,7 @@
 #include "Camara.h"
 #include "Movimiento.h"
 #include "ConfiguracionDeJuego.h"
+#include "Plane.h"
 
 #define ruta_modelo_rey "modelos/rey.obj"
 #define ruta_modelo_dama "modelos/dama.obj"
@@ -32,37 +33,6 @@
 #define ruta_textura_casilla_ultimo_mov "texturas/casilla_ultimo_mov.png"
 
 #define ruta_fondo "texturas/espacio.png"
-
-struct Factor
-{
-	float x, y;
-	Factor(float x, float y) : x(x), y(y) {}
-};
-
-template<typename Type>
-struct Corners
-{
-	Type ll, lr, ul, ur;
-
-	Corners(void) : ll(), lr(), ul(), ur() { }
-
-	Corners<Point> operator *= (const Factor& rhs)
-	{
-		this->ll.x *= rhs.x;
-		this->ll.y *= rhs.y;
-
-		this->lr.x *= rhs.x;
-		this->lr.y *= rhs.y;
-
-		this->ul.x *= rhs.x;
-		this->ul.y *= rhs.y;
-
-		this->ur.x *= rhs.x;
-		this->ur.y *= rhs.y;
-
-		return *this;
-	}
-};
 
 class Casilla
 {
@@ -282,6 +252,7 @@ public:
 	void cambiarGirado (void)			 { camara.cambiarGirado(); }
 	void resetLectura  (void)			 { this->posicion_leida = Posicion(); }
 	Posicion getCasilla(void) const		 { return this->posicion_leida; }
+	Point	 getCamaraPos(void) const    { return this->camara.getPosition(); }
 	ListaModelo* getCasillaSeleccionada(void) { return &this->casillas_seleccionadas; }
 	ListaModelo* getCasillaComible	   (void) { return &this->casillas_comibles; }
 	ListaModelo* getCasillaCoronacion  (void) { return &this->casillas_coronacion; }

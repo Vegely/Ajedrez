@@ -169,6 +169,7 @@
     <ClInclude Include="src\Partida.h" />
     <ClInclude Include="src\Peon.h" />
     <ClInclude Include="src\Pieza.h" />
+    <ClInclude Include="src\Plane.h" />
     <ClInclude Include="src\Posicion.h" />
     <ClInclude Include="src\Punto.h" />
     <ClInclude Include="src\Ranking.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="src\Partida.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
+    <ClCompile Include="src\Plane.cpp" />
     <ClCompile Include="src\Ranking.cpp" />
     <ClCompile Include="src\Rey.cpp" />
     <ClCompile Include="src\Servidor.cpp" />

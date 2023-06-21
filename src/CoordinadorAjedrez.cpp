@@ -1,21 +1,27 @@
+#define _USE_MATH_DEFINES
 #include "CoordinadorAjedrez.h"
 #include <ETSIDI.h>
+#include <cmath>
+
+#include "Plane.h"
 
 ConfiguracionDeJuego configuracion;
 
-PantallaElegirRol pantallaElegirRol;
-PantallaInicio pantallaInicio;
-PantallaJugadorLocal pantallaJugadorLocal;
-PantallaModoDeJuego pantallaModoJuego;
-PantallaColorJugador pantallaColorJugador;
+PantallaElegirRol	  pantallaElegirRol;
+PantallaInicio		  pantallaInicio;
+PantallaJugadorLocal  pantallaJugadorLocal;
+PantallaModoDeJuego   pantallaModoJuego;
+PantallaColorJugador  pantallaColorJugador;
 PantallaFalloConexion pantallaFalloConexion;
-PantallaFinPartida pantallaFinPartida;
-PantallaCliente pantallaCliente;
-PantallaPausa pantallaPausa;
-PantallaServidor pantallaServidor;
+PantallaFinPartida	  pantallaFinPartida;
+PantallaCliente		  pantallaCliente;
+PantallaPausa		  pantallaPausa;
+PantallaServidor	  pantallaServidor;
 PantallaCargarPartida pantallaCargarPartida;
-PantallaRankings pantallaRanking;
-PantallaGuardar pantallaGuardar;
+PantallaRankings	  pantallaRanking;
+PantallaGuardar		  pantallaGuardar;
+
+struct Color { unsigned char r, g, b; };
 
 void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal)
 {
@@ -40,6 +46,25 @@ void hiloCliente(CoordinadorAjedrez* ajedrez) {
 	ajedrez->estado = INICIALIZACION_PARTIDA;
 }
 
+void CoordinadorAjedrez::init(void)
+{
+	mundoGrafico.init();
+	flagDeSeguridadInit = false;
+	pantallaElegirRol.init();
+	pantallaInicio.init();
+	pantallaJugadorLocal.init();
+	pantallaModoJuego.init();
+	pantallaColorJugador.init();
+	pantallaFalloConexion.init();
+	pantallaFinPartida.init();
+	pantallaCliente.init();
+	pantallaPausa.init();
+	pantallaServidor.init();
+	pantallaCargarPartida.init();
+	pantallaRanking.init();
+	pantallaGuardar.init();
+}
+
 void CoordinadorAjedrez::Draw(void)
 {
 	gluLookAt(0, 7.5, 30, // posicion del ojo
@@ -58,27 +83,48 @@ void CoordinadorAjedrez::Draw(void)
 
 		if (datosFinal.finalizada)
 		{
-			ETSIDI::setFont(RUTA_FUENTES, 30);
-			ETSIDI::setTextColor(255, 255, 255);
-			ETSIDI::printxy("Pulsa k para continuar", X_FIN, Y_FIN - 5);
+			//ETSIDI::setFont(RUTA_FUENTES, 40);
+			//ETSIDI::setTextColor(255, 0, 0);
+			//ETSIDI::printxy("Pulsa k para continuar", 15 * mod, -5);
 			switch (datosFinal.codigoFinal)
 			{
 			case CodigoFinal::JAQUE_MATE:
 				if(datosFinal.ganaBlanco)
-					ETSIDI::printxy("JAQUE MATE BLANCO", X_FIN, Y_FIN);
-				else ETSIDI::printxy("JAQUE MATE NEGRAS", X_FIN, Y_FIN);
+				{
+					//ETSIDI::setTextColor(255, 0, 0);
+					//ETSIDI::printxy("JAQUE MATE BLANCO", 15 * mod, 0);
+					renderPantallaFinal(RUTA_JAQUE_MATE_BLANCAS);
+				}
+				else
+				{
+					//ETSIDI::setTextColor(255, 0, 0);
+					//ETSIDI::printxy("JAQUE MATE NEGRAS", 15 * mod, 0);
+					renderPantallaFinal(RUTA_JAQUE_MATE_NEGRAS);
+				}
 				break;
+
 			case CodigoFinal::REY_AHOGADO:
-				ETSIDI::printxy("REY AHOGADO", X_FIN, Y_FIN);
+				//ETSIDI::setTextColor(255, 0, 0);
+				//ETSIDI::printxy("REY AHOGADO", 15 * mod, 0);
+				renderPantallaFinal(RUTA_REY_AHOGADO);
 				break;
+
 			case CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE:
-				ETSIDI::printxy("TABLAS POR MATERIAL INSUFICIENTE", X_FIN, Y_FIN);
+				//ETSIDI::setTextColor(255, 0, 0);
+				//ETSIDI::printxy("TABLAS POR MATERIAL INSUFICIENTE", 15 * mod, 0);
+				renderPantallaFinal(RUTA_MATERIAL_INSUFICIENTE);
 				break;
+
 			case CodigoFinal::TABLAS_POR_REPETICION:
-				ETSIDI::printxy("TABLAS POR REPETICION", X_FIN, Y_FIN);
+				//ETSIDI::setTextColor(255, 0, 0);
+				//ETSIDI::printxy("TABLAS POR REPETICION", 15 * mod, 0);
+				renderPantallaFinal(RUTA_REPETICION);
 				break;
+
 			case CodigoFinal::TABLAS_POR_PASIVIDAD:
-				ETSIDI::printxy("TABLAS POR PASIVIDAD", X_FIN, Y_FIN);
+				//ETSIDI::setTextColor(255, 0, 0);
+				//ETSIDI::printxy("TABLAS POR PASIVIDAD", 15 * mod, 0);
+				renderPantallaFinal(RUTA_PASIVIDAD);
 				break;
 			}
 		}
@@ -487,4 +533,83 @@ void parametrosTexturasMEstados()
 	glEnd();
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
+}
+
+void CoordinadorAjedrez::renderPantallaFinal(const std::string& filepath)
+{
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(filepath.c_str()).id);
+
+	Plane screen(10.8f * 2.0f, 19.2f * 2.0f, Point::zero, "Plane");
+	float phi_cam = atanf(abs(mundoGrafico.getCamaraPos().y) / abs(mundoGrafico.getCamaraPos().z)) * 180.0f / M_PI;
+	screen.setPosition(Point{ 0, 12, 0 });
+	screen.rotate('y', -90);
+	screen.rotate('x', phi_cam);
+	screen.rotate('z', 180);
+	if (!mundoGrafico.getGirado())
+	{
+		Point previous_pos = screen.getPosition();
+		screen.setPosition(Point::zero);
+		screen.rotate('y', 180);
+		screen.setPosition(previous_pos);
+	}
+
+	glEnable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	{
+		glTexCoord3d(1, 1, -0.1); glVertex3f(screen.getCornersPosition().ll.x, screen.getCornersPosition().ll.y, screen.getCornersPosition().ll.z);
+		glTexCoord3d(1, 0, -0.1); glVertex3f(screen.getCornersPosition().lr.x, screen.getCornersPosition().lr.y, screen.getCornersPosition().lr.z);
+		glTexCoord3d(0, 0, -0.1); glVertex3f(screen.getCornersPosition().ur.x, screen.getCornersPosition().ur.y, screen.getCornersPosition().ur.z);
+		glTexCoord3d(0, 1, -0.1); glVertex3f(screen.getCornersPosition().ul.x, screen.getCornersPosition().ul.y, screen.getCornersPosition().ul.z);
+	}
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+}
+
+void debugAxis(void)
+{
+	// Debug: reference axis:
+	glTranslatef(25000, 25000, 25000);
+	glColor3f(255, 255, 255);
+	glutWireCube(50000);
+	glTranslatef(-25000, -25000, -25000);
+
+	glTranslatef(5, 0, 0);
+	glRotatef(90, 0, 1, 0);
+	glRotatef(-90, 0, 0, 1);
+	glColor3f(255, 255, 255);
+	glutSolidCone(.3f, .7f, 10, 10); // X axis.
+	glRotatef(90, 0, 0, 1);
+	glRotatef(-90, 0, 1, 0);
+	glTranslatef(-5, 0, 0);
+
+	for (float i = 0; i < 500; i++)
+	{
+		glTranslatef(i, 0, 0);
+		glColor3f(255, 255, 255);
+		glutSolidCube(.2f);
+		glTranslatef(-i, 0, 0);
+
+		glTranslatef(0, i, 0);
+		glColor3f(255, 255, 255);
+		glutSolidCube(.2f);
+		glTranslatef(0, -i, 0);
+
+		glTranslatef(0, 0, i);
+		glColor3f(255, 255, 255);
+		glutSolidCube(.2f);
+		glTranslatef(0, 0, -i);
+	}
+
+	glTranslatef(-37, 0, -25);
+	glutSolidSphere(3, 10, 10);
+	glTranslatef(37, -0, 25);
+
+	glTranslatef(37, 0, -25);
+	glutSolidSphere(3, 10, 10);
+	glTranslatef(-37, -0, 25);
 }

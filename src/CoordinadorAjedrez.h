@@ -14,8 +14,6 @@
 #define H_MIN -10.0f
 #define W_MAX 31.5f
 #define W_MIN -31.5f
-#define X_FIN 0
-#define Y_FIN 0
 
 constexpr const char* IA_IA = "iaia";
 constexpr const char* LOCAL_IA = "localia";
@@ -58,13 +56,15 @@ public:
 	CoordinadorAjedrez(void);
 
 	/* FUNCIONES PARA CALLBACKS */
-	void initGraficos(void) { mundoGrafico.init(); flagDeSeguridadInit = false; }
+	void init(void);
 	void Draw(void);
 	void Timer(float value);
 	void Keypress(unsigned char key);
 	void Keylift (unsigned char key);
 	void SpecialKeypress(int key);
 	void Click(int button, int state, int x, int y);
+
+	void renderPantallaFinal(const std::string& filepath);
 
 	friend void hiloServidor(CoordinadorAjedrez* ajedrez);
 	friend void hiloCliente (CoordinadorAjedrez* ajedrez);
@@ -78,5 +78,7 @@ float aCoordenadasGlutX(float p);
 float aCoordenadasGlutY(float p);
 
 void parametrosTexturasMEstados();
+
+void debugAxis(void);
 
 #endif
