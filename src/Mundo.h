@@ -219,6 +219,8 @@ private:
 	ModeloBase caballo;
 	ModeloBase casilla;
 
+	Tablero* tablero_jaque_mate = nullptr;
+
 public:
 	/* INICIALIZACION */
 	Mundo(void);
@@ -243,6 +245,7 @@ public:
 	Pieza::tipo_t getTipoFromCoords		  (const Posicion& pos) const;
 	Pieza::tipo_t seleccionPiezaCoronacion(bool color);
 	ListaModelo*  seleccionarLista		  (bool color, Pieza::tipo_t tipo_pieza);
+	Tablero*	  getTableroJaqueMate() { return this->tablero_jaque_mate; }
 
 	/* CALLBACKS */
 	void movimiento	     (const float time);

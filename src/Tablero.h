@@ -52,7 +52,7 @@ public:
 	// Devuelve el puntero a pieza de una posición leída
 	inline Pieza* leer(const Posicion& posicion) const
 	{
-		if (posicion.x < 8 && posicion.x >= 0 && posicion.y < 8 && posicion.y >= 0)
+		if (posicion.x < 8 && posicion.x >= 0 && posicion.y < 8 && posicion.y >= 0 && this != nullptr)
 			return tablero[posicion.x + posicion.y * ANCHO_TABLERO];
 		else return nullptr;
 	}		

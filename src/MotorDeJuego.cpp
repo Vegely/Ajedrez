@@ -178,6 +178,7 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico)
 
 			if (tablero.jaqueMate())
 			{
+				comprobarCasillasJaque(p_mundoGrafico);
 				datosFinal = { CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno };
 				datosFinal.finalizada = true;
 				exit = true;
@@ -251,23 +252,28 @@ Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, Mundo* p_motorGr
 void MotorDeJuego::comprobarCasillasJaque(Mundo* p_motorGrafico)
 {
 	p_motorGrafico->resetCasillas(p_motorGrafico->getCasillaJaque());
-	for (int i = 0; i < 64; i++)
+	if (&tablero != nullptr)
 	{
-		Pieza* pieza_leida = tablero.leer(Posicion(i % 8, i / 8));
-		ListaModelo* lista_jaque = p_motorGrafico->getCasillaJaque();
+		p_motorGrafico->getTableroJaqueMate()->copiar(tablero);
 
-		if (pieza_leida != nullptr)
+		for (int i = 0; i < 64; i++)
 		{
-			Pieza::tipo_t tipo = pieza_leida->getTipo();
-			Posicion posicion  = pieza_leida->getPosicion();
+			Pieza* pieza_leida = tablero.leer(Posicion(i % 8, i / 8));
+			ListaModelo* lista_jaque = p_motorGrafico->getCasillaJaque();
 
-			if (tipo == Pieza::tipo_t::REY && pieza_leida->getAmenazas().size() > 0) // Jaque
+			if (pieza_leida != nullptr)
 			{
-				lista_jaque->moverElemento(Movimiento(Posicion(), posicion));
-				if (tablero.jaqueMate()) // Jaque Mate
+				Pieza::tipo_t tipo = pieza_leida->getTipo();
+				Posicion posicion = pieza_leida->getPosicion();
+
+				if (tipo == Pieza::tipo_t::REY && pieza_leida->getAmenazas().size() > 0) // Jaque
 				{
-					for (int i = 0; i < pieza_leida->getAmenazas().size(); i++)
-						lista_jaque->moverElemento(Movimiento(Posicion(), pieza_leida->getAmenazas()[i]->getPosicion()));
+					lista_jaque->moverElemento(Movimiento(Posicion(), posicion));
+					if (tablero.jaqueMate()) // Jaque Mate
+					{
+						for (int i = 0; i < pieza_leida->getAmenazas().size(); i++)
+							lista_jaque->moverElemento(Movimiento(Posicion(), pieza_leida->getAmenazas()[i]->getPosicion()));
+					}
 				}
 			}
 		}

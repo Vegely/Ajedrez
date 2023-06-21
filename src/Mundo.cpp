@@ -410,6 +410,11 @@ void Mundo::actualizarCamara(bool turno, float time, const ConfiguracionDeJuego&
 		if (!this->getGirado())
 			this->cambiarGirado();
 	}
+	else if (config[0] == ia && config[1] == ia)
+	{
+		camara.setPosition(Point{ Camara::radius, Camara::height, Camara::radius });
+		return;
+	}
 	else if (config[0] == emisor)
 	{
 		if (this->getGirado())
@@ -447,6 +452,8 @@ void Mundo::resetCasillas(ListaModelo* lista)
 
 void Mundo::leerTablero(Tablero* tablero)
 {
+	if (tablero == nullptr) return;
+
 	reiniciarTablero();
 	for (int i = 0; i < 64; i++)
 	{

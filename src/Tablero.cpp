@@ -273,6 +273,7 @@ bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJue
 
 	if (jugadaHecha)
 	{
+		if (leer(movimiento.inicio) == nullptr) return false;
 		if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
 		{
 			Pieza* p_peon = leer(movimiento.inicio);
@@ -313,62 +314,61 @@ void Tablero::coronar(Posicion posicion, Pieza::tipo_t tipo)
 
 bool Tablero::jaqueMate() const 
 {
-	if (leer(reyPos[colorDelTurno]) == nullptr)
-		return true;
+	Pieza* rey_leido = leer(reyPos[colorDelTurno]);
+	if (rey_leido == nullptr)
+		return true; // No hay rey (por lo que sea)
 
-	if (leer(reyPos[colorDelTurno])->getAmenazas().size() == 0)
-	{
+	if (rey_leido->getAmenazas().size() == 0)
 		return false;
-	}
+
 	else
 	{
-		if (leer(reyPos[colorDelTurno])->getAmenazas().size() > 1)
+		if (rey_leido->getAmenazas().size() > 1)
 		{
-			//Comprobar si el rey puede mover
-			if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
+			// Comprobar si el rey puede mover
+			if (rey_leido->getPuedeMover().size() > 0 || rey_leido->getPuedeComer().size() > 0)
 				return false;
-			//Si no jaque mate
+			// Si no jaque mate
 			return true;
 		}
-		else
+		else // es == 1
 		{
-			if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO ||
-				distancia(leer(reyPos[colorDelTurno])->getAmenazas()[0]->posicion, leer(reyPos[colorDelTurno])->posicion) < 2.0)
+			if (rey_leido->getAmenazas()[0]->tipo == Pieza::tipo_t::CABALLO ||
+				distancia(rey_leido->getAmenazas()[0]->posicion, rey_leido->posicion) < 2.0)
 			{
 				// Comprobar si el rey puede mover 
-				if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
+				if (rey_leido->getPuedeMover().size() > 0 || rey_leido->getPuedeComer().size() > 0)
 					return false;
 
 				// Comprobar si se puede comer el caballo
-				if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->getAmenazas().size() > 0)
+				if (rey_leido->getAmenazas()[0]->getAmenazas().size() > 0)
 				{
-					for (auto comprobarAmenazas : leer(reyPos[colorDelTurno])->getAmenazas()[0]->getAmenazas())
+					for (auto comprobarAmenazas : rey_leido->getAmenazas()[0]->getAmenazas())
 					{
 						for (auto hayAmenaza : comprobarAmenazas->getPuedeComer())
 						{
-							if (hayAmenaza == leer(reyPos[colorDelTurno])->getAmenazas()[0])
+							if (hayAmenaza == rey_leido->getAmenazas()[0])
 								return false;
 						}
 					}
 				}
 				// Si ninguna jaque mate
 				return true;
-
 			}
 			else
 			{
 				// Comprobar si el rey puede mover (si no puede entonces jaque mate)
-				if (leer(reyPos[colorDelTurno])->getPuedeMover().size() > 0 || leer(reyPos[colorDelTurno])->getPuedeComer().size() > 0)
+				if (rey_leido->getPuedeMover().size() > 0 || rey_leido->getPuedeComer().size() > 0)
 					return false;
 
 				// Comprobar si se puede comer la pieza
-				if (leer(reyPos[colorDelTurno])->getAmenazas()[0]->getAmenazas().size() > 0)
+				if (rey_leido->getAmenazas()[0]->getAmenazas().size() > 0)
 				{
-					for (auto comprobarAmenazas : leer(reyPos[colorDelTurno])->getAmenazas()[0]->getAmenazas())
+					for (auto comprobarAmenazas : rey_leido->getAmenazas()[0]->getAmenazas())
 					{
 						for (auto hayAmenaza : comprobarAmenazas->getPuedeComer())
 						{
-							if (hayAmenaza == leer(reyPos[colorDelTurno])->getAmenazas()[0])
+							if (hayAmenaza == rey_leido->getAmenazas()[0])
 								return false;
 						}
 					}
@@ -376,7 +376,7 @@ bool Tablero::jaqueMate() const
 
 				// Comprobar si se puede poner algo en medio
 				std::vector<DatosBloqueoJaque> Bloquea = bloqueoJaque();
-				if(Bloquea.size()>0)
+				if (Bloquea.size() > 0)
 
 					return false;
 
@@ -385,7 +385,6 @@ bool Tablero::jaqueMate() const
 			}
 		}
 	}
-	
 }
 
 

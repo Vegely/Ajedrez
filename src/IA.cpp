@@ -78,7 +78,7 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 		for (Pieza* p_pieza : tablero.tablero) if (p_pieza != nullptr && p_pieza->getColor() == coloraMaximizar)
 		{
 			 for (Posicion posicion : p_pieza->getPuedeMover())
-			{
+			 {
 				Tablero aux = Tablero::copiar(tablero);
 				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), posicion), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
 

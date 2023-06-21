@@ -61,7 +61,8 @@ void CoordinadorAjedrez::Draw(void)
 			ETSIDI::setFont(RUTA_FUENTES, 30);
 			ETSIDI::setTextColor(255, 255, 255);
 			ETSIDI::printxy("Pulsa k para continuar", X_FIN, Y_FIN - 5);
-			switch (datosFinal.codigoFinal) {
+			switch (datosFinal.codigoFinal)
+			{
 			case CodigoFinal::JAQUE_MATE:
 				if(datosFinal.ganaBlanco)
 					ETSIDI::printxy("JAQUE MATE BLANCO", X_FIN, Y_FIN);
@@ -175,11 +176,16 @@ void CoordinadorAjedrez::Timer(float value)
 		p_motorLogico = new MotorDeJuego(config, &partida);
 		p_motor = new std::thread(threadMotor, p_motorLogico, &mundoGrafico, &configuracion, &datosFinal);
 		datosFinal.finalizada = false;
+
 		estado = JUEGO;
 	}
 	else if (estado == JUEGO) // Escribir a continuacion de la configuracion
-	{	
-		mundoGrafico.leerTablero(p_motorLogico->getTablero());
+	{
+		if (!p_motorLogico->getTablero()->jaqueMate())
+			mundoGrafico.leerTablero(p_motorLogico->getTablero());
+		else
+			mundoGrafico.leerTablero(mundoGrafico.getTableroJaqueMate());
+
 		this->mundoGrafico.actualizarCamara(this->p_motorLogico->getTablero()->getTurno(), value, config);
 		this->mundoGrafico.movimiento(value);
 	}
