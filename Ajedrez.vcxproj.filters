@@ -38,24 +38,6 @@
     <Filter Include="5_Sonido\Header Files">
       <UniqueIdentifier>{2f236604-69c4-4aba-bd53-d2bcbe36eb7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2_Graficos\1_Consola">
-      <UniqueIdentifier>{82776ae9-0094-48d8-8ff0-53bdf373b561}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2_Graficos\1_Consola\Header Files">
-      <UniqueIdentifier>{8ba588aa-61f8-452c-ba15-6f3143f03be2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2_Graficos\1_Consola\Resource Files">
-      <UniqueIdentifier>{85ffcf83-dc06-4ee4-9d92-4dc37c8f054b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2_Graficos\0_Glut">
-      <UniqueIdentifier>{a8ac46ba-b72d-4467-80c4-2ebedb3bc180}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2_Graficos\0_Glut\Resource FIles">
-      <UniqueIdentifier>{8617c2e6-5a6c-4fe7-96b7-aac117b1f893}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2_Graficos\0_Glut\Header Files">
-      <UniqueIdentifier>{944cdfb4-f9d3-49c7-a68a-f950046343ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1_Lógica\0_Resource Files">
       <UniqueIdentifier>{e4bece3b-8506-4749-a4b2-678186ab8e5c}</UniqueIdentifier>
     </Filter>
@@ -81,6 +63,12 @@
     </Filter>
     <Filter Include="6_Gestion_Ficheros\Source">
       <UniqueIdentifier>{13066925-cace-4074-9404-9e7756bb13d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2_Graficos\Header Files">
+      <UniqueIdentifier>{944cdfb4-f9d3-49c7-a68a-f950046343ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2_Graficos\Resource FIles">
+      <UniqueIdentifier>{8617c2e6-5a6c-4fe7-96b7-aac117b1f893}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -129,35 +117,8 @@
     <ClInclude Include="src\Torre.h">
       <Filter>1_Lógica\Piezas\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Callbacks.h">
-      <Filter>2_Graficos\0_Glut\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Camara.h">
-      <Filter>2_Graficos\0_Glut\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\CoordinadorAjedrez.h">
       <Filter>3_Menus_Máquina_Estados\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Entity.h">
-      <Filter>2_Graficos\0_Glut\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Modelo.h">
-      <Filter>2_Graficos\0_Glut\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mundo.h">
-      <Filter>2_Graficos\0_Glut\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Plane.h">
-      <Filter>2_Graficos\0_Glut\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SalidasConsola.h">
-      <Filter>2_Graficos\1_Consola\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Globals.h">
-      <Filter>2_Graficos\0_Glut\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Casilla.h">
-      <Filter>2_Graficos\0_Glut\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Sonidos.h">
       <Filter>5_Sonido\Header Files</Filter>
@@ -189,9 +150,6 @@
     <ClInclude Include="src\DatosRanking.h">
       <Filter>6_Gestion_Ficheros\Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\ListaModelo.h">
-      <Filter>1_Lógica\Piezas\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ConfiguracionDeJuego.h">
       <Filter>1_Lógica\Piezas\Header Files</Filter>
     </ClInclude>
@@ -200,6 +158,27 @@
     </ClInclude>
     <ClInclude Include="src\MovimientoEvaluado.h">
       <Filter>1_Lógica\0_Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Callbacks.h">
+      <Filter>2_Graficos\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camara.h">
+      <Filter>2_Graficos\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity.h">
+      <Filter>2_Graficos\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Globals.h">
+      <Filter>2_Graficos\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ListaModelo.h">
+      <Filter>2_Graficos\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Modelo.h">
+      <Filter>2_Graficos\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mundo.h">
+      <Filter>2_Graficos\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -239,32 +218,8 @@
     <ClCompile Include="src\Torre.cpp">
       <Filter>1_Lógica\Piezas\Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Callbacks.cpp">
-      <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Camara.cpp">
-      <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
-    </ClCompile>
     <ClCompile Include="src\CoordinadorAjedrez.cpp">
       <Filter>3_Menus_Máquina_Estados\Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Entity.cpp">
-      <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Modelo.cpp">
-      <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mundo.cpp">
-      <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Plane.cpp">
-      <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SalidasConsola.cpp">
-      <Filter>2_Graficos\1_Consola\Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Globals.cpp">
-      <Filter>2_Graficos\0_Glut\Resource FIles</Filter>
     </ClCompile>
     <ClCompile Include="src\Sonidos.cpp">
       <Filter>5_Sonido\Resource Files</Filter>
@@ -293,11 +248,29 @@
     <ClCompile Include="src\DatosRanking.cpp">
       <Filter>6_Gestion_Ficheros\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\ListaModelo.cpp">
-      <Filter>0_Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Movimiento.cpp">
       <Filter>1_Lógica\0_Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Callbacks.cpp">
+      <Filter>2_Graficos\Resource FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camara.cpp">
+      <Filter>2_Graficos\Resource FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity.cpp">
+      <Filter>2_Graficos\Resource FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Globals.cpp">
+      <Filter>2_Graficos\Resource FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ListaModelo.cpp">
+      <Filter>2_Graficos\Resource FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Modelo.cpp">
+      <Filter>2_Graficos\Resource FIles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mundo.cpp">
+      <Filter>2_Graficos\Resource FIles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

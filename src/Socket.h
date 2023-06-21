@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SOCKET__H_
+#define _SOCKET__H_
 
 #undef UNICODE
 
@@ -73,5 +74,4 @@ public:
 //Inicializa la librería WinSock
 void inicializaWinSock();
 
-
-
+#endif // !_SOCKET__H_

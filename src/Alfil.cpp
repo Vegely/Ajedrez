@@ -1,5 +1,4 @@
 #include "Alfil.h"
-
 #include "Tablero.h"
 
 DatosClavada Alfil::actualizarVariables(bool clavada, Posicion direccionClavada, bool tableroIlegalesRey[2][8][8])
@@ -7,7 +6,7 @@ DatosClavada Alfil::actualizarVariables(bool clavada, Posicion direccionClavada,
 	clearVariables();
 	DatosClavada piezaClavada;
 	Posicion posicionAux;
-	bool piezaEncontrada=false; //Variable para comprobar si se ha topado con una pieza
+	bool piezaEncontrada = false; // Variable para comprobar si se ha topado con una pieza
 	std::vector<Posicion> direcciones;
 
 	if (!clavada)

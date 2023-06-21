@@ -6,7 +6,6 @@
 
 constexpr int SPEED = 500;
 
-/* CONSTRUCTOR */
 Camara::Camara(const Point& position) :
 	position(position),
 	speed({0}),
@@ -18,11 +17,9 @@ Camara::Camara(const Point& position) :
 	rotation{0, 0, 1},
 	girado(false)
 {
-	//std::cout << "Initial camera position set to " << this->position << std::endl;
-	//std::cout << "Initial camera look-at point set to " << this->look_at << std::endl;
+
 }
 
-/* MOVEMENT (OnTimer) */
 void Camara::movement(const Point& p1, const Point& p2, float time)
 {
 	if (!girado)
@@ -47,7 +44,13 @@ void Camara::movement(const Point& p1, const Point& p2, float time)
 	}
 }
 
-/* PRINTERS */
+void Camara::motion(float time)
+{
+	this->speed = this->speed + this->acceleration * time;
+	this->angle = this->angle + this->ang_speed * time + 0.5f * this->ang_acc * time * time;
+	this->position = Point{ Camara::radius * cos(this->angle), Camara::height, Camara::radius * sin(this->angle) };
+}
+
 std::ostream& Camara::printPosition(std::ostream& str) const
 {
 	str << "Camera position:" << this->getPosition() << std::endl;
@@ -60,7 +63,6 @@ std::ostream& Camara::printLookAt(std::ostream& str) const
 	return str;
 }
 
-/* CAMERA UPDATE */
 void Camara::update(void)
 { 
 	// Clears screen.	

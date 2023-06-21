@@ -9,8 +9,6 @@ class Torre : public Pieza
 public:
 	explicit Torre(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_TORRE, tipo_t::TORRE) {}
 	explicit Torre(const Torre& T) : Pieza(T) {}
-
-	std::string getNombre() const override { return "T"; }
 };
 
 #endif // !_Torre__H_ //

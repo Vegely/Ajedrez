@@ -1,5 +1,4 @@
 #include "InfoTablas.h"
-
 #include "Tablero.h"
 
 void InfoTablas::add(const Tablero& tablero)

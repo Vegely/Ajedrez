@@ -1,6 +1,5 @@
 #include "Dama.h"
 #include "Tablero.h"
-#include "Torre.h"
 
 DatosClavada Dama::actualizarVariables(bool clavada, Posicion direccionClavada, bool tableroIlegalesRey[2][8][8])
 {

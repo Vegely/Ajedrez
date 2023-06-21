@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _CLIENTE__H_
+#define _CLIENTE__H_
 
 #include "Socket.h"
 #include "ElementoRed.h"
@@ -13,8 +14,6 @@
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
-
-
 
 class Cliente : public ElementoRed
 {
@@ -94,3 +93,5 @@ void cambiarTurno(bool& tnegras, bool& tblancas) {
     c.desconectarCliente();
 
 */
+
+#endif // !_CLIENTE__H_

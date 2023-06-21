@@ -1,6 +1,6 @@
-
 #include "Caja.h"
 #include "freeglut.h"
+
 Caja::Caja(float ulx, float uly, float drx, float dry)
 {
 	ul.x = ulx;

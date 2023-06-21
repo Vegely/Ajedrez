@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _IA__H_
+#define _IA__H_
 
 #include "Tablero.h"
 #include "MovimientoEvaluado.h"
@@ -15,3 +16,4 @@ public:
 	static Pieza::tipo_t coronar(const Tablero& tablero, const Movimiento& movimiento);
 };
 
+#endif

@@ -1,15 +1,7 @@
+#define _USE_MATH_DEFINES
 #include "Globals.h"
-#include <ctime>
+#include <cmath>
 #include <freeglut.h>
-
-CRGB Colors::White = { 255, 255, 255 };
-CRGB Colors::Black = { 0, 0, 0 };
-CRGB Colors::Red = { 255, 0, 0 };
-CRGB Colors::Green = { 0, 255, 0 };
-CRGB Colors::Blue = { 0, 0, 255 };
-CRGB Colors::Yellow = { 255, 255, 0 };
-CRGB Colors::Cyan = { 0, 255, 255 };
-CRGB Colors::Magenta = { 255, 0, 255 };
 
 Point Point::zero = { 0, 0, 0 };
 
@@ -98,7 +90,7 @@ bool operator != (const Point& lhs, const Point& rhs)
 void Point::rotate2D(const float angle)
 {
 	Point temp = { x, y };
-	float ang = angle * PI / 180;
+	float ang = angle * M_PI / 180;
 
 	this->x = temp.x * cos(ang) - temp.y * sin(ang);
 	this->y = temp.x * sin(ang) + temp.y * cos(ang);
@@ -107,12 +99,6 @@ void Point::rotate2D(const float angle)
 std::ostream& operator << (std::ostream& out, const Point& obj)
 {
 	out << "[" << obj.x << ", " << obj.y << ", " << obj.z << "]";
-	return out;
-}
-
-std::ostream& operator << (std::ostream& out, const CRGB& obj)
-{
-	out << "[" << static_cast<int>(obj.r) << ", " << static_cast<int>(obj.g) << ", " << static_cast<int>(obj.b) << "]";
 	return out;
 }
 

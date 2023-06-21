@@ -1,5 +1,8 @@
-#pragma once
+#ifndef _SONIDOS__H_
+#define _SONIDOS__H_
+
 #include "ETSIDI.h"
+
 #define SONIDO_JM "sonidos/son_jaquemate.wav"
 #define SONIDO_J "sonidos/son_jaque.wav"
 #define SONIDO_MOV "sonidos/son_mover.wav"
@@ -9,6 +12,7 @@
 #define SONIDO_COM "sonidos/son_comer.wav"
 #define SONIDO_COR "sonidos/son_coronar.wav"
 #define SONIDO_CAP "sonidos/son_cap.wav"
+
 class Sonidos
 {
 public:
@@ -23,3 +27,4 @@ public:
 	static void con_comerAlPaso();
 };
 
+#endif

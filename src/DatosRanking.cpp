@@ -1,5 +1,5 @@
-#pragma once
 #include "DatosRanking.h"
+
 #include <iostream>
 #include <fstream>
 

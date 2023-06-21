@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MOVIMIENTOEVALUADO__H_
+#define _MOVIMIENTOEVALUADO__H_
 
 #include "Movimiento.h"
 
@@ -11,3 +12,5 @@ struct MovimientoEvaluado
 
 	explicit MovimientoEvaluado(const eval_t& eval) : eval(eval) { movimiento.clear(); }
 };
+
+#endif // !_MOVIMIENTOEVALUADO__H_

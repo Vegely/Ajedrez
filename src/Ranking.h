@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _RANKING__H_
+#define _RANKING__H_
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -45,3 +47,5 @@ public:
 	void paginaAnterior() { if (pagina_actual <= 0)return; pagina_actual--; }
 	void iniPag() { pagina_actual = 0; }
 };
+
+#endif // !_RANKING__H_

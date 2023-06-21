@@ -3,9 +3,8 @@
 
 #include "Globals.h"
 #include <string>
-#include <iostream>
 
-class Entity // interface
+class Entity
 {
 protected:
 	Point		position;
@@ -21,44 +20,12 @@ public:
 	Entity(const Entity& e);
 
 	/* DESTRUCTOR */
-	virtual ~Entity(void);
+	virtual ~Entity(void) { }
 
-	/* GETTERS */
-	Point getPosition(void) const;
-	void  getPosition(Point* pos);
-	Point getVelocity(void) const;
-	void  getVelocity(Point* pos);
-	Point getAcceleration(void) const;
-	void  getAcceleration(Point* pos);
-
-	std::string getName(void) const;
-
-	/* SETTERS */
-	void setPosition(const Point& pt);
-	void move(const Point& incr);
-	void endMove(int key);
-	void warp(const Point& pt);
-	void setPosition(const float x, const float y, const float z);
-	void setVelocity(const Point& pt);
-	void setVelocity(const float x, const float y, const float z);
-	void setAcceleration(const Point& pt);
-	void setAcceleration(const float x, const float y, const float z);
-	void setName(const std::string& new_name);
-
-	/* MOVEMENT */
+	/* MOVIMIENTO */
 	virtual void movement(const float time);
 
-	/* PRINTERS */
-	std::ostream& printParameters(std::ostream& str = std::cout) const;
-	std::ostream& printParameters(const Entity& e, std::ostream& str = std::cout);
-	std::ostream& printPosition(std::ostream& str = std::cout) const;
-	std::ostream& printPosition(const Entity& e, std::ostream& str = std::cout);
-	std::ostream& printVelocity(std::ostream& str = std::cout) const;
-	std::ostream& printVelocity(const Entity& e, std::ostream& str = std::cout);
-	std::ostream& printAcceleration(std::ostream& str = std::cout) const;
-	std::ostream& printAcceleration(const Entity& e, std::ostream& str = std::cout);
-
-	/* RENDERING (Pure virtual) */
+	/* RENDERIZACION */
 	virtual void render(void) = 0;
 };
 

@@ -1,4 +1,4 @@
-#include "servidor.h"
+#include "Servidor.h"
 
 int Servidor::recibir(std::string& s) const 
 {

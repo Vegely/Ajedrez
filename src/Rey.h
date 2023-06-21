@@ -9,8 +9,6 @@ class Rey : public Pieza
 public:
 	explicit Rey(const Tablero& p_tablero, const bool color) : Pieza(p_tablero, color, VALOR_REY, tipo_t::REY) {};
 	explicit Rey(const Rey& R) : Pieza(R) {}
-
-	std::string getNombre() const override { return "R"; }
 };
 
 #endif // !_Rey__H_ //

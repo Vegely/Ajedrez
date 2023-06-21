@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MOVIMIENTO__H_
+#define _MOVIMIENTO__H_
+
 
 #include <string>
 #include <limits>
@@ -23,3 +25,5 @@ struct Movimiento
 	bool operator== (const Movimiento& rhs) const { return (this->inicio == rhs.inicio && this->fin == rhs.fin); }
 	bool operator!= (const Movimiento& rhs) const { return !(*this == rhs); }
 };
+
+#endif // !_MOVIMIENTO__H_

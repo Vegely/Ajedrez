@@ -28,7 +28,7 @@ private:
 	std::string model_path;
 	std::string texture_path;
 	TipoPieza   tipo_pieza;
-	bool color;
+	bool		color;
 
 public:
 	const aiScene*   scene;
@@ -37,15 +37,17 @@ public:
 public: 
 	/* FORMA CANÓNICA */
 	Modelo(void);
-	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path);
 	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color);
-	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color, const aiScene* scene);
 	Modelo(const Posicion& initial_pos, const aiScene* scene, std::string texture_path);
+	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color, const aiScene* scene);
+	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path);
 	virtual ~Modelo(void) { }
 	Modelo(const Modelo& m);
 	Modelo& operator = (const Modelo& rhs);
+
 	/* INICIALIZACIÓN */
 	void init(void);
+	void initRutas(void);
 
 	/* GETTERS */
 	Posicion	getCoords	    (void) const { return  this->pos_coords; }
@@ -76,17 +78,20 @@ struct ModeloBase
 	Assimp::Importer importer;
 	void init(std::string path)
 	{
-		this->scene = importer.ReadFile(path, aiProcess_Triangulate
+		this->scene = importer.ReadFile(path,
+			  aiProcess_Triangulate
 			| aiProcess_OptimizeMeshes
 			| aiProcess_JoinIdenticalVertices
-			| aiProcess_Triangulate
 			| aiProcess_CalcTangentSpace
 			| aiProcess_FlipUVs);
 		if (this->scene == nullptr || this->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !this->scene->mRootNode)
-			std::cerr << "Failed to load model at " + path;
-		//else
-		//	std::cout << "Created meshes." << std::endl;
+			std::cerr << "Failed to load model at " + path << std::endl;
 	}
+};
+
+struct TexturaBase
+{
+	//todo@textura_base
 };
 
 #endif

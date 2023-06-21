@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _DATOSCLAVADA__H_
+#define _DATOSCLAVADA__H_
+
 #include <vector>
 #include "Posicion.h"
 
@@ -11,3 +13,4 @@ struct DatosClavada
 	Pieza* PiezaClavada = nullptr;
 };
 
+#endif

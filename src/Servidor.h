@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SERVIDOR__H_
+#define _SERVIDOR__H_
 
 #include "Socket.h"
 #include "ElementoRed.h"
@@ -103,3 +104,5 @@ while (!salir) {
 
 s.desconectarServidor();
 */
+
+#endif

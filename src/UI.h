@@ -1,3 +1,6 @@
+#ifndef _UI__H_
+#define _UI__H_
+
 #include "Caja.h"
 #include "freeglut.h"
 #include "ETSIDI.h"
@@ -29,6 +32,7 @@ enum class Guardar { BLANCAS, NEGRAS, PARTIDA, NONE };
 struct PantallaBase {
 	std::string ruta;
 	PantallaBase(std::string ruta) : ruta(ruta) {}
+	virtual void dibuja() { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
 };
 
 struct PantallaColorJugador :public PantallaBase
@@ -38,45 +42,36 @@ struct PantallaColorJugador :public PantallaBase
 	Caja atras{ 25.4,-2.3,29.8,-6.3 };
 
 	PantallaColorJugador():PantallaBase(RUTA_COLOR_JUGADOR){}
-
-	void dibuja() { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
 };
 
 struct PantallaFalloConexion :public PantallaBase {
 	Caja aceptar{ -5.0, 7.3, 4.6, 3.5 };
 
 	PantallaFalloConexion():PantallaBase(RUTA_FALLO_CONEXION) {}
-
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
 };
 
 struct PantallaFinPartida :public PantallaBase {
 	Caja guardar_y_salir{ -8.5, 9.9, 8.1, 5.9 };
 	Caja salir_sin_guardar{ -9.7, 4.9, 9.3, 1.0 };
 	PantallaFinPartida(): PantallaBase(RUTA_FIN_DE_PARTIDA){}
-	void dibuja();
 };
 
 struct PantallaCliente :public PantallaBase {
 	Caja cliente{ -9.5, 10.0, 9.3, 6.0 };
 	Caja atras{ 25.4,-2.3,29.8,-6.3 };
 	PantallaCliente(): PantallaBase(RUTA_CLIENTE){}
-
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
 };
 
 struct PantallaPausa :public PantallaBase {
 	Caja guardar_y_salir{ -8.5, 9.9, 8.1, 5.9 };
 	Caja salir_sin_guardar{ -9.7, 4.9, 9.3, 1.0 };
 	PantallaPausa():PantallaBase(RUTA_PAUSA){}
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*guardar_y_salir.dibuja(); salir_sin_guardar.dibuja();*/ }
 };
 
 struct PantallaServidor :public PantallaBase {
 	Caja servidor{ -9.6, 9.9, 9.3, 6.0 };
 	Caja atras{ 25.4,-2.3,29.8,-6.3 };
 	PantallaServidor(): PantallaBase(RUTA_SERVIDOR){}
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*servidor.dibuja(); atras.dibuja();*/ }
 };
 
 struct PantallaCargarPartida :public PantallaBase {
@@ -84,8 +79,6 @@ struct PantallaCargarPartida :public PantallaBase {
 	Caja siguiente{ 20.0,-2.3,24.5,-6.3 };
 	Caja anterior{ -24.3,-2.3,-19.9,-6.3 };
 	PantallaCargarPartida(): PantallaBase(RUTA_CARGAR_PARTIDA){}
-
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*atras.dibuja(); siguiente.dibuja(); anterior.dibuja();*/ }
 };
 
 struct PantallaRankings :public PantallaBase {
@@ -93,7 +86,6 @@ struct PantallaRankings :public PantallaBase {
 	Caja siguiente{ 20.0,-2.3,24.5,-6.3 };
 	Caja anterior{ -24.3,-2.3,-19.9,-6.3 };
 	PantallaRankings(): PantallaBase(RUTA_RANKINGS){}
-	void dibuja()  { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); /*atras.dibuja(); siguiente.dibuja(); anterior.dibuja();*/ }
 };
 
 struct PantallaElegirRol :public PantallaBase
@@ -102,18 +94,15 @@ struct PantallaElegirRol :public PantallaBase
 	Caja cliente{ -4.45,4.9,4.0,0.9 };
 	Caja atras{ 25.4,-2.3,29.7,-6.3 };
 	PantallaElegirRol(): PantallaBase(RUTA_ROL_RED){}
-	void dibuja() { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
 };
+
 struct PantallaInicio :public PantallaBase
 {
 	Caja nuevaPartida{ -16.65f, 9.9f, -1.0, 5.9f };
 	Caja cargarPartida{ 1.0, 9.9,16.65,5.9 };
 	Caja mostrarRankings{ -9.45,4.9,9.45,0.9 };
 	Caja salir{ -3.15,-0.1,3.25,-4.0 };
-
 	PantallaInicio(): PantallaBase(RUTA_INICIO){}
-	
-	void dibuja();
 };
 
 struct PantallaJugadorLocal :public PantallaBase
@@ -123,15 +112,6 @@ struct PantallaJugadorLocal :public PantallaBase
 	Caja IAIA{ -4.35,-0.1,4.25,-4.0 };
 	Caja atras{ 25.4,-2.3,29.7,-6.3 };
 	PantallaJugadorLocal():PantallaBase(RUTA_JUEGO_LOCAL){}
-	void dibuja()
-	{
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id);
-		/*jugadorIA.dibuja();
-		dosJugadores.dibuja();
-		atras.dibuja();
-		IAIA.dibuja();*/
-	}
-	//Estado click(int button, int state, float x, float y) override;
 };
 
 struct PantallaModoDeJuego :public PantallaBase
@@ -140,13 +120,6 @@ struct PantallaModoDeJuego :public PantallaBase
 	Caja red{ -7.1,4.9,7.1,0.9 };
 	Caja salir{ -3,-0.1,3.2,-4.0 };
 	PantallaModoDeJuego(): PantallaBase(RUTA_MODO_DE_JUEGO){}
-	void dibuja()
-	{
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id);
-		/*local.dibuja();
-		red.dibuja();
-		salir.dibuja();*/
-	}
 };
 
 struct PantallaGuardar : public PantallaBase {
@@ -163,11 +136,8 @@ struct PantallaGuardar : public PantallaBase {
 	Caja negras{ 0.7,1.3,25.4,-2.7 };
 
 	PantallaGuardar(): PantallaBase(RUTA_GUARDAR){}
-
-	void dibuja() { glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(ruta.c_str()).id); }
 	void reset() { snombre_partida = ""; sblancas = ""; snegras = ""; smodo = ""; existe = 0; estado = Guardar::NONE; }
-
 	void escrituraGlut();
 };
 
-
+#endif // !_UI__H_

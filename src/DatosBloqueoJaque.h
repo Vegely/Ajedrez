@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _DATOSBLOQUEOJAQUE__H_
+#define _DATOSBLOQUEOJAQUE__H_
 #include "pieza.h"
 
 struct DatosBloqueoJaque
@@ -7,3 +8,4 @@ struct DatosBloqueoJaque
 	Posicion posicionPieza = Posicion{ 0,0 };
 };
 
+#endif

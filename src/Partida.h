@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _PARTIDA__H_
+#define _PARTIDA__H_
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -53,3 +55,5 @@ public:
 
 void operator<<(std::ostream& o, const Partida& p);
 void operator>>(std::istream& is, Partida& p);
+
+#endif // !_PARTIDA__H_

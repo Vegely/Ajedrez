@@ -34,42 +34,7 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color) :
 	color(color),
 	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
 {
-	switch (tipo_pieza)
-	{
-	case REY:
-		model_path = Mundo::ruta_modelo_rey;
-		break;
-
-	case DAMA:
-		model_path = Mundo::ruta_modelo_dama;
-		break;
-
-	case ALFIL:
-		model_path = Mundo::ruta_modelo_alfil;
-		break;
-
-	case CABALLO:
-		model_path = Mundo::ruta_modelo_caballo;
-		break;
-
-	case TORRE:
-		model_path = Mundo::ruta_modelo_torre;
-		break;
-
-	case PEON:
-		model_path = Mundo::ruta_modelo_peon;
-		break;
-
-	default:
-		std::cerr << "No default model path for the specified type." << std::endl;
-		exit(0);
-		break;
-	}
-	if (color)
-		texture_path = Mundo::ruta_textura_blanco;
-	else
-		texture_path = Mundo::ruta_textura_negro;
-
+	initRutas();
 	init();
 }
 
@@ -83,41 +48,7 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, bool color, co
 	color(color),
 	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
 {
-	switch (tipo_pieza)
-	{
-	case REY:
-		model_path = Mundo::ruta_modelo_rey;
-		break;
-
-	case DAMA:
-		model_path = Mundo::ruta_modelo_dama;
-		break;
-
-	case ALFIL:
-		model_path = Mundo::ruta_modelo_alfil;
-		break;
-
-	case CABALLO:
-		model_path = Mundo::ruta_modelo_caballo;
-		break;
-
-	case TORRE:
-		model_path = Mundo::ruta_modelo_torre;
-		break;
-
-	case PEON:
-		model_path = Mundo::ruta_modelo_peon;
-		break;
-
-	default:
-		std::cerr << "No default model path for the specified type." << std::endl;
-		exit(0);
-		break;
-	}
-	if (color)
-		texture_path = Mundo::ruta_textura_blanco;
-	else
-		texture_path = Mundo::ruta_textura_negro;
+	initRutas();
 }
 
 Modelo::Modelo(const Posicion& initial_pos, const aiScene* scene, std::string texture_path) :
@@ -131,32 +62,15 @@ Modelo::Modelo(const Posicion& initial_pos, const aiScene* scene, std::string te
 	Entity(getPointFromCoords(initial_pos), "Modelo " + tipo_pieza)
 { }
 
-void Modelo::init(void)
-{
-	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate
-		| aiProcess_OptimizeMeshes
-		| aiProcess_JoinIdenticalVertices
-		| aiProcess_Triangulate
-		| aiProcess_CalcTangentSpace
-		| aiProcess_FlipUVs);
-	if (this->scene == nullptr || this->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !this->scene->mRootNode)
-		std::cerr << "Failed to load model: " + model_path;
-	/*else
-		std::cout << "Created meshes for model type " << tipo_pieza << "." << std::endl;*/
-
-	if (this->tipo_pieza == NONE)
-		this->position = Point{ 0, 0, 0 };
-}
-
 Modelo::Modelo(const Modelo& m)
 {
 	this->position = m.position;
 	this->velocity = m.velocity;
 	this->acceleration = m.acceleration;
-	this->texture_ID   = m.texture_ID;
-	this->model_path   = m.model_path;
+	this->texture_ID = m.texture_ID;
+	this->model_path = m.model_path;
 	this->texture_path = m.texture_path;
-	this->tipo_pieza   = m.tipo_pieza;
+	this->tipo_pieza = m.tipo_pieza;
 	this->scene = importer.ReadFile(this->model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
 	if (!scene || scene->mRootNode == nullptr) // Comprobacion de lectura correcta del archivo.
 		std::cerr << "Failed to load 3D model file: " << importer.GetErrorString();
@@ -178,7 +92,60 @@ Modelo& Modelo::operator = (const Modelo& rhs)
 	return *this;
 }
 
-// Renderizado del modelo
+void Modelo::init(void)
+{
+	this->scene = importer.ReadFile(this->model_path,
+		  aiProcess_OptimizeMeshes
+		| aiProcess_JoinIdenticalVertices
+		| aiProcess_Triangulate
+		| aiProcess_CalcTangentSpace
+		| aiProcess_FlipUVs);
+	if (this->scene == nullptr || this->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !this->scene->mRootNode)
+		std::cerr << "Failed to load model: " + model_path;
+
+	if (this->tipo_pieza == NONE)
+		this->position = Point{ 0, 0, 0 };
+}
+
+void Modelo::initRutas(void)
+{
+	switch (this->tipo_pieza)
+	{
+	case REY:
+		this->model_path = Mundo::ruta_modelo_rey;
+		break;
+
+	case DAMA:
+		this->model_path = Mundo::ruta_modelo_dama;
+		break;
+
+	case ALFIL:
+		this->model_path = Mundo::ruta_modelo_alfil;
+		break;
+
+	case CABALLO:
+		this->model_path = Mundo::ruta_modelo_caballo;
+		break;
+
+	case TORRE:
+		this->model_path = Mundo::ruta_modelo_torre;
+		break;
+
+	case PEON:
+		this->model_path = Mundo::ruta_modelo_peon;
+		break;
+
+	default:
+		std::cerr << "No default model path for the specified type." << std::endl;
+		exit(0);
+		break;
+	}
+	if (color)
+		this->texture_path = Mundo::ruta_textura_blanco;
+	else
+		this->texture_path = Mundo::ruta_textura_negro;
+}
+
 void Modelo::renderNodo(const aiNode* nodo)
 {
 	if (nodo == nullptr)
@@ -239,7 +206,7 @@ void Modelo::render(void)
 		if (this->pos_coords != Posicion())
 			this->position = getPointFromCoords(this->pos_coords);
 		else
-			this->position = getPointFromCoords(this->pos_coords) * 2;
+			this->position = Point{ 0, 100, 0 };
 	}
 
 
@@ -282,7 +249,7 @@ bool Modelo::cargarTextura(void)
 	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, ancho, alto, GL_RGB, GL_UNSIGNED_BYTE, datos_imagen);
 
 	stbi_image_free(datos_imagen);
-	//std::cout << "Texture binded." << std::endl;
+
 	return true;
 }
 
@@ -290,18 +257,11 @@ bool Modelo::moverModelo(const Movimiento& movimiento)
 {
 	if (movimiento.inicio == this->pos_coords && this->tipo_pieza != NONE)
 	{
-		//std::cout << "Modelo tipo " << this->tipo_pieza << " movido de la posicion " << pos_coords.x << pos_coords.y;
 		this->pos_coords = movimiento.fin;
-		//std::cout << " a la posicion " << pos_coords.x << pos_coords.y << ". " << std::endl;
 		return true;
 	}
 	else
-	{
-		//std::cout << "El modelo que se ha intentado mover es nulo o no coincide con las coordenadas de inicio." << std::endl;
-		//std::cout << "Tipo: " << this->tipo_pieza << std::endl;
-		//std::cout << "Posicion modelo a mover: " << this->pos_coords.x << this->pos_coords.y << std::endl;
 		return false;
-	}
 }
 
 TipoPieza Modelo::castTipo(Pieza::tipo_t t)

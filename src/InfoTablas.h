@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _INFOTABLAS__H_
+#define _INFOTABLAS__H_
 
 #include <vector>
 
@@ -23,3 +24,4 @@ public:
 	InfoTablas(const InfoTablas& rhs) : posiciones(rhs.posiciones), repeticiones(rhs.repeticiones), boolRepeticion(rhs.boolRepeticion), contadorJugadas(rhs.contadorJugadas) {}
 };
 
+#endif

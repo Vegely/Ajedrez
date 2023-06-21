@@ -28,12 +28,10 @@ void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const Configura
 class CoordinadorAjedrez
 {
 	friend class menuInicial;
-	///
 	friend void hiloServidor(CoordinadorAjedrez* ajedrez);
 	friend void hiloCliente(CoordinadorAjedrez* ajedrez);
-	///
 
-public:
+private:
 	Mundo motorGrafico;
 	Ranking ranking;
 	Cliente* cliente = nullptr;
@@ -45,14 +43,13 @@ public:
 	std::thread* hilo_servidor = nullptr;
 	std::thread* hilo_cliente = nullptr;
 
-private:
 	/* ESTADO DEL JUEGO */
 	Estado estado;
-	/* MOTORES L�GICO Y GR�FICO */
+	/* MOTORES LOGICO Y GRAFICO */
 	Mundo mundoGrafico;
 	MotorDeJuego* p_motorLogico = nullptr;
 	std::thread* p_motor = nullptr;
-	/* VARIABLES DE GESTIÓN DE INICIALIZACIÓN Y FINALIZACIÓN */
+	/* VARIABLES DE GESTIÓN DE INICIALIZACIÓN Y FINALIZACION */
 	bool flagDeSeguridadInit = true;
 	DatosFinal datosFinal;
 	
@@ -70,15 +67,14 @@ public:
 	void Click(int button, int state, int x, int y);
 
 	friend void hiloServidor(CoordinadorAjedrez* ajedrez);
-	friend void hiloCliente(CoordinadorAjedrez* ajedrez);
+	friend void hiloCliente (CoordinadorAjedrez* ajedrez);
 };
 
 void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal);
 void hiloServidor(CoordinadorAjedrez* ajedrez);
-void hiloCliente(CoordinadorAjedrez* ajedrez);
+void hiloCliente (CoordinadorAjedrez* ajedrez);
 
 float aCoordenadasGlutX(float p);
-
 float aCoordenadasGlutY(float p);
 
 void parametrosTexturasMEstados();

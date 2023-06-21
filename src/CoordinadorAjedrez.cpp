@@ -20,7 +20,6 @@ PantallaGuardar pantallaGuardar;
 void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal)
 {
 	*p_datosFinal = motorLogico->motor(motorGrafico);
-
 	motorLogico->liberar();
 }
 

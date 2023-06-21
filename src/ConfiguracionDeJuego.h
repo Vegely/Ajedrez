@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _CONFIGURACIONDEJUEGO__H_
+#define _CONFIGURACIONDEJUEGO__H_
 
 #include "ElementoRed.h"
 
@@ -9,6 +10,8 @@ struct ConfiguracionDeJuego
 
 	ElementoRed* elementoRed = nullptr;
 
-	FormasDeInteraccion operator[] (int i) const { return config[i]; }
+	FormasDeInteraccion  operator[] (int i) const { return config[i]; }
 	FormasDeInteraccion& operator[] (int i) { return config[i]; }
 };
+
+#endif // !_CONFIGURACIONDEJUEGO__H_

@@ -5,8 +5,38 @@
 #include "ListaModelo.h"
 #include "Camara.h"
 #include "Movimiento.h"
-#include "Plane.h"
 #include "ConfiguracionDeJuego.h"
+
+struct Factor
+{
+	float x, y;
+	Factor(float x, float y) : x(x), y(y) {}
+};
+
+template<typename Type>
+struct Corners
+{
+	Type ll, lr, ul, ur;
+
+	Corners(void) : ll(), lr(), ul(), ur() { }
+
+	Corners<Point> operator *= (const Factor& rhs)
+	{
+		this->ll.x *= rhs.x;
+		this->ll.y *= rhs.y;
+
+		this->lr.x *= rhs.x;
+		this->lr.y *= rhs.y;
+
+		this->ul.x *= rhs.x;
+		this->ul.y *= rhs.y;
+
+		this->ur.x *= rhs.x;
+		this->ur.y *= rhs.y;
+
+		return *this;
+	}
+};
 
 class Casilla
 {
@@ -140,30 +170,8 @@ public:
 		float factor_escala_x = static_cast<float>(glutGet(GLUT_WINDOW_WIDTH)) / 1920.0f;
 		Corners<Point> result = this->casillas[i][j];
 		result *= Factor(factor_escala_x, factor_escala_y);
-		//std::cout << "Window height: " << glutGet(GLUT_WINDOW_HEIGHT) << std::endl;
-		//std::cout << "Ratio: " << factor_escala_x << " " << factor_escala_y << std::endl;
 		return result;
 	}
-};
-
-struct DatosPieza
-{
-	bool color;
-	Pieza::tipo_t tipo;
-	Posicion posicion;
-	bool valido;
-
-	bool operator == (const DatosPieza& dp)
-	{
-		return
-			(
-				this->color == dp.color &&
-				this->tipo == dp.tipo &&
-				this->posicion == dp.posicion &&
-				this->valido == dp.valido
-				);
-	}
-	bool operator != (const DatosPieza& dp) { return !(operator==(dp)); }
 };
 
 class Mundo
@@ -183,9 +191,6 @@ private:
 	ListaModelo peones_negros;
 	ListaModelo coronacion_blancos;
 	ListaModelo coronacion_negros;
-
-	DatosPieza tablero_anterior[64];
-	DatosPieza tablero_actual[64];
 
 	Posicion posicion_leida;
 	Casilla casillas_px;
@@ -228,13 +233,16 @@ public:
 	void cambiarGirado (void)			 { camara.cambiarGirado(); }
 	void resetLectura  (void)			 { this->posicion_leida = Posicion(); }
 	Posicion getCasilla(void) const		 { return this->posicion_leida; }
-	Pieza::tipo_t seleccionPiezaCoronacion(bool color);
 	ListaModelo* getCasillaSeleccionada(void) { return &this->casilla_seleccionada; }
 	ListaModelo* getCasillaComible	   (void) { return &this->casilla_comible; }
 	ListaModelo* getCasillaCoronacion  (void) { return &this->casilla_coronacion; }
 	ListaModelo* getCasillaPuedeMover  (void) { return &this->casilla_puede_mover; }
 	ListaModelo* getCasillaUltimoMov   (void) { return &this->casilla_ultimo_mov; }
 	ListaModelo* getCasillaJaque       (void) { return &this->casilla_jaque; }
+	bool		  getColorFromCoords	  (const Posicion& pos) const;
+	Pieza::tipo_t getTipoFromCoords		  (const Posicion& pos) const;
+	Pieza::tipo_t seleccionPiezaCoronacion(bool color);
+	ListaModelo*  seleccionarLista		  (bool color, Pieza::tipo_t tipo_pieza);
 
 	/* CALLBACKS */
 	void movimiento	     (const float time);
@@ -242,18 +250,14 @@ public:
 	void actualizarCamara(bool turno, float time, const ConfiguracionDeJuego& config);
 
 	/* GESTIÓN DE MODELOS */
-	void leerTablero(Tablero* tablero);
-	void reiniciarTablero(void);
-	void moverModelo(const Movimiento& mov, bool color, const Pieza::tipo_t tipo);
-	void dibujarFondo(void);
-	void moverModelos(const Movimiento& mov);
-	void renderizarModelos(void);
-	bool getColorFromCoords(const Posicion& pos);
-	ListaModelo* seleccionarLista(bool color, Pieza::tipo_t tipo_pieza);
-	Pieza::tipo_t getTipoFromCoords(const Posicion& pos) const;
 	void resetCasillas(void);
+	void reiniciarTablero(void);
 	void resetCasillas(ListaModelo* lista);
+	void leerTablero(Tablero* tablero);
+	void moverModelos(const Movimiento& mov);
 	void antisolapamientoCasillas(const Tablero& tablero);
+	void renderizarModelos(void);
+	//void dibujarFondo(void);
 
 	/* VARIABLES ESTÁTICAS */
 	static std::string ruta_modelo_rey;
@@ -281,8 +285,6 @@ public:
 	static std::string ruta_textura_casilla_ultimo_mov;
 
 	static std::string ruta_fondo;
-
-	static CasillasTablero casillas_tablero_array;
 };
 
 #endif // !MUNDO_H

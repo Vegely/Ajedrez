@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _DATOSRANKING__H_
+#define _DATOSRANKING__H_
+
 #include <string>
 #include <sstream>
 
@@ -16,3 +18,4 @@ int posicionJugador(DatosRanking* ptdranking, const std::string& nombre);
 void rellenaRanking(DatosRanking* ptdranking, std::string nombre_fichero);
 void actualizaRanking(DatosRanking* ptdranking, const std::string& nombre, int puntuacion, const std::string& nombre_fichero);
 
+#endif // !_DATOSRANKING__H_

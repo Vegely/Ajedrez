@@ -1,5 +1,4 @@
 #include "Torre.h"
-
 #include "Tablero.h"
 
 DatosClavada Torre::actualizarVariables(bool clavada, Posicion direccionClavada, bool tableroIlegalesRey[2][8][8])

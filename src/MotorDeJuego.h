@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MOTORDEJUEGO__H_
+#define _MOTORDEJUEGO__H_
 
 #include "Tablero.h"
 #include "Mundo.h"
@@ -42,3 +43,4 @@ public:
 	void setExit(bool exit) { this->exit = exit; }
 };
 
+#endif // !_MOTORDEJUEGO__H_

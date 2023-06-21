@@ -150,7 +150,6 @@
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\Callbacks.h" />
     <ClInclude Include="src\Camara.h" />
-    <ClInclude Include="src\Casilla.h" />
     <ClInclude Include="src\ConfiguracionDeJuego.h" />
     <ClInclude Include="src\Cliente.h" />
     <ClInclude Include="src\CoordinadorAjedrez.h" />
@@ -170,12 +169,10 @@
     <ClInclude Include="src\Partida.h" />
     <ClInclude Include="src\Peon.h" />
     <ClInclude Include="src\Pieza.h" />
-    <ClInclude Include="src\Plane.h" />
     <ClInclude Include="src\Posicion.h" />
     <ClInclude Include="src\Punto.h" />
     <ClInclude Include="src\Ranking.h" />
     <ClInclude Include="src\Rey.h" />
-    <ClInclude Include="src\SalidasConsola.h" />
     <ClInclude Include="src\Servidor.h" />
     <ClInclude Include="src\Socket.h" />
     <ClInclude Include="src\Sonidos.h" />
@@ -206,10 +203,8 @@
     <ClCompile Include="src\Partida.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
-    <ClCompile Include="src\Plane.cpp" />
     <ClCompile Include="src\Ranking.cpp" />
     <ClCompile Include="src\Rey.cpp" />
-    <ClCompile Include="src\SalidasConsola.cpp" />
     <ClCompile Include="src\Servidor.cpp" />
     <ClCompile Include="src\Socket.cpp" />
     <ClCompile Include="src\Sonidos.cpp" />
