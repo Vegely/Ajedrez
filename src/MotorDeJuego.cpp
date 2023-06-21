@@ -9,8 +9,6 @@
 
 #include "IA.h"
 
-#include "Mundo.h"
-
 #include <cstdint>
 #include <chrono>
 
@@ -54,7 +52,7 @@ Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool& run)
 			while(movimiento == Movimiento()) 
 			{
 				if (!run) return Movimiento();
-				movimiento = ensamblarMovimiento(getInput(p_motorGrafico), p_motorGrafico);
+				movimiento = ensamblarMovimiento(getInput(p_motorGrafico));
 			}
 
 			if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::EMISOR)
@@ -67,17 +65,16 @@ Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool& run)
 
 void MotorDeJuego::pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_motorGrafico) const
 {
-	Pieza*		 pieza_leida      = tablero.leer(posSelec);
-	Movimiento   ultima_jugada	  = tablero.getUltimaJugada();
-	ListaModelo* lista_comer      = p_motorGrafico->getCasillaComible();
-	ListaModelo* lista_coronacion = p_motorGrafico->getCasillaCoronacion();
-	ListaModelo* lista_jugada	  = p_motorGrafico->getCasillaUltimoMov();
-	ListaModelo* lista_mover	  = p_motorGrafico->getCasillaPuedeMover();
-	ListaModelo* lista_seleccion  = p_motorGrafico->getCasillaSeleccionada();
-	ListaModelo* lista_jaque	  = p_motorGrafico->getCasillaJaque();
-
-	if (posSelec != Posicion() && pieza_leida != nullptr && tablero.leer(posSelec)->getColor() == tablero.colorDelTurno)
+	if (posSelec != Posicion() && tablero.leer(posSelec) != nullptr && tablero.leer(posSelec)->getColor() == tablero.colorDelTurno)
 	{
+		Movimiento   ultima_jugada	  = tablero.getUltimaJugada();
+		ListaModelo* lista_comer      = p_motorGrafico->getCasillaComible();
+		ListaModelo* lista_coronacion = p_motorGrafico->getCasillaCoronacion();
+		ListaModelo* lista_jugada	  = p_motorGrafico->getCasillaUltimoMov();
+		ListaModelo* lista_mover	  = p_motorGrafico->getCasillaPuedeMover();
+		ListaModelo* lista_seleccion  = p_motorGrafico->getCasillaSeleccionada();
+		ListaModelo* lista_jaque	  = p_motorGrafico->getCasillaJaque();
+
 		Pieza::tipo_t tipo = tablero.leer(posSelec)->getTipo();
 		Posicion posicion  = tablero.leer(posSelec)->getPosicion();
 		bool color = tablero.leer(posSelec)->getColor();
@@ -177,8 +174,8 @@ uint64_t getTimeSinceEpoch()
 DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 {
 	// Pintar tablero
-	p_mundoGrafico->leerTablero(tablero);
-	p_mundoGrafico->actualizarCamara(tablero.colorDelTurno);
+	p_mundoGrafico->leerTablero(&tablero);
+	p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, TIMEPO_ROTACION_CAMARA, config);
 
 	// Tomar timepo para el primer movimiento
 	long long int t0 = getTimeSinceEpoch();
@@ -204,15 +201,15 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 			t0 = getTimeSinceEpoch();
 
 			// Pintar tablero
-			p_mundoGrafico->leerTablero(tablero);
-			p_mundoGrafico->actualizarCamara(tablero.colorDelTurno);
+			p_mundoGrafico->leerTablero(&tablero);
+			p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, TIMEPO_ROTACION_CAMARA, config);
 
 			fichero_partida.movimientos.push_back(tablero.ultimaJugada);
 
 			if (tablero.jaqueMate())
 			{
 				comprobarCasillasJaque(p_mundoGrafico);
-				datosFinal = { CodigoFinal::JAQUE_MATE, true, !tablero.colorDelTurno };
+				return DatosFinal{ CodigoFinal::JAQUE_MATE, true, !tablero.colorDelTurno };
 				//exit = true; ///???????????????
 			}
 			else if (tablero.reyAhogado())
@@ -248,19 +245,17 @@ Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Movimiento& movimien
 	}
 }
 
-Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, Mundo* p_motorGrafico) const
+Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion) const
 {
 	static bool aux;
 	static Posicion inicio;
-	Pieza* pieza_leida = tablero.leer(posicion);
 
 	if (posicion != Posicion())
 	{
-		if (pieza_leida != nullptr && pieza_leida->getColor() == tablero.colorDelTurno)
+		if (tablero.leer(posicion) != nullptr && tablero.leer(posicion)->getColor() == tablero.colorDelTurno)
 		{
 			inicio = posicion;
 			aux = true;
-			
 		}
 		else if (aux)
 		{

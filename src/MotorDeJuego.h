@@ -29,7 +29,7 @@ class MotorDeJuego
 	//bool exit = false;
 
 	Movimiento seleccionarEntrada(Mundo* p_motorGrafico, bool& run);
-	Movimiento ensamblarMovimiento(Posicion posicion, Mundo* p_motorGrafico) const;
+	Movimiento ensamblarMovimiento(Posicion posicion) const;
 
 public:
 	MotorDeJuego(const ConfiguracionDeJuego* config, Partida* partida, ElementoRed* elementoRed) : config(*config), tablero(Tablero(true)), fichero_partida(*partida), elementoRed(*elementoRed) { /*pintar();*/ }
