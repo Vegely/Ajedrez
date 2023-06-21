@@ -5,7 +5,8 @@
 
 #include "Plane.h"
 
-ConfiguracionDeJuego configuracion;
+#include <thread>
+#include <chrono>
 
 PantallaElegirRol	  pantallaElegirRol;
 PantallaInicio		  pantallaInicio;
@@ -23,10 +24,15 @@ PantallaGuardar		  pantallaGuardar;
 
 struct Color { unsigned char r, g, b; };
 
-void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal)
+void threadMotor(bool* p_run, Mundo* p_motorGrafico, const ConfiguracionDeJuego* p_config, Partida* p_partida, ElementoRed* p_elementoRed, DatosFinal* p_datosFinal)
 {
-	*p_datosFinal = motorLogico->motor(motorGrafico);
-	motorLogico->liberar();
+	std::cout << "Thread inicializado" << std::endl;
+
+	MotorDeJuego motor(p_config, p_partida, p_elementoRed);
+
+	*p_datosFinal = motor.motor(p_motorGrafico, *p_run);
+
+	motor.liberar();
 }
 
 CoordinadorAjedrez::CoordinadorAjedrez() :
@@ -35,15 +41,24 @@ CoordinadorAjedrez::CoordinadorAjedrez() :
 	datosFinal()
 {}
 
-void hiloServidor(CoordinadorAjedrez* ajedrez) {
-	ajedrez->servidor->conectarServidor();
-	ajedrez->config = { ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR, ConfiguracionDeJuego::FormasDeInteraccion::EMISOR, ajedrez->servidor };
-	ajedrez->estado = INICIALIZACION_PARTIDA;
-}
-void hiloCliente(CoordinadorAjedrez* ajedrez) {
-	ajedrez->cliente->conectarCliente();
-	ajedrez->config = { ConfiguracionDeJuego::FormasDeInteraccion::EMISOR, ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR, ajedrez->cliente };
-	ajedrez->estado = INICIALIZACION_PARTIDA;
+void hiloRed(CoordinadorAjedrez* p_ajedrez)
+{
+	p_ajedrez->p_elementoRed->conectar();
+	if (p_ajedrez->redAbierta)
+	{
+		p_ajedrez->estado = INICIALIZAR_PARTIDA;
+
+		int conectado = 1;
+		while (conectado > 0 && p_ajedrez->redAbierta) // Hay que aï¿½adir el error en el paquet porque no hay un callback al cerrar la ventana 
+														  // con la X para avisar al otro extremo de la red de que ha habido una desconexion
+		{
+			if (p_ajedrez->p_elementoRed->recibido.empty())
+				conectado = p_ajedrez->p_elementoRed->recibir(p_ajedrez->p_elementoRed->recibido);
+		}
+		///
+		p_ajedrez->estado = CERRAR_PARTIDA; // estado = FALLO_DE_CONEXION
+		///
+	}
 }
 
 void CoordinadorAjedrez::init(void)
@@ -164,7 +179,7 @@ void CoordinadorAjedrez::Draw(void)
 		parametrosTexturasMEstados();
 	}
 
-	else if (estado ==CLIENTE)
+	else if (estado == CLIENTE)
 	{
 		pantallaCliente.dibuja();
 		parametrosTexturasMEstados();
@@ -183,7 +198,7 @@ void CoordinadorAjedrez::Draw(void)
 
 		ETSIDI::setFont(RUTA_FUENTES, 30);
 		ETSIDI::setTextColor(0, 255, 255);
-		ETSIDI::printxy(servidor->getip().c_str(), 0, 0, 1);
+		ETSIDI::printxy(p_elementoRed->getIp().c_str(), 0, 0, 1);
 	}
 
 	else if (estado == CARGAR)
@@ -209,31 +224,55 @@ void CoordinadorAjedrez::Draw(void)
 		parametrosTexturasMEstados();
 		pantallaGuardar.escrituraGlut();
 	}
-	else if (estado == FIN) {
-		pantallaFinPartida.dibuja();
-		parametrosTexturasMEstados();
-	}
+}
+
+void CoordinadorAjedrez::cerrarHiloRed()
+{
+	p_elementoRed->desconectar();
+	
+	redAbierta = false;
+
+	p_hilo_elementoRed->join();
+
+	// Se elimina el hilo donde se estaba conectando
+	delete p_hilo_elementoRed;
+	p_hilo_elementoRed = nullptr;
+
+	// Se elimina el elemento de red
+	delete p_elementoRed;
+	p_elementoRed = nullptr;
+}
+
+void CoordinadorAjedrez::cerrarPartida()
+{
+	enPartida = false;
+
+	if (p_hilo_elementoRed != nullptr) cerrarHiloRed();
+		
+	// Esperar a que el hilo del motor logico acabe y eliminarlo
+	p_hiloMotorLogico->join();
+
+	delete p_hiloMotorLogico;
+	p_hiloMotorLogico = nullptr;
 }
 
 void CoordinadorAjedrez::Timer(float value)
 {
-	if (estado == INICIALIZACION_PARTIDA && !flagDeSeguridadInit)
+	if (estado == INICIALIZAR_PARTIDA && !flagDeSeguridadInit)
 	{
-		p_motorLogico = new MotorDeJuego(config, &partida);
-		p_motor = new std::thread(threadMotor, p_motorLogico, &mundoGrafico, &configuracion, &datosFinal);
-		datosFinal.finalizada = false;
+		// datosFinal.finalizada = false???????
+		enPartida =  true;
+		p_hiloMotorLogico = new std::thread(threadMotor, &(enPartida), &mundoGrafico, &config, &partida, p_elementoRed, &datosFinal);
 
 		estado = JUEGO;
 	}
 	else if (estado == JUEGO) // Escribir a continuacion de la configuracion
-	{
-		if (!p_motorLogico->getTablero()->jaqueMate())
-			mundoGrafico.leerTablero(p_motorLogico->getTablero());
-		else
-			mundoGrafico.leerTablero(mundoGrafico.getTableroJaqueMate());
-
-		this->mundoGrafico.actualizarCamara(this->p_motorLogico->getTablero()->getTurno(), value, config);
 		this->mundoGrafico.movimiento(value);
+	else if (estado == CERRAR_PARTIDA)
+	{
+		cerrarPartida();
+
+		estado = INICIO;
 	}
 }
 
@@ -251,15 +290,17 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 		}
 		else if ((int)key == TABULADOR) {
 			std::string fin = CARPETA_NOFINALIZADAS;
-			if (datosFinal.finalizada)fin = CARPETA_FINALIZADAS;
+			if (datosFinal.finalizada) fin = CARPETA_FINALIZADAS;
 			partida.setNombre(fin + pantallaGuardar.snombre_partida + ".txt");
 			if (partida.existe())
 				pantallaGuardar.existe = 1;
 			else
 			{
+				///
 				estado = INICIO;
+				///
 
-				//Actualización de la partida
+				//Actualizaciï¿½n de la partida
 				partida.setFin(datosFinal.finalizada);
 				partida.setBlancas(pantallaGuardar.sblancas);
 				partida.setNegras(pantallaGuardar.snegras);
@@ -267,7 +308,7 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 				partida.crearPartida();
 				partida.guardarPartida();
 
-				//Actualización del ranking
+				//Actualizaciï¿½n del ranking
 				ranking.aniadirJugador(pantallaGuardar.sblancas);
 				ranking.aniadirJugador(pantallaGuardar.snegras);
 
@@ -291,6 +332,8 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 				//Reset a valores iniciales para guardar futuras partidas
 				partida.reset();
 				pantallaGuardar.reset();
+				
+				estado = CERRAR_PARTIDA;
 			}
 		}
 		else {
@@ -309,9 +352,7 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 		//Falta resetear valores
 		else if (datosFinal.finalizada == true && key == 'k')
 		{
-			estado = FIN;
-			delete p_motorLogico;
-			p_motorLogico = nullptr;
+			estado = FIN; //???????????????????
 		}
 		/////////////////////////////////////////
 	}
@@ -340,16 +381,12 @@ void CoordinadorAjedrez::SpecialKeypress(int key)
 				pantallaGuardar.snegras = pantallaGuardar.snegras.substr(0, pantallaGuardar.snegras.length() - 1);
 		}
 	}
-	else if (estado == JUEGO) {
-		if (key == 27)
-			estado = PAUSA;
-	}
 }
 
 void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 {
-	float yg=aCoordenadasGlutY(y);
-	float xg=aCoordenadasGlutX(x);
+	float yg = aCoordenadasGlutY(y);
+	float xg = aCoordenadasGlutX(x);
 
 	if (!state) {
 		if (estado == INICIO)
@@ -383,7 +420,7 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 				pantallaGuardar.sblancas = JIA;
 				pantallaGuardar.snegras = JIA;
 				config = {ConfiguracionDeJuego::FormasDeInteraccion::IA, ConfiguracionDeJuego::FormasDeInteraccion::IA };
-				estado = INICIALIZACION_PARTIDA;
+				estado = INICIALIZAR_PARTIDA;
 			}
 			if (pantallaJugadorLocal.jugadorIA.enCaja(xg, yg))
 			{
@@ -394,7 +431,7 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 			{
 				pantallaGuardar.smodo = LOCAL_LOCAL;
 				config = { ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::LOCAL };
-				estado = INICIALIZACION_PARTIDA;
+				estado = INICIALIZAR_PARTIDA;
 			}
 			if (pantallaJugadorLocal.atras.enCaja(xg, yg))
 				estado = MODO;
@@ -402,29 +439,38 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 		else if (estado == MODO_RED) {
 			if (pantallaElegirRol.atras.enCaja(xg, yg))
 				estado = MODO;
-			if (pantallaElegirRol.cliente.enCaja(xg, yg)) {
-				estado = CLIENTE;
-				inicializaWinSock();
-				cliente = new Cliente;
-				cliente->inicializa();
-				hilo_cliente = new std::thread(hiloCliente, this);
+			else
+			{
+				bool cliente = pantallaElegirRol.cliente.enCaja(xg, yg);
+				if (cliente || pantallaElegirRol.servidor.enCaja(xg, yg)) // Si se selecciona la caja de cliente o de servidor
+				{
+					inicializaWinSock();
+					if (cliente) // Cliente
+					{
+						p_elementoRed = new Cliente;
+						config = { ConfiguracionDeJuego::FormasDeInteraccion::EMISOR, ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR };
+						
+						estado = CLIENTE;
+					}
+					else // Servidor
+					{
+						p_elementoRed = new Servidor;
+						config = { ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR, ConfiguracionDeJuego::FormasDeInteraccion::EMISOR };
 
-			}
-			if (pantallaElegirRol.servidor.enCaja(xg, yg)) {
-				estado = SERVIDOR;
-				inicializaWinSock();
-				servidor = new Servidor;
-				servidor->inicializa();
-				hilo_servidor = new std::thread(hiloServidor, this);
+						estado = SERVIDOR;
+					}
+					p_elementoRed->inicializa();
+					redAbierta = true;
+					p_hilo_elementoRed = new std::thread(hiloRed, this);
+				}
 			}
 		}
-		else if (estado == RANKING) {
-			if (pantallaRanking.siguiente.enCaja(xg, yg)) {
+		else if (estado == RANKING)
+		{
+			if (pantallaRanking.siguiente.enCaja(xg, yg))
 				ranking.paginaSiguiente();
-			}
-			if (pantallaRanking.anterior.enCaja(xg, yg)) {
+			if (pantallaRanking.anterior.enCaja(xg, yg))
 				ranking.paginaAnterior();
-			}
 			if (pantallaRanking.atras.enCaja(xg, yg)) {
 				estado = INICIO;
 				ranking.iniPag();
@@ -436,13 +482,13 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 			{
 				pantallaGuardar.sblancas = JIA;
 				config = { ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::IA };
-				estado = INICIALIZACION_PARTIDA;
+				estado = INICIALIZAR_PARTIDA;
 			}
 			if (pantallaColorJugador.blanco.enCaja(xg, yg))
 			{
 				pantallaGuardar.snegras = JIA;
 				config = { ConfiguracionDeJuego::FormasDeInteraccion::IA, ConfiguracionDeJuego::FormasDeInteraccion::LOCAL };
-				estado = INICIALIZACION_PARTIDA;
+				estado = INICIALIZAR_PARTIDA;
 			}
 			if (pantallaColorJugador.atras.enCaja(xg, yg))
 				estado = MODO_LOCAL;
@@ -450,35 +496,17 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 		else if (estado == PAUSA)
 		{
 			if (pantallaPausa.guardar_y_salir.enCaja(xg, yg))
-			{
 				estado = GUARDAR;
-				p_motorLogico->setExit(true);
-				delete p_motorLogico;
-				p_motorLogico = nullptr;
-			}
 			if (pantallaPausa.salir_sin_guardar.enCaja(xg, yg))
-			{
-				estado = INICIO;
-				p_motorLogico->setExit(true);
-				delete p_motorLogico;
-				p_motorLogico = nullptr;
-			}
+				estado = CERRAR_PARTIDA;
 		}
-		else if (estado == CLIENTE)
+		else if (estado == CLIENTE || estado == SERVIDOR)
 		{
 			if (pantallaCliente.atras.enCaja(xg, yg))
 			{
+				cerrarHiloRed();
+				
 				estado = MODO_RED;
-				cliente->desconectarCliente();
-				hilo_cliente->join();
-			}
-		}
-		else if (estado == SERVIDOR) {
-			if (pantallaServidor.atras.enCaja(xg, yg))
-			{
-				estado = MODO_RED;
-				servidor->desconectarServidor();
-				hilo_servidor->join();
 			}
 		}
 		else if (estado == CARGAR) {
@@ -503,7 +531,7 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 		}
 		else if (estado == FIN) {
 			if (pantallaFinPartida.guardar_y_salir.enCaja(xg, yg)) estado = GUARDAR;
-			else if (pantallaFinPartida.salir_sin_guardar.enCaja(xg, yg)) estado = INICIO;
+			else if (pantallaFinPartida.salir_sin_guardar.enCaja(xg, yg)) estado = CERRAR_PARTIDA;
 		}
 	}
 }

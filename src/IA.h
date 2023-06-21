@@ -4,7 +4,7 @@
 #include "Tablero.h"
 #include "MovimientoEvaluado.h"
 
-#define PROFUNDIDAD_IA 3
+#define PROFUNDIDAD_IA 2
 
 class IA
 {

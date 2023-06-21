@@ -37,9 +37,9 @@ public:
 
     void inicializa() { inicializaWinSock(); };
     //Conecta el cliente
-    bool conectarCliente();
+    bool conectar();
     //Desconecta el cliente
-    void desconectarCliente();
+    void desconectar();
 
     //Envía una cadena de caracteres al servidor
     //@param std::string s: cadena a enviar
@@ -50,7 +50,7 @@ public:
     //@return Número de bytes recibidos
     int recibir(std::string& s) const;
 
-    std::string& getIp() { return ipv4; };
+    std::string getIp() { return ipv4; };
 };
 
 // Main (poner la dirección ip que aparece en la pantalla del servidor en el campo ipv4 del cliente)

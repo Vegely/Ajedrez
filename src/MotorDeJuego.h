@@ -14,33 +14,36 @@ enum class CodigoFinal { JAQUE_MATE, REY_AHOGADO, TABLAS_POR_MATERIAL_INSUFICIEN
 struct DatosFinal
 {
 	CodigoFinal codigoFinal;
-	bool ganaBlanco;
 	bool finalizada = false;
+	bool ganaBlanco;
 };
 
 class MotorDeJuego
 {
-	Partida* fichero_partida = nullptr;
-	const ConfiguracionDeJuego config;
-	Tablero tablero;
-	bool exit = false;
+	Partida& fichero_partida;
 
-	Movimiento seleccionarEntrada(Mundo* p_motorGrafico);
+	const ConfiguracionDeJuego config;
+	ElementoRed& elementoRed;
+
+	Tablero tablero;
+	//bool exit = false;
+
+	Movimiento seleccionarEntrada(Mundo* p_motorGrafico, bool& run);
 	Movimiento ensamblarMovimiento(Posicion posicion, Mundo* p_motorGrafico) const;
 
 public:
-	MotorDeJuego(const ConfiguracionDeJuego& config, Partida* partida = nullptr) : config(config), tablero(Tablero(true)), fichero_partida(partida) { /*pintar();*/ }
+	MotorDeJuego(const ConfiguracionDeJuego* config, Partida* partida, ElementoRed* elementoRed) : config(*config), tablero(Tablero(true)), fichero_partida(*partida), elementoRed(*elementoRed) { /*pintar();*/ }
 
-	Tablero* getTablero(void) { return &this->tablero; }
+	//Tablero* getTablero(void) { return &this->tablero; }
 	void liberar() { tablero.liberar(); }
 	void pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_motorGrafico) const;
 	void comprobarCasillasJaque(Mundo* motorGrafico);
 
 	static Pieza::tipo_t seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico);
 
-	DatosFinal motor(Mundo* mundoGrafico);
+	//void setExit(bool exit) { this->exit = exit; }
 
-	void setExit(bool exit) { this->exit = exit; }
+	DatosFinal motor(Mundo* mundoGrafico, bool& run);
 };
 
 #endif // !_MOTORDEJUEGO__H_
