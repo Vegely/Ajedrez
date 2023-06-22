@@ -345,7 +345,7 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 		}
 	}
 	else if (estado == JUEGO) {
-		if (key == 'p')
+		if (key == 27) // Esc
 			estado = PAUSA;
 		///////////////////////////////////////////
 		//Falta resetear valores
@@ -356,7 +356,7 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 		/////////////////////////////////////////
 	}
 	else if (estado == PAUSA) {
-		if (key == 'c')
+		if (key == 27) // Esc
 			estado = JUEGO;
 	}
 	else if (estado == CLIENTE) {

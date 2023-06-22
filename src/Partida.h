@@ -33,14 +33,14 @@ private:
 	std::vector<int> coronacion;
 
 public:
-	Partida();
+	Partida() { reset(); }
 
 	bool existe();
 	bool crearPartida();
 	bool guardarPartida();
 	bool cargarPartida();
 	bool partidaFinalizada() { return finalizada; };
-	void reset() { nombre_partida = ""; finalizada = 0; modo = ""; blancas = ""; negras = ""; movimientos.clear(); coronacion.clear(); }
+	void reset();
 
 	void setNombre(std::string nombre) { nombre_partida = nombre; };
 	void setModo(std::string modo) { this->modo = modo; };

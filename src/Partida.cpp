@@ -1,15 +1,5 @@
 #include "Partida.h"
 
-Partida::Partida() {
-	nombre_partida = "";
-	finalizada = 0;
-	modo = "";
-	blancas = "";
-	negras = "";
-	movimientos = {};
-	coronacion = {};
-}
-
 bool Partida::crearPartida() {
 	std::ifstream fs(nombre_partida.c_str());
 
@@ -66,6 +56,20 @@ bool Partida::cargarPartida() {
 
 }
 
+void Partida::reset()
+{
+	nombre_partida = ""; 
+	finalizada = 0;
+	modo = "";
+	blancas = "";
+	negras = "";
+	for (int i = 0; i < 2; i++) 
+	{
+		movimientos.clear(); 
+		coronacion.clear(); 
+	}
+}
+
 void operator<<(std::ostream& o, const Partida& p) {
 	o << (partida_nombre_partida + ": ") << p.nombre_partida << std::endl;
 	o << (partida_modo + ": ") << p.modo << std::endl;
@@ -82,6 +86,7 @@ void operator<<(std::ostream& o, const Partida& p) {
 	for (int i = 0; i < p.coronacion.size(); i++)
 		o << p.coronacion[i] << std::endl;
 }
+
 void operator>>(std::istream& is, Partida& p) {
 	std::string str = "";
 
