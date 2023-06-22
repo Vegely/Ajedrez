@@ -1,7 +1,5 @@
 #define _USE_MATH_DEFINES
 #include "Camara.h"
-#include <freeglut.h>
-
 #include <cmath>
 
 constexpr int SPEED = 50;
@@ -65,18 +63,28 @@ std::ostream& Camara::printLookAt(std::ostream& str) const
 
 void Camara::update(void)
 { 
-	// Clears screen.	
+	// Limpia los buffers.	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// Defines a point of view.
+	// Define un punto de vista.
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt
 	(
 		position.x, position.y, position.z,	// Camera position.
-		look_at.x, look_at.y, look_at.z,		// Point to look at.
-		0.0, 1.0, 0.0						// Define Y axis direction to up.
+		 look_at.x,  look_at.y,  look_at.z,	// Point to look at.
+		       0.0,        1.0,        0.0	// Define Y axis direction to up.
 	);
+
+	// Aplica propiedades a la iluminacion (puntual).
+	glLightfv(GL_LIGHT0, GL_POSITION, Camara::light_position);
+	glLightfv(GL_LIGHT0, GL_AMBIENT,  Camara::light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE,  Camara::light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, Camara::light_specular);
+
+	// Activa la iluminacion en caso de estar desactivada.
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 
 	glRotatef(rotation.x, 1.0, 0.0, 0.0);				 // rotate our camera on the x-axis (left and right)
 	glRotatef(rotation.y, 0.0, 1.0, 0.0);				 // rotate our camera on the y-axis (up and down)
@@ -87,3 +95,8 @@ float Camara::radius = 15.6f;
 float Camara::height = 20.5f;
 Point Camara::white_pov = Point{ 0.0f, Camara::height, -Camara::radius };
 Point Camara::black_pov = Point{ 0.0f, Camara::height,  Camara::radius };
+
+GLfloat Camara::light_position[] = { 0.0f, 1.0f, 0.0f, 1.0f };
+GLfloat Camara::light_ambient [] = { 2.0f, 2.0f, 2.0f, 1.0f };
+GLfloat Camara::light_diffuse [] = { 0.7f, 0.7f, 0.7f, 1.0f };
+GLfloat Camara::light_specular[] = { 0.7f, 0.7f, 0.7f, 1.0f };

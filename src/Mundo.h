@@ -27,6 +27,7 @@
 #define ruta_textura_blanco_oscuro "texturas/marmol_blanco_oscuro.jpg"
 #define ruta_textura_negro_claro "texturas/marmol_negro_claro.jpg"
 #define ruta_textura_marco "texturas/marmol_negro_marco.jpg"
+#define ruta_textura_letras "texturas/marmol_blanco.jpg"
 #define ruta_textura_casilla_seleccionada "texturas/casilla_seleccionada.png"
 #define ruta_textura_casilla_comible "texturas/casilla_comer.png"
 #define ruta_textura_casilla_puede_mover "texturas/casilla_puede_mover.png"
@@ -248,7 +249,9 @@ private:
 public:
 	/* INICIALIZACION */
 	Mundo(void);
-	void init		   (void);
+	void init(void);
+	void asignarModelosBase(void);
+	void cargarTexturasBase(void);
 	void asignarModelos(void);
 	void cargarTexturas(void);
 

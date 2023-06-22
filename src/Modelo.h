@@ -36,22 +36,9 @@ struct ModeloBase
 	const aiScene* scene;
 	Assimp::Importer importer;
 
-	void init(std::string path)
-	{
-		this->scene = importer.ReadFile(path,
-			aiProcess_Triangulate
-			| aiProcess_OptimizeMeshes
-			| aiProcess_JoinIdenticalVertices
-			| aiProcess_CalcTangentSpace
-			| aiProcess_FlipUVs);
-		if (this->scene == nullptr || this->scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !this->scene->mRootNode)
-			std::cerr << "Failed to load model at " + path << std::endl;
-	}
+	void cargarModelo(std::string path);
 
-	ModeloBase& operator = (const ModeloBase& rhs)
-	{
-		this->scene = rhs.scene;
-	}
+	ModeloBase& operator = (const ModeloBase& rhs) { this->scene = rhs.scene; }
 };
 
 struct ModeloTexturizado
@@ -61,40 +48,7 @@ struct ModeloTexturizado
 
 	ModeloTexturizado(std::string path) : modelo(new ModeloBase()), textura(path) {}
 	~ModeloTexturizado(void) { delete modelo; }
-	void init(ModeloBase* modelo_base)
-	{
-		this->modelo = modelo_base;
-
-		if (modelo == nullptr)
-		{
-			std::cerr << "Error binding texture to object." << std::endl;
-			return;
-		}
-		if (modelo->scene == nullptr) return;
-
-		glGenTextures(1, &textura.ID);
-		glBindTexture(GL_TEXTURE_2D, textura.ID);
-
-		textura.datos_imagen = stbi_load(textura.ruta.c_str(), &textura.ancho, &textura.alto, &textura.num_componentes, STBI_rgb);
-
-		if (textura.datos_imagen == nullptr)
-		{
-			std::cerr << "Failed to load texture file: " << textura.ruta.c_str() << std::endl;
-			return;
-		}
-
-		//gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, textura.ancho, textura.alto, GL_RGB, GL_UNSIGNED_BYTE, textura.datos_imagen);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textura.ancho, textura.alto, 0, GL_RGB, GL_UNSIGNED_BYTE, textura.datos_imagen);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-		glBindTexture(GL_TEXTURE_2D, 0);
-		stbi_image_free(textura.datos_imagen);
-
-		std::cout << "Texture loaded." << std::endl;
-	}
+	void cargarTextura(ModeloBase* modelo_base);
 };
 
 class Modelo : public Entity
@@ -118,7 +72,7 @@ public:
 	virtual ~Modelo(void) { }
 
 	/* INICIALIZACIÓN */
-	void init(void);
+	void cargarVertices(void);
 	void initRutas(void);
 
 	/* GETTERS */

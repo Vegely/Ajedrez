@@ -42,7 +42,7 @@ public:
 	void renderModelos (void)				   { for (int i = 0; i < _numElem; i++) _modelo[i]->render(); }
 	void moverModelos  (const Movimiento& mov) { for (int i = 0; i < _numElem; i++) _modelo[i]->moverModelo(mov); }
 	void moverElemento (const Movimiento& mov);
-	void renderEspecial(void)
+	void renderConRotacion(void)
 	{ 
 		for (int i = 0; i < _numElem; i++)
 		{

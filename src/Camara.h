@@ -2,6 +2,7 @@
 #define CAMERA_H
 
 #include "Globals.h"
+#include <freeglut.h>
 
 class Camara
 {
@@ -53,8 +54,14 @@ public:
 	/* VARIABLES ESTATICAS */
 	static Point white_pov;
 	static Point black_pov;
+
 	static float radius;
 	static float height;
+
+	static GLfloat light_position[4];
+	static GLfloat light_ambient [4];
+	static GLfloat light_diffuse [4];
+	static GLfloat light_specular[4];
 };
 
 #endif // !CAMERA_H

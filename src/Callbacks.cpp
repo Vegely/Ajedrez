@@ -20,9 +20,11 @@ void motorGrafico(int* argc, char** argv)
 	glutInitWindowSize(1920, 1080);
 	glutCreateWindow("FlatChess");
 
-	inicializarIluminacion();
-	inicializarEstadoOpenGL();
+	//inicializarIluminacion();
+	//inicializarEstadoOpenGL();
 	registrarCallbacks();
+
+	glEnable(GL_DEPTH_TEST);
 
 	coordinador.init();
 
@@ -34,17 +36,27 @@ void inicializarIluminacion(void)
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 
-	GLfloat light0_position[] = { 1.0,  1.0,   1.0, 0.0 };
-	GLfloat light_ambient[] = { 10.0, 10.0, 10.0, 1.0 };
-	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light0_position[] = { 0.0, 10.0, 0.0, 0.0 };
+	GLfloat light_ambient[] = { 112, 112, 112, 1.0 };
+	GLfloat light_diffuse[] = { 135, 135, 135, 1.0 };
+	GLfloat light_specular[] = { 186, 186, 186, 1.0 };
+
+	GLfloat materialAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	GLfloat materialDiffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+	GLfloat materialSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat materialShininess = 32.0f;
 
 	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
 
-	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, materialAmbient);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, materialDiffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, materialSpecular);
+	glMaterialf(GL_FRONT, GL_SHININESS, materialShininess);
+
+	//glClearColor(0.0, 0.0, 0.0, 0.0);
 }
 
 void inicializarEstadoOpenGL(void)
