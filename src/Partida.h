@@ -36,7 +36,7 @@ private:
 	std::vector<int> coronacionSalida;
 
 public:
-	Partida() { reset(); }
+	Partida() { reset(); cargarPartida(); }
 
 	bool existe();
 	bool crearPartida();

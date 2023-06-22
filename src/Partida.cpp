@@ -41,7 +41,7 @@ bool Partida::guardarPartida() {
 }
 
 bool Partida::cargarPartida() {
-	std::ifstream ifs("Pruba.txt"/*nombre_partida.c_str()*/, std::ios_base::out);
+	std::ifstream ifs(CARPETA_NOFINALIZADAS + "caiuysg.txt"/*nombre_partida.c_str()*/, std::ios_base::out);
 
 	if (!ifs.is_open()) {
 		std::cerr << "Error al cargar la partida. Saliendo..." << std::endl;
@@ -65,8 +65,10 @@ void Partida::reset()
 	negras = "";
 	for (int i = 0; i < 2; i++) 
 	{
-		movimientosEntrada.clear(); 
-		coronacion.clear(); 
+		movimientosEntrada.clear();
+		movimientosSalida.clear();
+		coronacionEntrada.clear(); 
+		coronacionSalida.clear();
 	}
 }
 
@@ -83,8 +85,8 @@ void operator<<(std::ostream& o, const Partida& p) {
 
 	o << partida_coronacion << std::endl;
 
-	for (int i = 0; i < p.coronacion.size(); i++)
-		o << p.coronacion[i] << std::endl;
+	for (int i = 0; i < p.coronacionSalida.size(); i++)
+		o << p.coronacionSalida[i] << std::endl;
 }
 
 void operator>>(std::istream& is, Partida& p) {
@@ -128,7 +130,7 @@ void operator>>(std::istream& is, Partida& p) {
 		int cor = 0;
 		ss << str;
 		ss >> cor;
-		p.coronacion.push_back(cor);
+		p.coronacionEntrada.push_back(cor);
 	}
 }
 
