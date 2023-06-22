@@ -468,11 +468,8 @@ void Mundo::leerTablero(Tablero* tablero)
 		Pieza* pieza_leida = tablero->leer(Posicion(i % 8, i / 8));
 		if (pieza_leida != nullptr)
 		{
-			if (!tablero->jaqueMate())
-			{
-				ListaModelo* lista = seleccionarLista(pieza_leida->getColor(), pieza_leida->getTipo());
-				if (lista != nullptr) lista->moverElemento(Movimiento(Posicion(), Posicion(i % 8, i / 8)));
-			}
+			ListaModelo* lista = seleccionarLista(pieza_leida->getColor(), pieza_leida->getTipo());
+			if (lista != nullptr) lista->moverElemento(Movimiento(Posicion(), Posicion(i % 8, i / 8)));
 		}
 	}
 }

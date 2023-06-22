@@ -174,62 +174,58 @@ uint64_t getTimeSinceEpoch()
 DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 {
 	// Pintar tablero
+	p_mundoGrafico->resetCasillas();
 	p_mundoGrafico->leerTablero(&tablero);
 	p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, TIMEPO_ROTACION_CAMARA, config);
-
-	// Tomar timepo para el primer movimiento
-	long long int t0 = getTimeSinceEpoch();
-	while (true)
+	
+	DatosFinal datosFinal;
+	long long int t0 = getTimeSinceEpoch(); // Tomar timepo para el primer movimiento
+	while (!datosFinal.finalizada)
 	{
-		// Pintar ultimo movimiento
-		p_mundoGrafico->resetCasillas(p_mundoGrafico->getCasillaUltimoMov());
-		p_mundoGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), tablero.ultimaJugada.inicio));
-		p_mundoGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), tablero.ultimaJugada.fin));
-
 		// Entrada del movimiento
 		Movimiento movimiento = seleccionarEntrada(p_mundoGrafico, run);
 		if (!run) return DatosFinal(); // Salir a mitad de partida
 
-		p_mundoGrafico->resetCasillas();
+		p_mundoGrafico->resetCasillas();		
 
-		if (movimiento.fin == Posicion()) 
+		if (movimiento.fin == Posicion()) // Pintar seleccion de pieza
 			pintarSeleccionCasilla(movimiento.inicio, p_mundoGrafico);
 		else if (tablero.hacerJugada(movimiento, config[tablero.colorDelTurno], p_mundoGrafico)) // Se hace la jugada
 		{
+			// Guardar el movimiento
+			fichero_partida.movimientos.push_back(tablero.ultimaJugada);
+
 			// Evitar que se mueva muy rapido
 			while (getTimeSinceEpoch() - t0 < TIEMPO_MS_MIN_MOVIMIENTO); // Evita hacer un movimiento en menos tiempo que TIEMPO_MIN_MOVIMIENTO
 			t0 = getTimeSinceEpoch();
-
+			
 			// Pintar tablero
 			p_mundoGrafico->leerTablero(&tablero);
-			p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, TIMEPO_ROTACION_CAMARA, config);
+			comprobarCasillasJaque(p_mundoGrafico);
 
-			fichero_partida.movimientos.push_back(tablero.ultimaJugada);
-
+			// Comprobar finales
 			if (tablero.jaqueMate())
-			{
-				comprobarCasillasJaque(p_mundoGrafico);
-				return DatosFinal{ CodigoFinal::JAQUE_MATE, true, !tablero.colorDelTurno };
-				//exit = true; ///???????????????
-			}
+				datosFinal = DatosFinal{ CodigoFinal::JAQUE_MATE, true, !tablero.colorDelTurno };
 			else if (tablero.reyAhogado())
-			{
-				return DatosFinal{ CodigoFinal::REY_AHOGADO, true };
-			}
+				datosFinal = DatosFinal{ CodigoFinal::REY_AHOGADO, true };
 			else if (tablero.tablasMaterialInsuficiente())
-			{
-				return DatosFinal{ CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE, true };
-			}
+				datosFinal = DatosFinal{ CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE, true };
 			else if (tablero.infoTablas.tablasPorRepeticion())
-			{
-				return DatosFinal{ CodigoFinal::TABLAS_POR_REPETICION, true };
-			}
+				datosFinal = DatosFinal{ CodigoFinal::TABLAS_POR_REPETICION, true };
 			else if (tablero.infoTablas.tablasPorPasividad())
-			{
-				return DatosFinal{ CodigoFinal::TABLAS_POR_PASIVIDAD, true };
-			}
+				datosFinal = DatosFinal{ CodigoFinal::TABLAS_POR_PASIVIDAD, true };
+
+			// Rotar camara
+			p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, TIMEPO_ROTACION_CAMARA, config);
 		}
+		
+		// Pintar ultimo movimiento
+		p_mundoGrafico->resetCasillas(p_mundoGrafico->getCasillaUltimoMov());
+		p_mundoGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), tablero.ultimaJugada.inicio));
+		p_mundoGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), tablero.ultimaJugada.fin));
 	}
+
+	return datosFinal;
 }
 
 Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico)
@@ -272,7 +268,7 @@ void MotorDeJuego::comprobarCasillasJaque(Mundo* p_motorGrafico)
 	p_motorGrafico->resetCasillas(p_motorGrafico->getCasillaJaque());
 	if (&tablero != nullptr)
 	{
-		p_motorGrafico->getTableroJaqueMate()->copiar(tablero);
+		//p_motorGrafico->getTableroJaqueMate()->copiar(tablero);
 
 		for (int i = 0; i < 64; i++)
 		{
