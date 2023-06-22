@@ -193,7 +193,6 @@ void Tablero::mover(const Movimiento& movimiento) {
 	escribir(movimiento.fin, leer(movimiento.inicio));
 	escribir(movimiento.inicio, nullptr);
 
-	if (leer(movimiento.fin)->tipo == Pieza::tipo_t::PEON) infoTablas.clearAll();
 	infoTablas.add(*this);
 
 	if (leer(movimiento.fin)->tipo == Pieza::tipo_t::REY)
