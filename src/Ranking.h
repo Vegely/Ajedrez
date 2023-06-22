@@ -12,6 +12,13 @@
 #define ALTO_GL 35.0 //25 hasta -10
 #define ANCHO_GL 63.2 //-31.6 hasta 31.6
 
+struct DatosRanking {
+	int posicion;
+	std::string puntuacion;
+	std::string nombre;
+	std::string id;
+};
+
 class Ranking
 {
 private:
@@ -19,16 +26,16 @@ private:
 	int npaginas = 0;
 	const char* nombre_fichero = "ranking/ranking.txt";
 	const std::string titulo = "RANKING";
-	const std::string campos = "Pos  Punt \t Jug \t\t Id";
-	int ultima_posicion;
+	const std::string campos = "Pos  Punt \t Jug";
+	int ultima_posicion = 0;
+	
 	DatosRanking* ptdranking = nullptr;
 
 
 	bool inicializa();
-	void aEstructura() { ptdranking = asignaEspacio(ultima_posicion); };
-	void liberaEstructura() { liberaEspacio(ptdranking); ptdranking = nullptr; };
 	void encabezado() const;
 	bool jugadorExiste(std::string nombre_jugador) const;
+	int posicionJugador(const std::string& nombre);
 
 public:
 

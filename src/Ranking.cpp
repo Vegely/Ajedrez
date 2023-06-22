@@ -1,5 +1,6 @@
 #include "Ranking.h"
 #include "ETSIDI.h"
+#include <algorithm>
 
 //Estado de flujos de forma mas compacta?
 
@@ -58,11 +59,12 @@ bool Ranking::aniadirJugador(const std::string& nombre, int id) {
 		if (!jugadorExiste(nombre)) {
 			std::stringstream ss;
 			std::string str = "";
-			ss << (ultima_posicion + 1) << " \t 0.0 \t " << nombre << " \t " << id;
+			ss << (ultima_posicion + 1) << " \t 0.0 \t " << nombre;
 			str = ss.str();
 			ofs << str << std::endl;
 			ofs.close();
 			ultima_posicion++;
+			npaginas = ultima_posicion / JUGADORES_POR_HOJA;
 			return 1;
 		}
 	}
@@ -108,17 +110,73 @@ void Ranking::print() const {
 }
 
 void Ranking::actualizar(const std::string& nombre, float puntos) {
-	aEstructura();
-	rellenaRanking(ptdranking, nombre_fichero);
-	encabezado();
-	actualizaRanking(ptdranking, nombre, puntos, nombre_fichero);
-	liberaEstructura();
+	ptdranking = new DatosRanking[ultima_posicion];
+
+	std::ifstream ifs(nombre_fichero);
+	std::string str = "";
+	int ind = 0;
+	int pos = 1;
+
+	std::getline(ifs, str);
+	std::getline(ifs, str);
+
+	for (int i = 0; i < ultima_posicion; i++) {
+		std::stringstream ss;
+		std::getline(ifs, str);
+		ss << str;
+		ss >> ptdranking[i].posicion >> ptdranking[i].puntuacion >> ptdranking[i].nombre;
+	}
+	ifs.close();
+
+	ind = posicionJugador(nombre);
+
+	if (ind != -1) {
+		ptdranking[ind].puntuacion = std::to_string(std::stof(ptdranking[ind].puntuacion) + puntos);
+		
+		encabezado();
+
+		std::ofstream ofs(nombre_fichero, std::ios_base::app);
+
+		for (int i = 0; i < ultima_posicion; i++) 
+		{
+			if (std::stof(ptdranking[i].puntuacion) > std::stof(ptdranking[ind].puntuacion))
+			{
+				ofs << pos << " " << ptdranking[i].puntuacion << " " << ptdranking[i].nombre << std::endl;
+				pos++;
+			}
+		}
+		
+		ofs<< pos << " " << ptdranking[ind].puntuacion << " " << ptdranking[ind].nombre << std::endl;
+		pos++;
+
+		for (int i = 0; i < ultima_posicion; i++)
+		{
+			if ((std::stof(ptdranking[i].puntuacion) <= std::stof(ptdranking[ind].puntuacion)) && i !=ind)
+			{
+				ofs << pos << " " << ptdranking[i].puntuacion << " " << ptdranking[i].nombre << std::endl;
+				pos++;
+			}
+		}
+
+		ofs.close();
+	}
+
+	delete[] ptdranking;
+	ptdranking = nullptr;
+}
+
+int Ranking::posicionJugador(const std::string& nombre) {
+	for (int i = 0; i < ultima_posicion; i++)
+		if (ptdranking[i].nombre == nombre)
+			return i;
+
+	return -1;
 }
 
 bool Ranking::jugadorExiste(std::string nombre_jugador) const {
 	std::ifstream ifs(nombre_fichero);
 	std::string str = "";
-	float token = 0;
+	std::string token = "";
 	std::string nombre = "";
 
 	std::getline(ifs, str);
