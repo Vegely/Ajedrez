@@ -156,7 +156,6 @@
     <ClInclude Include="src\Dama.h" />
     <ClInclude Include="src\DatosBloqueoJaque.h" />
     <ClInclude Include="src\DatosClavada.h" />
-    <ClInclude Include="src\DatosRanking.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\IA.h" />
@@ -191,7 +190,6 @@
     <ClCompile Include="src\Cliente.cpp" />
     <ClCompile Include="src\CoordinadorAjedrez.cpp" />
     <ClCompile Include="src\Dama.cpp" />
-    <ClCompile Include="src\DatosRanking.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\IA.cpp" />

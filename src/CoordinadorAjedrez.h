@@ -50,7 +50,9 @@ private:
 
 	DatosFinal datosFinal;
 
+	void abrirRed();
 	void cerrarHiloRed();
+
 	void cerrarPartida();
 	
 public:
