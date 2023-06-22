@@ -37,7 +37,12 @@ Posicion getInput(Mundo* p_motorGrafico)
 Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool& run)
 {	
 	Movimiento movimiento = Movimiento();
-	if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::IA)
+	if (!fichero_partida.movimientosEntrada.empty()) 
+	{
+		movimiento = fichero_partida.movimientosEntrada.front();
+		fichero_partida.movimientosEntrada.pop_front();
+	}
+	else if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::IA)
 		movimiento = IA::mover(tablero);
 	else
 	{
@@ -178,8 +183,11 @@ uint64_t getTimeSinceEpoch()
 
 DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 {
-	// Pintar tablero
+	// Reset
+	p_mundoGrafico->resetLectura();
 	p_mundoGrafico->resetCasillas();
+
+	// Pintar tablero
 	p_mundoGrafico->leerTablero(&tablero);
 	p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, TIMEPO_ROTACION_CAMARA, config);
 	
@@ -198,7 +206,7 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 		else if (tablero.hacerJugada(movimiento, config[tablero.colorDelTurno], p_mundoGrafico)) // Se hace la jugada
 		{
 			// Guardar el movimiento
-			fichero_partida.movimientos.push_back(tablero.ultimaJugada);
+			fichero_partida.movimientosSalida.push_back(tablero.ultimaJugada);
 
 			// Evitar que se mueva muy rapido
 			while (getTimeSinceEpoch() - t0 < TIEMPO_MS_MIN_MOVIMIENTO); // Evita hacer un movimiento en menos tiempo que TIEMPO_MIN_MOVIMIENTO

@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <deque>
 #include "Movimiento.h"
 
 const std::string CARPETA_FINALIZADAS = "finalizadas/";
@@ -29,8 +30,10 @@ private:
 	std::string modo;
 	std::string blancas;
 	std::string negras;
-	std::vector<Movimiento> movimientos;
-	std::vector<int> coronacion;
+	std::deque<Movimiento> movimientosEntrada;
+	std::vector<Movimiento> movimientosSalida;
+	std::deque<int> coronacionEntrada;
+	std::vector<int> coronacionSalida;
 
 public:
 	Partida() { reset(); }

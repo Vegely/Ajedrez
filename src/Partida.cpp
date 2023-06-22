@@ -41,7 +41,7 @@ bool Partida::guardarPartida() {
 }
 
 bool Partida::cargarPartida() {
-	std::ifstream ifs(nombre_partida.c_str(), std::ios_base::out);
+	std::ifstream ifs("Pruba.txt"/*nombre_partida.c_str()*/, std::ios_base::out);
 
 	if (!ifs.is_open()) {
 		std::cerr << "Error al cargar la partida. Saliendo..." << std::endl;
@@ -65,7 +65,7 @@ void Partida::reset()
 	negras = "";
 	for (int i = 0; i < 2; i++) 
 	{
-		movimientos.clear(); 
+		movimientosEntrada.clear(); 
 		coronacion.clear(); 
 	}
 }
@@ -78,8 +78,8 @@ void operator<<(std::ostream& o, const Partida& p) {
 	o << (partida_negras + ": ") << p.negras << std::endl;
 	o << partida_movimientos << std::endl;
 
-	for (int i = 0; i < p.movimientos.size(); i++)
-		o << p.movimientos[i].inicio.x << " " << p.movimientos[i].inicio.y << " " << p.movimientos[i].fin.x << " " << p.movimientos[i].fin.y << std::endl;
+	for (int i = 0; i < p.movimientosSalida.size(); i++)
+		o << p.movimientosSalida.at(i).toString() << std::endl;
 
 	o << partida_coronacion << std::endl;
 
@@ -121,10 +121,7 @@ void operator>>(std::istream& is, Partida& p) {
 		if (str == partida_coronacion)break;
 		std::stringstream ss;
 		std::string s = "";
-		Movimiento mov;
-		ss << str;
-		ss >> mov.inicio.x >> mov.inicio.y >> mov.fin.x >> mov.fin.y;
-		p.movimientos.push_back(mov);
+		p.movimientosEntrada.push_back(Movimiento(str));
 	}
 	while (std::getline(is, str)) {
 		std::stringstream ss;
