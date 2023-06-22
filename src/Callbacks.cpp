@@ -62,7 +62,7 @@ void registrarCallbacks(void)
 	glutDisplayFunc(OnDraw);
 	glutIdleFunc(OnDraw);
 	glutReshapeFunc(OnReshape);
-	glutTimerFunc(0.001, OnTimer, 0);
+	glutTimerFunc(25, OnTimer, 0);
 	glutKeyboardFunc(OnKeyboardDown);
 	glutKeyboardUpFunc(OnKeyboardUp);
 	glutSpecialFunc(OnKeyboardSpecial);
@@ -96,8 +96,8 @@ void OnReshape(int w, int h)
 // Each set time, performs the set functions.
 void OnTimer(int value)
 {
-	coordinador.Timer(0.001);
-	glutTimerFunc(1, OnTimer, 0);
+	coordinador.Timer(0.025f);
+	glutTimerFunc(25, OnTimer, 0);
 }
 
 void OnKeyboardDown(const unsigned char key, int x_t, int y_t)

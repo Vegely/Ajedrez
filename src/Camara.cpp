@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-constexpr int SPEED = 500;
+constexpr int SPEED = 50;
 
 Camara::Camara(const Point& position) :
 	position(position),

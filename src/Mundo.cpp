@@ -257,6 +257,7 @@ void Mundo::moverModelos(const Movimiento& mov)
 
 void Mundo::movimiento(const float time)
 { 
+	camara.movement(time);
 	camara.motion(time);
 }
 
