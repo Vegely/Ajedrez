@@ -13,9 +13,12 @@ class InfoTablas
 	int contadorJugadas;
 
 public:
-	InfoTablas() { clear(); }
+	InfoTablas() { clearAll(); }
 
-	inline void clear() { posiciones.clear(); repeticiones.clear(); boolRepeticion = false; contadorJugadas = 0; }
+	inline void clearRepeticion() { posiciones.clear(); repeticiones.clear(); boolRepeticion = false; }
+	inline void clearPasividad() { contadorJugadas = 0; }
+	inline void clearAll() { clearRepeticion(); clearPasividad(); }
+
 	void add(const Tablero& tablero);
 	
 	inline bool tablasPorRepeticion() const{ return boolRepeticion; }

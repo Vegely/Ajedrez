@@ -24,12 +24,12 @@ PantallaGuardar		  pantallaGuardar;
 
 void threadMotor(bool* p_run, Mundo* p_motorGrafico, const ConfiguracionDeJuego* p_config, Partida* p_partida, ElementoRed* p_elementoRed, DatosFinal* p_datosFinal)
 {
-	std::cout << "Thread inicializado" << std::endl;
-
 	MotorDeJuego motor(p_config, p_partida, p_elementoRed);
 
 	*p_datosFinal = motor.motor(p_motorGrafico, *p_run);
 
+	//while (*p_run) std::this_thread::sleep_for(std::chrono::milliseconds(1)); // Mantener el motor sin liberar hasta que se solicite el cerrado de partida
+	
 	motor.liberar();
 }
 
@@ -258,7 +258,7 @@ void CoordinadorAjedrez::Timer(float value)
 {
 	if (estado == INICIALIZAR_PARTIDA && !flagDeSeguridadInit)
 	{
-		// datosFinal.finalizada = false???????
+		datosFinal.finalizada = false;
 		enPartida =  true;
 		p_hiloMotorLogico = new std::thread(threadMotor, &(enPartida), &mundoGrafico, &config, &partida, p_elementoRed, &datosFinal);
 

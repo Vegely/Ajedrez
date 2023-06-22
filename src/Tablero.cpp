@@ -220,7 +220,7 @@ bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJue
 
 				delete leer(movimiento.fin);
 
-				infoTablas.clear();
+				infoTablas.clearAll();
 				numeroPiezas--;
 
 				jugadaHecha = true;
@@ -238,7 +238,7 @@ bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJue
 				tablero[puedeComer->getPosicion().indice()] = nullptr;
 				delete leer(aux);
 
-				infoTablas.clear();
+				infoTablas.clearAll();
 				numeroPiezas--;
 
 				jugadaHecha = true;
@@ -251,7 +251,7 @@ bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJue
 	{
 		if (puedeMover == movimiento.fin)
 		{
-			if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::REY)
+			if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::REY) // Enroque
 			{
 				Posicion aux = movimiento.fin - movimiento.inicio;
 				if (abs(aux.x) == 2)
@@ -259,7 +259,7 @@ bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJue
 					if (aux.x < 0) mover(Movimiento(Posicion(0, movimiento.inicio.y), Posicion(3, movimiento.inicio.y)));
 					else mover(Movimiento(Posicion(7, movimiento.inicio.y), Posicion(5, movimiento.inicio.y)));
 
-					infoTablas.clear();
+					infoTablas.clearRepeticion();
 				}
 			}
 
@@ -273,14 +273,13 @@ bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJue
 
 	if (jugadaHecha)
 	{
-		if (leer(movimiento.inicio) == nullptr) return false;
+		//if (leer(movimiento.inicio) == nullptr) return false;
+		if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON) infoTablas.clearRepeticion(); // Se ha jugado un peon
 		if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
 		{
 			Pieza* p_peon = leer(movimiento.inicio);
 			coronar(movimiento.inicio, MotorDeJuego::seleccionarEntradaCoronar(movimiento, *this, interaccion, motorGrafico));
 			delete p_peon;
-
-			infoTablas.clear();
 		}
 
 		cambiarTurno();

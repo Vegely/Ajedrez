@@ -18,7 +18,7 @@ class Tablero
 	Pieza* tablero[ANCHO_TABLERO * ANCHO_TABLERO];
 	bool colorDelTurno;
 
-	bool haMovido[6] = {};
+	bool haMovido[6] = { false };
 
 	Posicion reyPos[2];
 
@@ -45,7 +45,7 @@ public:
 
 	static Tablero copiar(const Tablero& tablero);
 
-	void liberar() { for (Pieza* p_pieza : tablero)  p_pieza; }
+	void liberar() { for (Pieza* p_pieza : tablero) delete p_pieza; }
 
 	inline Posicion posicion(int i) const { return Posicion(i % ANCHO_TABLERO, i / ANCHO_TABLERO); }
 
