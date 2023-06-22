@@ -22,12 +22,12 @@ constexpr const char* RUTA_RANKINGS = "pantallas/rankings pag intermedia.png";
 
 constexpr const char* RUTA_FUENTES = "fuentes/SourceSerifPro-Bold.ttf";
 
-constexpr const char* RUTA_JAQUE_MATE_BLANCAS = "pantallas\jaque_mate_blancas.png";
-constexpr const char* RUTA_JAQUE_MATE_NEGRAS = "pantallas\jaque_mate_negras.png";
-constexpr const char* RUTA_REY_AHOGADO = "pantallas\rey_ahogado.png";
-constexpr const char* RUTA_MATERIAL_INSUFICIENTE = "pantallas\material_insuficiente.png";
-constexpr const char* RUTA_PASIVIDAD = "pantallas\pasividad.png";
-constexpr const char* RUTA_REPETICION = "pantallas\repeticion.png";
+constexpr const char* RUTA_JAQUE_MATE_BLANCAS = "pantallas/jaque_mate_blancas.png";
+constexpr const char* RUTA_JAQUE_MATE_NEGRAS = "pantallas/jaque_mate_negras.png";
+constexpr const char* RUTA_REY_AHOGADO = "pantallas/rey_ahogado.png";
+constexpr const char* RUTA_MATERIAL_INSUFICIENTE = "pantallas/material_insuficiente.png";
+constexpr const char* RUTA_PASIVIDAD = "pantallas/pasividad.png";
+constexpr const char* RUTA_REPETICION = "pantallas/repeticion.png";
 
 constexpr int TAM_FRASE = 10;
 constexpr int TABULADOR = 9;

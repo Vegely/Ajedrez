@@ -83,12 +83,14 @@ struct ModeloTexturizado
 			return;
 		}
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		//gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, textura.ancho, textura.alto, GL_RGB, GL_UNSIGNED_BYTE, textura.datos_imagen);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textura.ancho, textura.alto, 0, GL_RGB, GL_UNSIGNED_BYTE, textura.datos_imagen);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, textura.ancho, textura.alto, GL_RGB, GL_UNSIGNED_BYTE, textura.datos_imagen);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
+		glBindTexture(GL_TEXTURE_2D, 0);
 		stbi_image_free(textura.datos_imagen);
 
 		std::cout << "Texture loaded." << std::endl;
@@ -111,6 +113,7 @@ public:
 	/* FORMA CANÓNICA */
 	Modelo(void);
 	Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, ModeloTexturizado* modelo_texturizado, bool color = false);
+	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, ModeloTexturizado* modelo_texturizado, bool color = false);
 	Modelo(TipoPieza tipo_pieza, const Point& initial_pos, const std::string& model_path, const std::string& texture_path);
 	virtual ~Modelo(void) { }
 

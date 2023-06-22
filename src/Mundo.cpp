@@ -26,13 +26,13 @@ Mundo::Mundo(void) :
 	casillas_px(),
 	casillas_blancas(),
 	casillas_negras(),
-	marcos(),
 	casillas_seleccionadas(20),
 	casillas_comibles(20),
 	casillas_puede_mover(20),
 	casillas_coronacion(20),
 	casillas_ultimo_mov(2),
 	casillas_jaque(10),
+	marcos(4),
 	letras(),
 	camara(Camara::white_pov),
 	peon(),
@@ -42,6 +42,7 @@ Mundo::Mundo(void) :
 	torre(),
 	caballo(),
 	casilla(),
+	marco(),
 	modelo_peon_blanco(ruta_textura_blanco),
 	modelo_alfil_blanco(ruta_textura_blanco),
 	modelo_dama_blanca(ruta_textura_blanco),
@@ -59,7 +60,8 @@ Mundo::Mundo(void) :
 	modelo_casilla_puede_mover(ruta_textura_casilla_puede_mover),
 	modelo_casilla_coronacion(ruta_textura_casilla_coronacion),
 	modelo_casilla_ultimo_mov(ruta_textura_casilla_ultimo_mov),
-	modelo_casilla_jaque(ruta_textura_casilla_comible)
+	modelo_casilla_jaque(ruta_textura_casilla_comible),
+	modelo_marco(ruta_textura_marco)
 {
 
 }
@@ -73,6 +75,7 @@ void Mundo::init(void)
 	torre.init(ruta_modelo_torre);
 	caballo.init(ruta_modelo_caballo);
 	casilla.init(ruta_modelo_casilla);
+	marco.init(ruta_modelo_marco),
 
 	modelo_peon_blanco.init(&peon);
 	modelo_alfil_blanco.init(&alfil);
@@ -92,6 +95,7 @@ void Mundo::init(void)
 	modelo_casilla_coronacion.init(&casilla);
 	modelo_casilla_ultimo_mov.init(&casilla);
 	modelo_casilla_jaque.init(&casilla);
+	modelo_marco.init(&marco);
 
 	asignarModelos();
 	cargarTexturas();
@@ -111,7 +115,6 @@ void Mundo::asignarModelos(void)
 
 	casillas_blancas = new Modelo(NONE, Point::zero, ruta_modelo_casillas_blancas, ruta_textura_blanco_oscuro);
 	casillas_negras  = new Modelo(NONE, Point::zero, ruta_modelo_casillas_negras,  ruta_textura_negro_claro);
-	marcos			 = new Modelo(NONE, Point::zero, ruta_modelo_marcos,			  ruta_textura_marco);
 	letras			 = new Modelo(NONE, Point::zero, ruta_modelo_letras,			  ruta_textura_blanco);
 
 	rey_blanco.addElem(new Modelo(REY, Posicion(), &modelo_rey_blanco, true));
@@ -138,6 +141,8 @@ void Mundo::asignarModelos(void)
 		caballos_negros .addElem(new Modelo(CABALLO, Posicion(), &modelo_caballo_negro,  false));
 		alfiles_blancos .addElem(new Modelo(ALFIL,   Posicion(), &modelo_alfil_blanco,   true));
 		alfiles_negros  .addElem(new Modelo(ALFIL,   Posicion(), &modelo_alfil_negro,    false));
+
+		marcos.addElem(new Modelo(NONE, Point::zero, &modelo_marco));
 	}
 
 	posicion_leida = Posicion();
@@ -147,7 +152,6 @@ void Mundo::cargarTexturas(void)
 {
 	casillas_blancas    ->cargarTextura();
 	casillas_negras     ->cargarTextura();
-	marcos              ->cargarTextura();
 	letras              ->cargarTextura();
 }
 
@@ -173,6 +177,7 @@ void Mundo::renderizarModelos(void)
 		casillas_puede_mover	.renderModelos();
 		casillas_ultimo_mov	.renderModelos();
 		casillas_jaque		.renderModelos();
+		marcos.renderEspecial();
 	}
 	else if (coronando_blancas && !coronando_negras)
 		coronacion_blancos.renderModelos();
@@ -181,7 +186,6 @@ void Mundo::renderizarModelos(void)
 
 	casillas_blancas->render();
 	casillas_negras ->render();
-	marcos->render();
 	letras->render();
 }
 

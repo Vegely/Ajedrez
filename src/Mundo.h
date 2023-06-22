@@ -14,6 +14,7 @@
 #define ruta_modelo_caballo "modelos/caballo.obj"
 #define ruta_modelo_torre "modelos/torre.obj"
 #define ruta_modelo_peon "modelos/peon.obj"
+#define ruta_modelo_marco "modelos/marco.obj"
 
 #define ruta_modelo_casilla "modelos/casilla.obj"
 #define ruta_modelo_casillas_negras "modelos/casillas_negras.obj"
@@ -193,14 +194,15 @@ private:
 
 	Modelo* casillas_blancas;
 	Modelo* casillas_negras;
-	Modelo* marcos;
 	Modelo* letras;
+
 	ListaModelo casillas_seleccionadas;
 	ListaModelo casillas_comibles;
 	ListaModelo casillas_puede_mover;
 	ListaModelo casillas_coronacion;
 	ListaModelo casillas_ultimo_mov;
 	ListaModelo casillas_jaque;
+	ListaModelo marcos;
 
 	Camara camara;
 	
@@ -214,6 +216,7 @@ private:
 	ModeloBase torre;
 	ModeloBase caballo;
 	ModeloBase casilla;
+	ModeloBase marco;
 
 	ModeloTexturizado modelo_peon_blanco;
 	ModeloTexturizado modelo_alfil_blanco;
@@ -235,6 +238,8 @@ private:
 	ModeloTexturizado modelo_casilla_coronacion;
 	ModeloTexturizado modelo_casilla_ultimo_mov;
 	ModeloTexturizado modelo_casilla_jaque;
+
+	ModeloTexturizado modelo_marco;
 
 	Tablero* tablero_jaque_mate = nullptr;
 

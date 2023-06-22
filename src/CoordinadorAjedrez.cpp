@@ -21,8 +21,6 @@ PantallaCargarPartida pantallaCargarPartida;
 PantallaRankings	  pantallaRanking;
 PantallaGuardar		  pantallaGuardar;
 
-struct Color { unsigned char r, g, b; };
-
 void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal)
 {
 	*p_datosFinal = motorLogico->motor(motorGrafico);
@@ -181,9 +179,9 @@ void CoordinadorAjedrez::Draw(void)
 		pantallaServidor.dibuja();
 		parametrosTexturasMEstados();
 
-		ETSIDI::setFont(RUTA_FUENTES, 30);
-		ETSIDI::setTextColor(0, 255, 255);
-		ETSIDI::printxy(servidor->getip().c_str(), 0, 0, 1);
+		ETSIDI::setFont(RUTA_FUENTES, 45);
+		ETSIDI::setTextColor(0, 0, 0);
+		ETSIDI::printxy(servidor->getip().c_str(), -7, 7);
 	}
 
 	else if (estado == CARGAR)

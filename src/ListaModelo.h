@@ -42,6 +42,15 @@ public:
 	void renderModelos (void)				   { for (int i = 0; i < _numElem; i++) _modelo[i]->render(); }
 	void moverModelos  (const Movimiento& mov) { for (int i = 0; i < _numElem; i++) _modelo[i]->moverModelo(mov); }
 	void moverElemento (const Movimiento& mov);
+	void renderEspecial(void)
+	{ 
+		for (int i = 0; i < _numElem; i++)
+		{
+			glRotatef(90 * i, 0, 1, 0);
+			_modelo[i]->render();
+			glRotatef(-90 * i, 0, 1, 0);
+		}
+	}
 };
 
 #endif

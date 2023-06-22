@@ -34,6 +34,18 @@ Modelo::Modelo(TipoPieza tipo_pieza, const Posicion& initial_pos, ModeloTexturiz
 	
 }
 
+Modelo::Modelo(TipoPieza tipo_pieza, const Point& initial_pos, ModeloTexturizado* modelo_texturizado, bool color) :
+	model_path(""),
+	texture_path(""),
+	tipo_pieza(tipo_pieza),
+	pos_coords(Posicion()),
+	modelo_texturizado(modelo_texturizado),
+	color(color),
+	Entity(initial_pos, "Modelo " + tipo_pieza)
+{
+
+}
+
 void Modelo::init(void)
 {
 	this->modelo_texturizado->modelo->scene = this->modelo_texturizado->modelo->importer.ReadFile(this->model_path,
