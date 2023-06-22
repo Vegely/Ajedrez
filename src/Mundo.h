@@ -35,6 +35,8 @@
 
 #define ruta_fondo "texturas/espacio.png"
 
+#define TIMEPO_ROTACION_CAMARA 0.01
+
 class Casilla
 {
 private:

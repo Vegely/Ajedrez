@@ -42,9 +42,9 @@ public:
 
 	void inicializa() { inicializaWinSock(); ipDir(); };
 	//Conecta el servidor
-	bool conectarServidor();
+	bool conectar();
 	//Desconecta el servidor
-	void desconectarServidor();
+	void desconectar();
 
 	//Genera un código de partida a partir de la ip del equipo
 	//@return String con código de la partida
@@ -61,7 +61,7 @@ public:
 	//@return Número de bytes enviados
 	int enviar(std::string s) const;
 
-	std::string getip() { return ipv4; };
+	std::string getIp() { return ipv4; };
 
 };
 

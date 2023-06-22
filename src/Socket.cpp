@@ -145,7 +145,7 @@ int Socket::recibe(std::string& s) {
 	//Error al recibir la información
 	else {
 		std::cout << "Error al recibir el mensaje: " << WSAGetLastError() << std::endl;
-		return bytes_recibidos;
+		return -1;
 	}
 
 }

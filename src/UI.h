@@ -69,6 +69,7 @@ struct PantallaFinPartida : public PantallaBase {
 	PantallaFinPartida() : PantallaBase(RUTA_FIN_DE_PARTIDA){}
 };
 
+
 struct PantallaCliente : public PantallaBase {
 	Caja cliente{ -9.5, 10.0, 9.3, 6.0 };
 	Caja atras{ 25.4,-2.3,29.8,-6.3 };

@@ -19,37 +19,39 @@ constexpr const char* IA_IA = "iaia";
 constexpr const char* LOCAL_IA = "localia";
 constexpr const char* LOCAL_LOCAL = "locallocal";
 
-enum Estado { INICIO, JUEGO, FIN, RANKING, CARGAR, MODO_LOCAL, MODO_RED, MODO, COLOR, SERVIDOR, CLIENTE, FALLO_CONEXION, PAUSA, COLOR_SERVIDOR, GUARDAR, INICIALIZACION_PARTIDA};
-
-void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal);
+enum Estado { INICIO, JUEGO, FIN, RANKING, CARGAR, MODO_LOCAL, MODO_RED, MODO, COLOR, SERVIDOR, CLIENTE, FALLO_CONEXION, PAUSA, COLOR_SERVIDOR, GUARDAR, INICIALIZAR_PARTIDA, CERRAR_PARTIDA};
 
 class CoordinadorAjedrez
 {
 	friend class menuInicial;
-	friend void hiloServidor(CoordinadorAjedrez* ajedrez);
-	friend void hiloCliente(CoordinadorAjedrez* ajedrez);
+	friend void hiloRed(CoordinadorAjedrez* ajedrez);
 
 private:
 	Mundo motorGrafico;
 	Ranking ranking;
-	Cliente* cliente = nullptr;
-	Servidor* servidor = nullptr;
+	ElementoRed* p_elementoRed = nullptr;
 	Partida partida;
 
 	ConfiguracionDeJuego config;
 
-	std::thread* hilo_servidor = nullptr;
-	std::thread* hilo_cliente = nullptr;
+	std::thread* p_hilo_elementoRed = nullptr;
+	std::thread* p_hiloMotorLogico = nullptr;
 
 	/* ESTADO DEL JUEGO */
 	Estado estado;
-	/* MOTORES LOGICO Y GRAFICO */
+
+	/* MOTOR GRAFICO */
 	Mundo mundoGrafico;
-	MotorDeJuego* p_motorLogico = nullptr;
-	std::thread* p_motor = nullptr;
-	/* VARIABLES DE GESTIÓN DE INICIALIZACIÓN Y FINALIZACION */
+
+	/* VARIABLES DE GESTIÓN DE INICIALIZACIÓN Y FINALIZACIÓN */
 	bool flagDeSeguridadInit = true;
+	bool enPartida = false;
+	bool redAbierta = false;
+
 	DatosFinal datosFinal;
+
+	void cerrarHiloRed();
+	void cerrarPartida();
 	
 public:
 	/* FORMA CAN�NICA */
@@ -65,14 +67,10 @@ public:
 	void Click(int button, int state, int x, int y);
 
 	void renderPantallaFinal(const std::string& filepath);
-
-	friend void hiloServidor(CoordinadorAjedrez* ajedrez);
-	friend void hiloCliente (CoordinadorAjedrez* ajedrez);
 };
 
-void threadMotor(MotorDeJuego* motorLogico, Mundo* motorGrafico, const ConfiguracionDeJuego* p_configuracion, DatosFinal* p_datosFinal);
-void hiloServidor(CoordinadorAjedrez* ajedrez);
-void hiloCliente (CoordinadorAjedrez* ajedrez);
+void threadMotor(bool* p_stop, Mundo* p_motorGrafico, const ConfiguracionDeJuego* p_config, Partida* p_partida, ElementoRed* p_elementoRed, DatosFinal* p_datosFinal);
+void hiloRed(CoordinadorAjedrez* p_ajedrez);
 
 float aCoordenadasGlutX(float p);
 float aCoordenadasGlutY(float p);

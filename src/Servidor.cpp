@@ -59,7 +59,7 @@ void Servidor::ipDir() {
 	}
 }
 
-bool Servidor::conectarServidor() {
+bool Servidor::conectar() {
 	//NULL: almacena en host_info todas las direcciones de red almacenadas en el equipo 
 	//AI_PASSIVE: indica que vamos a hacer una llamada a bind()
 	sck = new Socket{ AI_PASSIVE };
@@ -76,7 +76,7 @@ bool Servidor::conectarServidor() {
 	return true;
 }
 
-void Servidor::desconectarServidor() {
+void Servidor::desconectar() {
 	comunicacion_sck->desconecta();
 
 	//Conexión cerrada: elimina el socket para la comunicación

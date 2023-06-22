@@ -9,7 +9,14 @@
 
 #include "IA.h"
 
-#include "Mundo.h"
+#include <cstdint>
+#include <chrono>
+
+#define TIEMPO_MS_MIN_MOVIMIENTO 1500
+
+///
+#include <iostream>
+///
 
 constexpr auto NUM_LINEAS = 40;
 
@@ -26,25 +33,30 @@ Posicion getInput(Mundo* p_motorGrafico)
 	return Posicion();
 }
 
-Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico)
-{
-	Movimiento movimiento = Movimiento();
 
+Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool& run)
+{	
+	Movimiento movimiento = Movimiento();
 	if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::IA)
 		movimiento = IA::mover(tablero);
 	else
 	{
 		if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR)
 		{
-			std::string str;
-			config.elementoRed->recibir(str);
-			movimiento = Movimiento(str);
+			while(elementoRed.recibido.empty() && run); // Esperar hasta que se reciba algo
+			movimiento = Movimiento(elementoRed.recibido);
+			elementoRed.recibido.clear();
 		}
 		else
 		{
-			while(movimiento == Movimiento()) movimiento = ensamblarMovimiento(getInput(p_motorGrafico), p_motorGrafico);
-			if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::EMISOR && movimiento.inicio != Posicion())
-				config.elementoRed->enviar(movimiento.toString());
+			while(movimiento == Movimiento()) 
+			{
+				if (!run) return Movimiento();
+				movimiento = ensamblarMovimiento(getInput(p_motorGrafico));
+			}
+
+			if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::EMISOR)
+				elementoRed.enviar(movimiento.toString());
 		}		
 	}
 	
@@ -53,17 +65,16 @@ Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico)
 
 void MotorDeJuego::pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_motorGrafico) const
 {
-	Pieza*		 pieza_leida      = tablero.leer(posSelec);
-	Movimiento   ultima_jugada	  = tablero.getUltimaJugada();
-	ListaModelo* lista_comer      = p_motorGrafico->getCasillaComible();
-	ListaModelo* lista_coronacion = p_motorGrafico->getCasillaCoronacion();
-	ListaModelo* lista_jugada	  = p_motorGrafico->getCasillaUltimoMov();
-	ListaModelo* lista_mover	  = p_motorGrafico->getCasillaPuedeMover();
-	ListaModelo* lista_seleccion  = p_motorGrafico->getCasillaSeleccionada();
-	ListaModelo* lista_jaque	  = p_motorGrafico->getCasillaJaque();
-
-	if (posSelec != Posicion() && pieza_leida != nullptr && tablero.leer(posSelec)->getColor() == tablero.colorDelTurno)
+	if (posSelec != Posicion() && tablero.leer(posSelec) != nullptr && tablero.leer(posSelec)->getColor() == tablero.colorDelTurno)
 	{
+		Movimiento   ultima_jugada	  = tablero.getUltimaJugada();
+		ListaModelo* lista_comer      = p_motorGrafico->getCasillaComible();
+		ListaModelo* lista_coronacion = p_motorGrafico->getCasillaCoronacion();
+		ListaModelo* lista_jugada	  = p_motorGrafico->getCasillaUltimoMov();
+		ListaModelo* lista_mover	  = p_motorGrafico->getCasillaPuedeMover();
+		ListaModelo* lista_seleccion  = p_motorGrafico->getCasillaSeleccionada();
+		ListaModelo* lista_jaque	  = p_motorGrafico->getCasillaJaque();
+
 		Pieza::tipo_t tipo = tablero.leer(posSelec)->getTipo();
 		Posicion posicion  = tablero.leer(posSelec)->getPosicion();
 		bool color = tablero.leer(posSelec)->getColor();
@@ -154,17 +165,30 @@ void MotorDeJuego::pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_mot
 	}
 }
 
-DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico)
+uint64_t getTimeSinceEpoch()
 {
-	DatosFinal datosFinal;
-	static Movimiento movimiento = Movimiento(Posicion(), Posicion());
+	using namespace std::chrono;
+	return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+}
 
-	while (!exit)
+DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
+{
+	// Pintar tablero
+	p_mundoGrafico->leerTablero(&tablero);
+	p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, TIMEPO_ROTACION_CAMARA, config);
+
+	// Tomar timepo para el primer movimiento
+	long long int t0 = getTimeSinceEpoch();
+	while (true)
 	{
-		comprobarCasillasJaque(p_mundoGrafico);
-		p_mundoGrafico->antisolapamientoCasillas(tablero);
+		// Pintar ultimo movimiento
+		p_mundoGrafico->resetCasillas(p_mundoGrafico->getCasillaUltimoMov());
+		p_mundoGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), tablero.ultimaJugada.inicio));
+		p_mundoGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), tablero.ultimaJugada.fin));
 
-		movimiento = seleccionarEntrada(p_mundoGrafico);
+		// Entrada del movimiento
+		Movimiento movimiento = seleccionarEntrada(p_mundoGrafico, run);
+		if (!run) return DatosFinal(); // Salir a mitad de partida
 
 		p_mundoGrafico->resetCasillas();
 
@@ -172,45 +196,40 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico)
 			pintarSeleccionCasilla(movimiento.inicio, p_mundoGrafico);
 		else if (tablero.hacerJugada(movimiento, config[tablero.colorDelTurno], p_mundoGrafico)) // Se hace la jugada
 		{
-			p_mundoGrafico->resetCasillas();
-			
-			fichero_partida->movimientos.push_back(tablero.ultimaJugada);
+			// Evitar que se mueva muy rapido
+			while (getTimeSinceEpoch() - t0 < TIEMPO_MS_MIN_MOVIMIENTO); // Evita hacer un movimiento en menos tiempo que TIEMPO_MIN_MOVIMIENTO
+			t0 = getTimeSinceEpoch();
+
+			// Pintar tablero
+			p_mundoGrafico->leerTablero(&tablero);
+			p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, TIMEPO_ROTACION_CAMARA, config);
+
+			fichero_partida.movimientos.push_back(tablero.ultimaJugada);
 
 			if (tablero.jaqueMate())
 			{
 				comprobarCasillasJaque(p_mundoGrafico);
-				datosFinal = { CodigoFinal::JAQUE_MATE, !tablero.colorDelTurno };
-				datosFinal.finalizada = true;
-				exit = true;
+				return DatosFinal{ CodigoFinal::JAQUE_MATE, true, !tablero.colorDelTurno };
+				//exit = true; ///???????????????
 			}
 			else if (tablero.reyAhogado())
 			{
-				datosFinal.codigoFinal = CodigoFinal::REY_AHOGADO;
-				datosFinal.finalizada = true;
-				exit = true;
+				return DatosFinal{ CodigoFinal::REY_AHOGADO, true };
 			}
 			else if (tablero.tablasMaterialInsuficiente())
 			{
-				datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE;
-				datosFinal.finalizada = true;
-				exit = true;
+				return DatosFinal{ CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE, true };
 			}
 			else if (tablero.infoTablas.tablasPorRepeticion())
 			{
-				datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_REPETICION;
-				datosFinal.finalizada = true;
-				exit = true;
+				return DatosFinal{ CodigoFinal::TABLAS_POR_REPETICION, true };
 			}
 			else if (tablero.infoTablas.tablasPorPasividad())
 			{
-				datosFinal.codigoFinal = CodigoFinal::TABLAS_POR_PASIVIDAD;
-				datosFinal.finalizada = true;
-				exit = true;
+				return DatosFinal{ CodigoFinal::TABLAS_POR_PASIVIDAD, true };
 			}
 		}
 	}
-
-	return datosFinal;
 }
 
 Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico)
@@ -226,19 +245,17 @@ Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Movimiento& movimien
 	}
 }
 
-Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion, Mundo* p_motorGrafico) const
+Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion) const
 {
 	static bool aux;
 	static Posicion inicio;
-	Pieza* pieza_leida = tablero.leer(posicion);
 
 	if (posicion != Posicion())
 	{
-		if (pieza_leida != nullptr && pieza_leida->getColor() == tablero.colorDelTurno)
+		if (tablero.leer(posicion) != nullptr && tablero.leer(posicion)->getColor() == tablero.colorDelTurno)
 		{
 			inicio = posicion;
 			aux = true;
-			
 		}
 		else if (aux)
 		{

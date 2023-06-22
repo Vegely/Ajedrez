@@ -8,6 +8,7 @@ void motorGrafico(int* argc, char** argv);
 void inicializarIluminacion(void);
 void inicializarEstadoOpenGL(void);
 void registrarCallbacks(void);
+
 /* GLUT CALLBACKS */
 void OnDraw(void);
 void OnReshape(int w, int h);
@@ -17,6 +18,12 @@ void OnKeyboardUp(const unsigned char key, int x, int y);
 void OnKeyboardSpecial(int key, int x, int y);
 void OnMouseClick(int button, int state, int x, int y);
 void OnMouseMotion(int x, int y);
+
 /* DEBUG AXIS */
 void debugAxis(void);
+
+/* OPENGL INIT */
+void inicializarEstadoOpenGL(void);
+void inicializarIluminacion(void);
+
 #endif
