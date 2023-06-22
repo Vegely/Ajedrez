@@ -6,7 +6,6 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "DatosRanking.h"
 
 #define JUGADORES_POR_HOJA 5
 #define ALTO_GL 35.0 //25 hasta -10

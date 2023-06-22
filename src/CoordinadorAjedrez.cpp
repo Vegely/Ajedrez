@@ -482,13 +482,13 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 				config = { ConfiguracionDeJuego::FormasDeInteraccion::LOCAL, ConfiguracionDeJuego::FormasDeInteraccion::IA };
 				estado = INICIALIZAR_PARTIDA;
 			}
-			if (pantallaColorJugador.blanco.enCaja(xg, yg))
+			else if (pantallaColorJugador.blanco.enCaja(xg, yg))
 			{
 				pantallaGuardar.snegras = JIA;
 				config = { ConfiguracionDeJuego::FormasDeInteraccion::IA, ConfiguracionDeJuego::FormasDeInteraccion::LOCAL };
 				estado = INICIALIZAR_PARTIDA;
 			}
-			if (pantallaColorJugador.atras.enCaja(xg, yg))
+			else if (pantallaColorJugador.atras.enCaja(xg, yg))
 				estado = MODO_LOCAL;
 		}
 		else if (estado == PAUSA)
