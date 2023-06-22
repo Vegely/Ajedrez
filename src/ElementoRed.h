@@ -17,6 +17,7 @@ public:
 	virtual int recibir(std::string& s) const = 0;
 
 	virtual std::string getIp() = 0;
+	virtual void setIp(std::string ip) {}
 };
 
 #endif // !_ELEMENTORED__H_

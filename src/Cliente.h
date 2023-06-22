@@ -51,6 +51,7 @@ public:
     int recibir(std::string& s) const;
 
     std::string getIp() { return ipv4; };
+    void setIp(std::string ip) { ipv4 = ip; }
 };
 
 // Main (poner la dirección ip que aparece en la pantalla del servidor en el campo ipv4 del cliente)

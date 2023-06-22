@@ -181,6 +181,7 @@ void CoordinadorAjedrez::Draw(void)
 	{
 		pantallaCliente.dibuja();
 		parametrosTexturasMEstados();
+		ETSIDI::printxy(pantallaCliente.ip.c_str(), -5, 5);
 	}
 
 	else if (estado == PAUSA)
@@ -358,6 +359,15 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 		if (key == 'c')
 			estado = JUEGO;
 	}
+	else if (estado == CLIENTE) {
+		if ((int)key == SUPRIMIR)
+			pantallaCliente.ip = "";
+		else if ((int)key == TABULADOR) {
+			p_elementoRed->setIp(pantallaCliente.ip);
+		}
+		else
+			pantallaCliente.ip += key;
+	}
 }
 
 void CoordinadorAjedrez::Keylift(unsigned char key)
@@ -377,6 +387,12 @@ void CoordinadorAjedrez::SpecialKeypress(int key)
 
 			else if (pantallaGuardar.estado == Guardar::NEGRAS && pantallaGuardar.snegras.length() > 0)
 				pantallaGuardar.snegras = pantallaGuardar.snegras.substr(0, pantallaGuardar.snegras.length() - 1);
+		}
+	}
+	else if (estado == CLIENTE) {
+		if (key == GLUT_KEY_LEFT) {
+			if (pantallaCliente.ip.length() > 0)
+				pantallaCliente.ip = pantallaCliente.ip.substr(0, pantallaCliente.ip.length() - 1);
 		}
 	}
 }

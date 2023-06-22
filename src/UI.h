@@ -71,9 +71,13 @@ struct PantallaFinPartida : public PantallaBase {
 
 
 struct PantallaCliente : public PantallaBase {
+	std::string ip = "";
+
 	Caja cliente{ -9.5, 10.0, 9.3, 6.0 };
 	Caja atras{ 25.4,-2.3,29.8,-6.3 };
+
 	PantallaCliente() : PantallaBase(RUTA_CLIENTE){}
+
 };
 
 struct PantallaPausa : public PantallaBase {
@@ -154,4 +158,4 @@ struct PantallaGuardar : public PantallaBase {
 	void escrituraGlut();
 };
 
-#endif // !_UI__H_
+#endif 
