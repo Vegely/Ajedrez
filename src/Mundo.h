@@ -34,6 +34,7 @@
 #define ruta_textura_casilla_puede_mover "texturas/casilla_puede_mover.png"
 #define ruta_textura_casilla_coronacion "texturas/casilla_coronacion.png"
 #define ruta_textura_casilla_ultimo_mov "texturas/casilla_ultimo_mov.png"
+#define ruta_textura_casilla_jaque "texturas/casilla_jaque.png"
 #define ruta_textura_fondo "texturas/fondo.jpg"
 
 #define TIMEPO_ROTACION_CAMARA 0.01

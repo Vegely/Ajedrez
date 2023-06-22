@@ -62,7 +62,7 @@ Mundo::Mundo(void) :
 	modelo_casilla_puede_mover(ruta_textura_casilla_puede_mover),
 	modelo_casilla_coronacion(ruta_textura_casilla_coronacion),
 	modelo_casilla_ultimo_mov(ruta_textura_casilla_ultimo_mov),
-	modelo_casilla_jaque(ruta_textura_casilla_comible),
+	modelo_casilla_jaque(ruta_textura_casilla_jaque),
 	modelo_marco(ruta_textura_marco)
 {
 

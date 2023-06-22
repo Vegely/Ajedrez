@@ -36,6 +36,7 @@ struct ModeloBase
 	const aiScene* scene;
 	Assimp::Importer importer;
 
+	~ModeloBase(void) { delete scene; }
 	void cargarModelo(std::string path);
 
 	ModeloBase& operator = (const ModeloBase& rhs) { this->scene = rhs.scene; }
