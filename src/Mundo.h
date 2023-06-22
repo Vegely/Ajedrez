@@ -21,6 +21,7 @@
 #define ruta_modelo_casillas_blancas "modelos/casillas_blancas.obj"
 #define ruta_modelo_marcos "modelos/marcos.obj"
 #define ruta_modelo_letras "modelos/letras.obj"
+#define ruta_modelo_fondo  "modelos/fondo.obj"
 
 #define ruta_textura_blanco "texturas/marmol_blanco.png"
 #define ruta_textura_negro "texturas/marmol_negro.png"
@@ -33,8 +34,8 @@
 #define ruta_textura_casilla_puede_mover "texturas/casilla_puede_mover.png"
 #define ruta_textura_casilla_coronacion "texturas/casilla_coronacion.png"
 #define ruta_textura_casilla_ultimo_mov "texturas/casilla_ultimo_mov.png"
-
-#define ruta_fondo "texturas/espacio.png"
+#define ruta_textura_casilla_jaque "texturas/casilla_jaque.png"
+#define ruta_textura_fondo "texturas/fondo.jpg"
 
 #define TIMEPO_ROTACION_CAMARA 0.01
 
@@ -198,6 +199,8 @@ private:
 	Modelo* casillas_blancas;
 	Modelo* casillas_negras;
 	Modelo* letras;
+	Modelo* fondoA;
+	Modelo* fondoB;
 
 	ListaModelo casillas_seleccionadas;
 	ListaModelo casillas_comibles;

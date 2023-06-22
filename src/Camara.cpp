@@ -93,6 +93,7 @@ void Camara::update(void)
 
 float Camara::radius = 15.6f;
 float Camara::height = 20.5f;
+float Camara::phi = atanf(Camara::height / Camara::radius) * M_PI / 180.0f;
 Point Camara::white_pov = Point{ 0.0f, Camara::height, -Camara::radius };
 Point Camara::black_pov = Point{ 0.0f, Camara::height,  Camara::radius };
 

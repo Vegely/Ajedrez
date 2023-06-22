@@ -34,6 +34,8 @@ Mundo::Mundo(void) :
 	casillas_jaque(10),
 	marcos(4),
 	letras(),
+	fondoA(),
+	fondoB(),
 	camara(Camara::white_pov),
 	peon(),
 	alfil(),
@@ -60,7 +62,7 @@ Mundo::Mundo(void) :
 	modelo_casilla_puede_mover(ruta_textura_casilla_puede_mover),
 	modelo_casilla_coronacion(ruta_textura_casilla_coronacion),
 	modelo_casilla_ultimo_mov(ruta_textura_casilla_ultimo_mov),
-	modelo_casilla_jaque(ruta_textura_casilla_comible),
+	modelo_casilla_jaque(ruta_textura_casilla_jaque),
 	modelo_marco(ruta_textura_marco)
 {
 
@@ -124,18 +126,20 @@ void Mundo::asignarModelos(void)
 	casillas_blancas = new Modelo(NONE, Point::zero, ruta_modelo_casillas_blancas, ruta_textura_blanco_oscuro);
 	casillas_negras  = new Modelo(NONE, Point::zero, ruta_modelo_casillas_negras,  ruta_textura_negro_claro);
 	letras			 = new Modelo(NONE, Point::zero, ruta_modelo_letras,		   ruta_textura_letras);
+	fondoA			 = new Modelo(NONE, Point::zero, ruta_modelo_fondo,			   ruta_textura_fondo);	
+	fondoB			 = new Modelo(NONE, Point::zero, ruta_modelo_fondo,			   ruta_textura_fondo);	
 
 	rey_blanco.addElem(new Modelo(REY, Posicion(), &modelo_rey_blanco, true));
 	rey_negro .addElem(new Modelo(REY, Posicion(), &modelo_rey_negro,  false));
 
-	coronacion_blancos.addElem(new Modelo(ALFIL,   Posicion(3, 3), &modelo_alfil_blanco,   true));
-	coronacion_blancos.addElem(new Modelo(TORRE,   Posicion(4, 3), &modelo_torre_blanca,   true));
-	coronacion_blancos.addElem(new Modelo(DAMA,    Posicion(5, 3), &modelo_dama_blanca,    true));
-	coronacion_blancos.addElem(new Modelo(CABALLO, Posicion(6, 3), &modelo_caballo_blanco, true));
-	coronacion_negros .addElem(new Modelo(ALFIL,   Posicion(3, 4), &modelo_alfil_negro,    false));
-	coronacion_negros .addElem(new Modelo(TORRE,   Posicion(4, 4), &modelo_torre_negra,    false));
-	coronacion_negros .addElem(new Modelo(DAMA,    Posicion(5, 4), &modelo_dama_negra,     false));
-	coronacion_negros .addElem(new Modelo(CABALLO, Posicion(6, 4), &modelo_caballo_negro,  false));
+	coronacion_blancos.addElem(new Modelo(ALFIL,   Posicion(2, 3), &modelo_alfil_blanco,   true));
+	coronacion_blancos.addElem(new Modelo(TORRE,   Posicion(3, 3), &modelo_torre_blanca,   true));
+	coronacion_blancos.addElem(new Modelo(DAMA,    Posicion(4, 3), &modelo_dama_blanca,    true));
+	coronacion_blancos.addElem(new Modelo(CABALLO, Posicion(5, 3), &modelo_caballo_blanco, true));
+	coronacion_negros .addElem(new Modelo(ALFIL,   Posicion(2, 4), &modelo_alfil_negro,    false));
+	coronacion_negros .addElem(new Modelo(TORRE,   Posicion(3, 4), &modelo_torre_negra,    false));
+	coronacion_negros .addElem(new Modelo(DAMA,    Posicion(4, 4), &modelo_dama_negra,     false));
+	coronacion_negros .addElem(new Modelo(CABALLO, Posicion(5, 4), &modelo_caballo_negro,  false));
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -161,6 +165,8 @@ void Mundo::cargarTexturas(void)
 	casillas_blancas->cargarTextura();
 	casillas_negras	->cargarTextura();
 	letras			->cargarTextura();
+	fondoA			->cargarTextura();
+	fondoB			->cargarTextura();
 }
 
 void Mundo::renderizarModelos(void)
@@ -195,6 +201,14 @@ void Mundo::renderizarModelos(void)
 	casillas_negras ->render();
 	letras->render();
 	marcos.renderConRotacion();
+
+	//glScalef(4, 4, 4);
+	glRotatef(90, 0, 0, 1);
+	glRotatef(Camara::phi * 2, 1, 0, 0);
+	fondoB->render();
+	glRotatef(-Camara::phi * 2, 1, 0, 0);
+	glRotatef(-90, 0, 0, 1);
+	//glScalef(0.25f, 0.25f, 0.25f);
 }
 
 void Mundo::seleccionCasilla(int button, int state, int x_mouse, int y_mouse)
@@ -223,26 +237,6 @@ void Mundo::seleccionCasilla(int button, int state, int x_mouse, int y_mouse)
 
 	this->posicion_leida = result;
 }
-
-//void Mundo::dibujarFondo(void)
-//{
-//	glTranslatef(100, -10, 0);
-//	glRotatef(90.0f, 1, 0, 0);
-//	glEnable(GL_TEXTURE_2D);
-//	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(Mundo::ruta_fondo.c_str()).id);
-//	glDisable(GL_LIGHTING);
-//	glBegin(GL_POLYGON);
-//	glColor3f(1, 1, 1);
-//	glTexCoord2d(0, 0); glVertex2f(-1000, -1000);
-//	glTexCoord2d(0, 1); glVertex2f(-1000,  1000);
-//	glTexCoord2d(1, 1); glVertex2f( 1000,  1000);
-//	glTexCoord2d(1, 0); glVertex2f( 1000, -1000);
-//	glEnd();
-//	glEnable(GL_LIGHTING);
-//	glDisable(GL_TEXTURE_2D);
-//	glRotatef(-90.0f, 1, 0, 0);
-//	glTranslatef(-100, 10, 0);
-//}
 
 void Mundo::moverModelos(const Movimiento& mov)
 {

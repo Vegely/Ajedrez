@@ -81,8 +81,8 @@ void CoordinadorAjedrez::init(void)
 void CoordinadorAjedrez::Draw(void)
 {
 	gluLookAt(0, 7.5, 30, // posicion del ojo
-		0.0, 7.5, 0.0, // hacia que punto mira (0,7.5,0) 
-		0.0, 1.0, 0.0); // definimos hacia arriba (eje Y)
+		0.0, 7.5, 0.0,    // hacia que punto mira 
+		0.0, 1.0, 0.0);   // definimos hacia arriba (eje Y)
 
 	if (estado == INICIO) {
 		

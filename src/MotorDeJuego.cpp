@@ -108,6 +108,11 @@ void MotorDeJuego::pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_mot
 							lista_mover->moverElemento(Movimiento(Posicion(), puedeMover)); // Seleccion de movimento 
 							if (ultima_jugada.inicio == puedeMover || ultima_jugada.fin == puedeMover)
 								lista_jugada->moverElemento(Movimiento(puedeMover, Posicion()));
+							if (tipo == Pieza::tipo_t::REY && (((puedeMover == Posicion(6, 0) || puedeMover == Posicion(2, 0)) && color) || ((puedeMover == Posicion(6, 7) || puedeMover == Posicion(2, 7)) && !color)))
+							{
+								lista_mover->moverElemento(Movimiento(puedeMover, Posicion()));
+								lista_coronacion->moverElemento(Movimiento(Posicion(), puedeMover));
+							}
 							skip = true;
 							break;
 						}
