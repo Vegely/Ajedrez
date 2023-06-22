@@ -57,6 +57,7 @@ public:
 
 	static float radius;
 	static float height;
+	static float phi;
 
 	static GLfloat light_position[4];
 	static GLfloat light_ambient [4];
