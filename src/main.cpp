@@ -5,11 +5,9 @@
 
 int main(int argc, char** argv)
 {
-	//srand(time(NULL)); // Inicializar la semilla aleatoria con el tiempo del sistema
-	//motorGrafico(&argc, argv);
+	srand(time(NULL)); // Inicializar la semilla aleatoria con el tiempo del sistema
 
-	Partida p;
+	motorGrafico(&argc, argv);
 
-	p.cargarPartida();
 	return 0;
 }

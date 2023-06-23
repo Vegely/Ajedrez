@@ -184,7 +184,7 @@ uint64_t getTimeSinceEpoch()
 DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 {
 	// Reset
-	p_mundoGrafico->resetLectura();
+	//p_mundoGrafico->resetLectura();
 	p_mundoGrafico->resetCasillas();
 
 	// Pintar tablero
@@ -279,15 +279,6 @@ Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(MotorDeJuego& motor, const
 	if (guardarCoronacion) motor.fichero_partida.coronacionSalida.push_back((int)tipo);
 
 	return tipo;
-	/*switch (interaccion)
-	{
-	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
-		motorGrafico->resetLectura();
-		return motorGrafico->seleccionPiezaCoronacion(tablero.getTurno());
-
-	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
-		return IA::coronar(motor, tablero, movimiento);
-	}*/
 }
 
 Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion) const
