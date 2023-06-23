@@ -108,7 +108,16 @@ void Plane::setDims(const float x, const float y)
 	updateCorners();
 }
 
-void Plane::rotate(const char axis, const float angle)
+void Plane::setPosition(const Point& pos)
+{
+	Entity::setPosition(pos);
+	this->position_corners.ll += pos;
+	this->position_corners.lr += pos;
+	this->position_corners.ul += pos;
+	this->position_corners.ur += pos;
+}
+
+void Plane::rotate(const char axis, const float angle, const Point& pos)
 {
 	float ang = angle * M_PI / 180;
 	Corners<Point> temp_corners = position_corners;
@@ -116,41 +125,41 @@ void Plane::rotate(const char axis, const float angle)
 	switch (axis)
 	{
 	case 'x':
-		position_corners.ll.y = position.y - (temp_corners.ll.z - position.z) * sin(ang) + (temp_corners.ll.y - position.y) * cos(ang);
-		position_corners.lr.y = position.y - (temp_corners.lr.z - position.z) * sin(ang) + (temp_corners.lr.y - position.y) * cos(ang);
-		position_corners.ul.y = position.y - (temp_corners.ul.z - position.z) * sin(ang) + (temp_corners.ul.y - position.y) * cos(ang);
-		position_corners.ur.y = position.y - (temp_corners.ur.z - position.z) * sin(ang) + (temp_corners.ur.y - position.y) * cos(ang);
+		position_corners.ll.y = pos.y - (temp_corners.ll.z - pos.z) * sin(ang) + (temp_corners.ll.y - pos.y) * cos(ang);
+		position_corners.lr.y = pos.y - (temp_corners.lr.z - pos.z) * sin(ang) + (temp_corners.lr.y - pos.y) * cos(ang);
+		position_corners.ul.y = pos.y - (temp_corners.ul.z - pos.z) * sin(ang) + (temp_corners.ul.y - pos.y) * cos(ang);
+		position_corners.ur.y = pos.y - (temp_corners.ur.z - pos.z) * sin(ang) + (temp_corners.ur.y - pos.y) * cos(ang);
 
-		position_corners.ll.z = position.z + (temp_corners.ll.z - position.z) * cos(ang) + (temp_corners.ll.y - position.y) * sin(ang);
-		position_corners.lr.z = position.z + (temp_corners.lr.z - position.z) * cos(ang) + (temp_corners.lr.y - position.y) * sin(ang);
-		position_corners.ul.z = position.z + (temp_corners.ul.z - position.z) * cos(ang) + (temp_corners.ul.y - position.y) * sin(ang);
-		position_corners.ur.z = position.z + (temp_corners.ur.z - position.z) * cos(ang) + (temp_corners.ur.y - position.y) * sin(ang);
+		position_corners.ll.z = pos.z + (temp_corners.ll.z - pos.z) * cos(ang) + (temp_corners.ll.y - pos.y) * sin(ang);
+		position_corners.lr.z = pos.z + (temp_corners.lr.z - pos.z) * cos(ang) + (temp_corners.lr.y - pos.y) * sin(ang);
+		position_corners.ul.z = pos.z + (temp_corners.ul.z - pos.z) * cos(ang) + (temp_corners.ul.y - pos.y) * sin(ang);
+		position_corners.ur.z = pos.z + (temp_corners.ur.z - pos.z) * cos(ang) + (temp_corners.ur.y - pos.y) * sin(ang);
 
 		break;
 
 	case 'y':
-		position_corners.ll.x = position.x + (temp_corners.ll.x - position.x) * cos(ang) + (temp_corners.ll.z - position.z) * sin(ang);
-		position_corners.lr.x = position.x + (temp_corners.lr.x - position.x) * cos(ang) + (temp_corners.lr.z - position.z) * sin(ang);
-		position_corners.ul.x = position.x + (temp_corners.ul.x - position.x) * cos(ang) + (temp_corners.ul.z - position.z) * sin(ang);
-		position_corners.ur.x = position.x + (temp_corners.ur.x - position.x) * cos(ang) + (temp_corners.ur.z - position.z) * sin(ang);
+		position_corners.ll.x = pos.x + (temp_corners.ll.x - pos.x) * cos(ang) + (temp_corners.ll.z - pos.z) * sin(ang);
+		position_corners.lr.x = pos.x + (temp_corners.lr.x - pos.x) * cos(ang) + (temp_corners.lr.z - pos.z) * sin(ang);
+		position_corners.ul.x = pos.x + (temp_corners.ul.x - pos.x) * cos(ang) + (temp_corners.ul.z - pos.z) * sin(ang);
+		position_corners.ur.x = pos.x + (temp_corners.ur.x - pos.x) * cos(ang) + (temp_corners.ur.z - pos.z) * sin(ang);
 
-		position_corners.ll.z = position.z + (temp_corners.ll.z - position.z) * cos(ang) - (temp_corners.ll.x - position.x) * sin(ang);
-		position_corners.lr.z = position.z + (temp_corners.lr.z - position.z) * cos(ang) - (temp_corners.lr.x - position.x) * sin(ang);
-		position_corners.ul.z = position.z + (temp_corners.ul.z - position.z) * cos(ang) - (temp_corners.ul.x - position.x) * sin(ang);
-		position_corners.ur.z = position.z + (temp_corners.ur.z - position.z) * cos(ang) - (temp_corners.ur.x - position.x) * sin(ang);
+		position_corners.ll.z = pos.z + (temp_corners.ll.z - pos.z) * cos(ang) - (temp_corners.ll.x - pos.x) * sin(ang);
+		position_corners.lr.z = pos.z + (temp_corners.lr.z - pos.z) * cos(ang) - (temp_corners.lr.x - pos.x) * sin(ang);
+		position_corners.ul.z = pos.z + (temp_corners.ul.z - pos.z) * cos(ang) - (temp_corners.ul.x - pos.x) * sin(ang);
+		position_corners.ur.z = pos.z + (temp_corners.ur.z - pos.z) * cos(ang) - (temp_corners.ur.x - pos.x) * sin(ang);
 
 		break;
 
 	case 'z':
-		position_corners.ll.x = position.x + (temp_corners.ll.x - position.x) * cos(ang) - (temp_corners.ll.y - position.y) * sin(ang);
-		position_corners.lr.x = position.x + (temp_corners.lr.x - position.x) * cos(ang) - (temp_corners.lr.y - position.y) * sin(ang);
-		position_corners.ul.x = position.x + (temp_corners.ul.x - position.x) * cos(ang) - (temp_corners.ul.y - position.y) * sin(ang);
-		position_corners.ur.x = position.x + (temp_corners.ur.x - position.x) * cos(ang) - (temp_corners.ur.y - position.y) * sin(ang);
+		position_corners.ll.x = pos.x + (temp_corners.ll.x - pos.x) * cos(ang) - (temp_corners.ll.y - pos.y) * sin(ang);
+		position_corners.lr.x = pos.x + (temp_corners.lr.x - pos.x) * cos(ang) - (temp_corners.lr.y - pos.y) * sin(ang);
+		position_corners.ul.x = pos.x + (temp_corners.ul.x - pos.x) * cos(ang) - (temp_corners.ul.y - pos.y) * sin(ang);
+		position_corners.ur.x = pos.x + (temp_corners.ur.x - pos.x) * cos(ang) - (temp_corners.ur.y - pos.y) * sin(ang);
 
-		position_corners.ll.y = position.y + (temp_corners.ll.x - position.x) * sin(ang) + (temp_corners.ll.y - position.y) * cos(ang);
-		position_corners.lr.y = position.y + (temp_corners.lr.x - position.x) * sin(ang) + (temp_corners.lr.y - position.y) * cos(ang);
-		position_corners.ul.y = position.y + (temp_corners.ul.x - position.x) * sin(ang) + (temp_corners.ul.y - position.y) * cos(ang);
-		position_corners.ur.y = position.y + (temp_corners.ur.x - position.x) * sin(ang) + (temp_corners.ur.y - position.y) * cos(ang);
+		position_corners.ll.y = pos.y + (temp_corners.ll.x - pos.x) * sin(ang) + (temp_corners.ll.y - pos.y) * cos(ang);
+		position_corners.lr.y = pos.y + (temp_corners.lr.x - pos.x) * sin(ang) + (temp_corners.lr.y - pos.y) * cos(ang);
+		position_corners.ul.y = pos.y + (temp_corners.ul.x - pos.x) * sin(ang) + (temp_corners.ul.y - pos.y) * cos(ang);
+		position_corners.ur.y = pos.y + (temp_corners.ur.x - pos.x) * sin(ang) + (temp_corners.ur.y - pos.y) * cos(ang);
 
 		break;
 
@@ -158,8 +167,6 @@ void Plane::rotate(const char axis, const float angle)
 		std::cout << "No rotation defined for the selected axis." << std::endl << std::endl;
 		break;
 	}
-
-	//std::cout << "Plane '" << getName() << "' rotated " << angle << " degrees anticlockwise in the " << axis << " axis." << std::endl;
 }
 
 std::ostream& Plane::printCorners(std::ostream& out) const

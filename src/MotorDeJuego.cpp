@@ -12,7 +12,7 @@
 #include <cstdint>
 #include <chrono>
 
-#define TIEMPO_MS_MIN_MOVIMIENTO 1500
+#define TIEMPO_MS_MIN_MOVIMIENTO 150
 
 ///
 #include <iostream>
@@ -108,7 +108,7 @@ void MotorDeJuego::pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_mot
 							lista_mover->moverElemento(Movimiento(Posicion(), puedeMover)); // Seleccion de movimento 
 							if (ultima_jugada.inicio == puedeMover || ultima_jugada.fin == puedeMover)
 								lista_jugada->moverElemento(Movimiento(puedeMover, Posicion()));
-							if (tipo == Pieza::tipo_t::REY && (((puedeMover == Posicion(6, 0) || puedeMover == Posicion(2, 0)) && color) || ((puedeMover == Posicion(6, 7) || puedeMover == Posicion(2, 7)) && !color)))
+							if (tipo == Pieza::tipo_t::REY && (abs(puedeMover.x - posicion.x) > 1))
 							{
 								lista_mover->moverElemento(Movimiento(puedeMover, Posicion()));
 								lista_coronacion->moverElemento(Movimiento(Posicion(), puedeMover));
@@ -181,7 +181,7 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 	// Pintar tablero
 	p_mundoGrafico->resetCasillas();
 	p_mundoGrafico->leerTablero(&tablero);
-	p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, TIMEPO_ROTACION_CAMARA, config);
+	p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, config);
 	
 	DatosFinal datosFinal;
 	long long int t0 = getTimeSinceEpoch(); // Tomar timepo para el primer movimiento
@@ -206,7 +206,6 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 			
 			// Pintar tablero
 			p_mundoGrafico->leerTablero(&tablero);
-			comprobarCasillasJaque(p_mundoGrafico);
 
 			// Comprobar finales
 			if (tablero.jaqueMate())
@@ -221,13 +220,14 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 				datosFinal = DatosFinal{ CodigoFinal::TABLAS_POR_PASIVIDAD, true };
 
 			// Rotar camara
-			p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, TIMEPO_ROTACION_CAMARA, config);
+			p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, config);
 		}
 		
 		// Pintar ultimo movimiento
 		p_mundoGrafico->resetCasillas(p_mundoGrafico->getCasillaUltimoMov());
 		p_mundoGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), tablero.ultimaJugada.inicio));
 		p_mundoGrafico->getCasillaUltimoMov()->moverElemento(Movimiento(Posicion(), tablero.ultimaJugada.fin));
+		p_mundoGrafico->comprobarCasillasJaque(&tablero);
 	}
 
 	return datosFinal;
@@ -266,35 +266,4 @@ Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion) const
 	}
 
 	return Movimiento(posicion, Posicion()); 
-}
-
-void MotorDeJuego::comprobarCasillasJaque(Mundo* p_motorGrafico)
-{
-	p_motorGrafico->resetCasillas(p_motorGrafico->getCasillaJaque());
-	if (&tablero != nullptr)
-	{
-		//p_motorGrafico->getTableroJaqueMate()->copiar(tablero);
-
-		for (int i = 0; i < 64; i++)
-		{
-			Pieza* pieza_leida = tablero.leer(Posicion(i % 8, i / 8));
-			ListaModelo* lista_jaque = p_motorGrafico->getCasillaJaque();
-
-			if (pieza_leida != nullptr)
-			{
-				Pieza::tipo_t tipo = pieza_leida->getTipo();
-				Posicion posicion = pieza_leida->getPosicion();
-
-				if (tipo == Pieza::tipo_t::REY && pieza_leida->getAmenazas().size() > 0) // Jaque
-				{
-					lista_jaque->moverElemento(Movimiento(Posicion(), posicion));
-					if (tablero.jaqueMate()) // Jaque Mate
-					{
-						for (int i = 0; i < pieza_leida->getAmenazas().size(); i++)
-							lista_jaque->moverElemento(Movimiento(Posicion(), pieza_leida->getAmenazas()[i]->getPosicion()));
-					}
-				}
-			}
-		}
-	}
 }

@@ -66,7 +66,7 @@ public:
 	void SpecialKeypress(int key);
 	void Click(int button, int state, int x, int y);
 
-	void renderPantallaFinal(const std::string& filepath);
+	void renderPantallaTransparente(const std::string& filepath, const Point& pos = { 0, 32.5, 1 }, float rot_x = Camara::phi - 15, float rot_y = -90.0f, float rot_z = 180.0f);
 };
 
 void threadMotor(bool* p_stop, Mundo* p_motorGrafico, const ConfiguracionDeJuego* p_config, Partida* p_partida, ElementoRed* p_elementoRed, DatosFinal* p_datosFinal);

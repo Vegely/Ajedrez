@@ -59,7 +59,8 @@ public:
 
 	/* SETTERS */
 	void setDims(const float x, const float y);
-	void rotate(const char axis, const float angle);
+	void setPosition(const Point& pos) override;
+	void rotate(const char axis, const float angle, const Point& pos);
 
 	/* PRINTERS */
 	std::ostream& printCorners(std::ostream& out = std::cout) const;

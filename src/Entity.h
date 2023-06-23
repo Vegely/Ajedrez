@@ -23,7 +23,7 @@ public:
 	Point getPosition(void) const { return this->position; }
 
 	/* SETTERS */
-	void setPosition(const Point& pos) { this->position = pos; }
+	virtual void setPosition(const Point& pos) { this->position = pos; }
 
 	/* DESTRUCTOR */
 	virtual ~Entity(void) { }

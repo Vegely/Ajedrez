@@ -35,7 +35,7 @@ Mundo::Mundo(void) :
 	marcos(4),
 	letras(),
 	fondoA(),
-	fondoB(),
+	fondo(),
 	camara(Camara::white_pov),
 	peon(),
 	alfil(),
@@ -127,7 +127,7 @@ void Mundo::asignarModelos(void)
 	casillas_negras  = new Modelo(NONE, Point::zero, ruta_modelo_casillas_negras,  ruta_textura_negro_claro);
 	letras			 = new Modelo(NONE, Point::zero, ruta_modelo_letras,		   ruta_textura_letras);
 	fondoA			 = new Modelo(NONE, Point::zero, ruta_modelo_fondo,			   ruta_textura_fondo);	
-	fondoB			 = new Modelo(NONE, Point::zero, ruta_modelo_fondo,			   ruta_textura_fondo);	
+	fondo			 = new Modelo(NONE, Point::zero, ruta_modelo_fondo,			   ruta_textura_fondo);	
 
 	rey_blanco.addElem(new Modelo(REY, Posicion(), &modelo_rey_blanco, true));
 	rey_negro .addElem(new Modelo(REY, Posicion(), &modelo_rey_negro,  false));
@@ -166,11 +166,12 @@ void Mundo::cargarTexturas(void)
 	casillas_negras	->cargarTextura();
 	letras			->cargarTextura();
 	fondoA			->cargarTextura();
-	fondoB			->cargarTextura();
+	fondo			->cargarTextura();
 }
 
 void Mundo::renderizarModelos(void)
 {
+	glEnable(GL_LIGHTING);
 	if (!coronando_blancas && !coronando_negras)
 	{
 		rey_blanco			  .renderModelos();
@@ -201,14 +202,9 @@ void Mundo::renderizarModelos(void)
 	casillas_negras ->render();
 	letras->render();
 	marcos.renderConRotacion();
+	renderizarFondo();
 
-	//glScalef(4, 4, 4);
-	glRotatef(90, 0, 0, 1);
-	glRotatef(Camara::phi * 2, 1, 0, 0);
-	fondoB->render();
-	glRotatef(-Camara::phi * 2, 1, 0, 0);
-	glRotatef(-90, 0, 0, 1);
-	//glScalef(0.25f, 0.25f, 0.25f);
+	glDisable(GL_LIGHTING);
 }
 
 void Mundo::seleccionCasilla(int button, int state, int x_mouse, int y_mouse)
@@ -254,6 +250,36 @@ void Mundo::moverModelos(const Movimiento& mov)
 		torres_negras   .moverModelos(mov);
 		peones_blancos  .moverModelos(mov);
 		peones_negros   .moverModelos(mov);
+	}
+}
+
+void Mundo::comprobarCasillasJaque(Tablero* tablero)
+{
+	this->resetCasillas(this->getCasillaJaque());
+	if (tablero != nullptr)
+	{
+		for (int i = 0; i < 64; i++)
+		{
+			Pieza* pieza_leida = tablero->leer(Posicion(i % 8, i / 8));
+			ListaModelo* lista_jaque = this->getCasillaJaque();
+
+			if (pieza_leida != nullptr)
+			{
+				Pieza::tipo_t tipo = pieza_leida->getTipo();
+				Posicion posicion = pieza_leida->getPosicion();
+
+				if (tipo == Pieza::tipo_t::REY && pieza_leida->getAmenazas().size() > 0) // Jaque
+				{
+					lista_jaque->moverElemento(Movimiento(Posicion(), posicion));
+					if (tablero->jaqueMate()) // Jaque Mate
+					{
+						this->casillas_ultimo_mov.moverElemento(Movimiento(this->posicion_leida, Posicion()));
+						for (int i = 0; i < pieza_leida->getAmenazas().size(); i++)
+							lista_jaque->moverElemento(Movimiento(Posicion(), pieza_leida->getAmenazas()[i]->getPosicion()));
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -386,12 +412,22 @@ bool Mundo::getColorFromCoords(const Posicion& pos) const
 	else return false;
 }
 
-void Mundo::actualizarCamara(bool turno, float time, const ConfiguracionDeJuego& config)
+void Mundo::actualizarCamara(bool turno, const ConfiguracionDeJuego& config)
 {
-	ConfiguracionDeJuego::FormasDeInteraccion local = ConfiguracionDeJuego::FormasDeInteraccion::LOCAL;
-	ConfiguracionDeJuego::FormasDeInteraccion ia = ConfiguracionDeJuego::FormasDeInteraccion::IA;
-	ConfiguracionDeJuego::FormasDeInteraccion emisor = ConfiguracionDeJuego::FormasDeInteraccion::EMISOR;
+	ConfiguracionDeJuego::FormasDeInteraccion local    = ConfiguracionDeJuego::FormasDeInteraccion::LOCAL;
+	ConfiguracionDeJuego::FormasDeInteraccion ia       = ConfiguracionDeJuego::FormasDeInteraccion::IA;
+	ConfiguracionDeJuego::FormasDeInteraccion emisor   = ConfiguracionDeJuego::FormasDeInteraccion::EMISOR;
 	ConfiguracionDeJuego::FormasDeInteraccion receptor = ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR;
+
+	if (config[0] == ia && config[1] == ia)
+	{
+		camara.desactivarMovimiento();
+		camara.setAngSpeed(0.0f);
+		camara.setAngle(M_PI);
+		return;
+	}
+	else
+		camara.activarMovimiento();
 
 	if (config[0] == local && config[1] == local)
 	{
@@ -410,11 +446,6 @@ void Mundo::actualizarCamara(bool turno, float time, const ConfiguracionDeJuego&
 		if (!this->getGirado())
 			this->cambiarGirado();
 	}
-	else if (config[0] == ia && config[1] == ia)
-	{
-		camara.setPosition(Point{ Camara::radius, Camara::height, Camara::radius });
-		return;
-	}
 	else if (config[0] == emisor)
 	{
 		if (this->getGirado())
@@ -427,8 +458,6 @@ void Mundo::actualizarCamara(bool turno, float time, const ConfiguracionDeJuego&
 			this->cambiarGirado();
 		camara.setAngle(-M_PI_2);
 	}
-
-	camara.movement(time);
 }
 
 void Mundo::resetCasillas(void)
@@ -507,4 +536,15 @@ void Mundo::antisolapamientoCasillas(const Tablero& tablero)
 		if (erase)
 			this->getCasillaUltimoMov()->moverElemento(Movimiento(pos, Posicion()));
 	}
+}
+
+void Mundo::renderizarFondo(void)
+{
+	glRotatef(-camara.getAngle() * 180.0f / M_PI, 0, 1, 0);
+	glScalef(4, 4, 4);
+	glRotatef(-90, 1, 0, 0);
+	fondo->render();
+	glRotatef(90, 1, 0, 0);
+	glScalef(0.25f, 0.25f, 0.25f);
+	glRotatef(camara.getAngle() * 180.0f / M_PI, 0, 1, 0);
 }

@@ -200,7 +200,7 @@ private:
 	Modelo* casillas_negras;
 	Modelo* letras;
 	Modelo* fondoA;
-	Modelo* fondoB;
+	Modelo* fondo;
 
 	ListaModelo casillas_seleccionadas;
 	ListaModelo casillas_comibles;
@@ -281,7 +281,7 @@ public:
 	/* CALLBACKS */
 	void movimiento	     (const float time);
 	void seleccionCasilla(int button, int state, int x_mouse, int y_mouse);
-	void actualizarCamara(bool turno, float time, const ConfiguracionDeJuego& config);
+	void actualizarCamara(bool turno, const ConfiguracionDeJuego& config);
 
 	/* GESTIÓN DE MODELOS */
 	void resetCasillas   (void);
@@ -289,9 +289,12 @@ public:
 	void resetCasillas(ListaModelo* lista);
 	void leerTablero  (Tablero* tablero);
 	void moverModelos (const Movimiento& mov);
+
+	void comprobarCasillasJaque(Tablero* tablero);
 	void antisolapamientoCasillas(const Tablero& tablero);
+
 	void renderizarModelos(void);
-	//void dibujarFondo(void);
+	void renderizarFondo  (void);
 };
 
 #endif // !MUNDO_H

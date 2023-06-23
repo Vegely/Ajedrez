@@ -16,6 +16,7 @@ private:
 	float    ang_acc;
 	bool     girado;
 	Rotation rotation;
+	bool     activar_movimiento = true;
 
 public:
 	/* CONSTRUCTOR */
@@ -33,12 +34,14 @@ public:
 	bool   getGirado  (void) const { return this->girado; }
 
 	/* SETTERS */
-	void setPosition    (const Point pt)  { this->position = pt;}
+	void setPosition    (const Point& pt) { this->position = pt;}
 	void setAngle		(const float f)   { this->angle = f; }
 	void setAngSpeed	(const float sp)  { this->ang_speed = sp; }
 	void setAcceleration(const Point& ac) { this->acceleration = ac; }
 	void setLookAt		(const Point& pt) { this->look_at = pt; }
 	void cambiarGirado	(void)			  { this->girado = !this->girado; }
+	void desactivarMovimiento(void)       { this->activar_movimiento = false; }
+	void activarMovimiento   (void)		  { this->activar_movimiento = true; }
 
 	/* MOVIMIENTO */
 	void movement(float time);

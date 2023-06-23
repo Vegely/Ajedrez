@@ -106,38 +106,38 @@ void CoordinadorAjedrez::Draw(void)
 				{
 					//ETSIDI::setTextColor(255, 0, 0);
 					//ETSIDI::printxy("JAQUE MATE BLANCO", 15 * mod, 0);
-					renderPantallaFinal(RUTA_JAQUE_MATE_BLANCAS);
+					renderPantallaTransparente(RUTA_JAQUE_MATE_BLANCAS);
 				}
 				else
 				{
 					//ETSIDI::setTextColor(255, 0, 0);
 					//ETSIDI::printxy("JAQUE MATE NEGRAS", 15 * mod, 0);
-					renderPantallaFinal(RUTA_JAQUE_MATE_NEGRAS);
+					renderPantallaTransparente(RUTA_JAQUE_MATE_NEGRAS);
 				}
 				break;
 
 			case CodigoFinal::REY_AHOGADO:
 				//ETSIDI::setTextColor(255, 0, 0);
 				//ETSIDI::printxy("REY AHOGADO", 15 * mod, 0);
-				renderPantallaFinal(RUTA_REY_AHOGADO);
+				renderPantallaTransparente(RUTA_REY_AHOGADO);
 				break;
 
 			case CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE:
 				//ETSIDI::setTextColor(255, 0, 0);
 				//ETSIDI::printxy("TABLAS POR MATERIAL INSUFICIENTE", 15 * mod, 0);
-				renderPantallaFinal(RUTA_MATERIAL_INSUFICIENTE);
+				renderPantallaTransparente(RUTA_MATERIAL_INSUFICIENTE);
 				break;
 
 			case CodigoFinal::TABLAS_POR_REPETICION:
 				//ETSIDI::setTextColor(255, 0, 0);
 				//ETSIDI::printxy("TABLAS POR REPETICION", 15 * mod, 0);
-				renderPantallaFinal(RUTA_REPETICION);
+				renderPantallaTransparente(RUTA_REPETICION);
 				break;
 
 			case CodigoFinal::TABLAS_POR_PASIVIDAD:
 				//ETSIDI::setTextColor(255, 0, 0);
 				//ETSIDI::printxy("TABLAS POR PASIVIDAD", 15 * mod, 0);
-				renderPantallaFinal(RUTA_PASIVIDAD);
+				renderPantallaTransparente(RUTA_PASIVIDAD);
 				break;
 			}
 		}
@@ -186,8 +186,11 @@ void CoordinadorAjedrez::Draw(void)
 
 	else if (estado == PAUSA)
 	{
-		pantallaPausa.dibuja();
-		parametrosTexturasMEstados();
+		mundoGrafico.updateCamara();
+		mundoGrafico.renderizarModelos();
+		if (config[0] == ConfiguracionDeJuego::FormasDeInteraccion::IA && config[1] == config[0]) glRotatef(90, 0, 1, 0);
+			renderPantallaTransparente(RUTA_PAUSA);
+		if (config[0] == ConfiguracionDeJuego::FormasDeInteraccion::IA && config[1] == config[0]) glRotatef(-90, 0, 1, 0);
 	}
 
 	else if (estado == SERVIDOR)
@@ -577,25 +580,20 @@ void parametrosTexturasMEstados()
 	glDisable(GL_TEXTURE_2D);
 }
 
-void CoordinadorAjedrez::renderPantallaFinal(const std::string& filepath)
+void CoordinadorAjedrez::renderPantallaTransparente(const std::string& filepath, const Point& pos, float rot_x, float rot_y, float rot_z)
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture(filepath.c_str()).id);
 
 	Plane screen(10.8f * 2.0f, 19.2f * 2.0f, Point::zero, "Plane");
-	float phi_cam = atanf(abs(mundoGrafico.getCamaraPos().y) / abs(mundoGrafico.getCamaraPos().z)) * 180.0f / M_PI;
-	screen.setPosition(Point{ 0, 12, 0 });
-	screen.rotate('y', -90);
-	screen.rotate('x', phi_cam);
-	screen.rotate('z', 180);
+	screen.rotate('y', rot_y, screen.getPosition());
+	screen.rotate('z', rot_z, screen.getPosition());
+	screen.setPosition(pos);
+	screen.rotate('x', -rot_x, Point::zero);
+
 	if (!mundoGrafico.getGirado())
-	{
-		Point previous_pos = screen.getPosition();
-		screen.setPosition(Point::zero);
-		screen.rotate('y', 180);
-		screen.setPosition(previous_pos);
-	}
+		screen.rotate('y', 180, Point::zero);
 
 	glEnable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);

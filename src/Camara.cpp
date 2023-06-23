@@ -2,7 +2,7 @@
 #include "Camara.h"
 #include <cmath>
 
-constexpr int SPEED = 50;
+constexpr int SPEED = 300;
 
 Camara::Camara(const Point& position) :
 	position(position),
@@ -20,24 +20,27 @@ Camara::Camara(const Point& position) :
 
 void Camara::movement(float time)
 {
-	if (!girado)
+	if (activar_movimiento)
 	{
-		if (this->angle + (SPEED * time) < (M_PI_2))
-			this->setAngSpeed(SPEED);
-		else
+		if (!girado)
 		{
-			this->setAngSpeed(0.0f);
-			this->setAngle(M_PI_2);
+			if (this->angle + (SPEED * time) < (M_PI_2))
+				this->setAngSpeed(SPEED);
+			else
+			{
+				this->setAngSpeed(0.0f);
+				this->setAngle(M_PI_2);
+			}
 		}
-	}
-	if (girado)
-	{
-		if (this->angle + (-SPEED * time) > (-M_PI_2))
-			this->setAngSpeed(-SPEED);
-		else
+		if (girado)
 		{
-			this->setAngSpeed(0.0f);
-			this->setAngle(-M_PI_2);
+			if (this->angle + (-SPEED * time) > (-M_PI_2))
+				this->setAngSpeed(-SPEED);
+			else
+			{
+				this->setAngSpeed(0.0f);
+				this->setAngle(-M_PI_2);
+			}
 		}
 	}
 }
@@ -93,7 +96,7 @@ void Camara::update(void)
 
 float Camara::radius = 15.6f;
 float Camara::height = 20.5f;
-float Camara::phi = atanf(Camara::height / Camara::radius) * M_PI / 180.0f;
+float Camara::phi = atanf(Camara::height / Camara::radius) * 180.0f / M_PI;
 Point Camara::white_pov = Point{ 0.0f, Camara::height, -Camara::radius };
 Point Camara::black_pov = Point{ 0.0f, Camara::height,  Camara::radius };
 

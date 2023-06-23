@@ -36,7 +36,7 @@ struct ModeloBase
 	const aiScene* scene;
 	Assimp::Importer importer;
 
-	~ModeloBase(void) { delete scene; }
+	~ModeloBase(void) { }
 	void cargarModelo(std::string path);
 
 	ModeloBase& operator = (const ModeloBase& rhs) { this->scene = rhs.scene; }
@@ -48,7 +48,7 @@ struct ModeloTexturizado
 	Textura textura;
 
 	ModeloTexturizado(std::string path) : modelo(new ModeloBase()), textura(path) {}
-	~ModeloTexturizado(void) { delete modelo; }
+	~ModeloTexturizado(void) { }
 	void cargarTextura(ModeloBase* modelo_base);
 };
 
