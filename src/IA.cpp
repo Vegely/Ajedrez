@@ -65,7 +65,7 @@ double IA::evaluacion(const Tablero& tablero)  //Valor negativo ventaja negras v
 	return COEFF_DIFERENCIA_MATERIAL * valorTablero + COEFF_AMENAZAS_PELIGROSAS * amenazaPeligrosaReturn + COEFF_AMENAZAS_POCO_PELIGROSAS * amenazaPocoPeligrosaReturn;
 }
 
-MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad, bool coloraMaximizar, eval_t alfa, eval_t beta)
+MovimientoEvaluado IA::minimax(MotorDeJuego& motor, const Tablero& tablero, unsigned char profundidad, bool coloraMaximizar, eval_t alfa, eval_t beta)
 {
 	if (profundidad == 0 || tablero.jaqueMate() || tablero.reyAhogado() || tablero.tablasMaterialInsuficiente() || tablero.infoTablas.tablasPorRepeticion() || tablero.infoTablas.tablasPorPasividad())
 		return MovimientoEvaluado(evaluacion(tablero));
@@ -80,9 +80,9 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			 for (Posicion posicion : p_pieza->getPuedeMover())
 			 {
 				Tablero aux = Tablero::copiar(tablero);
-				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), posicion), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
+				aux.hacerJugada(motor, Movimiento(p_pieza->getPosicion(), posicion), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
 
-				MovimientoEvaluado eval(0); eval = minimax(aux, profundidad - 1, false, alfa, beta);
+				MovimientoEvaluado eval(0); eval = minimax(motor, aux, profundidad - 1, false, alfa, beta);
 				aux.liberar();
 
 				if (eval.eval >= maxEval.eval) // Guarda los movimientos de maximo valor en la ultima vuelta antes de salir
@@ -105,9 +105,9 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			if (!exit) for (Pieza* p_piezaComida : p_pieza->getPuedeComer())
 			{
 				Tablero aux = Tablero::copiar(tablero);
-				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
+				aux.hacerJugada(motor, Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
 
-				MovimientoEvaluado eval = minimax(aux, profundidad - 1, false, alfa, beta);
+				MovimientoEvaluado eval = minimax(motor, aux, profundidad - 1, false, alfa, beta);
 				aux.liberar();
 
 				if (eval.eval >= maxEval.eval) // Guarda los movimientos de maximo valor en la ultima vuelta antes de salir
@@ -140,9 +140,9 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			for (Posicion posicion : p_pieza->getPuedeMover())
 			{
 				Tablero aux = Tablero::copiar(tablero);
-				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), posicion), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
+				aux.hacerJugada(motor, Movimiento(p_pieza->getPosicion(), posicion), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
 
-				MovimientoEvaluado eval = minimax(aux, profundidad - 1, true, alfa, beta);
+				MovimientoEvaluado eval = minimax(motor, aux, profundidad - 1, true, alfa, beta);
 				aux.liberar();
 
 				if (eval.eval <= minEval.eval) // Guarda los movimientos de maximo valor en la ultima vuelta antes de salir
@@ -163,9 +163,9 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 			if (!exit) for (Pieza* p_piezaComida : p_pieza->getPuedeComer())
 			{
 				Tablero aux = Tablero::copiar(tablero);
-				aux.hacerJugada(Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
+				aux.hacerJugada(motor, Movimiento(p_pieza->getPosicion(), p_piezaComida->getPosicion()), ConfiguracionDeJuego::FormasDeInteraccion::IA, nullptr);
 
-				MovimientoEvaluado eval = minimax(aux, profundidad - 1, true, alfa, beta);
+				MovimientoEvaluado eval = minimax(motor, aux, profundidad - 1, true, alfa, beta);
 				aux.liberar();
 
 				if (eval.eval <= minEval.eval) // Guarda los movimientos de maximo valor en la ultima vuelta antes de salir
@@ -189,14 +189,14 @@ MovimientoEvaluado IA::minimax(const Tablero& tablero, unsigned char profundidad
 	}
 }
 
-Movimiento IA::mover(const Tablero& tablero)
+Movimiento IA::mover(MotorDeJuego& motor)
 {
-	MovimientoEvaluado movimientoEvaluado = minimax(tablero, PROFUNDIDAD_IA, tablero.colorDelTurno);
+	MovimientoEvaluado movimientoEvaluado = minimax(motor, motor.tablero, PROFUNDIDAD_IA, motor.tablero.colorDelTurno);
 
 	return movimientoEvaluado.movimiento.at(rand() % movimientoEvaluado.movimiento.size());
 }
 
-Pieza::tipo_t IA::coronar(const Tablero& tablero, const Movimiento& movimiento)
+Pieza::tipo_t IA::coronar(MotorDeJuego& motor, const Tablero& tablero, const Movimiento& movimiento)
 {
 	std::vector<Pieza::tipo_t> tiposBuenos;
 	eval_t eval((1 - 2 * tablero.colorDelTurno) * MAX_EVAL_T);
@@ -215,7 +215,7 @@ Pieza::tipo_t IA::coronar(const Tablero& tablero, const Movimiento& movimiento)
 		aux.ultimaJugada = movimiento;
 		aux.mover(movimiento);
 
-		MovimientoEvaluado movimientoEvaluado = minimax(aux, PROFUNDIDAD_IA, aux.colorDelTurno);
+		MovimientoEvaluado movimientoEvaluado = minimax(motor, aux, PROFUNDIDAD_IA, aux.colorDelTurno);
 
 		if ((tablero.colorDelTurno && movimientoEvaluado.eval > eval) || (!tablero.colorDelTurno && movimientoEvaluado.eval < eval))
 		{

@@ -22,7 +22,7 @@ private:
     Socket* sck = nullptr;
 
     //Guarda la dirección ip del host
-    std::string ipv4 = "127.0.0.1";//"192.168.0.21";
+    std::string ipv4 = ""; // Para jugar en el mismo ordenador: 127.0.0.1
 public:
     //Constructor:
     // - Inicialización por defecto

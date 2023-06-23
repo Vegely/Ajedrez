@@ -32,6 +32,8 @@ class MotorDeJuego
 	Movimiento ensamblarMovimiento(Posicion posicion) const;
 
 public:
+	friend class IA;
+
 	MotorDeJuego(const ConfiguracionDeJuego* config, Partida* partida, ElementoRed* elementoRed) : config(*config), tablero(Tablero(true)), fichero_partida(*partida), elementoRed(*elementoRed) { /*pintar();*/ }
 
 	//Tablero* getTablero(void) { return &this->tablero; }
@@ -39,7 +41,7 @@ public:
 	void pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_motorGrafico) const;
 	void comprobarCasillasJaque(Mundo* motorGrafico);
 
-	static Pieza::tipo_t seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico);
+	static Pieza::tipo_t seleccionarEntradaCoronar(MotorDeJuego& motor, const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico, bool& run, bool guardarCoronacion);
 
 	//void setExit(bool exit) { this->exit = exit; }
 

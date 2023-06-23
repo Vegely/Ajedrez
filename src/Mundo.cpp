@@ -317,39 +317,37 @@ ListaModelo* Mundo::seleccionarLista(bool color, Pieza::tipo_t tipo_pieza)
 
 Pieza::tipo_t Mundo::seleccionPiezaCoronacion(bool color)
 {
-	if (color) this->coronando_blancas = true;
-	else	   this->coronando_negras  = true;
+	if (!this->coronando_blancas && !this->coronando_negras)
+		if (color) this->coronando_blancas = true;
+		else	   this->coronando_negras  = true;
 
-	Posicion& posicion = this->posicion_leida;
-	while (posicion.y != 3 || posicion.y != 4 || posicion.x != 2 || posicion.x != 3 || posicion.x != 4 || posicion.x != 5)
+	if ((this->posicion_leida.y == 3 && color) || (this->posicion_leida.y == 4 && !color))
 	{
-		if ((posicion.y == 3 && color) || (posicion.y == 4 && !color))
+		switch (this->posicion_leida.x)
 		{
-			switch (posicion.x)
-			{
-			case 2:
-				this->coronando_blancas = false;
-				this->coronando_negras  = false;
-				return Pieza::tipo_t::ALFIL;
-				break;
-			case 3:
-				this->coronando_blancas = false;
-				this->coronando_negras  = false;
-				return Pieza::tipo_t::TORRE;
-				break;
-			case 4:
-				this->coronando_blancas = false;
-				this->coronando_negras  = false;
-				return Pieza::tipo_t::DAMA;
-				break;
-			case 5:
-				this->coronando_blancas = false;
-				this->coronando_negras  = false;
-				return Pieza::tipo_t::CABALLO;
-				break;
-			}
+		case 2:
+			this->coronando_blancas = false;
+			this->coronando_negras = false;
+			return Pieza::tipo_t::ALFIL;
+			break;
+		case 3:
+			this->coronando_blancas = false;
+			this->coronando_negras = false;
+			return Pieza::tipo_t::TORRE;
+			break;
+		case 4:
+			this->coronando_blancas = false;
+			this->coronando_negras = false;
+			return Pieza::tipo_t::DAMA;
+			break;
+		case 5:
+			this->coronando_blancas = false;
+			this->coronando_negras = false;
+			return Pieza::tipo_t::CABALLO;
+			break;
 		}
 	}
+	else return Pieza::tipo_t::NULA;
 }
 
 Pieza::tipo_t Mundo::getTipoFromCoords(const Posicion& pos) const
