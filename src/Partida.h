@@ -6,7 +6,6 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <deque>
 #include "Movimiento.h"
 
 const std::string CARPETA_FINALIZADAS = "finalizadas/";
@@ -30,27 +29,25 @@ private:
 	std::string modo;
 	std::string blancas;
 	std::string negras;
-	std::deque<Movimiento> movimientosEntrada;
-	std::vector<Movimiento> movimientosSalida;
-	std::deque<int> coronacionEntrada;
-	std::vector<int> coronacionSalida;
+	std::vector<Movimiento> movimientos;
+	std::vector<int> coronacion;
 
 public:
-	Partida() { reset(); cargarPartida(); }
+	Partida();
 
 	bool existe();
 	bool crearPartida();
 	bool guardarPartida();
 	bool cargarPartida();
 	bool partidaFinalizada() { return finalizada; };
-	void reset();
+	void reset() { nombre_partida = ""; finalizada = 0; modo = ""; blancas = ""; negras = ""; movimientos.clear(); coronacion.clear(); }
 
 	void setNombre(std::string nombre) { nombre_partida = nombre; };
 	void setModo(std::string modo) { this->modo = modo; };
 	void setBlancas(std::string blancas) { this->blancas = blancas; };
 	void setNegras(std::string negras) { this->negras = negras; };
 	void setFin(bool fin) { finalizada = fin; }
-	
+
 	friend void operator<<(std::ostream& o, const Partida& p);
 	friend void operator>>(std::istream& is, Partida& p);
 	friend class MotorDeJuego;
