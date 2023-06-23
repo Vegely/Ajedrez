@@ -12,6 +12,10 @@
 
 constexpr auto ANCHO_TABLERO = 8;
 
+static bool valorAux = true;
+
+class MotorDeJuego;
+
 class Tablero
 {
 	//Un tablero contiene todas las piezas
@@ -58,7 +62,7 @@ public:
 	}		
 
 	//Dadas dos posiciones mueve la pieza de la primera posicion a la segunda
-	bool hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico);
+	bool hacerJugada(MotorDeJuego& motor, const Movimiento& movimiento, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico, bool& run = valorAux, bool guardarCoronacion = false);
 
 	Movimiento getUltimaJugada() const { return ultimaJugada; }
 	bool getTurno(void) const { return colorDelTurno; }

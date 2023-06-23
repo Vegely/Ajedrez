@@ -203,7 +203,7 @@ void Tablero::mover(const Movimiento& movimiento) {
 	actualizarTablero();
 }
 
-bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico)
+bool Tablero::hacerJugada(MotorDeJuego& motor, const Movimiento& movimiento, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico, bool& run, bool guardarCoronacion)
 {
 	bool jugadaHecha = false;
 
@@ -277,7 +277,7 @@ bool Tablero::hacerJugada(const Movimiento& movimiento, const ConfiguracionDeJue
 		if (leer(movimiento.inicio)->getTipo() == Pieza::tipo_t::PEON && movimiento.fin.y % 7 == 0)
 		{
 			Pieza* p_peon = leer(movimiento.inicio);
-			coronar(movimiento.inicio, MotorDeJuego::seleccionarEntradaCoronar(movimiento, *this, interaccion, motorGrafico));
+			coronar(movimiento.inicio, MotorDeJuego::seleccionarEntradaCoronar(motor, movimiento, *this, interaccion, motorGrafico, run, guardarCoronacion));
 			delete p_peon;
 		}
 

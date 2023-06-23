@@ -37,8 +37,13 @@ Posicion getInput(Mundo* p_motorGrafico)
 Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool& run)
 {	
 	Movimiento movimiento = Movimiento();
-	if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::IA)
-		movimiento = IA::mover(tablero);
+	if (!fichero_partida.movimientosEntrada.empty()) 
+	{
+		movimiento = fichero_partida.movimientosEntrada.front();
+		fichero_partida.movimientosEntrada.pop_front();
+	}
+	else if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::IA)
+		movimiento = IA::mover(*this);
 	else
 	{
 		if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR)
@@ -178,8 +183,11 @@ uint64_t getTimeSinceEpoch()
 
 DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 {
-	// Pintar tablero
+	// Reset
+	//p_mundoGrafico->resetLectura();
 	p_mundoGrafico->resetCasillas();
+
+	// Pintar tablero
 	p_mundoGrafico->leerTablero(&tablero);
 	p_mundoGrafico->actualizarCamara(tablero.colorDelTurno, config);
 	
@@ -195,10 +203,10 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 
 		if (movimiento.fin == Posicion()) // Pintar seleccion de pieza
 			pintarSeleccionCasilla(movimiento.inicio, p_mundoGrafico);
-		else if (tablero.hacerJugada(movimiento, config[tablero.colorDelTurno], p_mundoGrafico)) // Se hace la jugada
+		else if (tablero.hacerJugada(*this, movimiento, config[tablero.colorDelTurno], p_mundoGrafico, run, true)) // Se hace la jugada
 		{
 			// Guardar el movimiento
-			fichero_partida.movimientos.push_back(tablero.ultimaJugada);
+			fichero_partida.movimientosSalida.push_back(tablero.ultimaJugada);
 
 			// Evitar que se mueva muy rapido
 			while (getTimeSinceEpoch() - t0 < TIEMPO_MS_MIN_MOVIMIENTO); // Evita hacer un movimiento en menos tiempo que TIEMPO_MIN_MOVIMIENTO
@@ -206,6 +214,9 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 			
 			// Pintar tablero
 			p_mundoGrafico->leerTablero(&tablero);
+
+			// Resetear la ultima posicion pulsada
+			p_mundoGrafico->resetLectura();
 
 			// Comprobar finales
 			if (tablero.jaqueMate())
@@ -233,17 +244,41 @@ DatosFinal MotorDeJuego::motor(Mundo* p_mundoGrafico, bool& run)
 	return datosFinal;
 }
 
-Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico)
+Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(MotorDeJuego& motor, const Movimiento& movimiento, const Tablero& tablero, const ConfiguracionDeJuego::FormasDeInteraccion& interaccion, Mundo* motorGrafico, bool& run, bool guardarCoronacion)
 {
-	switch (interaccion)
+	Pieza::tipo_t tipo = Pieza::tipo_t::NULA;
+	if (!motor.fichero_partida.coronacionEntrada.empty())
 	{
-	case ConfiguracionDeJuego::FormasDeInteraccion::LOCAL:
-		motorGrafico->resetLectura();
-		return motorGrafico->seleccionPiezaCoronacion(tablero.getTurno());
-
-	case ConfiguracionDeJuego::FormasDeInteraccion::IA:
-		return IA::coronar(tablero, movimiento);
+		tipo = (Pieza::tipo_t)motor.fichero_partida.coronacionEntrada.front();
+		motor.fichero_partida.coronacionEntrada.pop_front();
 	}
+	else if (interaccion == ConfiguracionDeJuego::FormasDeInteraccion::IA)
+		tipo = IA::coronar(motor, tablero, movimiento);
+	else
+	{
+		if (interaccion == ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR)
+		{
+			while (motor.elementoRed.recibido.empty() && run); // Esperar hasta que se reciba algo
+			tipo = (Pieza::tipo_t)stoi(motor.elementoRed.recibido);
+			motor.elementoRed.recibido.clear();
+		}
+		else
+		{
+			motorGrafico->resetLectura();
+			while (tipo == Pieza::tipo_t::NULA)
+			{
+				if (!run) return Pieza::tipo_t::DAMA;
+				tipo = motorGrafico->seleccionPiezaCoronacion(tablero.getTurno()); // Quitar el bucle interno
+			}
+
+			if (interaccion == ConfiguracionDeJuego::FormasDeInteraccion::EMISOR)
+				motor.elementoRed.enviar(movimiento.toString());
+		}
+	}
+
+	if (guardarCoronacion) motor.fichero_partida.coronacionSalida.push_back((int)tipo);
+
+	return tipo;
 }
 
 Movimiento MotorDeJuego::ensamblarMovimiento(Posicion posicion) const

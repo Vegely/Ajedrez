@@ -41,7 +41,7 @@ bool Partida::guardarPartida() {
 }
 
 bool Partida::cargarPartida() {
-	std::ifstream ifs(nombre_partida.c_str(), std::ios_base::out);
+	std::ifstream ifs("finalizadas/partida2.txt", std::ios_base::out);
 
 	if (!ifs.is_open()) {
 		std::cerr << "Error al cargar la partida. Saliendo..." << std::endl;
@@ -58,16 +58,15 @@ bool Partida::cargarPartida() {
 
 void Partida::reset()
 {
-	nombre_partida = ""; 
+	nombre_partida = "";
 	finalizada = 0;
 	modo = "";
 	blancas = "";
 	negras = "";
-	for (int i = 0; i < 2; i++) 
-	{
-		movimientos.clear(); 
-		coronacion.clear(); 
-	}
+	movimientosEntrada.clear();
+	movimientosSalida.clear();
+	coronacionEntrada.clear();
+	coronacionSalida.clear();
 }
 
 void operator<<(std::ostream& o, const Partida& p) {
@@ -78,15 +77,14 @@ void operator<<(std::ostream& o, const Partida& p) {
 	o << (partida_negras + ": ") << p.negras << std::endl;
 	o << partida_movimientos << std::endl;
 
-	for (int i = 0; i < p.movimientos.size(); i++)
-		o << p.movimientos[i].inicio.x << " " << p.movimientos[i].inicio.y << " " << p.movimientos[i].fin.x << " " << p.movimientos[i].fin.y << std::endl;
+	for (int i = 0; i < p.movimientosSalida.size(); i++)
+		o << p.movimientosSalida[i].inicio.x << " " << p.movimientosSalida[i].inicio.y << " " << p.movimientosSalida[i].fin.x << " " << p.movimientosSalida[i].fin.y << std::endl;
 
 	o << partida_coronacion << std::endl;
 
-	for (int i = 0; i < p.coronacion.size(); i++)
-		o << p.coronacion[i] << std::endl;
+	for (int i = 0; i < p.coronacionSalida.size(); i++)
+		o << p.coronacionSalida[i] << std::endl;
 }
-
 void operator>>(std::istream& is, Partida& p) {
 	std::string str = "";
 
@@ -124,14 +122,13 @@ void operator>>(std::istream& is, Partida& p) {
 		Movimiento mov;
 		ss << str;
 		ss >> mov.inicio.x >> mov.inicio.y >> mov.fin.x >> mov.fin.y;
-		p.movimientos.push_back(mov);
+		p.movimientosEntrada.push_back(mov);
 	}
 	while (std::getline(is, str)) {
 		std::stringstream ss;
 		int cor = 0;
 		ss << str;
 		ss >> cor;
-		p.coronacion.push_back(cor);
+		p.coronacionEntrada.push_back(cor);
 	}
 }
-
