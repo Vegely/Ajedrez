@@ -1,3 +1,7 @@
 RANKING
 Pos  Punt 	 Jug
-1 4.000000 IA
+1 6.000000 IA
+2 3.000000 adrimaster
+3 0.0 jorge
+4 0.0 adridan
+5 -3.000000 jorasdf

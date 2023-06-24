@@ -2,7 +2,7 @@
 #include "Camara.h"
 #include <cmath>
 
-constexpr int SPEED = 300;
+constexpr int SPEED = 1;
 
 Camara::Camara(const Point& position) :
 	position(position),

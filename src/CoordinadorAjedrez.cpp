@@ -110,7 +110,7 @@ void CoordinadorAjedrez::Draw(void)
 
 	if (estado == INICIALIZAR_PARTIDA)
 	{
-		
+		motorGrafico.getCasillaJaque()->renderModelos();
 		motorGrafico.getCasillaUltimoMov()->renderModelos();
 	}
 	else if (estado == INICIO) {
@@ -318,6 +318,7 @@ void CoordinadorAjedrez::Timer(float value)
 		p_hiloMotorLogico = new std::thread(threadMotor, &(enPartida), &motorGrafico, &config, &partida, p_elementoRed, &datosFinal);
 
 		motorGrafico.resetCasillas(motorGrafico.getCasillaUltimoMov());
+		motorGrafico.resetCasillas(motorGrafico.getCasillaJaque());
 
 		estado = JUEGO;
 	}
