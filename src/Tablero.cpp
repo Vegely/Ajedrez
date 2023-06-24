@@ -227,7 +227,8 @@ bool Tablero::hacerJugada(MotorDeJuego& motor, const Movimiento& movimiento, con
 
 				jugadaHecha = true;
 				///
-				Sonidos::son_comer();
+				if (guardarCoronacion)
+					Sonidos::son_comer();
 				///
 				break;
 			}
@@ -248,7 +249,8 @@ bool Tablero::hacerJugada(MotorDeJuego& motor, const Movimiento& movimiento, con
 
 				jugadaHecha = true;
 				///
-				Sonidos::son_comerAlPaso();
+				if (guardarCoronacion)
+					Sonidos::son_comerAlPaso();
 				///
 				break;
 			}
@@ -276,7 +278,8 @@ bool Tablero::hacerJugada(MotorDeJuego& motor, const Movimiento& movimiento, con
 
 			jugadaHecha = true;
 			///
-			Sonidos::son_mover();
+			if (guardarCoronacion)
+				Sonidos::son_mover();
 			///
 			break;
 		}
@@ -294,7 +297,8 @@ bool Tablero::hacerJugada(MotorDeJuego& motor, const Movimiento& movimiento, con
 			delete p_peon;
 
 			///
-			Sonidos::son_coronar();
+			if (guardarCoronacion)
+				Sonidos::son_coronar();
 			///
 		}
 
