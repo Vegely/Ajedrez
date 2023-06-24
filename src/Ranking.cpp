@@ -101,11 +101,6 @@ void Ranking::print() const {
 			ETSIDI::printxy(str.c_str(), -5, floor(ALTO_GL - ALTO_GL / 2) - 3 * i - 10);
 		}
 	}
-
-	/*/for (int i = 0; i < nposiciones && !ifs.eof(); i++) {
-		std::getline(ifs, str);
-		//ETSIDI::printxy(ranking.print(5).c_str(), -5, 8);
-	}*/
 	ifs.close();
 }
 
