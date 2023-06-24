@@ -182,7 +182,7 @@ void CoordinadorAjedrez::Draw(void)
 
 		ETSIDI::setFont(RUTA_FUENTES, 30);
 		ETSIDI::setTextColor(0, 255, 255);
-		ETSIDI::printxy(pantallaCliente.ip.c_str(), -5, 5);
+		ETSIDI::printxy(pantallaCliente.ip.c_str(), -6, 7,1);
 	}
 
 	else if (estado == PAUSA)
@@ -200,14 +200,15 @@ void CoordinadorAjedrez::Draw(void)
 		parametrosTexturasMEstados();
 
 		ETSIDI::setFont(RUTA_FUENTES, 30);
-		ETSIDI::setTextColor(0, 255, 255);
-		ETSIDI::printxy(p_elementoRed->getIp().c_str(), 0, 0, 1);
+		ETSIDI::setTextColor(0, 0, 0);
+		ETSIDI::printxy(p_elementoRed->getIp().c_str(), -6, 7, 1);
 	}
 
 	else if (estado == CARGAR)
 	{
 		pantallaCargarPartida.dibuja();
 		parametrosTexturasMEstados();
+		pantallaCargarPartida.escrituraGlut();
 	}
 
 	else if (estado == RANKING)
@@ -351,26 +352,33 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 		}
 		else {
 			if (pantallaGuardar.estado == Guardar::PARTIDA && pantallaGuardar.snombre_partida.length() < TAM_FRASE)
-				pantallaGuardar.snombre_partida += key;
+			{
+				if (key >= 'A' && key <= 'Z' || key >= 'a' && key <= 'z' || key >= '0' && key <= '9')
+					pantallaGuardar.snombre_partida += key;
+			}
 			else if (pantallaGuardar.estado == Guardar::BLANCAS && pantallaGuardar.sblancas.length() < TAM_FRASE && pantallaGuardar.sblancas != JIA)
-				pantallaGuardar.sblancas += key;
+				{
+					if (key >= 'A' && key <= 'Z' || key >= 'a' && key <= 'z' || key >= '0' && key <= '9')
+						pantallaGuardar.sblancas += key;
+				}
 			else if (pantallaGuardar.estado == Guardar::NEGRAS && pantallaGuardar.snegras.length() < TAM_FRASE && pantallaGuardar.snegras != JIA)
-				pantallaGuardar.snegras += key;
+				{
+					if (key >= 'A' && key <= 'Z' || key >= 'a' && key <= 'z' || key >= '0' && key <= '9')
+						pantallaGuardar.snegras += key;
+				}
 		}
 	}
 	else if (estado == JUEGO) {
-		if (key == 27) // Esc
+		if (key == ESCAPE) // Esc
 			estado = PAUSA;
-		///////////////////////////////////////////
-		//Falta resetear valores
+
 		else if (datosFinal.finalizada == true && key == 'k')
 		{
-			estado = FIN; //???????????????????
+			estado = FIN; 
 		}
-		/////////////////////////////////////////
 	}
 	else if (estado == PAUSA) {
-		if (key == 27) // Esc
+		if (key == ESCAPE) // Esc
 			estado = JUEGO;
 	}
 	else if (estado == CLIENTE)
@@ -381,9 +389,13 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 		{
 			p_elementoRed->setIp(pantallaCliente.ip);
 			abrirRed();
+			pantallaCliente.ip = CONECTANDO;
 		}
 		else
-			pantallaCliente.ip += key;
+		{
+			if (pantallaCliente.ip.size() < TAM_MAX_IP && ((key >= '0' && key <= '9') || key == '.') && pantallaCliente.ip!=CONECTANDO)
+				pantallaCliente.ip += key;
+		}
 	}
 }
 
@@ -440,7 +452,7 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 				estado = MODO_LOCAL;
 			if (pantallaModoJuego.red.enCaja(xg, yg))
 				estado = MODO_RED;
-			if (pantallaModoJuego.salir.enCaja(xg, yg))
+			if (pantallaModoJuego.atras.enCaja(xg, yg))
 				estado = INICIO;
 		}
 		else if (estado == MODO_LOCAL)
@@ -497,6 +509,7 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 		}
 		else if (estado == FALLO_CONEXION)
 		{
+			pantallaCliente.ip = "";
 			cerrarHiloRed();
 			if (pantallaFalloConexion.aceptar.enCaja(xg, yg))
 				estado = INICIO;
@@ -542,13 +555,42 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 			if (pantallaCliente.atras.enCaja(xg, yg))
 			{
 				cerrarHiloRed();
-
 				estado = MODO_RED;
+				pantallaCliente.ip = "";
 			}
 		}
 		else if (estado == CARGAR) {
 			if (pantallaCargarPartida.atras.enCaja(xg, yg))
 				estado = INICIO;
+			else if (pantallaCargarPartida.anterior.enCaja(xg, yg))
+				pantallaCargarPartida.paginaAnterior();
+			else if (pantallaCargarPartida.siguiente.enCaja(xg, yg))
+				pantallaCargarPartida.paginaSiguiente();
+			else if (pantallaCargarPartida.partida1.enCaja(xg, yg)) {
+				partida.setNombre(pantallaCargarPartida.p1_nombre);
+				partida.cargarPartida();
+				estado = INICIALIZAR_PARTIDA;
+			}
+			else if (pantallaCargarPartida.partida2.enCaja(xg, yg)) {
+				partida.setNombre(pantallaCargarPartida.p2_nombre);
+				partida.cargarPartida();
+				estado = INICIALIZAR_PARTIDA;
+			}
+			else if (pantallaCargarPartida.partida3.enCaja(xg, yg)) {
+				partida.setNombre(pantallaCargarPartida.p3_nombre);
+				partida.cargarPartida();
+				estado = INICIALIZAR_PARTIDA;
+			}
+			else if (pantallaCargarPartida.partida4.enCaja(xg, yg)) {
+				partida.setNombre(pantallaCargarPartida.p4_nombre);
+				partida.cargarPartida();
+				estado = INICIALIZAR_PARTIDA;
+			}
+			else if (pantallaCargarPartida.partida5.enCaja(xg, yg)) {
+				partida.setNombre(pantallaCargarPartida.p5_nombre);
+				partida.cargarPartida();
+				estado = INICIALIZAR_PARTIDA;
+			}
 		}
 		else if (estado == GUARDAR) {
 			if (pantallaGuardar.nombre_partida.enCaja(xg, yg))

@@ -32,7 +32,11 @@ constexpr const char* RUTA_REPETICION = "pantallas/repeticion.png";
 constexpr int TAM_FRASE = 10;
 constexpr int TABULADOR = 9;
 constexpr int SUPRIMIR = 127;
+constexpr int ESCAPE = 27;
+constexpr int PARTIDAS_POR_HOJA = 5;
+constexpr int TAM_MAX_IP = 15;
 constexpr const char* JIA = "IA";
+constexpr const char* CONECTANDO = "Conectando...";
 
 enum class Guardar { BLANCAS, NEGRAS, PARTIDA, NONE };
 
@@ -93,10 +97,31 @@ struct PantallaServidor : public PantallaBase {
 };
 
 struct PantallaCargarPartida : public PantallaBase {
+	int pagina_actual = 0;
+	int npaginas = 0;
+
+	std::string p1_nombre = "";
+	std::string p2_nombre = "";
+	std::string p3_nombre = "";
+	std::string p4_nombre = "";
+	std::string p5_nombre = "";
+
 	Caja atras{ 25.4,-2.3,29.8,-6.3 };
 	Caja siguiente{ 20.0,-2.3,24.5,-6.3 };
 	Caja anterior{ -24.3,-2.3,-19.9,-6.3 };
-	PantallaCargarPartida() : PantallaBase(RUTA_CARGAR_PARTIDA){}
+	Caja partida1{ -19.0, 9.0,19.0, 7.0 };
+	Caja partida2{ -19.0, 6.0,19.0,4.0 };
+	Caja partida3{ -19.0, 2.5,19.0,0.5 };
+	Caja partida4{ -19.0, -0.5,19.0,-2.5 };
+	Caja partida5{ -19.0, -3.5,19.0 ,-5.5 };
+
+
+	PantallaCargarPartida() : PantallaBase(RUTA_CARGAR_PARTIDA) {}
+
+	void escrituraGlut();
+	void rellenaNombre(int i, std::string str);
+	void paginaSiguiente() { if (pagina_actual >= npaginas)return; pagina_actual++; }
+	void paginaAnterior() { if (pagina_actual <= 0)return; pagina_actual--; }
 };
 
 struct PantallaRankings : public PantallaBase {
@@ -136,7 +161,7 @@ struct PantallaModoDeJuego : public PantallaBase
 {
 	Caja local{ -6.65f, 9.9f, 6.45f, 5.9f };
 	Caja red{ -7.1,4.9,7.1,0.9 };
-	Caja salir{ -3,-0.1,3.2,-4.0 };
+	Caja atras{ 25.4,-2.3,29.7,-6.3 };
 	PantallaModoDeJuego() : PantallaBase(RUTA_MODO_DE_JUEGO){}
 };
 

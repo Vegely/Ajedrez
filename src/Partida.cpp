@@ -41,7 +41,7 @@ bool Partida::guardarPartida() {
 }
 
 bool Partida::cargarPartida() {
-	std::ifstream ifs("finalizadas/partida2.txt", std::ios_base::out);
+	std::ifstream ifs(nombre_partida.c_str(), std::ios_base::out);
 
 	if (!ifs.is_open()) {
 		std::cerr << "Error al cargar la partida. Saliendo..." << std::endl;
