@@ -59,7 +59,7 @@ bool Ranking::aniadirJugador(const std::string& nombre, int id) {
 		if (!jugadorExiste(nombre)) {
 			std::stringstream ss;
 			std::string str = "";
-			ss << (ultima_posicion + 1) << ": " << nombre << "\t 0.0";
+			ss << (ultima_posicion + 1) << " " << nombre << "\t 0.0";
 			str = ss.str();
 			ofs << str << std::endl;
 			ofs.close();
@@ -124,10 +124,8 @@ void Ranking::actualizar(const std::string& nombre, float puntos) {
 	ifs.close();
 
 	ind = posicionJugador(nombre);
-
 	if (ind != -1) {
 		ptdranking[ind].puntuacion = std::to_string(std::stof(ptdranking[ind].puntuacion) + puntos);
-		
 		encabezado();
 
 		std::ofstream ofs(nombre_fichero, std::ios_base::app);
@@ -136,19 +134,19 @@ void Ranking::actualizar(const std::string& nombre, float puntos) {
 		{
 			if (std::stof(ptdranking[i].puntuacion) > std::stof(ptdranking[ind].puntuacion))
 			{
-				ofs << pos << ": " << ptdranking[i].nombre << "\t " << ptdranking[i].puntuacion   << std::endl;
+				ofs << pos << " " << ptdranking[i].nombre << "\t " << ptdranking[i].puntuacion   << std::endl;
 				pos++;
 			}
 		}
 		
-		ofs<< pos << ": " << ptdranking[ind].nombre << "\t " << ptdranking[ind].puntuacion << std::endl;
+		ofs<< pos << " " << ptdranking[ind].nombre << "\t " << ptdranking[ind].puntuacion << std::endl;
 		pos++;
 
 		for (int i = 0; i < ultima_posicion; i++)
 		{
 			if ((std::stof(ptdranking[i].puntuacion) <= std::stof(ptdranking[ind].puntuacion)) && i !=ind)
 			{
-				ofs << pos << ": " << ptdranking[i].nombre << "\t " << ptdranking[i].puntuacion << std::endl;
+				ofs << pos << " " << ptdranking[i].nombre << "\t " << ptdranking[i].puntuacion << std::endl;
 				pos++;
 			}
 		}

@@ -386,15 +386,17 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 				if (datosFinal.finalizada) {
 					if (datosFinal.codigoFinal == CodigoFinal::JAQUE_MATE) {
 						if (datosFinal.ganaBlanco) {
-							if(pantallaGuardar.sblancas!=JIA) ranking.actualizar(pantallaGuardar.sblancas, 3.0);
+							ranking.actualizar(pantallaGuardar.sblancas, 3.0);
+							ranking.actualizar(pantallaGuardar.snegras, 0.0);
 						}
 						else {
-							if (pantallaGuardar.snegras != JIA) ranking.actualizar(pantallaGuardar.snegras, 3.0);
+							ranking.actualizar(pantallaGuardar.sblancas, 0.0);
+							ranking.actualizar(pantallaGuardar.snegras, 3.0);
 						}
 					}
 					else {
-						if (pantallaGuardar.sblancas != JIA) ranking.actualizar(pantallaGuardar.sblancas, 1.0);
-						if (pantallaGuardar.snegras != JIA) ranking.actualizar(pantallaGuardar.snegras, 1.0);
+						ranking.actualizar(pantallaGuardar.sblancas, 1.0);
+						ranking.actualizar(pantallaGuardar.snegras, 1.0);
 					}
 				}
 
