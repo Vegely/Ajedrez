@@ -37,13 +37,13 @@ void PantallaCargarPartida::escrituraGlut() {
 	for (const auto& fichero : std::filesystem::directory_iterator(CARPETA_NOFINALIZADAS))
 		str_vec.push_back(fichero.path().generic_string());
 
-	npaginas = str_vec.size() / JUGADORES_POR_HOJA;
+	npaginas = (str_vec.size()-1) / JUGADORES_POR_HOJA;
 
 	if (npaginas == 0) {
 		for (int i = 0; i < str_vec.size(); i++) 
 		{
-			ETSIDI::printxy(str_vec[i].substr(14).c_str(), -5, floor(ALTO_GL - ALTO_GL / 2) - 3 * i - 10);
-			rellenaNombre(i, str_vec[i].substr(14).c_str());
+			ETSIDI::printxy(str_vec[i].substr(CARPETA_NOFINALIZADAS.length()).c_str(), -5, floor(ALTO_GL - ALTO_GL / 2) - 3 * i - 10);
+			rellenaNombre(i, str_vec[i].substr(CARPETA_NOFINALIZADAS.length()).c_str());
 		}
 	}
 	else {
@@ -52,8 +52,13 @@ void PantallaCargarPartida::escrituraGlut() {
 		for (i; i < pagina_actual * PARTIDAS_POR_HOJA + JUGADORES_POR_HOJA; i++) {
 			if(i<str_vec.size())
 			{
-				ETSIDI::printxy(str_vec[i].substr(14).c_str(), -5, floor(ALTO_GL - ALTO_GL / 2) - 3 * j - 10);
-				rellenaNombre(j, str_vec[i].substr(14).c_str());
+				ETSIDI::printxy(str_vec[i].substr(CARPETA_NOFINALIZADAS.length()).c_str(), -5, floor(ALTO_GL - ALTO_GL / 2) - 3 * j - 10);
+				rellenaNombre(j, str_vec[i].substr(CARPETA_NOFINALIZADAS.length()).c_str());
+				j++;
+			}
+			else
+			{
+				rellenaNombre(j, "");
 				j++;
 			}
 		}
@@ -74,8 +79,16 @@ void PantallaCargarPartida::rellenaNombre(int i, std::string str) {
 	case 3:
 		p4_nombre = CARPETA_NOFINALIZADAS + str;
 		break;
-	case 5:
+	case 4:
 		p5_nombre = CARPETA_NOFINALIZADAS + str;
 		break;
 	}
+}
+
+void PantallaGuardar::cargarPartida(Partida& p) {
+	sblancas = p.getBlancas();
+	snegras = p.getNegras();
+	smodo = p.getModo();
+	snombre_partida = p.getNombre().substr(CARPETA_NOFINALIZADAS.length());
+	snombre_partida = snombre_partida.substr(0, snombre_partida.length() - 4);//length(".txt") = 4
 }

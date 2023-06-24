@@ -26,6 +26,7 @@ class Partida
 {
 private:
 	std::string nombre_partida;
+	std::string nombre_partida_cargar;
 	bool finalizada = 0;
 	std::string modo;
 	std::string blancas;
@@ -46,10 +47,18 @@ public:
 	void reset();
 
 	void setNombre(std::string nombre) { nombre_partida = nombre; };
+	void setNombreCargar(std::string nombre) { nombre_partida_cargar = nombre; }
 	void setModo(std::string modo) { this->modo = modo; };
 	void setBlancas(std::string blancas) { this->blancas = blancas; };
 	void setNegras(std::string negras) { this->negras = negras; };
 	void setFin(bool fin) { finalizada = fin; }
+
+	std::string getNombre() { return nombre_partida; }
+	std::string getNombreCargar() { return nombre_partida_cargar; }
+	std::string getModo() { return modo; }
+	std::string getBlancas() { return blancas; }
+	std::string getNegras() { return negras; }
+	bool getFin() { return finalizada; }
 
 	friend void operator<<(std::ostream& o, const Partida& p);
 	friend void operator>>(std::istream& is, Partida& p);

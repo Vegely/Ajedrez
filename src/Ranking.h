@@ -25,7 +25,7 @@ private:
 	int npaginas = 0;
 	const char* nombre_fichero = "ranking/ranking.txt";
 	const std::string titulo = "RANKING";
-	const std::string campos = "Pos  Punt \t Jug";
+	const std::string campos = "Pos  Jug \t Punt";
 	int ultima_posicion = 0;
 	
 	DatosRanking* ptdranking = nullptr;

@@ -1,2 +1,20 @@
 RANKING
-Pos  Punt 	 Jug
+Pos  Jug 	 Punt
+1: fdsafsd	 0.0
+2: fsadf	 0.0
+3: IA	 0.0
+4: jorge	 0.0
+5: fas	 0.0
+6: sfd	 0.0
+7: dsafd	 0.0
+8: otro	 0.0
+9: fdasfsd	 0.0
+10: dfasfds	 0.0
+11: dfasfd	 0.0
+12: fafds	 0.0
+13: fasd	 0.0
+14: fdasd	 0.0
+15: dfas	 0.0
+16: fdasf	 0.0
+17: fadsfds	 0.0
+18: adfsfds	 0.0

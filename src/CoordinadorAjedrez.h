@@ -45,6 +45,7 @@ private:
 
 	/* VARIABLES DE GESTIÓN DE INICIALIZACIÓN Y FINALIZACIÓN */
 	bool flagDeSeguridadInit = true;
+	bool flag_cargar_partida = false;
 	bool enPartida = false;
 	bool redAbierta = false;
 

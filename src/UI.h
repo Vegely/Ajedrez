@@ -181,6 +181,7 @@ struct PantallaGuardar : public PantallaBase {
 	PantallaGuardar() : PantallaBase(RUTA_GUARDAR){}
 	void reset() { snombre_partida = ""; sblancas = ""; snegras = ""; smodo = ""; existe = 0; estado = Guardar::NONE; }
 	void escrituraGlut();
+	void cargarPartida(Partida& p);
 };
 
 #endif 

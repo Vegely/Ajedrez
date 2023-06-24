@@ -7,6 +7,7 @@
 
 #include <thread>
 #include <chrono>
+#include <filesystem>
 
 PantallaElegirRol	  pantallaElegirRol;
 PantallaInicio		  pantallaInicio;
@@ -304,9 +305,23 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 		}
 		else if ((int)key == TABULADOR) {
 			std::string fin = CARPETA_NOFINALIZADAS;
-			if (datosFinal.finalizada) fin = CARPETA_FINALIZADAS;
+			if (flag_cargar_partida) 
+			{
+				if(partida.getNombreCargar() == pantallaGuardar.snombre_partida)
+				{
+
+					std::string ruta = (fin + partida.getNombreCargar() + ".txt");
+					std::filesystem::remove(ruta);
+				}
+					
+				partida.setNombreCargar("");
+			}
+			if (datosFinal.finalizada)
+				fin = CARPETA_FINALIZADAS;
+
 			partida.setNombre(fin + pantallaGuardar.snombre_partida + ".txt");
-			if (partida.existe())
+
+			if (partida.existe()&&!flag_cargar_partida)
 				pantallaGuardar.existe = 1;
 			else
 			{
@@ -329,23 +344,24 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 				if (datosFinal.finalizada) {
 					if (datosFinal.codigoFinal == CodigoFinal::JAQUE_MATE) {
 						if (datosFinal.ganaBlanco) {
-							ranking.actualizar(pantallaGuardar.sblancas, 3.0);
-							ranking.actualizar(pantallaGuardar.snegras, -3.0);
+							if(pantallaGuardar.sblancas!=JIA) ranking.actualizar(pantallaGuardar.sblancas, 3.0);
 						}
 						else {
-							ranking.actualizar(pantallaGuardar.sblancas, -3.0);
-							ranking.actualizar(pantallaGuardar.snegras, 3.0);
+							if (pantallaGuardar.snegras != JIA) ranking.actualizar(pantallaGuardar.snegras, 3.0);
 						}
 					}
 					else {
-						ranking.actualizar(pantallaGuardar.sblancas, 1.0);
-						ranking.actualizar(pantallaGuardar.snegras, 1.0);
+						if (pantallaGuardar.sblancas != JIA) ranking.actualizar(pantallaGuardar.sblancas, 1.0);
+						if (pantallaGuardar.snegras != JIA) ranking.actualizar(pantallaGuardar.snegras, 1.0);
 					}
 				}
 
 				//Reset a valores iniciales para guardar futuras partidas
 				partida.reset();
 				pantallaGuardar.reset();
+
+				flag_cargar_partida = false;
+				pantallaCargarPartida.pagina_actual = 0;
 
 				estado = CERRAR_PARTIDA;
 			}
@@ -411,10 +427,10 @@ void CoordinadorAjedrez::SpecialKeypress(int key)
 			if (pantallaGuardar.estado == Guardar::PARTIDA && pantallaGuardar.snombre_partida.length() > 0)
 				pantallaGuardar.snombre_partida = pantallaGuardar.snombre_partida.substr(0, pantallaGuardar.snombre_partida.length() - 1);
 
-			else if (pantallaGuardar.estado == Guardar::BLANCAS && pantallaGuardar.sblancas.length() > 0)
+			else if (pantallaGuardar.estado == Guardar::BLANCAS && pantallaGuardar.sblancas.length() > 0 && pantallaGuardar.sblancas!=JIA)
 				pantallaGuardar.sblancas = pantallaGuardar.sblancas.substr(0, pantallaGuardar.sblancas.length() - 1);
 
-			else if (pantallaGuardar.estado == Guardar::NEGRAS && pantallaGuardar.snegras.length() > 0)
+			else if (pantallaGuardar.estado == Guardar::NEGRAS && pantallaGuardar.snegras.length() > 0 && pantallaGuardar.snegras != JIA)
 				pantallaGuardar.snegras = pantallaGuardar.snegras.substr(0, pantallaGuardar.snegras.length() - 1);
 		}
 	}
@@ -548,7 +564,12 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 			if (pantallaPausa.guardar_y_salir.enCaja(xg, yg))
 				estado = GUARDAR;
 			if (pantallaPausa.salir_sin_guardar.enCaja(xg, yg))
+			{
+				flag_cargar_partida = false;
+				partida.reset();
+				pantallaGuardar.reset();
 				estado = CERRAR_PARTIDA;
+			}
 		}
 		else if (estado == CLIENTE || estado == SERVIDOR)
 		{
@@ -561,35 +582,68 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 		}
 		else if (estado == CARGAR) {
 			if (pantallaCargarPartida.atras.enCaja(xg, yg))
+			{
+				pantallaCargarPartida.pagina_actual = 0;
 				estado = INICIO;
+			}
 			else if (pantallaCargarPartida.anterior.enCaja(xg, yg))
 				pantallaCargarPartida.paginaAnterior();
 			else if (pantallaCargarPartida.siguiente.enCaja(xg, yg))
 				pantallaCargarPartida.paginaSiguiente();
 			else if (pantallaCargarPartida.partida1.enCaja(xg, yg)) {
-				partida.setNombre(pantallaCargarPartida.p1_nombre);
-				partida.cargarPartida();
-				estado = INICIALIZAR_PARTIDA;
+				if(pantallaCargarPartida.p1_nombre!= CARPETA_NOFINALIZADAS)
+				{
+					partida.setNombre(pantallaCargarPartida.p1_nombre);
+					partida.cargarPartida();
+					flag_cargar_partida = true;
+					pantallaGuardar.cargarPartida(partida);
+					partida.setNombreCargar(pantallaGuardar.snombre_partida);
+					estado = INICIALIZAR_PARTIDA;
+				}
 			}
 			else if (pantallaCargarPartida.partida2.enCaja(xg, yg)) {
-				partida.setNombre(pantallaCargarPartida.p2_nombre);
-				partida.cargarPartida();
-				estado = INICIALIZAR_PARTIDA;
+				if (pantallaCargarPartida.p2_nombre != CARPETA_NOFINALIZADAS)
+				{
+					partida.setNombre(pantallaCargarPartida.p2_nombre);
+					partida.cargarPartida();
+					flag_cargar_partida = true;
+					pantallaGuardar.cargarPartida(partida);
+					partida.setNombreCargar(pantallaGuardar.snombre_partida);
+					estado = INICIALIZAR_PARTIDA;
+				}
 			}
 			else if (pantallaCargarPartida.partida3.enCaja(xg, yg)) {
-				partida.setNombre(pantallaCargarPartida.p3_nombre);
-				partida.cargarPartida();
-				estado = INICIALIZAR_PARTIDA;
+				if (pantallaCargarPartida.p3_nombre != CARPETA_NOFINALIZADAS)
+				{
+					partida.setNombre(pantallaCargarPartida.p3_nombre);
+					partida.cargarPartida();
+					flag_cargar_partida = true;
+					pantallaGuardar.cargarPartida(partida);
+					partida.setNombreCargar(pantallaGuardar.snombre_partida);
+					estado = INICIALIZAR_PARTIDA;
+				}
 			}
 			else if (pantallaCargarPartida.partida4.enCaja(xg, yg)) {
-				partida.setNombre(pantallaCargarPartida.p4_nombre);
-				partida.cargarPartida();
-				estado = INICIALIZAR_PARTIDA;
+				if (pantallaCargarPartida.p4_nombre != CARPETA_NOFINALIZADAS)
+				{
+					partida.setNombre(pantallaCargarPartida.p4_nombre);
+					partida.cargarPartida();
+					flag_cargar_partida = true;
+					pantallaGuardar.cargarPartida(partida);
+					partida.setNombreCargar(pantallaGuardar.snombre_partida);
+					estado = INICIALIZAR_PARTIDA;
+				}
 			}
 			else if (pantallaCargarPartida.partida5.enCaja(xg, yg)) {
-				partida.setNombre(pantallaCargarPartida.p5_nombre);
-				partida.cargarPartida();
-				estado = INICIALIZAR_PARTIDA;
+				if (pantallaCargarPartida.p5_nombre != CARPETA_NOFINALIZADAS)
+				{
+					partida.setNombre(pantallaCargarPartida.p5_nombre);
+					partida.cargarPartida();
+					flag_cargar_partida = true;
+					pantallaGuardar.cargarPartida(partida);
+					partida.setNombreCargar(pantallaGuardar.snombre_partida);
+					estado = INICIALIZAR_PARTIDA;
+				}
 			}
 		}
 		else if (estado == GUARDAR) {
