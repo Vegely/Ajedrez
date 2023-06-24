@@ -266,6 +266,7 @@ public:
 	void resetLectura  (void)			 { this->posicion_leida = Posicion(); }
 	Posicion getCasilla(void) const		 { return this->posicion_leida; }
 	Point	 getCamaraPos(void) const    { return this->camara.getPosition(); }
+	float	 getCamaraAng(void) const	 { return this->camara.getAngle(); }
 	ListaModelo* getCasillaSeleccionada(void) { return &this->casillas_seleccionadas; }
 	ListaModelo* getCasillaComible	   (void) { return &this->casillas_comibles; }
 	ListaModelo* getCasillaCoronacion  (void) { return &this->casillas_coronacion; }

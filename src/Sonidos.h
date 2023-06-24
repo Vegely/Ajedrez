@@ -12,7 +12,8 @@
 #define SONIDO_COM "sonidos/son_comer.wav"
 #define SONIDO_COR "sonidos/son_coronar.wav"
 #define SONIDO_CAP "sonidos/son_cap.wav"
-
+#define MUSICA_MENU "sonidos/soundtrack_menu.mp3"
+#define MUSICA_JUEGO "sonidos/soundtrack_juego.mp3"
 class Sonidos
 {
 public:
@@ -24,7 +25,10 @@ public:
 	static void son_seleccionPieza();
 	static void son_comer();
 	static void son_coronar();
-	static void con_comerAlPaso();
+	static void son_comerAlPaso();
+	static void mus_menu();
+	static void mus_fin();
+	static void mus_juego();
 };
 
 #endif

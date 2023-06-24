@@ -9,10 +9,12 @@
 
 #include "IA.h"
 
+#include "Sonidos.h"
+
 #include <cstdint>
 #include <chrono>
 
-#define TIEMPO_MS_MIN_MOVIMIENTO 150
+#define TIEMPO_MS_MIN_MOVIMIENTO 0
 
 ///
 #include <iostream>
@@ -90,6 +92,7 @@ void MotorDeJuego::pintarSeleccionCasilla(const Posicion& posSelec, Mundo* p_mot
 			if (Posicion(i % 8, i / 8) == posSelec)
 			{
 				lista_seleccion->moverElemento(Movimiento(Posicion(), posSelec)); // Seleccion de la pieza
+				Sonidos::son_seleccionPieza();
 				if (ultima_jugada.inicio == posSelec || ultima_jugada.fin == posSelec)
 					lista_jugada->moverElemento(Movimiento(posSelec, Posicion()));
 			}

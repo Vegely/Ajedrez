@@ -10,6 +10,8 @@
 #include "Torre.h"
 #include "Dama.h"
 
+#include "Sonidos.h"
+
 #include "MotorDeJuego.h"
 
 void Tablero::actualizarTablero()
@@ -207,6 +209,7 @@ bool Tablero::hacerJugada(MotorDeJuego& motor, const Movimiento& movimiento, con
 {
 	bool jugadaHecha = false;
 
+	//comer
 	for (const Pieza* puedeComer : leer(movimiento.inicio)->getPuedeComer())
 	{
 		if (puedeComer->getPosicion() == movimiento.fin)
@@ -223,6 +226,10 @@ bool Tablero::hacerJugada(MotorDeJuego& motor, const Movimiento& movimiento, con
 				numeroPiezas--;
 
 				jugadaHecha = true;
+				///
+				if (guardarCoronacion)
+					Sonidos::son_comer();
+				///
 				break;
 			}
 		}
@@ -241,11 +248,16 @@ bool Tablero::hacerJugada(MotorDeJuego& motor, const Movimiento& movimiento, con
 				numeroPiezas--;
 
 				jugadaHecha = true;
+				///
+				if (guardarCoronacion)
+					Sonidos::son_comerAlPaso();
+				///
 				break;
 			}
 		}
 	}
-
+	
+	//mover
 	if (!jugadaHecha) for (const Posicion puedeMover : leer(movimiento.inicio)->getPuedeMover())
 	{
 		if (puedeMover == movimiento.fin)
@@ -265,6 +277,10 @@ bool Tablero::hacerJugada(MotorDeJuego& motor, const Movimiento& movimiento, con
 			actualizarHaMovido(movimiento);
 
 			jugadaHecha = true;
+			///
+			if (guardarCoronacion)
+				Sonidos::son_mover();
+			///
 			break;
 		}
 	}
@@ -279,6 +295,11 @@ bool Tablero::hacerJugada(MotorDeJuego& motor, const Movimiento& movimiento, con
 			Pieza* p_peon = leer(movimiento.inicio);
 			coronar(movimiento.inicio, MotorDeJuego::seleccionarEntradaCoronar(motor, movimiento, *this, interaccion, motorGrafico, run, guardarCoronacion));
 			delete p_peon;
+
+			///
+			if (guardarCoronacion)
+				Sonidos::son_coronar();
+			///
 		}
 
 		cambiarTurno();

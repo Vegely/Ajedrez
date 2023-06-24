@@ -7,6 +7,8 @@
 #include <string>
 #include <cmath>
 
+#include "Sonidos.h"
+
 Mundo::Mundo(void) :
 	rey_blanco(1),
 	rey_negro(1),
@@ -271,6 +273,16 @@ void Mundo::comprobarCasillasJaque(Tablero* tablero)
 				if (tipo == Pieza::tipo_t::REY && pieza_leida->getAmenazas().size() > 0) // Jaque
 				{
 					lista_jaque->moverElemento(Movimiento(Posicion(), posicion));
+					
+					///
+					static Movimiento auxMov = {};
+
+					if(auxMov!= tablero->getUltimaJugada())
+						Sonidos::son_jaque();
+					
+					auxMov = tablero->getUltimaJugada();
+					///
+
 					if (tablero->jaqueMate()) // Jaque Mate
 					{
 						this->casillas_ultimo_mov.moverElemento(Movimiento(this->posicion_leida, Posicion()));
@@ -278,6 +290,7 @@ void Mundo::comprobarCasillasJaque(Tablero* tablero)
 							lista_jaque->moverElemento(Movimiento(Posicion(), pieza_leida->getAmenazas()[i]->getPosicion()));
 					}
 				}
+
 			}
 		}
 	}

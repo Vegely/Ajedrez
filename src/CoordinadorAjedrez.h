@@ -27,7 +27,6 @@ class CoordinadorAjedrez
 	friend void hiloRed(CoordinadorAjedrez* ajedrez);
 
 private:
-	Mundo motorGrafico;
 	Ranking ranking;
 	ElementoRed* p_elementoRed = nullptr;
 	Partida partida;
@@ -41,7 +40,7 @@ private:
 	Estado estado;
 
 	/* MOTOR GRAFICO */
-	Mundo mundoGrafico;
+	Mundo motorGrafico;
 
 	/* VARIABLES DE GESTIÓN DE INICIALIZACIÓN Y FINALIZACIÓN */
 	bool flagDeSeguridadInit = true;
@@ -57,6 +56,8 @@ private:
 	void cerrarPartida();
 	
 public:
+
+	void gestionSonido();
 	/* FORMA CAN�NICA */
 	CoordinadorAjedrez(void);
 
@@ -69,7 +70,7 @@ public:
 	void SpecialKeypress(int key);
 	void Click(int button, int state, int x, int y);
 
-	void renderPantallaTransparente(const std::string& filepath, const Point& pos = { 0, 32.5, 1 }, float rot_x = Camara::phi - 15, float rot_y = -90.0f, float rot_z = 180.0f);
+	void renderPantallaTransparente(const std::string& filepath, float main_ang, const Point& pos = { 0, 32.5, 1 }, float rot_x = Camara::phi - 15, float rot_y = -90.0f, float rot_z = 180.0f);
 };
 
 void threadMotor(bool* p_stop, Mundo* p_motorGrafico, const ConfiguracionDeJuego* p_config, Partida* p_partida, ElementoRed* p_elementoRed, DatosFinal* p_datosFinal);
@@ -81,5 +82,7 @@ float aCoordenadasGlutY(float p);
 void parametrosTexturasMEstados();
 
 void debugAxis(void);
+
+
 
 #endif

@@ -1,6 +1,6 @@
 #include "Caja.h"
 #include "freeglut.h"
-
+#include "Sonidos.h"
 Caja::Caja(float ulx, float uly, float drx, float dry)
 {
 	ul.x = ulx;
@@ -11,8 +11,11 @@ Caja::Caja(float ulx, float uly, float drx, float dry)
 
 bool Caja::enCaja(float x, float y)
 {
-	if (x<dr.x && x>ul.x && y<ul.y && y>dr.y)
+	if (x<dr.x && x>ul.x && y<ul.y && y>dr.y) {
+		Sonidos::son_seleccionMenu();
 		return true;
+	}
+		
 	return false;
 }
 

@@ -40,7 +40,22 @@ void Sonidos::son_coronar()
 	ETSIDI::play(SONIDO_COR);
 }
 
-void Sonidos::con_comerAlPaso()
+void Sonidos::son_comerAlPaso()
 {
 	ETSIDI::play(SONIDO_CAP);
+}
+
+void Sonidos::mus_menu()
+{
+	ETSIDI::playMusica(MUSICA_MENU,true);
+}
+
+void Sonidos::mus_fin()
+{
+	ETSIDI::stopMusica();
+}
+
+void Sonidos::mus_juego()
+{
+	ETSIDI::playMusica(MUSICA_JUEGO, true);
 }
