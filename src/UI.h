@@ -46,6 +46,7 @@ protected:
 public:
 	void init(void) { textura = ETSIDI::getTexture(ruta.c_str()); }
 	virtual void dibuja() { glBindTexture(GL_TEXTURE_2D, textura.id); }
+	
 };
 
 struct PantallaColorJugador : public PantallaBase

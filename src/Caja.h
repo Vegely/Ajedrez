@@ -1,6 +1,7 @@
 #ifndef _CAJA__H_
 #define _CAJA__H_
 
+
 #include "Punto.h"
 
 #define ULY 25.0f

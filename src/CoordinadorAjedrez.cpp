@@ -8,6 +8,7 @@
 #include <thread>
 #include <chrono>
 
+#include "Sonidos.h"
 PantallaElegirRol	  pantallaElegirRol;
 PantallaInicio		  pantallaInicio;
 PantallaJugadorLocal  pantallaJugadorLocal;
@@ -76,12 +77,36 @@ void CoordinadorAjedrez::init(void)
 	pantallaGuardar.init();
 }
 
+void CoordinadorAjedrez::gestionSonido()
+{
+	static bool sonidoMenuInicializado = false;
+	static bool sonidoJuegoInicializado = false;
+	if (estado != JUEGO)
+	{
+		sonidoJuegoInicializado = false;
+		if (!sonidoMenuInicializado)
+		{
+			sonidoMenuInicializado = true;
+			Sonidos::mus_menu();
+		}
+	}
+	else
+	{
+		sonidoMenuInicializado = false;
+		if (!sonidoJuegoInicializado)
+		{
+			sonidoJuegoInicializado = true;
+			Sonidos::mus_juego();
+		}
+	}
+}
 void CoordinadorAjedrez::Draw(void)
 {
+	static bool iniciaSonidoFinal=false;
 	gluLookAt(0, 7.5, 30, // posicion del ojo
 		0.0, 7.5, 0.0,    // hacia que punto mira 
 		0.0, 1.0, 0.0);   // definimos hacia arriba (eje Y)
-
+	gestionSonido();
 	if (estado == INICIO) {
 
 		pantallaInicio.dibuja();
@@ -91,54 +116,70 @@ void CoordinadorAjedrez::Draw(void)
 	{
 		mundoGrafico.updateCamara();
 		mundoGrafico.renderizarModelos();
+		 
 
 		if (datosFinal.finalizada)
 		{
-			//ETSIDI::setFont(RUTA_FUENTES, 40);
-			//ETSIDI::setTextColor(255, 0, 0);
-			//ETSIDI::printxy("Pulsa k para continuar", 15 * mod, -5);
+			Sonidos::mus_fin();
 			switch (datosFinal.codigoFinal)
 			{
 			case CodigoFinal::JAQUE_MATE:
 				if (datosFinal.ganaBlanco)
 				{
-					//ETSIDI::setTextColor(255, 0, 0);
-					//ETSIDI::printxy("JAQUE MATE BLANCO", 15 * mod, 0);
+					
 					renderPantallaTransparente(RUTA_JAQUE_MATE_BLANCAS);
 				}
 				else
 				{
-					//ETSIDI::setTextColor(255, 0, 0);
-					//ETSIDI::printxy("JAQUE MATE NEGRAS", 15 * mod, 0);
+					
 					renderPantallaTransparente(RUTA_JAQUE_MATE_NEGRAS);
 				}
+				///
+				if(!iniciaSonidoFinal)
+					Sonidos::son_jaquemate();
+				///
 				break;
 
 			case CodigoFinal::REY_AHOGADO:
-				//ETSIDI::setTextColor(255, 0, 0);
-				//ETSIDI::printxy("REY AHOGADO", 15 * mod, 0);
+				
 				renderPantallaTransparente(RUTA_REY_AHOGADO);
+				///
+				if (!iniciaSonidoFinal)
+					Sonidos::son_tablas();
+				///
 				break;
 
 			case CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE:
-				//ETSIDI::setTextColor(255, 0, 0);
-				//ETSIDI::printxy("TABLAS POR MATERIAL INSUFICIENTE", 15 * mod, 0);
+				
 				renderPantallaTransparente(RUTA_MATERIAL_INSUFICIENTE);
+				///
+				if (!iniciaSonidoFinal)
+					Sonidos::son_tablas();
+				///
 				break;
 
 			case CodigoFinal::TABLAS_POR_REPETICION:
-				//ETSIDI::setTextColor(255, 0, 0);
-				//ETSIDI::printxy("TABLAS POR REPETICION", 15 * mod, 0);
+				
 				renderPantallaTransparente(RUTA_REPETICION);
+				///
+				if (!iniciaSonidoFinal)
+					Sonidos::son_tablas();
+				///
 				break;
 
 			case CodigoFinal::TABLAS_POR_PASIVIDAD:
-				//ETSIDI::setTextColor(255, 0, 0);
-				//ETSIDI::printxy("TABLAS POR PASIVIDAD", 15 * mod, 0);
+				
 				renderPantallaTransparente(RUTA_PASIVIDAD);
+				///
+				if (!iniciaSonidoFinal)
+					Sonidos::son_tablas();
+				///
 				break;
 			}
+			iniciaSonidoFinal = true;
 		}
+		else
+			iniciaSonidoFinal = false;
 	}
 	else if (estado == COLOR_SERVIDOR)
 	{

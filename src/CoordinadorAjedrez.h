@@ -56,6 +56,8 @@ private:
 	void cerrarPartida();
 	
 public:
+
+	void gestionSonido();
 	/* FORMA CAN�NICA */
 	CoordinadorAjedrez(void);
 
@@ -80,5 +82,7 @@ float aCoordenadasGlutY(float p);
 void parametrosTexturasMEstados();
 
 void debugAxis(void);
+
+
 
 #endif
