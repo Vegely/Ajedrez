@@ -34,7 +34,7 @@ void threadMotor(bool* p_run, Mundo* p_motorGrafico, const ConfiguracionDeJuego*
 
 CoordinadorAjedrez::CoordinadorAjedrez() :
 	estado(INICIO),
-	mundoGrafico(),
+	motorGrafico(),
 	datosFinal()
 {}
 
@@ -60,7 +60,7 @@ void hiloRed(CoordinadorAjedrez* p_ajedrez)
 
 void CoordinadorAjedrez::init(void)
 {
-	mundoGrafico.init();
+	motorGrafico.init();
 	flagDeSeguridadInit = false;
 	pantallaElegirRol.init();
 	pantallaInicio.init();
@@ -107,15 +107,21 @@ void CoordinadorAjedrez::Draw(void)
 		0.0, 7.5, 0.0,    // hacia que punto mira 
 		0.0, 1.0, 0.0);   // definimos hacia arriba (eje Y)
 	gestionSonido();
-	if (estado == INICIO) {
+
+	if (estado == INICIALIZAR_PARTIDA)
+	{
+		
+		motorGrafico.getCasillaUltimoMov()->renderModelos();
+	}
+	else if (estado == INICIO) {
 
 		pantallaInicio.dibuja();
 		parametrosTexturasMEstados();
 	}
 	else if (estado == JUEGO)
 	{
-		mundoGrafico.updateCamara();
-		mundoGrafico.renderizarModelos();
+		motorGrafico.updateCamara();
+		motorGrafico.renderizarModelos();
 		 
 
 		if (datosFinal.finalizada)
@@ -126,13 +132,11 @@ void CoordinadorAjedrez::Draw(void)
 			case CodigoFinal::JAQUE_MATE:
 				if (datosFinal.ganaBlanco)
 				{
-					
-					renderPantallaTransparente(RUTA_JAQUE_MATE_BLANCAS);
+					renderPantallaTransparente(RUTA_JAQUE_MATE_BLANCAS, motorGrafico.getCamaraAng());
 				}
 				else
 				{
-					
-					renderPantallaTransparente(RUTA_JAQUE_MATE_NEGRAS);
+					renderPantallaTransparente(RUTA_JAQUE_MATE_NEGRAS, motorGrafico.getCamaraAng());
 				}
 				///
 				if(!iniciaSonidoFinal)
@@ -141,8 +145,7 @@ void CoordinadorAjedrez::Draw(void)
 				break;
 
 			case CodigoFinal::REY_AHOGADO:
-				
-				renderPantallaTransparente(RUTA_REY_AHOGADO);
+				renderPantallaTransparente(RUTA_REY_AHOGADO, motorGrafico.getCamaraAng());
 				///
 				if (!iniciaSonidoFinal)
 					Sonidos::son_tablas();
@@ -150,8 +153,7 @@ void CoordinadorAjedrez::Draw(void)
 				break;
 
 			case CodigoFinal::TABLAS_POR_MATERIAL_INSUFICIENTE:
-				
-				renderPantallaTransparente(RUTA_MATERIAL_INSUFICIENTE);
+				renderPantallaTransparente(RUTA_MATERIAL_INSUFICIENTE, motorGrafico.getCamaraAng());
 				///
 				if (!iniciaSonidoFinal)
 					Sonidos::son_tablas();
@@ -159,8 +161,7 @@ void CoordinadorAjedrez::Draw(void)
 				break;
 
 			case CodigoFinal::TABLAS_POR_REPETICION:
-				
-				renderPantallaTransparente(RUTA_REPETICION);
+				renderPantallaTransparente(RUTA_REPETICION, motorGrafico.getCamaraAng());
 				///
 				if (!iniciaSonidoFinal)
 					Sonidos::son_tablas();
@@ -168,8 +169,7 @@ void CoordinadorAjedrez::Draw(void)
 				break;
 
 			case CodigoFinal::TABLAS_POR_PASIVIDAD:
-				
-				renderPantallaTransparente(RUTA_PASIVIDAD);
+				renderPantallaTransparente(RUTA_PASIVIDAD, motorGrafico.getCamaraAng());
 				///
 				if (!iniciaSonidoFinal)
 					Sonidos::son_tablas();
@@ -223,16 +223,14 @@ void CoordinadorAjedrez::Draw(void)
 
 		ETSIDI::setFont(RUTA_FUENTES, 30);
 		ETSIDI::setTextColor(0, 255, 255);
-		ETSIDI::printxy(pantallaCliente.ip.c_str(), -6, 7,1);
+		ETSIDI::printxy(pantallaCliente.ip.c_str(), -6, 7, 1);
 	}
 
 	else if (estado == PAUSA)
 	{
-		mundoGrafico.updateCamara();
-		mundoGrafico.renderizarModelos();
-		if (config[0] == ConfiguracionDeJuego::FormasDeInteraccion::IA && config[1] == config[0]) glRotatef(90, 0, 1, 0);
-			renderPantallaTransparente(RUTA_PAUSA);
-		if (config[0] == ConfiguracionDeJuego::FormasDeInteraccion::IA && config[1] == config[0]) glRotatef(-90, 0, 1, 0);
+		motorGrafico.updateCamara();
+		motorGrafico.renderizarModelos();
+		renderPantallaTransparente(RUTA_PAUSA, motorGrafico.getCamaraAng());
 	}
 
 	else if (estado == SERVIDOR)
@@ -317,12 +315,14 @@ void CoordinadorAjedrez::Timer(float value)
 	{
 		datosFinal.finalizada = false;
 		enPartida = true;
-		p_hiloMotorLogico = new std::thread(threadMotor, &(enPartida), &mundoGrafico, &config, &partida, p_elementoRed, &datosFinal);
+		p_hiloMotorLogico = new std::thread(threadMotor, &(enPartida), &motorGrafico, &config, &partida, p_elementoRed, &datosFinal);
+
+		motorGrafico.resetCasillas(motorGrafico.getCasillaUltimoMov());
 
 		estado = JUEGO;
 	}
 	else if (estado == JUEGO) // Escribir a continuacion de la configuracion
-		this->mundoGrafico.movimiento(value);
+		this->motorGrafico.movimiento(value);
 	else if (estado == CERRAR_PARTIDA)
 	{
 		cerrarPartida();
@@ -363,7 +363,7 @@ void CoordinadorAjedrez::Keypress(unsigned char key)
 				partida.crearPartida();
 				partida.guardarPartida();
 
-				//Actualizaci�n del ranking
+				//Actualizacion del ranking
 				ranking.aniadirJugador(pantallaGuardar.sblancas);
 				ranking.aniadirJugador(pantallaGuardar.snegras);
 
@@ -485,7 +485,7 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 				estado = RANKING;
 		}
 		else if (estado == JUEGO) {
-			this->mundoGrafico.seleccionCasilla(button, state, x, y);
+			this->motorGrafico.seleccionCasilla(button, state, x, y);
 		}
 		else if (estado == MODO)
 		{
@@ -683,7 +683,7 @@ void parametrosTexturasMEstados()
 	glDisable(GL_TEXTURE_2D);
 }
 
-void CoordinadorAjedrez::renderPantallaTransparente(const std::string& filepath, const Point& pos, float rot_x, float rot_y, float rot_z)
+void CoordinadorAjedrez::renderPantallaTransparente(const std::string& filepath, float main_ang, const Point& pos, float rot_x, float rot_y, float rot_z)
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -695,8 +695,7 @@ void CoordinadorAjedrez::renderPantallaTransparente(const std::string& filepath,
 	screen.setPosition(pos);
 	screen.rotate('x', -rot_x, Point::zero);
 
-	if (!mundoGrafico.getGirado())
-		screen.rotate('y', 180, Point::zero);
+	screen.rotate('y', -main_ang * 180.0f / M_PI - 90.0f, Point::zero);
 
 	glEnable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);

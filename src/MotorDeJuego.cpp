@@ -14,7 +14,7 @@
 #include <cstdint>
 #include <chrono>
 
-#define TIEMPO_MS_MIN_MOVIMIENTO 1500
+#define TIEMPO_MS_MIN_MOVIMIENTO 0
 
 ///
 #include <iostream>
