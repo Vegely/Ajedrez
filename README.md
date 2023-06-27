@@ -29,11 +29,4 @@ Proyecto de programación de un ajedrez en C++ con la librería gráfica [Glut](
 - Lectura de inputs.
 - Juego en red.
 
-## Atributos de las piezas:
-- Valor.
-- Color.
-- Posición.
-- Puede comer.
-- Puede defender.
-- Amenazada.
 
