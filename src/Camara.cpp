@@ -52,18 +52,6 @@ void Camara::motion(float time)
 	this->position = Point{ Camara::radius * cos(this->angle), Camara::height, Camara::radius * sin(this->angle) };
 }
 
-std::ostream& Camara::printPosition(std::ostream& str) const
-{
-	str << "Camera position:" << this->getPosition() << std::endl;
-	return str;
-}
-
-std::ostream& Camara::printLookAt(std::ostream& str) const
-{
-	str << "Looking at point " << this->getLookAt() << std::endl;
-	return str;
-}
-
 void Camara::update(void)
 { 
 	// Limpia los buffers.	

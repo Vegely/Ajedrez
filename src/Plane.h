@@ -62,9 +62,6 @@ public:
 	void setPosition(const Point& pos) override;
 	void rotate(const char axis, const float angle, const Point& pos);
 
-	/* PRINTERS */
-	std::ostream& printCorners(std::ostream& out = std::cout) const;
-
 	/* DRAWING */
 	void render(void) override;
 };

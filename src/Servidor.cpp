@@ -54,7 +54,7 @@ void Servidor::ipDir() {
 		}
 	}
 	if (p_enlace == "") {
-		std::cout << "Direccion ipv4 no encontrada" << std::endl;
+		std::cerr << "Direccion ipv4 no encontrada" << std::endl;
 		ipv4 = "";
 	}
 }

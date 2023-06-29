@@ -163,21 +163,10 @@ void Plane::rotate(const char axis, const float angle, const Point& pos)
 
 		break;
 
-	default:
-		std::cout << "No rotation defined for the selected axis." << std::endl << std::endl;
-		break;
+	/*default:
+		std::cerr << "No rotation defined for the selected axis." << std::endl << std::endl;
+		break;*/
 	}
-}
-
-std::ostream& Plane::printCorners(std::ostream& out) const
-{
-	out << "Corners for plane " << this->name << ":" << std::endl;
-	out << "Lower left:  " << this->position_corners.ll << std::endl;
-	out << "Lower right: " << this->position_corners.lr << std::endl;
-	out << "Upper left:  " << this->position_corners.ul << std::endl;
-	out << "Upper right: " << this->position_corners.ur << std::endl << std::endl;
-
-	return out;
 }
 
 void Plane::render(void)

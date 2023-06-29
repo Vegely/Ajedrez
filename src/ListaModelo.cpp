@@ -34,7 +34,7 @@ void ListaModelo::deleteElem(int k)
 {
 	if (k > _numElem)
 	{
-		std::cout << "Not an existing element." << std::endl;
+		std::cerr << "Not an existing element." << std::endl;
 		return;
 	}
 	else
@@ -62,7 +62,7 @@ void ListaModelo::deleteFromCoord(const Posicion& pos)
 		}
 	}
 	else
-		std::cout << "This list is a nullptr." << std::endl;
+		std::cerr << "This list is a nullptr." << std::endl;
 }
 
 int ListaModelo::getIndex(const Posicion& pos) const
@@ -102,7 +102,7 @@ void ListaModelo::setPosicion(int i, const Posicion& posicion)
 	if (i <= _numElem)
 		_modelo[i]->setCoords(posicion);
 	else
-		std::cout << "Not an element in the list." << std::endl;
+		std::cerr << "Not an element in the list." << std::endl;
 }
 
 void ListaModelo::moverElemento(const Movimiento& mov)

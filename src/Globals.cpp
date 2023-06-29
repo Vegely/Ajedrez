@@ -96,12 +96,6 @@ void Point::rotate2D(const float angle)
 	this->y = temp.x * sin(ang) + temp.y * cos(ang);
 }
 
-std::ostream& operator << (std::ostream& out, const Point& obj)
-{
-	out << "[" << obj.x << ", " << obj.y << ", " << obj.z << "]";
-	return out;
-}
-
 void drawLine(const Point& p1, const Point& p2)
 {
 	glBegin(GL_LINES);

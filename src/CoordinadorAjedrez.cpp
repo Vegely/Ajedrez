@@ -295,6 +295,9 @@ void CoordinadorAjedrez::cerrarHiloRed()
 	// Se elimina el elemento de red
 	delete p_elementoRed;
 	p_elementoRed = nullptr;
+
+	// Se elimina la frase CONECTANDO de la pantalla del cliente
+	pantallaCliente.ip = "";
 }
 
 void CoordinadorAjedrez::cerrarPartida()
@@ -569,10 +572,8 @@ void CoordinadorAjedrez::Click(int button, int state, int x, int y)
 		}
 		else if (estado == FALLO_CONEXION)
 		{
-			pantallaCliente.ip = "";
-			cerrarHiloRed();
 			if (pantallaFalloConexion.aceptar.enCaja(xg, yg))
-				estado = INICIO;
+				estado = CERRAR_PARTIDA;
 		}
 		else if (estado == RANKING)
 		{

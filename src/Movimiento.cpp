@@ -4,7 +4,7 @@
 
 Movimiento::Movimiento(const std::string& str)
 {
-	if (str.empty()) *this = Movimiento();
+	if (str.empty() || str.size() > 11) *this = Movimiento();
 	else
 	{
 		std::stringstream ss(str);
@@ -19,6 +19,4 @@ Movimiento::Movimiento(const std::string& str)
 		else
 			*this = Movimiento();
 	}
-
-	
 }

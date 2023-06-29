@@ -6,7 +6,9 @@
 class ElementoRed
 {
 public:
-	std::string recibido = "";
+	std::string recibido;
+
+	ElementoRed() { recibido.clear(); }
 
 	virtual void inicializa() = 0;
 

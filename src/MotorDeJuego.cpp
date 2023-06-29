@@ -16,10 +16,6 @@
 
 #define TIEMPO_MS_MIN_MOVIMIENTO 0
 
-///
-#include <iostream>
-///
-
 constexpr auto NUM_LINEAS = 40;
 
 Posicion getInput(Mundo* p_motorGrafico) 
@@ -50,7 +46,7 @@ Movimiento MotorDeJuego::seleccionarEntrada(Mundo* p_motorGrafico, bool& run)
 	{
 		if (config[tablero.colorDelTurno] == ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR)
 		{
-			while(elementoRed.recibido.empty() && run); // Esperar hasta que se reciba algo
+			while(elementoRed.recibido.empty()) if (!run) return Movimiento(); // Esperar hasta que se reciba algo
 			movimiento = Movimiento(elementoRed.recibido);
 			elementoRed.recibido.clear();
 		}

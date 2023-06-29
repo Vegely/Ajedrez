@@ -21,7 +21,7 @@ void Socket::creaSocket(const char* direccion) {
 
 	//Comprobación de errores
 	if (error_creacion != 0) {
-		std::cout << "Error en la obtencion de la direccion: " << error_creacion << std::endl;
+		std::cerr << "Error en la obtencion de la direccion: " << error_creacion << std::endl;
 		WSACleanup();
 	}
 
@@ -31,7 +31,7 @@ void Socket::creaSocket(const char* direccion) {
 
 	//Comprobación de errores
 	if (sck == INVALID_SOCKET) {
-		std::cout << "Error en la creacion del socket: " << WSAGetLastError();
+		std::cerr << "Error en la creacion del socket: " << WSAGetLastError();
 		freeaddrinfo(host_info);
 	}
 }
@@ -44,7 +44,7 @@ void Socket::vincula() {
 
 	//Comprobación de errores
 	if (error_vinculacion == SOCKET_ERROR) {
-		std::cout << "Error en la vinculacion: " << WSAGetLastError();
+		std::cerr << "Error en la vinculacion: " << WSAGetLastError();
 		freeaddrinfo(host_info);
 		closesocket(sck);
 		WSACleanup();
@@ -61,7 +61,7 @@ void Socket::escucha() {
 
 	//Comprobación de errores
 	if (error_escucha == SOCKET_ERROR) {
-		std::cout << "Error al atender la conexion: " << error_escucha << std::endl;
+		std::cerr << "Error al atender la conexion: " << error_escucha << std::endl;
 		closesocket(sck);
 		WSACleanup();
 	}
@@ -75,7 +75,7 @@ void Socket::aceptaConexion(Socket& sck_aux) {
 
 	//Comprobación de errores
 	if (sck_aux.sck == INVALID_SOCKET) {
-		std::cout << "Error al aceptar la conexion " << std::endl;
+		std::cerr << "Error al aceptar la conexion " << std::endl;
 		closesocket(sck);
 		WSACleanup();
 	}
@@ -93,7 +93,7 @@ bool Socket::conectarAServidor() {
 
 	//Comprobación de errores
 	if (error_conexion == SOCKET_ERROR) {
-		std::cout << "No se pudo conectar al servidor: " << error_conexion << std::endl;
+		std::cerr << "No se pudo conectar al servidor: " << error_conexion << std::endl;
 		closesocket(sck);
 		WSACleanup();
 		return false;
@@ -112,7 +112,7 @@ int Socket::envia(std::string s) {
 
 	//Comprobación de errores
 	if (bytes_enviados == SOCKET_ERROR) {
-		std::cout << "Error al enviar el mensaje: " << WSAGetLastError() << std::endl;
+		std::cerr << "Error al enviar el mensaje: " << WSAGetLastError() << std::endl;
 		closesocket(sck);
 		WSACleanup();
 		return bytes_enviados;
@@ -139,12 +139,10 @@ int Socket::recibe(std::string& s) {
 	}
 	//Si recibe 0, el cliente ha cerrado la conexión
 	else if (bytes_recibidos == 0) {
-		std::cout << "Conexion cerrada " << std::endl;
 		return bytes_recibidos;
 	}
 	//Error al recibir la información
 	else {
-		std::cout << "Error al recibir el mensaje: " << WSAGetLastError() << std::endl;
 		return -1;
 	}
 
@@ -158,7 +156,7 @@ void Socket::desconecta() {
 
 	//Comprobación de errores
 	if (error_desconexion == SOCKET_ERROR) {
-		std::cout << "Error en la desconexion: " << WSAGetLastError() << std::endl;
+		std::cerr << "Error en la desconexion: " << WSAGetLastError() << std::endl;
 		closesocket(sck);
 		WSACleanup();
 
@@ -178,5 +176,5 @@ void inicializaWinSock() {
 
 	//Comprobación de errores
 	if (error_inicializacion_ws != 0)
-		std::cout << "Error en la inicializacion de WinSock: " << error_inicializacion_ws << std::endl;
+		std::cerr << "Error en la inicializacion de WinSock: " << error_inicializacion_ws << std::endl;
 }

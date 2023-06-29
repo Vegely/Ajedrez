@@ -1,7 +1,6 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#include <iostream>
 #include <string>
 #include <cmath>
 #include "Posicion.h"
@@ -23,7 +22,6 @@ struct Rotation
 };
 
 /* OVERLOADED OPERATORS */
-std::ostream& operator << (std::ostream& out, const Point& obj);
 Point operator * (const Point& lhs, const float rhs);
 Point operator * (const float lhs, const Point& rhs);
 Point operator / (const Point& lhs, const float rhs);

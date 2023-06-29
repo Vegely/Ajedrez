@@ -1,7 +1,8 @@
 #ifndef _PUNTO__H_
 #define _PUNTO__H_
 
-#include <iostream>
+#include <cmath>
+
 class Punto
 {
 public:

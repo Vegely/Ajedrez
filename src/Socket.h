@@ -8,10 +8,10 @@ constexpr int MAX_LONG_BUFF = 256;
 //Puerto en el que se realiza la conexión por defecto
 constexpr const char* PUERTO_PREDETERMINADO = "42069";
 
+#include <iostream>
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <iostream>
 
 #pragma comment (lib, "Ws2_32.lib")
 

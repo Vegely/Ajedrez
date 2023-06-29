@@ -47,10 +47,6 @@ public:
 	void movement(float time);
 	void motion  (float time);
 
-	/* PRINTERS */
-	std::ostream& printPosition(std::ostream& str) const;
-	std::ostream& printLookAt  (std::ostream& str) const;
-
 	/* FUNCIONES */
 	void update(void);
 
