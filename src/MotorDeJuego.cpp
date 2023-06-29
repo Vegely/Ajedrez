@@ -14,7 +14,7 @@
 #include <cstdint>
 #include <chrono>
 
-#define TIEMPO_MS_MIN_MOVIMIENTO 0
+#define TIEMPO_MS_MIN_MOVIMIENTO 150
 
 constexpr auto NUM_LINEAS = 40;
 
@@ -257,7 +257,14 @@ Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(MotorDeJuego& motor, const
 	{
 		if (interaccion == ConfiguracionDeJuego::FormasDeInteraccion::RECEPTOR)
 		{
-			while (motor.elementoRed.recibido.empty() && run); // Esperar hasta que se reciba algo
+			uint64_t t0 = getTimeSinceEpoch();
+			while (motor.elementoRed.recibido.empty() && run) // Esperar hasta que se reciba algo
+			{
+				while (getTimeSinceEpoch() - t0 < 1); // Evita que en modo release el programa se salte la valoracion del while
+				t0 = getTimeSinceEpoch();
+			}
+			if (!run) return Pieza::tipo_t::DAMA;
+
 			tipo = (Pieza::tipo_t)stoi(motor.elementoRed.recibido);
 			motor.elementoRed.recibido.clear();
 		}
@@ -271,7 +278,7 @@ Pieza::tipo_t MotorDeJuego::seleccionarEntradaCoronar(MotorDeJuego& motor, const
 			}
 
 			if (interaccion == ConfiguracionDeJuego::FormasDeInteraccion::EMISOR)
-				motor.elementoRed.enviar(movimiento.toString());
+				motor.elementoRed.enviar(std::to_string((int)tipo));
 		}
 	}
 

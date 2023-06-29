@@ -258,6 +258,9 @@ public:
 	void asignarModelos(void);
 	void cargarTexturas(void);
 
+	/* RESET */
+	void salirDeCoronacion() { coronando_blancas = false; coronando_negras = false; }
+
 	/* VARIABLES INTERNAS */
 	void updateCamara  (void)			 { camara.update(); }
 	void setCamaraPos  (const Point& pt) { camara.setPosition(pt); }

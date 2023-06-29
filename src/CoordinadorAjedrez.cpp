@@ -311,6 +311,8 @@ void CoordinadorAjedrez::cerrarPartida()
 
 	delete p_hiloMotorLogico;
 	p_hiloMotorLogico = nullptr;
+
+	motorGrafico.salirDeCoronacion();
 }
 
 void CoordinadorAjedrez::Timer(float value)
